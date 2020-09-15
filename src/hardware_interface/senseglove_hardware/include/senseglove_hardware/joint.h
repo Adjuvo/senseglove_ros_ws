@@ -44,7 +44,7 @@ namespace senseglove
 
         double getPosition() const;
         double getVelocity() const;
-        int16_t getTorque();
+        double getTorque();
         SenseGloveState getSenseGloveState();
 
         std::string getName() const;

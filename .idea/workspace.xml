@@ -28,26 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/dk1.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/include/senseglove_hardware_interface/senseglove_hardware_interface.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/package.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/actuation_mode.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove-API" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/src/SG_hardware_interface_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +65,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/senseglove/senseglove_launch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -89,11 +73,11 @@
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_launch" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description" />
       <recent name="$PROJECT_DIR$/src/SenseGlove" />
       <recent name="$PROJECT_DIR$/src/hardware_interface" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/SG_hardware" />
     </key>
   </component>
   <component name="RunManager">
@@ -113,7 +97,7 @@
       <updated>1599821558768</updated>
       <workItem from="1599821559858" duration="603000" />
       <workItem from="1600155547729" duration="229000" />
-      <workItem from="1600155938137" duration="12135000" />
+      <workItem from="1600155938137" duration="12865000" />
     </task>
     <servers />
   </component>
@@ -136,6 +120,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1600156334095" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1600172465214">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1600172465214" />
     <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1600155813018">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
