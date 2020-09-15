@@ -28,17 +28,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/package.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/package.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/package.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/src/SG_hardware_interface_node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/doc/search/all_1a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/doc/search/all_1a.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/incl/SG_GloveInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/incl/SG_GloveInfo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCs/doc/search/classes_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCs/doc/search/classes_8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/dk1.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/include/senseglove_hardware_interface/senseglove_hardware_interface.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/src/SG_hardware_interface_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +65,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1hMWhFfJ3GXIeCdgcfyW7ibiyix" />
@@ -67,15 +81,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/SenseGlove" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/senseglove/senseglove_launch" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_launch" />
+      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description" />
       <recent name="$PROJECT_DIR$/src/SenseGlove" />
       <recent name="$PROJECT_DIR$/src/hardware_interface" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/SG_hardware" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface" />
     </key>
   </component>
   <component name="RunManager">
@@ -95,7 +113,7 @@
       <updated>1599821558768</updated>
       <workItem from="1599821559858" duration="603000" />
       <workItem from="1600155547729" duration="229000" />
-      <workItem from="1600155938137" duration="1710000" />
+      <workItem from="1600155938137" duration="12135000" />
     </task>
     <servers />
   </component>

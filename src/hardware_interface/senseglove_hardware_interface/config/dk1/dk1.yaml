@@ -1,0 +1,5 @@
+senseglove:
+  controller:
+    joint_state:
+      type: joint_state_controller/JointStateController
+      publish_rate: 250

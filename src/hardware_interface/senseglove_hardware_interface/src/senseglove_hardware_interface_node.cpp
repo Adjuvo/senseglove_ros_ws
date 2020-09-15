@@ -1,5 +1,5 @@
 // Copyright 2020 senseglove
-#include "SG_hardware_interface/SG_hardware_interface.h"
+#include "senseglove_hardware_interface/senseglove_hardware_interface.h"
 
 #include <cstdlib>
 
@@ -10,7 +10,7 @@ std::unique_ptr<senseglove::SenseGloveRobot> build(AllowedRobot robot);
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "SG_hardware_interface");
+    ros::init(argc, argv, "senseglove_hardware_interface");
     ros::NodeHandle nh;
     ros::AsyncSpinner spinner(2);
 
