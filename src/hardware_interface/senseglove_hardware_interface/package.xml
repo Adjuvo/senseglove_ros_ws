@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>SG_hardware_interface</name>
+  <name>senseglove_hardware_interface</name>
   <version>0.0.0</version>
   <description>
-    Communicates with the senseglove hardware.
+    The bridge between ros_control and the senseglove hardware.
   </description>
 
   <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>
