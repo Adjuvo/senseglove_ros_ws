@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_builder/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface/src/SG_hardware_interface_node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/doc/search/all_1a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/doc/search/all_1a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/incl/SG_GloveInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCpp/incl/SG_GloveInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCs/doc/search/classes_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API/Core/SGCoreCs/doc/search/classes_8.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1hMWhFfJ3GXIeCdgcfyW7ibiyix" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/SenseGlove" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/SenseGlove" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/SG_hardware" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/SG_hardware_interface" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="" />
+      <created>1599821558768</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599821558768</updated>
+      <workItem from="1599821559858" duration="603000" />
+      <workItem from="1600155547729" duration="229000" />
+      <workItem from="1600155938137" duration="1710000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1600156334095">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1600156334095" />
+    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1600155813018">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1600155813018" />
+  </component>
+</project>
