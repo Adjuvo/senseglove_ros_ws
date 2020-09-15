@@ -54,8 +54,6 @@ namespace senseglove
 
         ActuationMode getActuationMode() const;
 
-        bool hasIMotionCube() const;
-        bool hasTemperatureGES() const;
         bool canActuate() const;
         bool receivedDataUpdate();
         void setAllowActuation(bool allow_actuation);
@@ -63,9 +61,7 @@ namespace senseglove
         /** @brief Override comparison operator */
         friend bool operator==(const Joint& lhs, const Joint& rhs)
         {
-            return lhs.name_ == rhs.name_ && ((lhs.imc_ && rhs.imc_ && *lhs.imc_ == *rhs.imc_) || (!lhs.imc_ && !rhs.imc_)) &&
-                   ((lhs.temperature_ges_ && rhs.temperature_ges_ && *lhs.temperature_ges_ == *rhs.temperature_ges_) ||
-                    (!lhs.temperature_ges_ && !rhs.temperature_ges_)) &&
+            return lhs.name_ == rhs.name_ && lhs.finger_ == rhs.finger_ && // Mits Finger een comparison operator heeft
                    lhs.allow_actuation_ == rhs.allow_actuation_ &&
                    lhs.getActuationMode().getValue() == rhs.getActuationMode().getValue();
         }
@@ -80,26 +76,7 @@ namespace senseglove
             os << "name: " << joint.name_ << ", "
                << "ActuationMode: " << joint.getActuationMode().toString() << ", "
                << "allowActuation: " << joint.allow_actuation_ << ", "
-               << "imotioncube: ";
-            if (joint.imc_)
-            {
-                os << *joint.imc_;
-            }
-            else
-            {
-                os << "none";
-            }
-
-            os << ", temperatureges: ";
-            if (joint.temperature_ges_)
-            {
-                os << *joint.temperature_ges_;
-            }
-            else
-            {
-                os << "none";
-            }
-
+               << "finger: " << finger_; // Mits finger een ostream operator heeft.
             return os;
         }
 
@@ -107,21 +84,10 @@ namespace senseglove
         const std::string name_;
         const int net_number_;
         bool allow_actuation_ = false;
-        float previous_imc_volt_ = 0.0;
-        float previous_motor_current_ = 0.0;
-        float previous_motor_volt_ = 0.0;
-        double previous_absolute_position_ = 0.0;
-        double previous_incremental_position_ = 0.0;
-        double previous_absolute_velocity_ = 0.0;
-        double previous_incremental_velocity_ = 0.0;
 
         double position_ = 0.0;
-        double incremental_position_ = 0.0;
-        double absolute_position_ = 0.0;
         double velocity_ = 0.0;
-
-        std::unique_ptr<IMotionCube> imc_ = nullptr;
-        std::unique_ptr<TemperatureGES> temperature_ges_ = nullptr;
+        Finger finger_;
     };
 
 }  // namespace senseglove

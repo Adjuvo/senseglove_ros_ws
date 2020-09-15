@@ -4,7 +4,7 @@
   <name>senseglove_description</name>
   <version>0.0.0</version>
   <description>
-    Communicates with the March4 hardware.
+    provides descriptive features of the senseglove
   </description>
 
   <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>

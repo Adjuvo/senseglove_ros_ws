@@ -4,7 +4,7 @@
   <name>senseglove_launch</name>
   <version>0.0.0</version>
   <description>
-    Communicates with the March4 hardware.
+    provides a clear directory from which one can launch the senseglove.
   </description>
 
   <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>

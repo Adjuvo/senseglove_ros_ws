@@ -4,7 +4,7 @@
   <name>SG_hardware_builder</name>
   <version>0.0.0</version>
   <description>
-    Communicates with the March4 hardware.
+    Communicates with the senseglove hardware.
   </description>
 
   <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>
