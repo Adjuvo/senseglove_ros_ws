@@ -1,0 +1,6 @@
+source;share/SenseGlove_API/hook/pkg_config_path.ps1
+source;share/SenseGlove_API/hook/pkg_config_path.dsv
+source;share/SenseGlove_API/hook/pkg_config_path.sh
+source;share/SenseGlove_API/hook/pkg_config_path_multiarch.ps1
+source;share/SenseGlove_API/hook/pkg_config_path_multiarch.dsv
+source;share/SenseGlove_API/hook/pkg_config_path_multiarch.sh

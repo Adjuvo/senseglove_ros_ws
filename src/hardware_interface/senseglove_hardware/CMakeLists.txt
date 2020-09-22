@@ -8,6 +8,11 @@ find_package(catkin REQUIRED COMPONENTS
         urdf
         )
 
+find_library(SENSEGLOVE
+        NAMES SGCore.so
+        PATHS /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove-API/Core/SGCoreCpp/lib/Linux
+        REQUIRED)
+
 catkin_package(
         INCLUDE_DIRS include
         CATKIN_DEPENDS
@@ -22,6 +27,7 @@ include(cmake/${PROJECT_NAME}-extras.cmake)
 
 include_directories(
         include
+        SenseGlove_API/Core/SGCoreCpp/incl
         SYSTEM
         ${catkin_INCLUDE_DIRS}
 )
@@ -40,7 +46,7 @@ add_library(${PROJECT_NAME}
         src/senseglove_robot.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} pthread)
+target_link_libraries(${PROJECT_NAME} ${SENSEGLOVE} ${catkin_LIBRARIES} pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -54,7 +60,7 @@ install(TARGETS ${PROJECT_NAME}
 ### Add gtest based cpp test target and link libraries
 #if(CATKIN_ENABLE_TESTING)
 #    catkin_add_gmock(${PROJECT_NAME}_test
-#            test/encoder/absolute_encoder_test.cpp
+#            test/.cpp
 #            )
 #    target_link_libraries(${PROJECT_NAME}_test ${catkin_LIBRARIES} ${PROJECT_NAME})
 #

@@ -1,0 +1,23 @@
+[0.037s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description -- -j8 -l8
+[0.108s] [ 25%] Built target senseglove_description_dk1_xacro
+[0.113s] [100%] Built target senseglove_description_dk1_xacro_to_devel_space_
+[0.169s] [100%] Built target senseglove_description_xacro_generated_to_devel_space_
+[0.203s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description -- -j8 -l8
+[0.284s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description --target tests -- -j8 -l8
+[0.361s] Built target tests
+[0.378s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description --target tests -- -j8 -l8
+[0.434s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description --target install -- -j8 -l8
+[0.489s] [ 75%] Built target senseglove_description_dk1_xacro_to_devel_space_
+[0.500s] [100%] Built target senseglove_description_dk1_xacro
+[0.514s] [100%] Built target senseglove_description_xacro_generated_to_devel_space_
+[0.539s] [36mInstall the project...[0m
+[0.546s] -- Install configuration: ""
+[0.546s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/lib/pkgconfig/senseglove_description.pc
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_description-extras.cmake
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig.cmake
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig-version.cmake
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/package.xml
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.urdf
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf
+[0.547s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.xacro
+[0.551s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description --target install -- -j8 -l8

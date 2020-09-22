@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "SenseGlove-API/Core/SGCoreCpp/incl/Fingers.h"
+#include "SenseGlove.h"
 
 namespace senseglove
 {

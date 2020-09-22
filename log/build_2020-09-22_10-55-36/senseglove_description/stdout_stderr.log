@@ -1,0 +1,17 @@
+[ 75%] Built target senseglove_description_dk1_xacro_to_devel_space_
+[100%] Built target senseglove_description_dk1_xacro
+[100%] Built target senseglove_description_xacro_generated_to_devel_space_
+Built target tests
+[ 25%] Built target senseglove_description_dk1_xacro
+[100%] Built target senseglove_description_dk1_xacro_to_devel_space_
+[100%] Built target senseglove_description_xacro_generated_to_devel_space_
+[36mInstall the project...[0m
+-- Install configuration: ""
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/lib/pkgconfig/senseglove_description.pc
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_description-extras.cmake
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig.cmake
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig-version.cmake
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/package.xml
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.urdf
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf
+-- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.xacro

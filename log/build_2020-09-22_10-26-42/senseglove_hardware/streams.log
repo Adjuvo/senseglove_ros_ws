@@ -1,0 +1,35 @@
+[0.020s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware -- -j8 -l8
+[0.050s] -- Using CATKIN_DEVEL_PREFIX: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/devel
+[0.050s] -- Using CMAKE_PREFIX_PATH: 
+[0.068s] -- Found PythonInterp: /usr/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+[0.069s] -- Using PYTHON_EXECUTABLE: /usr/bin/python2
+[0.069s] -- Using Debian Python package layout
+[0.070s] -- Using empy: /usr/bin/empy
+[0.248s] -- Using CATKIN_ENABLE_TESTING: ON
+[0.248s] -- Call enable_testing()
+[0.249s] -- Using CATKIN_TEST_RESULTS_DIR: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/test_results
+[0.268s] -- Found gtest sources under '/usr/src/googletest': gtests will be built
+[0.268s] -- Found gmock sources under '/usr/src/googletest': gmock will be built
+[0.280s] -- Found PythonInterp: /usr/bin/python2 (found version "2.7.17") 
+[0.285s] -- Using Python nosetests: /usr/bin/nosetests-2.7
+[0.321s] -- catkin 0.7.28
+[0.322s] -- BUILD_SHARED_LIBS is on
+[0.335s] Traceback (most recent call last):
+[0.335s]   File "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/catkin_generated/generate_cached_setup.py", line 20, in <module>
+[0.336s]     from catkin.environment_cache import generate_environment_script
+[0.336s] ImportError: No module named catkin.environment_cache
+[0.336s] CMake Error at /opt/ros/melodic/share/catkin/cmake/safe_execute_process.cmake:11 (message):
+[0.337s]   execute_process(/usr/bin/python2
+[0.337s]   "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/catkin_generated/generate_cached_setup.py")
+[0.337s]   returned error code 1
+[0.337s] Call Stack (most recent call first):
+[0.337s]   /opt/ros/melodic/share/catkin/cmake/all.cmake:208 (safe_execute_process)
+[0.337s]   /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:20 (include)
+[0.338s]   CMakeLists.txt:6 (find_package)
+[0.338s] 
+[0.338s] 
+[0.338s] -- Configuring incomplete, errors occurred!
+[0.338s] See also "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/CMakeFiles/CMakeOutput.log".
+[0.338s] See also "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/CMakeFiles/CMakeError.log".
+[0.340s] Makefile:604: recipe for target 'cmake_check_build_system' failed
+[0.340s] make: *** [cmake_check_build_system] Error 1

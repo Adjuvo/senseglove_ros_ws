@@ -1,0 +1,8 @@
+prefix=/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources/devel
+
+Name: senseglove_shared_resources
+Description: Description of senseglove_shared_resources
+Version: 0.0.0
+Cflags: -I/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources/devel/include
+Libs: -L${prefix}/lib 
+Requires: actionlib_msgs control_msgs message_runtime std_msgs trajectory_msgs

@@ -1,0 +1,2 @@
+Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8
+Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources' returned '2': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8

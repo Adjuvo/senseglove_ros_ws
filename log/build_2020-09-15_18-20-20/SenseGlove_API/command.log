@@ -1,0 +1,6 @@
+Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API
+Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '0': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API
+Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API -- -j8 -l8
+Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API -- -j8 -l8
+Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API --target install -- -j8 -l8
+Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '2': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API --target install -- -j8 -l8

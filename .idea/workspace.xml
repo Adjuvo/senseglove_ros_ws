@@ -28,35 +28,86 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/msg/senseglove.msg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/package.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake/senseglove_hardware-extras.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake/senseglove_description-extras.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/launch/senseglove_demo.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/.built_by" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/COLCON_IGNORE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/.colcon_install_layout" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/COLCON_IGNORE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/_local_setup_util_ps1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/_local_setup_util_sh.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/local_setup.bash" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/local_setup.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/local_setup.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/local_setup.zsh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/setup.bash" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/setup.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/setup.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/setup.zsh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/COLCON_IGNORE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/build_2020-09-15_09-47-16/events.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/build_2020-09-15_09-47-16/logger_all.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/latest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/latest_build" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove-API" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_12.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_12.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_13.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_13.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_9.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_f.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_f.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/classes_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/classes_9.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/files_a.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/files_a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_10.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_10.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_11.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_15.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_15.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_d.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/functions_d.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_11.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/variables_7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/BetaDevice.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/BetaDevice.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/Fino.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/Fino.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/HandProfile.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/HandProfile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/HapticGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/HapticGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SG_GloveInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SG_GloveInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SG_GlovePose.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SG_GlovePose.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SenseGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SenseGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SenseGloveVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/incl/SenseGloveVars.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_12.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_12.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_13.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_13.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_9.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_f.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/all_f.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/classes_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/classes_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_10.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_10.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_11.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_d.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/functions_d.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/variables_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCs/doc/search/variables_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/NoSenseCom/NoSenseCom.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/NoSenseCom/NoSenseCom.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/BetaDevice.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/BetaDevice.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/Fino.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/Fino.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/HandProfile.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/HandProfile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/HapticGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/HapticGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SG_GloveInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SG_GloveInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SG_GlovePose.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SG_GlovePose.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SenseGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SenseGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SenseGloveVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/NoSenseCom/SGCoreCpp/incl/SenseGloveVars.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/BetaDevice.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/BetaDevice.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/Fino.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/Fino.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/HandProfile.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/HandProfile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/HapticGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/HapticGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GloveInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GloveInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GlovePose.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GlovePose.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGlove.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGloveVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGloveVars.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/package.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +133,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1hMWhFfJ3GXIeCdgcfyW7ibiyix" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -90,27 +142,21 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware" />
-      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_launch" />
+      <recent name="$PROJECT_DIR$/src/SenseGlove-API" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake" />
+      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description" />
-      <recent name="$PROJECT_DIR$/src/SenseGlove" />
+      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -122,7 +168,9 @@
       <updated>1599821558768</updated>
       <workItem from="1599821559858" duration="603000" />
       <workItem from="1600155547729" duration="229000" />
-      <workItem from="1600155938137" duration="17293000" />
+      <workItem from="1600155938137" duration="25933000" />
+      <workItem from="1600759518767" duration="180000" />
+      <workItem from="1600759721762" duration="4865000" />
     </task>
     <servers />
   </component>
@@ -139,16 +187,21 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600178843215">
+    <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600761914252">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1600178843215" />
+    <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1600761914251" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1600156334095">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1600156334095" />
+    <state x="2402" y="187" key="SettingsEditor" timestamp="1600764877389">
+      <screen x="0" y="27" width="3840" height="1053" />
+    </state>
+    <state x="2402" y="187" key="SettingsEditor/0.27.3840.1053@0.27.3840.1053" timestamp="1600764877389" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1600172465214">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

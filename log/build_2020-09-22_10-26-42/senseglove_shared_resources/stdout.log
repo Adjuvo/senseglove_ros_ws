@@ -1,0 +1,13 @@
+[  0%] Built target trajectory_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target control_msgs_generate_messages_eus
+CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove.dir/build.make:57: recipe for target 'CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove' failed
+[  0%] Built target control_msgs_generate_messages_py
+CMakeFiles/Makefile2:1308: recipe for target 'CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove.dir/all' failed
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target trajectory_msgs_generate_messages_py
+Makefile:140: recipe for target 'all' failed

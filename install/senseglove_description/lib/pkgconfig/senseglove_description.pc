@@ -1,0 +1,8 @@
+prefix=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description
+
+Name: senseglove_description
+Description: Description of senseglove_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

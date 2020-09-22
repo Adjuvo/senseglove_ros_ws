@@ -1,0 +1,13 @@
+[0.033s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description -- -j8 -l8
+[0.085s] [35m[1mScanning dependencies of target senseglove_description_dk1_xacro[0m
+[0.086s] [35m[1mScanning dependencies of target senseglove_description_dk1_xacro_to_devel_space_[0m
+[0.102s] [ 25%] [34m[1mxacro: generating /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description/dk1.urdf from urdf/dk1.xacro[0m
+[0.117s] [ 50%] [34m[1mxacro: generating /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description/dk1.urdf from urdf/dk1.xacro[0m
+[0.117s] [ 75%] [34m[1mcreating dir /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description/devel/share/senseglove_description/urdf[0m
+[0.221s] 
+[0.245s] [ 75%] Built target senseglove_description_dk1_xacro
+[0.259s] 
+[0.286s] [100%] [34m[1mCopying to devel space: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description/devel/share/senseglove_description/urdf/dk1.urdf[0m
+[0.319s] [100%] Built target senseglove_description_dk1_xacro_to_devel_space_
+[0.334s] [35m[1mScanning dependencies of target senseglove_description_xacro_generated_to_devel_space_[0m
+[0.350s] [100%] Built target senseglove_description_xacro_generated_to_devel_space_

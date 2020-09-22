@@ -1,0 +1,289 @@
+[0.189s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.189s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fc01268f8d0>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=8, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fc01268f8d0>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7fc013068860>)
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.210s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.210s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/rogier/SenseGlove_ROS/ros_workspace'
+[0.210s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.223s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.224s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extensions ['ignore', 'ignore_ament_install']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extension 'ignore'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extension 'ignore_ament_install'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extensions ['colcon_pkg']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extension 'colcon_pkg'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extensions ['colcon_meta']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extension 'colcon_meta'
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extensions ['ros']
+[0.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/SenseGlove_API) by extension 'ros'
+[0.228s] DEBUG:colcon.colcon_core.package_identification:Package 'src/SenseGlove_API' with type 'ros.cmake' and name 'SenseGlove_API'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['ignore', 'ignore_ament_install']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'ignore'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'ignore_ament_install'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['colcon_pkg']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'colcon_pkg'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['colcon_meta']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'colcon_meta'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['ros']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'ros'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['cmake', 'python']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'cmake'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'python'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extensions ['python_setup_py']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface) by extension 'python_setup_py'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extensions ['ignore', 'ignore_ament_install']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extension 'ignore'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extension 'ignore_ament_install'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extensions ['colcon_pkg']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extension 'colcon_pkg'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extensions ['colcon_meta']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extension 'colcon_meta'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extensions ['ros']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware) by extension 'ros'
+[0.230s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hardware_interface/senseglove_hardware' with type 'ros.catkin' and name 'senseglove_hardware'
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extensions ['ignore', 'ignore_ament_install']
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extension 'ignore'
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extension 'ignore_ament_install'
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extensions ['colcon_pkg']
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extension 'colcon_pkg'
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extensions ['colcon_meta']
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extension 'colcon_meta'
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extensions ['ros']
+[0.230s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_builder) by extension 'ros'
+[0.231s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hardware_interface/senseglove_hardware_builder' with type 'ros.catkin' and name 'senseglove_hardware_builder'
+[0.231s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extensions ['ignore', 'ignore_ament_install']
+[0.231s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extension 'ignore'
+[0.231s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extension 'ignore_ament_install'
+[0.231s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extensions ['colcon_pkg']
+[0.231s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extension 'colcon_pkg'
+[0.232s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extensions ['colcon_meta']
+[0.232s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extension 'colcon_meta'
+[0.232s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extensions ['ros']
+[0.232s] Level 1:colcon.colcon_core.package_identification:_identify(src/hardware_interface/senseglove_hardware_interface) by extension 'ros'
+[0.233s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hardware_interface/senseglove_hardware_interface' with type 'ros.catkin' and name 'senseglove_hardware_interface'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['ignore', 'ignore_ament_install']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'ignore'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'ignore_ament_install'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['colcon_pkg']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'colcon_pkg'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['colcon_meta']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'colcon_meta'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['ros']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'ros'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['cmake', 'python']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'cmake'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'python'
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extensions ['python_setup_py']
+[0.233s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove) by extension 'python_setup_py'
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extensions ['ignore', 'ignore_ament_install']
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extension 'ignore'
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extension 'ignore_ament_install'
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extensions ['colcon_pkg']
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extension 'colcon_pkg'
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extensions ['colcon_meta']
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extension 'colcon_meta'
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extensions ['ros']
+[0.234s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_description) by extension 'ros'
+[0.235s] DEBUG:colcon.colcon_core.package_identification:Package 'src/senseglove/senseglove_description' with type 'ros.catkin' and name 'senseglove_description'
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extension 'ignore'
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extension 'ignore_ament_install'
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extensions ['colcon_pkg']
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extension 'colcon_pkg'
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extensions ['colcon_meta']
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extension 'colcon_meta'
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extensions ['ros']
+[0.235s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_launch) by extension 'ros'
+[0.236s] DEBUG:colcon.colcon_core.package_identification:Package 'src/senseglove/senseglove_launch' with type 'ros.catkin' and name 'senseglove_launch'
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extensions ['ignore', 'ignore_ament_install']
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extension 'ignore'
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extension 'ignore_ament_install'
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extensions ['colcon_pkg']
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extension 'colcon_pkg'
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extensions ['colcon_meta']
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extension 'colcon_meta'
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extensions ['ros']
+[0.236s] Level 1:colcon.colcon_core.package_identification:_identify(src/senseglove/senseglove_shared_resources) by extension 'ros'
+[0.237s] DEBUG:colcon.colcon_core.package_identification:Package 'src/senseglove/senseglove_shared_resources' with type 'ros.catkin' and name 'senseglove_shared_resources'
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_args' from command line to 'None'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_target' from command line to 'None'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_clean_cache' from command line to 'False'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_clean_first' from command line to 'False'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'cmake_force_configure' from command line to 'False'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'ament_cmake_args' from command line to 'None'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'catkin_cmake_args' from command line to 'None'
+[0.245s] Level 5:colcon.colcon_core.verb:set package 'SenseGlove_API' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.245s] DEBUG:colcon.colcon_core.verb:Building package 'SenseGlove_API' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API', 'symlink_install': False, 'test_result_base': None}
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_args' from command line to 'None'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_target' from command line to 'None'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_clean_cache' from command line to 'False'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_clean_first' from command line to 'False'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'cmake_force_configure' from command line to 'False'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'ament_cmake_args' from command line to 'None'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'catkin_cmake_args' from command line to 'None'
+[0.249s] Level 5:colcon.colcon_core.verb:set package 'senseglove_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.249s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_description', 'symlink_install': False, 'test_result_base': None}
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_args' from command line to 'None'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_target' from command line to 'None'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_clean_cache' from command line to 'False'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_clean_first' from command line to 'False'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'cmake_force_configure' from command line to 'False'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'ament_cmake_args' from command line to 'None'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'catkin_cmake_args' from command line to 'None'
+[0.252s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.252s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_hardware' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware', 'symlink_install': False, 'test_result_base': None}
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_args' from command line to 'None'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_target' from command line to 'None'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_clean_cache' from command line to 'False'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_clean_first' from command line to 'False'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'cmake_force_configure' from command line to 'False'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'ament_cmake_args' from command line to 'None'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'catkin_cmake_args' from command line to 'None'
+[0.256s] Level 5:colcon.colcon_core.verb:set package 'senseglove_shared_resources' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.256s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_shared_resources' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_shared_resources', 'symlink_install': False, 'test_result_base': None}
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_args' from command line to 'None'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_target' from command line to 'None'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_clean_cache' from command line to 'False'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_clean_first' from command line to 'False'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'cmake_force_configure' from command line to 'False'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'ament_cmake_args' from command line to 'None'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'catkin_cmake_args' from command line to 'None'
+[0.269s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_builder' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.269s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_hardware_builder' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware_builder', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware_builder', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware_builder', 'symlink_install': False, 'test_result_base': None}
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_args' from command line to 'None'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_target' from command line to 'None'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_clean_cache' from command line to 'False'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_clean_first' from command line to 'False'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'cmake_force_configure' from command line to 'False'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'ament_cmake_args' from command line to 'None'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'catkin_cmake_args' from command line to 'None'
+[0.272s] Level 5:colcon.colcon_core.verb:set package 'senseglove_launch' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.273s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_launch' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_launch', 'symlink_install': False, 'test_result_base': None}
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_args' from command line to 'None'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_target' from command line to 'None'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_clean_cache' from command line to 'False'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_clean_first' from command line to 'False'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'cmake_force_configure' from command line to 'False'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'ament_cmake_args' from command line to 'None'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'catkin_cmake_args' from command line to 'None'
+[0.276s] Level 5:colcon.colcon_core.verb:set package 'senseglove_hardware_interface' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.276s] DEBUG:colcon.colcon_core.verb:Building package 'senseglove_hardware_interface' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware_interface', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware_interface', 'merge_install': False, 'path': '/home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware_interface', 'symlink_install': False, 'test_result_base': None}
+[0.276s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.278s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.279s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_description' with build type 'catkin'
+[0.279s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_description'
+[0.283s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.283s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.283s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.288s] DEBUG:colcon.colcon_core.shell:Ignoring prefix path '/opt/ros/melodic'
+[0.291s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware' with build type 'catkin'
+[0.291s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware'
+[0.292s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.293s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.297s] DEBUG:colcon.colcon_core.shell:Ignoring prefix path '/opt/ros/melodic'
+[0.300s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_shared_resources' with build type 'catkin'
+[0.300s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_shared_resources'
+[0.302s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.302s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.306s] DEBUG:colcon.colcon_core.shell:Ignoring prefix path '/opt/ros/melodic'
+[0.308s] INFO:colcon.colcon_ros.task.cmake.build:Building ROS package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API' with build type 'cmake'
+[0.308s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API'
+[0.309s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.310s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.314s] DEBUG:colcon.colcon_core.shell:Ignoring prefix path '/opt/ros/melodic'
+[0.321s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_description -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description
+[0.329s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware
+[0.334s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_shared_resources -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources
+[0.338s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API
+[1.631s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '0': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove_API -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API
+[1.635s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API -- -j8 -l8
+[1.681s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API -- -j8 -l8
+[1.721s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API --target install -- -j8 -l8
+[1.808s] Level 1:colcon.colcon_core.shell:create_environment_hook('SenseGlove_API', 'pkg_config_path')
+[1.810s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path.ps1'
+[1.811s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API' returned '2': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/SenseGlove_API --target install -- -j8 -l8
+[1.811s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path.dsv'
+[1.812s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path.sh'
+[1.818s] Level 1:colcon.colcon_core.shell:create_environment_hook('SenseGlove_API', 'pkg_config_path_multiarch')
+[1.820s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path_multiarch.ps1'
+[1.821s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path_multiarch.dsv'
+[1.821s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/hook/pkg_config_path_multiarch.sh'
+[1.822s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(SenseGlove_API)
+[1.828s] Level 1:colcon.colcon_core.environment:checking '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API' for CMake module files
+[1.829s] Level 1:colcon.colcon_core.environment:checking '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API' for CMake config files
+[1.830s] Level 1:colcon.colcon_core.environment:checking '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/bin'
+[1.830s] Level 1:colcon.colcon_core.environment:checking '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/lib/pkgconfig/SenseGlove_API.pc'
+[1.830s] Level 1:colcon.colcon_core.environment:checking '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/lib/python3.6/site-packages'
+[1.831s] INFO:colcon.colcon_core.shell:Creating package script '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/package.ps1'
+[1.832s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/package.dsv'
+[1.833s] INFO:colcon.colcon_core.shell:Creating package script '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/package.sh'
+[1.834s] INFO:colcon.colcon_core.shell:Creating package script '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/package.bash'
+[1.835s] INFO:colcon.colcon_core.shell:Creating package script '/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/SenseGlove_API/package.zsh'
+[1.836s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rogier/SenseGlove_ROS/ros_workspace/install/SenseGlove_API/share/colcon-core/packages/SenseGlove_API)
+[2.893s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[2.893s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[2.894s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '2'
+[2.894s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[2.905s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[2.906s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[2.906s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[2.953s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[2.954s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rogier/SenseGlove_ROS/ros_workspace/install/local_setup.ps1'
+[2.956s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rogier/SenseGlove_ROS/ros_workspace/install/_local_setup_util_ps1.py'
+[2.957s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rogier/SenseGlove_ROS/ros_workspace/install/setup.ps1'
+[2.962s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rogier/SenseGlove_ROS/ros_workspace/install/local_setup.sh'
+[2.963s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rogier/SenseGlove_ROS/ros_workspace/install/_local_setup_util_sh.py'
+[2.963s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rogier/SenseGlove_ROS/ros_workspace/install/setup.sh'
+[2.971s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rogier/SenseGlove_ROS/ros_workspace/install/local_setup.bash'
+[2.971s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rogier/SenseGlove_ROS/ros_workspace/install/setup.bash'
+[2.975s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rogier/SenseGlove_ROS/ros_workspace/install/local_setup.zsh'
+[2.976s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rogier/SenseGlove_ROS/ros_workspace/install/setup.zsh'

@@ -1,0 +1,5 @@
+/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/lib/pkgconfig/senseglove_launch.pc
+/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/cmake/senseglove_launchConfig.cmake
+/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/cmake/senseglove_launchConfig-version.cmake
+/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/package.xml
+/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/launch/senseglove_demo.launch

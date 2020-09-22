@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/devel/setup.sh

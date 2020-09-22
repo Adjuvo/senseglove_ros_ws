@@ -1,0 +1,62 @@
+[0.025s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8
+[0.079s] [35m[1mScanning dependencies of target _senseglove_shared_resources_generate_messages_check_deps_senseglove[0m
+[0.079s] [35m[1mScanning dependencies of target trajectory_msgs_generate_messages_eus[0m
+[0.080s] [35m[1mScanning dependencies of target control_msgs_generate_messages_eus[0m
+[0.081s] [35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[0.087s] [35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[0.090s] [35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[0.091s] [35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[0.093s] [35m[1mScanning dependencies of target control_msgs_generate_messages_py[0m
+[0.102s] [  0%] Built target trajectory_msgs_generate_messages_eus
+[0.110s] [  0%] Built target control_msgs_generate_messages_eus
+[0.111s] [  0%] Built target std_msgs_generate_messages_py
+[0.113s] [  0%] Built target actionlib_msgs_generate_messages_py
+[0.117s] [  0%] Built target std_msgs_generate_messages_eus
+[0.127s] [  0%] Built target actionlib_msgs_generate_messages_eus
+[0.128s] [  0%] Built target control_msgs_generate_messages_py
+[0.129s] [35m[1mScanning dependencies of target trajectory_msgs_generate_messages_py[0m
+[0.138s] [35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[0.142s] [35m[1mScanning dependencies of target trajectory_msgs_generate_messages_nodejs[0m
+[0.143s] [35m[1mScanning dependencies of target control_msgs_generate_messages_nodejs[0m
+[0.145s] [35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[0.160s] [35m[1mScanning dependencies of target trajectory_msgs_generate_messages_lisp[0m
+[0.162s] [  0%] Built target std_msgs_generate_messages_nodejs
+[0.165s] [  0%] Built target trajectory_msgs_generate_messages_py
+[0.167s] [35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[0.169s] [  0%] Built target trajectory_msgs_generate_messages_nodejs
+[0.169s] [  0%] Built target control_msgs_generate_messages_nodejs
+[0.178s] [  0%] Built target _senseglove_shared_resources_generate_messages_check_deps_senseglove
+[0.187s] [  0%] Built target trajectory_msgs_generate_messages_lisp
+[0.187s] [35m[1mScanning dependencies of target control_msgs_generate_messages_lisp[0m
+[0.190s] [35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[0.197s] [  0%] Built target actionlib_msgs_generate_messages_nodejs
+[0.201s] [35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[0.202s] [35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[0.202s] [  0%] Built target std_msgs_generate_messages_lisp
+[0.213s] [35m[1mScanning dependencies of target trajectory_msgs_generate_messages_cpp[0m
+[0.219s] [  0%] Built target control_msgs_generate_messages_lisp
+[0.220s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages_py[0m
+[0.222s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages_eus[0m
+[0.223s] [35m[1mScanning dependencies of target control_msgs_generate_messages_cpp[0m
+[0.228s] [  0%] Built target std_msgs_generate_messages_cpp
+[0.233s] [  0%] Built target actionlib_msgs_generate_messages_cpp
+[0.237s] [  0%] Built target actionlib_msgs_generate_messages_lisp
+[0.237s] [  0%] Built target trajectory_msgs_generate_messages_cpp
+[0.238s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages_nodejs[0m
+[0.240s] [ 14%] [34m[1mGenerating Python from MSG senseglove_shared_resources/senseglove[0m
+[0.244s] [ 28%] [34m[1mGenerating EusLisp code from senseglove_shared_resources/senseglove.msg[0m
+[0.248s] [ 28%] Built target control_msgs_generate_messages_cpp
+[0.251s] [ 42%] [34m[1mGenerating EusLisp manifest code for senseglove_shared_resources[0m
+[0.257s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages_lisp[0m
+[0.260s] [ 57%] [34m[1mGenerating Javascript code from senseglove_shared_resources/senseglove.msg[0m
+[0.270s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages_cpp[0m
+[0.279s] [ 71%] [34m[1mGenerating Lisp code from senseglove_shared_resources/senseglove.msg[0m
+[0.285s] [ 85%] [34m[1mGenerating C++ code from senseglove_shared_resources/senseglove.msg[0m
+[0.342s] [ 85%] Built target senseglove_shared_resources_generate_messages_nodejs
+[0.353s] [ 85%] Built target senseglove_shared_resources_generate_messages_lisp
+[0.399s] [100%] [34m[1mGenerating Python msg __init__.py for senseglove_shared_resources[0m
+[0.468s] [100%] Built target senseglove_shared_resources_generate_messages_cpp
+[0.504s] [100%] Built target senseglove_shared_resources_generate_messages_py
+[0.887s] [100%] Built target senseglove_shared_resources_generate_messages_eus
+[0.898s] [35m[1mScanning dependencies of target senseglove_shared_resources_generate_messages[0m
+[0.909s] [100%] Built target senseglove_shared_resources_generate_messages

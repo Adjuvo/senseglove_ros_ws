@@ -1,0 +1,27 @@
+[0.023s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8
+[0.108s] [  0%] Built target control_msgs_generate_messages_py
+[0.109s] [  0%] Built target control_msgs_generate_messages_eus
+[0.113s] [  0%] Built target actionlib_msgs_generate_messages_py
+[0.114s] [  0%] Built target std_msgs_generate_messages_py
+[0.119s] [  0%] Built target actionlib_msgs_generate_messages_eus
+[0.119s] [  0%] Built target trajectory_msgs_generate_messages_eus
+[0.124s] [  0%] Built target std_msgs_generate_messages_eus
+[0.131s] Traceback (most recent call last):
+[0.131s]   File "/opt/ros/melodic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py", line 41, in <module>
+[0.132s]     from genmsg import EXT_MSG, EXT_SRV, MsgContext
+[0.132s] ImportError: No module named genmsg
+[0.134s] CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove.dir/build.make:57: recipe for target 'CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove' failed
+[0.135s] make[2]: *** [CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove] Error 1
+[0.135s] make[1]: *** [CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove.dir/all] Error 2
+[0.135s] make[1]: *** Waiting for unfinished jobs....
+[0.135s] CMakeFiles/Makefile2:1308: recipe for target 'CMakeFiles/_senseglove_shared_resources_generate_messages_check_deps_senseglove.dir/all' failed
+[0.146s] [  0%] Built target trajectory_msgs_generate_messages_py
+[0.153s] [  0%] Built target std_msgs_generate_messages_nodejs
+[0.153s] [  0%] Built target trajectory_msgs_generate_messages_lisp
+[0.158s] [  0%] Built target trajectory_msgs_generate_messages_nodejs
+[0.159s] [  0%] Built target std_msgs_generate_messages_lisp
+[0.160s] [  0%] Built target control_msgs_generate_messages_nodejs
+[0.160s] [  0%] Built target actionlib_msgs_generate_messages_nodejs
+[0.161s] Makefile:140: recipe for target 'all' failed
+[0.161s] make: *** [all] Error 2
+[0.164s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources' returned '2': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8

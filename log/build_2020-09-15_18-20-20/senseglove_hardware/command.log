@@ -1,0 +1,1 @@
+Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware

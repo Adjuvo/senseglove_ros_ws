@@ -1,0 +1,26 @@
+-- Using CATKIN_DEVEL_PREFIX: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/devel
+-- Using CMAKE_PREFIX_PATH: /home/rogier/march_ws/install/march_tutorials;/home/rogier/march_ws/install/march_temperature_sensor_controller;/home/rogier/march_ws/install/march_launch;/home/rogier/march_ws/install/march_state_machine;/home/rogier/march_ws/install/march_simulation;/home/rogier/march_ws/install/march_rqt_gait_generator;/home/rogier/march_ws/install/march_gait_selection;/home/rogier/march_ws/install/march_shared_classes;/home/rogier/march_ws/install/march_safety;/home/rogier/march_ws/install/march_monitor;/home/rogier/march_ws/install/march_rqt_robot_monitor;/home/rogier/march_ws/install/march_rqt_note_taker;/home/rogier/march_ws/install/march_rqt_input_device;/home/rogier/march_ws/install/march_pdb_state_controller;/home/rogier/march_ws/install/march_joint_inertia_controller;/home/rogier/march_ws/install/march_hardware_interface;/home/rogier/march_ws/install/march_gazebo_plugins;/home/rogier/march_ws/install/march_gait_scheduler;/home/rogier/march_ws/install/march_gain_scheduling;/home/rogier/march_ws/install/march_data_collector;/home/rogier/march_ws/install/march_shared_resources;/home/rogier/march_ws/install/march_rqt_software_check;/home/rogier/march_ws/install/march_rqt_gait_selection;/home/rogier/march_ws/install/march_moveit;/home/rogier/march_ws/install/march_imu_manager;/home/rogier/march_ws/install/march_identification;/home/rogier/march_ws/install/march_hardware_builder;/home/rogier/march_ws/install/march_hardware;/home/rogier/march_ws/install/march_gait_files;/home/rogier/march_ws/install/march_fake_sensor_data;/home/rogier/march_ws/install/march_ems_projects;/home/rogier/march_ws/install/march_description;/opt/ros/melodic
+-- This workspace overlays: /home/rogier/march_ws/install/march_tutorials;/home/rogier/march_ws/install/march_temperature_sensor_controller;/home/rogier/march_ws/install/march_launch;/home/rogier/march_ws/install/march_state_machine;/home/rogier/march_ws/install/march_simulation;/home/rogier/march_ws/install/march_rqt_gait_generator;/home/rogier/march_ws/install/march_gait_selection;/home/rogier/march_ws/install/march_shared_classes;/home/rogier/march_ws/install/march_safety;/home/rogier/march_ws/install/march_monitor;/home/rogier/march_ws/install/march_rqt_robot_monitor;/home/rogier/march_ws/install/march_rqt_note_taker;/home/rogier/march_ws/install/march_rqt_input_device;/home/rogier/march_ws/install/march_pdb_state_controller;/home/rogier/march_ws/install/march_joint_inertia_controller;/home/rogier/march_ws/install/march_hardware_interface;/home/rogier/march_ws/install/march_gazebo_plugins;/home/rogier/march_ws/install/march_gait_scheduler;/home/rogier/march_ws/install/march_gain_scheduling;/home/rogier/march_ws/install/march_data_collector;/home/rogier/march_ws/install/march_shared_resources;/home/rogier/march_ws/install/march_rqt_software_check;/home/rogier/march_ws/install/march_rqt_gait_selection;/home/rogier/march_ws/install/march_moveit;/home/rogier/march_ws/install/march_imu_manager;/home/rogier/march_ws/install/march_identification;/home/rogier/march_ws/install/march_hardware_builder;/home/rogier/march_ws/install/march_hardware;/home/rogier/march_ws/install/march_gait_files;/home/rogier/march_ws/install/march_fake_sensor_data;/home/rogier/march_ws/install/march_ems_projects;/home/rogier/march_ws/install/march_description;/opt/ros/melodic
+-- Found PythonInterp: /usr/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python2
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/test_results
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python2 (found version "2.7.17") 
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.28
+-- BUILD_SHARED_LIBS is on
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+Please set them or make sure they are set and tested correctly in the CMake files:
+SENSEGLOVE
+    linked by target "senseglove_hardware" in directory /home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware
+-- Configuring incomplete, errors occurred!
+See also "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/CMakeFiles/CMakeOutput.log".
+See also "/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware/CMakeFiles/CMakeError.log".
+
+Makefile:604: recipe for target 'cmake_check_build_system' failed
+make: *** [cmake_check_build_system] Error 1

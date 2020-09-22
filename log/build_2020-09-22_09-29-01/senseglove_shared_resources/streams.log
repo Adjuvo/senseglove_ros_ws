@@ -1,0 +1,97 @@
+[0.104s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8
+[1.240s] [  0%] Built target std_msgs_generate_messages_py
+[1.249s] [  0%] Built target trajectory_msgs_generate_messages_eus
+[1.254s] [  0%] Built target control_msgs_generate_messages_eus
+[1.255s] [  0%] Built target control_msgs_generate_messages_py
+[1.262s] [  0%] Built target std_msgs_generate_messages_eus
+[1.264s] [  0%] Built target actionlib_msgs_generate_messages_eus
+[1.266s] [  0%] Built target actionlib_msgs_generate_messages_py
+[1.296s] [  0%] Built target trajectory_msgs_generate_messages_py
+[1.304s] [  0%] Built target std_msgs_generate_messages_nodejs
+[1.306s] [  0%] Built target control_msgs_generate_messages_nodejs
+[1.306s] [  0%] Built target std_msgs_generate_messages_lisp
+[1.307s] [  0%] Built target actionlib_msgs_generate_messages_nodejs
+[1.309s] [  0%] Built target trajectory_msgs_generate_messages_nodejs
+[1.324s] [  0%] Built target trajectory_msgs_generate_messages_lisp
+[1.337s] [  0%] Built target actionlib_msgs_generate_messages_lisp
+[1.338s] [  0%] Built target _senseglove_shared_resources_generate_messages_check_deps_senseglove
+[1.347s] [  0%] Built target control_msgs_generate_messages_lisp
+[1.347s] [  0%] Built target std_msgs_generate_messages_cpp
+[1.348s] [  0%] Built target actionlib_msgs_generate_messages_cpp
+[1.352s] [  0%] Built target control_msgs_generate_messages_cpp
+[1.354s] [  0%] Built target trajectory_msgs_generate_messages_cpp
+[1.378s] [ 28%] Built target senseglove_shared_resources_generate_messages_py
+[1.397s] [ 42%] Built target senseglove_shared_resources_generate_messages_nodejs
+[1.398s] [ 57%] Built target senseglove_shared_resources_generate_messages_lisp
+[1.402s] [ 85%] Built target senseglove_shared_resources_generate_messages_eus
+[1.406s] [100%] Built target senseglove_shared_resources_generate_messages_cpp
+[1.432s] [100%] Built target senseglove_shared_resources_generate_messages
+[1.444s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources -- -j8 -l8
+[1.506s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources --target tests -- -j8 -l8
+[1.588s] Built target tests
+[1.599s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources --target tests -- -j8 -l8
+[1.937s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources --target install -- -j8 -l8
+[2.012s] [  0%] Built target trajectory_msgs_generate_messages_eus
+[2.013s] [  0%] Built target actionlib_msgs_generate_messages_eus
+[2.018s] [  0%] Built target std_msgs_generate_messages_eus
+[2.018s] [  0%] Built target control_msgs_generate_messages_eus
+[2.021s] [  0%] Built target control_msgs_generate_messages_py
+[2.024s] [  0%] Built target actionlib_msgs_generate_messages_py
+[2.029s] [  0%] Built target std_msgs_generate_messages_py
+[2.053s] [  0%] Built target std_msgs_generate_messages_nodejs
+[2.056s] [  0%] Built target actionlib_msgs_generate_messages_nodejs
+[2.058s] [  0%] Built target trajectory_msgs_generate_messages_nodejs
+[2.065s] [  0%] Built target control_msgs_generate_messages_nodejs
+[2.067s] [  0%] Built target trajectory_msgs_generate_messages_py
+[2.069s] [  0%] Built target trajectory_msgs_generate_messages_lisp
+[2.069s] [  0%] Built target std_msgs_generate_messages_lisp
+[2.081s] [  0%] Built target _senseglove_shared_resources_generate_messages_check_deps_senseglove
+[2.094s] [  0%] Built target actionlib_msgs_generate_messages_lisp
+[2.096s] [  0%] Built target std_msgs_generate_messages_cpp
+[2.106s] [  0%] Built target trajectory_msgs_generate_messages_cpp
+[2.106s] [  0%] Built target control_msgs_generate_messages_lisp
+[2.112s] [  0%] Built target control_msgs_generate_messages_cpp
+[2.115s] [  0%] Built target actionlib_msgs_generate_messages_cpp
+[2.123s] [ 28%] Built target senseglove_shared_resources_generate_messages_eus
+[2.126s] [ 57%] Built target senseglove_shared_resources_generate_messages_py
+[2.134s] [ 71%] Built target senseglove_shared_resources_generate_messages_nodejs
+[2.141s] [ 85%] Built target senseglove_shared_resources_generate_messages_lisp
+[2.144s] [100%] Built target senseglove_shared_resources_generate_messages_cpp
+[2.168s] [100%] Built target senseglove_shared_resources_generate_messages
+[2.192s] [36mInstall the project...[0m
+[2.203s] -- Install configuration: ""
+[2.204s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/msg/senseglove.msg
+[2.204s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/cmake/senseglove_shared_resources-msg-paths.cmake
+[2.204s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/include/senseglove_shared_resources
+[2.204s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/include/senseglove_shared_resources/senseglove.h
+[2.204s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/roseus/ros/senseglove_shared_resources
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/roseus/ros/senseglove_shared_resources/msg
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/roseus/ros/senseglove_shared_resources/msg/senseglove.l
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/roseus/ros/senseglove_shared_resources/manifest.l
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources/msg
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources/msg/_package.lisp
+[2.205s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources/msg/senseglove_shared_resources-msg.asd
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources/msg/_package_senseglove.lisp
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/common-lisp/ros/senseglove_shared_resources/msg/senseglove.lisp
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/gennodejs/ros/senseglove_shared_resources
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/gennodejs/ros/senseglove_shared_resources/msg
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/gennodejs/ros/senseglove_shared_resources/msg/_index.js
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/gennodejs/ros/senseglove_shared_resources/msg/senseglove.js
+[2.206s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/gennodejs/ros/senseglove_shared_resources/_index.js
+[2.289s] Listing /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources/devel/lib/python2.7/dist-packages/senseglove_shared_resources ...
+[2.289s] Listing /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources/devel/lib/python2.7/dist-packages/senseglove_shared_resources/msg ...
+[2.291s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources
+[2.291s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/__init__.pyc
+[2.291s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/msg
+[2.291s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/msg/__init__.pyc
+[2.292s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/msg/__init__.py
+[2.294s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/msg/_senseglove.pyc
+[2.294s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/msg/_senseglove.py
+[2.294s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/python2.7/dist-packages/senseglove_shared_resources/__init__.py
+[2.294s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/lib/pkgconfig/senseglove_shared_resources.pc
+[2.295s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/cmake/senseglove_shared_resources-msg-extras.cmake
+[2.295s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/cmake/senseglove_shared_resourcesConfig.cmake
+[2.295s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/cmake/senseglove_shared_resourcesConfig-version.cmake
+[2.295s] -- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_shared_resources/share/senseglove_shared_resources/package.xml
+[2.329s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_shared_resources --target install -- -j8 -l8

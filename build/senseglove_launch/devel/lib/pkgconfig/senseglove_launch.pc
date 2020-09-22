@@ -1,0 +1,8 @@
+prefix=/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/devel
+
+Name: senseglove_launch
+Description: Description of senseglove_launch
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

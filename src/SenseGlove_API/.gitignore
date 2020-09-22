@@ -1,0 +1,60 @@
+
+# Visual Studio cache directory
+.vs/
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Aa]ssembly[Ii]nfo.cs
+VERSIONINFO.rc
+[Ee]xported[Oo]bj/
+[Oo]bj/
+.vs/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+*.user
+*.unityproj
+*.booproj
+*.sln.docstates
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx

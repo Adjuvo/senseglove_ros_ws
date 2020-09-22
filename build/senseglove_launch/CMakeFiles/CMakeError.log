@@ -1,0 +1,55 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_55a03/fast"
+/usr/bin/make -f CMakeFiles/cmTC_55a03.dir/build.make CMakeFiles/cmTC_55a03.dir/build
+make[1]: Entering directory '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_55a03.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_55a03.dir/CheckSymbolExists.c.o   -c /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_55a03
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_55a03.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_55a03.dir/CheckSymbolExists.c.o  -o cmTC_55a03 
+CMakeFiles/cmTC_55a03.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_55a03.dir/build.make:97: recipe for target 'cmTC_55a03' failed
+make[1]: *** [cmTC_55a03] Error 1
+make[1]: Leaving directory '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_55a03/fast' failed
+make: *** [cmTC_55a03/fast] Error 2
+
+File /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7c342/fast"
+/usr/bin/make -f CMakeFiles/cmTC_7c342.dir/build.make CMakeFiles/cmTC_7c342.dir/build
+make[1]: Entering directory '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7c342.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_7c342.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_7c342
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7c342.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_7c342.dir/CheckFunctionExists.c.o  -o cmTC_7c342 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_7c342.dir/build.make:97: recipe for target 'cmTC_7c342' failed
+make[1]: *** [cmTC_7c342] Error 1
+make[1]: Leaving directory '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_launch/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_7c342/fast' failed
+make: *** [cmTC_7c342/fast] Error 2
+
+
