@@ -28,13 +28,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake/senseglove_hardware-extras.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake/senseglove_description-extras.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/launch/senseglove_demo.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SenseGlove-API" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_12.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_12.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_13.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/doc/search/all_13.js" afterDir="false" />
@@ -98,16 +91,6 @@
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GlovePose.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SG_GlovePose.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGlove.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGlove.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGloveVars.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/SenseGlove_API/Examples/VS 2019/SGCppTemplate/SGCoreCpp/incl/SenseGloveVars.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/package.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +153,7 @@
       <workItem from="1600155547729" duration="229000" />
       <workItem from="1600155938137" duration="25933000" />
       <workItem from="1600759518767" duration="180000" />
-      <workItem from="1600759721762" duration="4865000" />
+      <workItem from="1600759721762" duration="5530000" />
     </task>
     <servers />
   </component>

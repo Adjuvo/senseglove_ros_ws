@@ -1,9 +1,0 @@
-Built target tests
-[36mInstall the project...[0m
--- Install configuration: ""
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/lib/pkgconfig/senseglove_launch.pc
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/cmake/senseglove_launchConfig.cmake
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/cmake/senseglove_launchConfig-version.cmake
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/package.xml
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/launch
--- Up-to-date: /home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_launch/share/senseglove_launch/launch/senseglove_demo.launch

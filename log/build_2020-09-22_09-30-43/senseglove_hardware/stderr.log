@@ -1,6 +1,0 @@
-CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
-Please set them or make sure they are set and tested correctly in the CMake files:
-SENSEGLOVE
-    linked by target "senseglove_hardware" in directory /home/rogier/SenseGlove_ROS/ros_workspace/src/hardware_interface/senseglove_hardware
-
-make: *** [cmake_check_build_system] Error 1

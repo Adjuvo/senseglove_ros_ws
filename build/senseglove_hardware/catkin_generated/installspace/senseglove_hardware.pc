@@ -1,8 +1,0 @@
-prefix=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_hardware
-
-Name: senseglove_hardware
-Description: Description of senseglove_hardware
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib -lsenseglove_hardware
-Requires: roscpp urdf

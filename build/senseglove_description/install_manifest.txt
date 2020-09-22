@@ -1,7 +1,0 @@
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/lib/pkgconfig/senseglove_description.pc
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_description-extras.cmake
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig.cmake
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/cmake/senseglove_descriptionConfig-version.cmake
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/package.xml
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.urdf
-/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description/share/senseglove_description/urdf/dk1.xacro

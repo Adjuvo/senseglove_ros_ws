@@ -1,1 +1,0 @@
-Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_hardware -- -j8 -l8

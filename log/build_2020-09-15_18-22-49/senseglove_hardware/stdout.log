@@ -1,7 +1,0 @@
-[35m[1mScanning dependencies of target senseglove_hardware[0m
-[ 33%] [32mBuilding CXX object CMakeFiles/senseglove_hardware.dir/src/joint.cpp.o[0m
-[ 66%] [32mBuilding CXX object CMakeFiles/senseglove_hardware.dir/src/senseglove_robot.cpp.o[0m
-CMakeFiles/senseglove_hardware.dir/build.make:62: recipe for target 'CMakeFiles/senseglove_hardware.dir/src/joint.cpp.o' failed
-CMakeFiles/senseglove_hardware.dir/build.make:86: recipe for target 'CMakeFiles/senseglove_hardware.dir/src/senseglove_robot.cpp.o' failed
-CMakeFiles/Makefile2:67: recipe for target 'CMakeFiles/senseglove_hardware.dir/all' failed
-Makefile:140: recipe for target 'all' failed

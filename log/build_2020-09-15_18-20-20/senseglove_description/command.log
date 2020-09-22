@@ -1,1 +1,0 @@
-Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake /home/rogier/SenseGlove_ROS/ros_workspace/src/senseglove/senseglove_description -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/rogier/SenseGlove_ROS/ros_workspace/install/senseglove_description

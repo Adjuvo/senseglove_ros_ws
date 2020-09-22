@@ -1,5 +1,0 @@
-[0.033s] Invoking command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description -- -j8 -l8
-[0.101s] [ 25%] Built target senseglove_description_dk1_xacro
-[0.103s] [100%] Built target senseglove_description_dk1_xacro_to_devel_space_
-[0.140s] [100%] Built target senseglove_description_xacro_generated_to_devel_space_
-[0.163s] Invoked command in '/home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description' returned '0': /usr/bin/cmake --build /home/rogier/SenseGlove_ROS/ros_workspace/build/senseglove_description -- -j8 -l8
