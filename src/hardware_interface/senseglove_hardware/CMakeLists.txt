@@ -10,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_library(SENSEGLOVE
         NAMES SGCore.so
-        PATHS /home/rogier/SenseGlove_ROS/ros_workspace/src/SenseGlove-API/Core/SGCoreCpp/lib/Linux
+        PATHS /SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
 catkin_package(
@@ -27,9 +27,9 @@ include(cmake/${PROJECT_NAME}-extras.cmake)
 
 include_directories(
         include
-        SenseGlove_API/Core/SGCoreCpp/incl
         SYSTEM
         ${catkin_INCLUDE_DIRS}
+        ../../SenseGlove_API/Core/SGCoreCpp/incl
 )
 
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
