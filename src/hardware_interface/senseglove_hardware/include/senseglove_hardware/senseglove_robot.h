@@ -2,6 +2,7 @@
 #ifndef ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
 #define ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
 
+#include "senseglove_hardware/communication/sense_com.h"
 #include "senseglove_hardware/joint.h"
 
 #include <cstdint>
@@ -11,27 +12,27 @@
 
 #include <urdf/model.h>
 
-namespace march
+namespace senseglove
 {
     class SenseGloveRobot
     {
     private:
         ::std::vector<Joint> jointList;
         urdf::Model urdf_;
-        // SenseComm communication?;
+        Sensecom sensecom_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
 
-        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf);
+        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time);
 
         ~SenseGloveRobot();
 
         /* Delete move constructor/assignment since atomic bool cannot be moved */
-        SenseGloveRobot(SenseGloveRobot&&) = delete;
-        SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
+//        SenseGloveRobot(SenseGloveRobot&&) = delete;
+//        SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
 
-        void startCommunication(bool reset_imc);
+        void startCommunication(bool /*reset*/);
 
         void stopCommunication();
 

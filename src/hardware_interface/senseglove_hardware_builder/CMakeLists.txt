@@ -26,7 +26,10 @@ if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
     append_coverage_compiler_flags()
 endif()
 
-include_directories(include SYSTEM ${catkin_INCLUDE_DIRS})
+include_directories(include
+        SYSTEM
+        ${catkin_INCLUDE_DIRS}
+        ../../SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_library(${PROJECT_NAME}
         src/hardware_builder.cpp

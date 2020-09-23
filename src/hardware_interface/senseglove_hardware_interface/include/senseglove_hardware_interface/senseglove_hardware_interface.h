@@ -5,13 +5,15 @@
 #include <memory>
 #include <vector>
 
+#include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 #include <realtime_tools/realtime_publisher.h>
 #include <ros/ros.h>
 
 #include <senseglove_hardware/senseglove_robot.h>
-#include <senseglove_hardware_builder/senseglove_builder.h>
+#include <senseglove_hardware_builder/hardware_builder.h>
+#include <senseglove_shared_resources/SenseGloveState.h>
 
 template <typename T>
 using RtPublisherPtr = std::unique_ptr<realtime_tools::RealtimePublisher<T>>;
@@ -33,12 +35,17 @@ public:
     bool init(ros::NodeHandle& nh, ros::NodeHandle& robot_hw_nh) override;
 
     /**
+     * @brief Perform all safety checks that might crash the robot.
+     */
+    void validate();
+
+    /**
      * Reads (in realtime) the state from the senseglove robot.
      *
      * @param time Current time
      * @param elapsed_time Duration since last write action
      */
-    void read(const ros::Time& time, const ros::Duration& elapsed_time) override;
+    void read(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
     /**
      * Writes (in realtime) the commands from the controllers to the senseglove robot.
@@ -46,7 +53,7 @@ public:
      * @param time Current time
      * @param elapsed_time Duration since last write action
      */
-    void write(const ros::Time& time, const ros::Duration& elapsed_time) override;
+    void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
 private:
     void uploadJointNames(ros::NodeHandle& nh) const;
@@ -55,6 +62,8 @@ private:
      * in order to avoid allocation at runtime.
      */
     void reserveMemory();
+
+    void updateSenseGloveState();
 
     /* SenseGlove hardware */
     std::unique_ptr<senseglove::SenseGloveRobot> senseglove_robot_;

@@ -11,26 +11,23 @@
 
 namespace senseglove
 {
-    Joint::Joint(std::string name, int net_number) : name_(std::move(name)), net_number_(net_number)
+    Joint::Joint(std::string name, int joint_index) : name_(std::move(name)), joint_index_(joint_index)
     {
     }
 
-    Joint::Joint(std::string name, int net_number, bool allow_actuation, std::unique_ptr<IMotionCube> imc)
-            : name_(std::move(name)), net_number_(net_number), allow_actuation_(allow_actuation), imc_(std::move(imc))
-    {
-    }
-
-    Joint::Joint(std::string name, int net_number, bool allow_actuation, std::unique_ptr<IMotionCube> imc,
-                 std::unique_ptr<TemperatureGES> temperature_ges)
+    Joint::Joint(std::string name, int joint_index, bool allow_actuation)
             : name_(std::move(name))
-            , net_number_(net_number)
+            , joint_index_(joint_index)
             , allow_actuation_(allow_actuation)
-            , imc_(std::move(imc))
-            , temperature_ges_(std::move(temperature_ges))
     {
     }
 
-    bool Joint::initialize(int cycle_time)
+    Joint::Joint(std::string name, int joint_index, bool allow_actuation, std::unique_ptr<SGCore::Finger> finger)
+            : name_(std::move(name)), joint_index_(joint_index), allow_actuation_(allow_actuation), finger_(std::move(finger))
+    {
+    }
+
+    bool Joint::initialize()
     {
         return false;
     }
@@ -51,14 +48,14 @@ namespace senseglove
     {
         if (!this->canActuate())
         {
-            ROS_ERROR("Joint %s is not allowed to actuate", this->name_.c_str());
+            ROS_ERROR("Joint %s is not allowed to actuate %d", this->name_.c_str(), target_position);
         }
-        this->imc_->actuateRad(target_position);
     }
 
-    void Joint::readAngle(/*const ros::Duration& elapsed_time*/)
+    double Joint::readAngle(/*const ros::Duration& elapsed_time*/)
     {
         // get angle from finger array at correct index
+        return 0.0;
     }
 
     double Joint::getPosition() const
@@ -75,9 +72,9 @@ namespace senseglove
     {
         if (!this->canActuate())
         {
-            ROS_ERROR("Joint %s is not allowed to actuate", this->name_.c_str());
+            ROS_ERROR("Joint %s is not allowed to actuate %d", this->name_.c_str(), target_torque);
         }
-        forcefeedbackcommand();
+//        forcefeedbackcommand();
     }
 
     double Joint::getTorque()
@@ -92,7 +89,7 @@ namespace senseglove
 
     int Joint::getNetNumber() const
     {
-        return this->net_number_;
+        return this->joint_index_;
     }
 
     std::string Joint::getName() const
@@ -102,11 +99,11 @@ namespace senseglove
 
     bool Joint::canActuate() const
     {
-        return this->allow_actuation_ && this->hasIMotionCube();
+        return this->allow_actuation_;
     }
 
     ActuationMode Joint::getActuationMode() const
     {
-        return this->imc_->getActuationMode();
+        return this->getActuationMode();
     }
 }  // namespace senseglove

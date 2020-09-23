@@ -1,6 +1,6 @@
 // Copyright 2020 SenseGlove
 #include "senseglove_hardware/joint.h"
-//#include "senseglove_hardware/senseglove_robot.h"
+#include "senseglove_hardware/senseglove_robot.h"
 
 #include <algorithm>
 #include <memory>
@@ -12,13 +12,13 @@
 
 namespace senseglove
 {
-    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf)
+    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time)
             : jointList(std::move(jointList))
-            , urdf_(std::move(urdf))
+            , urdf_(std::move(urdf)), sensecom_(/*max slave/robot index*/0, cycle_time)
     {
     }
 
-    void SenseGloveRobot::startCommunication(bool reset_imc)
+    void SenseGloveRobot::startCommunication(bool /*reset*/)
     {
 
     }
@@ -35,7 +35,7 @@ namespace senseglove
 
     Joint& SenseGloveRobot::getJoint(::std::string jointName)
     {
-        if (!Sensecom.isOperational())
+        if (!sensecom_.isOperational())
         {
             ROS_WARN("Trying to access joints while communication is not operational. This "
                      "may lead to incorrect sensor data.");
@@ -53,7 +53,7 @@ namespace senseglove
 
     Joint& SenseGloveRobot::getJoint(size_t index)
     {
-        if (!Sensecom.isOperational())
+        if (!sensecom_.isOperational())
         {
             ROS_WARN("Trying to access joints while ethercat is not operational. This "
                      "may lead to incorrect sensor data.");
@@ -68,7 +68,7 @@ namespace senseglove
 
     SenseGloveRobot::iterator SenseGloveRobot::begin()
     {
-        if (!Sensecom.isOperational())
+        if (!sensecom_.isOperational())
         {
             ROS_WARN("Trying to access joints while ethercat is not operational. This "
                      "may lead to incorrect sensor data.");

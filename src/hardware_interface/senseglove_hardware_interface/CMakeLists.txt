@@ -5,7 +5,6 @@ add_compile_options(-std=c++14 -Wall -Wextra -Werror)
 
 find_package(catkin REQUIRED COMPONENTS
         controller_manager
-        joint_limits_interface
         joint_state_controller
         joint_trajectory_controller
         realtime_tools
@@ -22,7 +21,6 @@ catkin_package(
         INCLUDE_DIRS include
         CATKIN_DEPENDS
         controller_manager
-        joint_limits_interface
         realtime_tools
         roscpp
         senseglove_description
@@ -39,7 +37,10 @@ if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
     append_coverage_compiler_flags()
 endif()
 
-include_directories(include SYSTEM ${catkin_INCLUDE_DIRS})
+include_directories(include
+        SYSTEM
+        ${catkin_INCLUDE_DIRS}
+        ../../SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_executable(${PROJECT_NAME}_node
         src/senseglove_hardware_interface.cpp

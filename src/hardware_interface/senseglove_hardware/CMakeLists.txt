@@ -10,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_library(SENSEGLOVE
         NAMES SGCore.so
-        PATHS /SenseGlove_API/Core/SGCoreCpp/lib/Linux
+        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
 catkin_package(
@@ -39,9 +39,11 @@ if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
 endif()
 
 add_library(${PROJECT_NAME}
+        include/${PROJECT_NAME}/communication/sense_com.h
         include/${PROJECT_NAME}/actuation_mode.h
         include/${PROJECT_NAME}/joint.h
         include/${PROJECT_NAME}/senseglove_robot.h
+        src/communication/sense_com.cpp
         src/joint.cpp
         src/senseglove_robot.cpp
         )

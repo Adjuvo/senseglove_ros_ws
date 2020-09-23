@@ -14,13 +14,8 @@ using hardware_interface::JointHandle;
 using hardware_interface::JointStateHandle;
 using hardware_interface::PositionJointInterface;
 
-SensGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveRobot>
-robot) : senseglove_robot_(std::move(robot)), num_joints_(this->senseglove_robot_->size())
-{
-}
-
-MarchHardwareInterface::MarchHardwareInterface(std::unique_ptr<march::MarchRobot> robot, bool reset_imc)
-        : march_robot_(std::move(robot)), num_joints_(this->march_robot_->size()), reset_imc_(reset_imc) {
+SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveRobot> robot)
+        : senseglove_robot_(std::move(robot)), num_joints_(this->senseglove_robot_->size()){
 }
 
 
@@ -36,7 +31,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     this->reserveMemory();
 
     // Start ethercat cycle in the hardware
-    this->senseglove_robot_->startCommunication();
+    this->senseglove_robot_->startCommunication(true);
 
     // Initialize interfaces for each joint
     for (size_t i = 0; i < num_joints_; ++i) {
@@ -53,16 +48,16 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
             position_joint_interface_.registerHandle(joint_position_handle);
 
             // Create joint limit interface
-            PositionJointSoftLimitsHandle joint_limits_handle(joint_position_handle, limits, soft_limits_[i]);
-            position_joint_soft_limits_interface_.registerHandle(joint_limits_handle);
+//            PositionJointSoftLimitsHandle joint_limits_handle(joint_position_handle, limits, soft_limits_[i]);
+//            position_joint_soft_limits_interface_.registerHandle(joint_limits_handle);
         } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
             // Create effort joint interface
             JointHandle joint_effort_handle_(joint_state_handle, &joint_effort_command_[i]);
             effort_joint_interface_.registerHandle(joint_effort_handle_);
 
             // Create joint effort limit interface
-            EffortJointSoftLimitsHandle joint_effort_limits_handle(joint_effort_handle_, limits, soft_limits_[i]);
-            effort_joint_soft_limits_interface_.registerHandle(joint_effort_limits_handle);
+//            EffortJointSoftLimitsHandle joint_effort_limits_handle(joint_effort_handle_, limits, soft_limits_[i]);
+//            effort_joint_soft_limits_interface_.registerHandle(joint_effort_limits_handle);
         }
 
         // Create velocity joint interface
@@ -94,7 +89,12 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     return true;
 }
 
-void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::Duration &elapsed_time) {
+void SenseGloveHardwareInterface::validate()
+{
+    // TO DO
+}
+
+void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
 
     // read senseglove robot data
 
@@ -102,7 +102,7 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
         senseglove::Joint &joint = senseglove_robot_->getJoint(i);
 
         // Update position with he most accurate velocity
-        joint.readAngle(elapsed_time);
+        joint.readAngle();
         joint_position_[i] = joint.getPosition();
         joint_velocity_[i] = joint.getVelocity();
         joint_effort_[i] = joint.getTorque();
@@ -111,7 +111,7 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
     this->updateSenseGloveState();
 }
 
-void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros::Duration &elapsed_time) {
+void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
     for (size_t i = 0; i < num_joints_; i++) {
         joint_effort_command_[i] = joint_last_effort_command_[i];
         has_actuated_ |= (joint_effort_command_[i] != 0);
@@ -165,24 +165,24 @@ void SenseGloveHardwareInterface::reserveMemory() {
     joint_last_effort_command_.resize(num_joints_);
 
     senseglove_state_pub_->msg_.joint_names.resize(num_joints_);
-    senseglove_state_pub_->msg_.incremental_encoder_value.resize(num_joints_);
+    senseglove_state_pub_->msg_.position.resize(num_joints_);
     senseglove_state_pub_->msg_.absolute_velocity.resize(num_joints_);
 }
 
 void SenseGloveHardwareInterface::updateSenseGloveState() {
-    if (!imc_state_pub_->trylock()) {
-        return;
-    }
-
-    senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
-    for (size_t i = 0; i < num_joints_; i++) {
-        senseglove::Joint &joint = senseglove_robot_->getJoint(i);
-        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
-        senseglove_state->msg_.header.stamp = ros::Time::now();
-        senseglove_state->msg_.joint_names[i] = joint.getName();
-        senseglove_state->msg_.incremental_encoder_value[i] = imc_state.incrementalEncoderValue;
-        senseglove_state->msg_.absolute_velocity[i] = imc_state.absoluteVelocity;
-    }
-
-    senseglove_state->unlockAndPublish();
+//    if (!senseglove_state_pub_->trylock()) {
+//        return;
+//    }
+//
+//    senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
+//    for (size_t i = 0; i < num_joints_; i++) {
+//        senseglove::Joint &joint = senseglove_robot_->getJoint(i);
+//        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
+//        senseglove_state->msg_.header.stamp = ros::Time::now();
+//        senseglove_state->msg_.joint_names[i] = joint.getName();
+//        senseglove_state->msg_.position[i] = senseglove_state.position;
+//        senseglove_state->msg_.absolute_velocity[i] = senseglove_state.absoluteVelocity;
+//    }
+//
+//    senseglove_state->unlockAndPublish();
 }

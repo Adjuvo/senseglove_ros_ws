@@ -6,7 +6,11 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <ros/ros.h>
+#include <senseglove_hardware/actuation_mode.h>
+#include <urdf/model.h>
 
+#include <Fingers.h>
 #include "SenseGlove.h"
 
 namespace senseglove
@@ -15,15 +19,20 @@ namespace senseglove
     {
     public:
         /**
-         * Initializes a Joint without motor controller and temperature slave.
+         * Initializes a Joint without a finger
          * Actuation will be disabled.
          */
         Joint(std::string name, int net_number);
 
         /**
-         * Initializes a Joint with a Finger?
+         * Initializes a Joint without a finger
          */
-        Joint(std::string name, int net_number, bool allow_actuation, std::unique_ptr<Finger> finger);
+        Joint(std::string name, int net_number, bool allow_actuation);
+
+        /**
+         * Initializes a Joint with a Finger
+         */
+        Joint(std::string name, int net_number, bool allow_actuation, std::unique_ptr<SGCore::Finger> finger);
 
         virtual ~Joint() noexcept = default;
 
@@ -35,17 +44,17 @@ namespace senseglove
         Joint(Joint&&) = default;
         Joint& operator=(Joint&&) = delete;
 
-        bool initialize(int cycle_time);
+        bool initialize();
         void prepareActuation();
 
         void actuateRad(double target_position);
         void actuateTorque(int16_t target_torque);
-        void readAngle(const ros::Duration& elapsed_time);
+        double readAngle();
 
         double getPosition() const;
         double getVelocity() const;
         double getTorque();
-        SenseGloveState getSenseGloveState();
+//        SenseGloveState getSenseGloveState();
 
         std::string getName() const;
         int getTemperatureGESSlaveIndex() const;
@@ -75,19 +84,19 @@ namespace senseglove
         {
             os << "name: " << joint.name_ << ", "
                << "ActuationMode: " << joint.getActuationMode().toString() << ", "
-               << "allowActuation: " << joint.allow_actuation_ << ", "
-               << "finger: " << finger_; // Mits finger een ostream operator heeft.
+               << "allowActuation: " << joint.allow_actuation_; // << ", "
+               // << "finger: " << finger_; // Mits finger een ostream operator heeft.
             return os;
         }
 
     private:
         const std::string name_;
-        const int net_number_;
+        const int joint_index_;
         bool allow_actuation_ = false;
 
         double position_ = 0.0;
         double velocity_ = 0.0;
-        Finger finger_;
+        std::unique_ptr<SGCore::Finger> finger_;
     };
 
 }  // namespace senseglove

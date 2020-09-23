@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 add_message_files(
     FILES
-    senseglove.msg
+    SenseGloveState.msg
 )
 
 #add_service_files(
