@@ -28,30 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/communication/sense_com.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/allowed_robot.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/dk1.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/fino.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/dk1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/controllers.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/include/senseglove_hardware_interface/senseglove_hardware_interface.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/include/senseglove_hardware_interface/senseglove_hardware_interface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/msg/senseglove.msg" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources/msg/SenseGloveState.msg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +103,7 @@
       <workItem from="1600155938137" duration="25933000" />
       <workItem from="1600759518767" duration="180000" />
       <workItem from="1600759721762" duration="5530000" />
-      <workItem from="1600767254634" duration="18415000" />
+      <workItem from="1600767254634" duration="20705000" />
     </task>
     <servers />
   </component>
