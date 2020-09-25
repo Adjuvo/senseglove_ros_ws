@@ -11,7 +11,7 @@
 #include <ros/ros.h>
 
 // clang-format off
-const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation" };
+const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
 // clang-format on
 
 HardwareBuilder::HardwareBuilder(AllowedRobot robot) : HardwareBuilder(robot.getFilePath())

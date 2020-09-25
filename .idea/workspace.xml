@@ -28,8 +28,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/fino/controllers.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/dk1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/dk1.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/controllers.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/controllers.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,21 +69,21 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots" />
       <recent name="$PROJECT_DIR$/src/SenseGlove-API" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description" />
-      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_shared_resources" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
     </key>
   </component>
   <component name="RunManager">
@@ -103,7 +106,10 @@
       <workItem from="1600155938137" duration="25933000" />
       <workItem from="1600759518767" duration="180000" />
       <workItem from="1600759721762" duration="5530000" />
-      <workItem from="1600767254634" duration="20705000" />
+      <workItem from="1600767254634" duration="21279000" />
+      <workItem from="1601040779253" duration="4580000" />
+      <workItem from="1601046501080" duration="14000" />
+      <workItem from="1601046535979" duration="4621000" />
     </task>
     <servers />
   </component>
@@ -127,10 +133,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1600761914251" />
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1600156334095">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1601047550249">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1600156334095" />
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1601047550249" />
     <state x="514" y="136" key="SettingsEditor" timestamp="1600780001528">
       <screen x="0" y="27" width="3840" height="1053" />
     </state>
@@ -139,9 +145,9 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1600172465214" />
-    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1600155813018">
+    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1601046511219">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1600155813018" />
+    <state x="718" y="466" width="540" height="172" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1601046511219" />
   </component>
 </project>

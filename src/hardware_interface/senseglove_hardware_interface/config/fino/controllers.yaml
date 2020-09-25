@@ -1,4 +1,4 @@
-dk1:
+fino:
   controller:
     glove_state:
       type: joint_state_controller/JointStateController
@@ -10,8 +10,8 @@ dk1:
       type: position_controllers/JointTrajectoryController
       allow_partial_joints_goal: true
       joints:
-        - thumbCMC
-        - indexMCP
-        - middleMCP
-        - ringMCP
-        - pinkyMCP
+        - thumbBrake
+        - indexBrake
+        - middleBrake
+        - ringBrake
+        - pinkyBrake
