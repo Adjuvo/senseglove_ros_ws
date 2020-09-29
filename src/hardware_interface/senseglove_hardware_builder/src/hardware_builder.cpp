@@ -12,6 +12,7 @@
 
 // clang-format off
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
+const std::vector<std::string> HardwareBuilder::DEVICE_REQUIRED_KEYS = { "deviceType" };
 // clang-format on
 
 HardwareBuilder::HardwareBuilder(AllowedRobot robot) : HardwareBuilder(robot.getFilePath())
@@ -42,11 +43,12 @@ std::unique_ptr<senseglove::SenseGloveRobot> HardwareBuilder::createSenseGloveRo
     // Remove top level robot name key
     YAML::Node config = this->robot_config_[robot_name];
     const auto cycle_time = config["communicationCycleTime"].as<int>();
+    const auto device_type = config["deviceType"].as<int>();
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
 
     ROS_INFO_STREAM("Robot config:\n" << config);
-    return std::make_unique<senseglove::SenseGloveRobot>(std::move(joints), this->urdf_, cycle_time);
+    return std::make_unique<senseglove::SenseGloveRobot>(std::move(joints), this->urdf_, cycle_time, device_type);
 }
 
 senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, const std::string& joint_name,
