@@ -30,6 +30,7 @@ include_directories(
         SYSTEM
         ${catkin_INCLUDE_DIRS}
         ../../SenseGlove_API/Core/SGCoreCpp/incl
+        ../../SenseGlove_API/Core/SGConnect/incl
 )
 
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)

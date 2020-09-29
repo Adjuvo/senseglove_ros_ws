@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 #include <ros/ros.h>
+#include "SGConnect.h"
 
 namespace senseglove
 {

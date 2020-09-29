@@ -28,8 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +65,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hardware_interface" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -107,7 +108,7 @@
       <workItem from="1600767254634" duration="21279000" />
       <workItem from="1601040779253" duration="4580000" />
       <workItem from="1601046501080" duration="14000" />
-      <workItem from="1601046535979" duration="20252000" />
+      <workItem from="1601046535979" duration="20567000" />
     </task>
     <servers />
   </component>
