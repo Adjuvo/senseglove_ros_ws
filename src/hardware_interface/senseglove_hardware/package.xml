@@ -13,7 +13,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <depend>Fingers</depend>
   <depend>roscpp</depend>
   <depend>SenseGlove_API</depend>
   <depend>urdf</depend>
