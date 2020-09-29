@@ -9,5 +9,4 @@ melodic:
   variables:
     BUILDER: colcon
     CATKIN_LINT: pedantic
-    CLANG_FORMAT_CHECK: file
     ROSDEP_SKIP_KEYS: "SenseGlove_API"
