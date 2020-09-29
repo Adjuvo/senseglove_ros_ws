@@ -63,6 +63,7 @@ public:
                                     const urdf::JointConstSharedPtr& urdf_joint);
 
     static const std::vector<std::string> JOINT_REQUIRED_KEYS;
+    static const std::vector<std::string> DEVICE_REQUIRED_KEYS;
 
 private:
     /**
