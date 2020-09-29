@@ -29,7 +29,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_description/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/package.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +105,7 @@
       <workItem from="1600767254634" duration="21279000" />
       <workItem from="1601040779253" duration="4580000" />
       <workItem from="1601046501080" duration="14000" />
-      <workItem from="1601046535979" duration="16603000" />
+      <workItem from="1601046535979" duration="17574000" />
     </task>
     <servers />
   </component>
