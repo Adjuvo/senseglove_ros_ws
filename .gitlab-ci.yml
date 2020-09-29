@@ -8,7 +8,7 @@ melodic:
   script: .industrial_ci/gitlab.sh ROS_DISTRO=melodic
   variables:
     BUILDER: colcon
-    CATKIN_LINT: pedantic
+    #    CATKIN_LINT: pedantic
     CATKIN_LINT_ARGS: '--ignore external_directory'
     CLANG_FORMAT_CHECK: file
     ROSDEP_SKIP_KEYS: "SenseGlove_API"
