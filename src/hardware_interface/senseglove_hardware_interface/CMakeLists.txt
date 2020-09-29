@@ -43,8 +43,8 @@ include_directories(include
         ../../SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_executable(${PROJECT_NAME}_node
-        src/senseglove_hardware_interface.cpp
-        src/senseglove_hardware_interface_node.cpp
+        src/${PROJECT_NAME}.cpp
+        src/${PROJECT_NAME}_node.cpp
         )
 
 add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})

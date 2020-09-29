@@ -14,3 +14,4 @@ TO DO:
 * Implement SenseGlove methods in the read, write function in the HWI
 * Structure the urdf/xacro file(s)
 * Custom Exceptions for easy debugging
+* CMakeLists.txt --> transition from hardcode path to include directory using find_path()

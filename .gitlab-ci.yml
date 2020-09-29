@@ -9,4 +9,5 @@ melodic:
   variables:
     BUILDER: colcon
     CATKIN_LINT: pedantic
+    CATKIN_LINT_ARGS: '--ignore external_directory'
     ROSDEP_SKIP_KEYS: "SenseGlove_API"

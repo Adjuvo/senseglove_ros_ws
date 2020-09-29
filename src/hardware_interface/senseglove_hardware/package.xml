@@ -14,7 +14,6 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>roscpp</depend>
-  <depend>SenseGlove_API</depend>
   <depend>urdf</depend>
 
   <test_depend>code_coverage</test_depend>

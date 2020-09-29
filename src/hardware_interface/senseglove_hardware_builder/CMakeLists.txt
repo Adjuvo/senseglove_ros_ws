@@ -20,11 +20,11 @@ catkin_package(
         LIBRARIES ${PROJECT_NAME}
 )
 
-if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
-    find_package(code_coverage REQUIRED)
-    # Add compiler flags for coverage instrumentation before defining any targets
-    append_coverage_compiler_flags()
-endif()
+#if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
+#    find_package(code_coverage REQUIRED)
+#    # Add compiler flags for coverage instrumentation before defining any targets
+#    append_coverage_compiler_flags()
+#endif()
 
 include_directories(include
         SYSTEM
