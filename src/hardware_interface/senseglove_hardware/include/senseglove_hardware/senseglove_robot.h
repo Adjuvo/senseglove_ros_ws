@@ -24,7 +24,7 @@ namespace senseglove
     public:
         using iterator = std::vector<Joint>::iterator;
 
-        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time);
+        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time, int device_type);
 
         ~SenseGloveRobot();
 

@@ -9,8 +9,8 @@
 
 namespace senseglove
 {
-    Sensecom::Sensecom(int max_slave_index, int cycle_time) : is_operational_(false), max_slave_index_(max_slave_index),
-    cycle_time_ms_(cycle_time)
+    Sensecom::Sensecom(int device_type, int max_slave_index, int cycle_time) : is_operational_(false), device_type_(device_type),
+    max_slave_index_(max_slave_index), cycle_time_ms_(cycle_time)
     {
     }
 

@@ -14,7 +14,7 @@ namespace senseglove
     class Sensecom
     {
     public:
-        Sensecom(int max_slave_index, int cycle_time);
+        Sensecom(int device_type, int max_slave_index, int cycle_time);
         ~Sensecom();
 
         bool isOperational() const;
@@ -39,6 +39,7 @@ namespace senseglove
 
     private:
         std::atomic<bool> is_operational_;
+        const int device_type_;
         const int max_slave_index_;
         const int cycle_time_ms_;
 

@@ -12,9 +12,9 @@
 
 namespace senseglove
 {
-    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time)
+    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time, int device_type)
             : jointList(std::move(jointList))
-            , urdf_(std::move(urdf)), sensecom_(/*max slave/robot index*/0, cycle_time)
+            , urdf_(std::move(urdf)), sensecom_(device_type, /*max slave/robot index*/0, cycle_time)
     {
     }
 
