@@ -28,7 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +106,7 @@
       <workItem from="1600767254634" duration="21279000" />
       <workItem from="1601040779253" duration="4580000" />
       <workItem from="1601046501080" duration="14000" />
-      <workItem from="1601046535979" duration="7733000" />
+      <workItem from="1601046535979" duration="9782000" />
     </task>
     <servers />
   </component>
