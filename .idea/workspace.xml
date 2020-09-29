@@ -28,6 +28,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,21 +66,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hardware_interface" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/senseglove" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots" />
       <recent name="$PROJECT_DIR$/src/SenseGlove-API" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake" />
       <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake" />
-      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description" />
     </key>
   </component>
   <component name="RunManager">
@@ -105,7 +107,7 @@
       <workItem from="1600767254634" duration="21279000" />
       <workItem from="1601040779253" duration="4580000" />
       <workItem from="1601046501080" duration="14000" />
-      <workItem from="1601046535979" duration="17574000" />
+      <workItem from="1601046535979" duration="18783000" />
     </task>
     <servers />
   </component>

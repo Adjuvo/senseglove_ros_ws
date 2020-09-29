@@ -11,3 +11,7 @@ melodic:
     CATKIN_LINT: pedantic
     CATKIN_LINT_ARGS: '--ignore external_directory'
     ROSDEP_SKIP_KEYS: "SenseGlove_API"
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 week
