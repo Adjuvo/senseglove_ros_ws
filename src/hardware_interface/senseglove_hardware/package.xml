@@ -15,7 +15,6 @@
 
   <depend>Fingers</depend>
   <depend>roscpp</depend>
-  <depend>SenseGlove</depend>
   <depend>SenseGlove_API</depend>
   <depend>urdf</depend>
 

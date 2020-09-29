@@ -13,7 +13,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <depend>march_hardware</depend>
   <depend>roscpp</depend>
   <depend>roslib</depend>
   <depend>senseglove_hardware</depend>
