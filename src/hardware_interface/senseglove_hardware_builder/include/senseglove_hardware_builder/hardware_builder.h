@@ -62,11 +62,10 @@ public:
 
     static senseglove::Joint createJoint(const YAML::Node& joint_config, const std::string& joint_name,
                                     const urdf::JointConstSharedPtr& urdf_joint);
-    static senseglove::Joint createRobot(const YAML::Node& joint_config, const std::string& joint_name,
-                                         const urdf::JointConstSharedPtr& urdf_joint);
+    static senseglove::SenseGloveRobot createRobot(const YAML::Node& joint_config, urdf::Model urdf, std::vector<senseglove::Joint> joints, int robot_index);
 
     static const std::vector<std::string> JOINT_REQUIRED_KEYS;
-    static const std::vector<std::string> DEVICE_REQUIRED_KEYS;
+    static const std::vector<std::string> ROBOT_REQUIRED_KEYS;
 
 private:
     /**
@@ -82,7 +81,7 @@ private:
      * @return list of created joints
      */
     std::vector<senseglove::Joint> createJoints(const YAML::Node& joints_config) const;
-    std::vector<senseglove::SenseGloveRobot> createRobots(const YAML::Node& joints_config) const;
+    std::vector<senseglove::SenseGloveRobot> createRobots(const YAML::Node& robots_config, urdf::Model urdf, std::vector<senseglove::Joint> joints, int maxGloves) const;
 
     YAML::Node robot_config_;
     urdf::Model urdf_;

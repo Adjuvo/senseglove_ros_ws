@@ -19,14 +19,12 @@ namespace senseglove
     {
     private:
         ::std::vector<senseglove::SenseGloveRobot> sensegloves_;
-        urdf::Model urdf_left_;
-        urdf::Model urdf_right_;
         Sensecom sensecom_;
 
     public:
         using iterator = std::vector<senseglove::SenseGloveRobot>::iterator;
 
-        SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves, urdf::Model urdf_left, urdf::Model urdf_right, int cycle_time);
+        SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves, int cycle_time);
 
         ~SenseGloveSetup();
 

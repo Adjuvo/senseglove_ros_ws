@@ -17,6 +17,7 @@ namespace senseglove
 {
     class Joint
     {
+    friend class SenseGloveRobot;
     public:
         /**
          * Initializes a Joint without a finger

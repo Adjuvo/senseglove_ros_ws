@@ -35,7 +35,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     for(size_t i = 0; i < num_gloves_; ++i){
         // Initialize interfaces for each joint
         for (size_t k = 0; k < num_joints_; ++k) {
-            senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
+            senseglove::Joint &joint = this->senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 
             // Create joint state interface
             JointStateHandle joint_state_handle(joint.getName(), &joint_position_[i][k], &joint_velocity_[i][k],

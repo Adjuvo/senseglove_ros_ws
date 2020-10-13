@@ -12,9 +12,8 @@
 
 namespace senseglove
 {
-    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf)
-            : jointList_(std::move(jointList))
-            , urdf_(std::move(urdf))
+    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int deviceType, int robotIndex)
+            : jointList_(std::move(jointList)), urdf_(std::move(urdf)), device_type_(deviceType), robot_index_(robotIndex)
     {
     }
 
@@ -35,7 +34,7 @@ namespace senseglove
         throw std::out_of_range("Could not find joint with name " + jointName);
     }
 
-    Joint& SenseGloveRobot::getJoint(size_t index)
+    const Joint& SenseGloveRobot::getJoint(size_t index) const
     {
         return this->jointList_.at(index);
     }

@@ -21,12 +21,16 @@ namespace senseglove
         ::std::vector<Joint> jointList_;
         urdf::Model urdf_;
         SGCore::SG::SenseGlove senseglove_;
+        SGCore::SG::SG_GloveInfo model_;
+        SGCore::SG::SG_SensorData sensorData_;
         const std::string name_;
+        const int device_type_;
+        const int robot_index_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
 
-        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf);
+        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int deviceType, int robotIndex);
 
         ~SenseGloveRobot();
 
@@ -42,7 +46,7 @@ namespace senseglove
 
         Joint& getJoint(::std::string jointName);
 
-        Joint& getJoint(size_t index);
+        const Joint& getJoint(size_t index) const;
 
         size_t size() const;
 
