@@ -10,7 +10,7 @@
 
 namespace senseglove
 {
-    Sensecom::Sensecom(int device_type, int max_slave_index, int cycle_time) : is_operational_(false), device_type_(device_type),
+    Sensecom::Sensecom(int max_slave_index, int cycle_time) : is_operational_(false),
     max_slave_index_(max_slave_index), cycle_time_ms_(cycle_time)
     {
     }
@@ -30,13 +30,28 @@ namespace senseglove
         return this->cycle_time_ms_;
     }
 
+    int Sensecom::start()
+    {
+        if (!SGConnect::ScanningActive())
+        {
+            return SGConnect::Init();
+        }
+        else
+        {
+            ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
+        }
+        return 0;
+    }
+
     void Sensecom::stop()
     {
         if (this->is_operational_)
         {
             ROS_INFO("Stopping communication with Senseglove device");
             this->is_operational_ = false;
+            int result = SGConnect::Dispose();
             this->communication_thread_.join();
+            ROS_INFO("SGConnect Dispose returned with result: %d", result);
         }
     }
 }

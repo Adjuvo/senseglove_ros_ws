@@ -11,7 +11,7 @@
 #include <urdf/model.h>
 
 #include <Fingers.h>
-#include "SenseGlove.h"
+#include <SenseGlove.h>
 
 namespace senseglove
 {
@@ -41,8 +41,8 @@ namespace senseglove
         Joint& operator=(const Joint&) = delete;
 
         /* Delete move assignment since string cannot be move assigned */
-        Joint(Joint&&) = default;
-        Joint& operator=(Joint&&) = delete;
+//        Joint(Joint&&) = default;
+//        Joint& operator=(Joint&&) = delete;
 
         bool initialize();
         void prepareActuation();

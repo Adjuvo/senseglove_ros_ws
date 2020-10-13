@@ -17,6 +17,16 @@ find_package(catkin REQUIRED COMPONENTS
         urdf
         )
 
+find_library(SENSEGLOVE
+        NAMES SGCore.so
+        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
+        REQUIRED)
+
+find_library(SENSEGLOVE_CONNECT
+        NAMES SGConnect.so
+        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+        REQUIRED)
+
 catkin_package(
         INCLUDE_DIRS include
         CATKIN_DEPENDS
@@ -40,6 +50,7 @@ catkin_package(
 include_directories(include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
+        ../../SenseGlove_API/Core/SGConnect/incl
         ../../SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_executable(${PROJECT_NAME}_node
@@ -49,7 +60,7 @@ add_executable(${PROJECT_NAME}_node
 
 add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES} ${SENSEGLOVE} ${SENSEGLOVE_CONNECT})
 # From senseglove_hardware/cmake
 ros_enable_rpath(${PROJECT_NAME}_node)
 

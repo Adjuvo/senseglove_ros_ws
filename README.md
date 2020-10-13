@@ -16,3 +16,4 @@ TO DO:
 * Custom Exceptions for easy debugging
 * CMakeLists.txt --> transition from hardcode path to include directory using find_path()
 * adjust .gitlab-ci.yml to include clang only if it does not check the SenseGlove_API package due to style differences.
+* Give each SenseGlove a unique HWI so that multiple/varying controllers can be used at runtime

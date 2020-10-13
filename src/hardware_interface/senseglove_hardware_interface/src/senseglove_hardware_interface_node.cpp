@@ -9,7 +9,7 @@
 #include <senseglove_hardware/senseglove_robot.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
 
-std::unique_ptr<senseglove::SenseGloveRobot> build(AllowedRobot robot);
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot);
 
 int main(int argc, char** argv)
 {
@@ -71,12 +71,12 @@ int main(int argc, char** argv)
     return 0;
 }
 
-std::unique_ptr<senseglove::SenseGloveRobot> build(AllowedRobot robot)
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot)
 {
     HardwareBuilder builder(robot);
     try
     {
-        return builder.createSenseGloveRobot();
+        return builder.createSenseGloveSetup();
     }
     catch (const std::exception& e)
     {

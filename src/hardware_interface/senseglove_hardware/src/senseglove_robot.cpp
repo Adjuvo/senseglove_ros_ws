@@ -12,78 +12,51 @@
 
 namespace senseglove
 {
-    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time, int device_type)
-            : jointList(std::move(jointList))
-            , urdf_(std::move(urdf)), sensecom_(device_type, /*max slave/robot index*/0, cycle_time)
+    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf)
+            : jointList_(std::move(jointList))
+            , urdf_(std::move(urdf))
     {
     }
 
-    void SenseGloveRobot::startCommunication(bool /*reset*/)
+    std::string SenseGloveRobot::getName() const
     {
-
-    }
-
-    void SenseGloveRobot::stopCommunication()
-    {
-
-    }
-
-    bool SenseGloveRobot::isCommunicationOperational()
-    {
-        return false;
+        return this->name_;
     }
 
     Joint& SenseGloveRobot::getJoint(::std::string jointName)
     {
-        if (!sensecom_.isOperational())
-        {
-            ROS_WARN("Trying to access joints while communication is not operational. This "
-                     "may lead to incorrect sensor data.");
-        }
-        for (auto& joint : jointList)
+        for (auto& joint : jointList_)
         {
             if (joint.getName() == jointName)
             {
                 return joint;
             }
         }
-
         throw std::out_of_range("Could not find joint with name " + jointName);
     }
 
     Joint& SenseGloveRobot::getJoint(size_t index)
     {
-        if (!sensecom_.isOperational())
-        {
-            ROS_WARN("Trying to access joints while ethercat is not operational. This "
-                     "may lead to incorrect sensor data.");
-        }
-        return this->jointList.at(index);
+        return this->jointList_.at(index);
     }
 
     size_t SenseGloveRobot::size() const
     {
-        return this->jointList.size();
+        return this->jointList_.size();
     }
 
     SenseGloveRobot::iterator SenseGloveRobot::begin()
     {
-        if (!sensecom_.isOperational())
-        {
-            ROS_WARN("Trying to access joints while ethercat is not operational. This "
-                     "may lead to incorrect sensor data.");
-        }
-        return this->jointList.begin();
+        return this->jointList_.begin();
     }
 
     SenseGloveRobot::iterator SenseGloveRobot::end()
     {
-        return this->jointList.end();
+        return this->jointList_.end();
     }
 
     SenseGloveRobot::~SenseGloveRobot()
     {
-        stopCommunication();
     }
 
     const urdf::Model& SenseGloveRobot::getUrdf() const

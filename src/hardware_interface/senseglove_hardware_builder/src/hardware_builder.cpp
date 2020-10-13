@@ -33,7 +33,7 @@ HardwareBuilder::HardwareBuilder(const std::string& yaml_path, urdf::Model urdf)
 {
 }
 
-std::unique_ptr<senseglove::SenseGloveRobot> HardwareBuilder::createSenseGloveRobot()
+std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSetup()
 {
     this->initUrdf();
 
@@ -43,12 +43,14 @@ std::unique_ptr<senseglove::SenseGloveRobot> HardwareBuilder::createSenseGloveRo
     // Remove top level robot name key
     YAML::Node config = this->robot_config_[robot_name];
     const auto cycle_time = config["communicationCycleTime"].as<int>();
-    const auto device_type = config["deviceType"].as<int>();
+//    const auto device_type = config["deviceType"].as<int>();
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
 
+    std::vector<senseglove::SenseGloveRobots> sensegloves = this->createRobots(joints, this->urdf_);
+
     ROS_INFO_STREAM("Robot config:\n" << config);
-    return std::make_unique<senseglove::SenseGloveRobot>(std::move(joints), this->urdf_, cycle_time, device_type);
+    return std::make_unique<senseglove::SenseGloveSetup>(sensegloves, this->urdf_ /*left*/, this->urdf_ /*right*/, cycle_time);
 }
 
 senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, const std::string& joint_name,

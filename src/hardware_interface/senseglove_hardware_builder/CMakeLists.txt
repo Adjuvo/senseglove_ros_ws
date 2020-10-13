@@ -29,6 +29,7 @@ catkin_package(
 include_directories(include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
+        ../../SenseGlove_API/Core/SGConnect/incl
         ../../SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_library(${PROJECT_NAME}

@@ -8,13 +8,14 @@
 #include <utility>
 #include <vector>
 #include <ros/ros.h>
+#include <SGConnect.h>
 
 namespace senseglove
 {
     class Sensecom
     {
     public:
-        Sensecom(int device_type, int max_slave_index, int cycle_time);
+        Sensecom(int max_slave_index, int cycle_time);
         ~Sensecom();
 
         bool isOperational() const;
@@ -29,7 +30,7 @@ namespace senseglove
          * Starts the communication for a SenseGlove
          * TO DO: Start a thread that communicates between the SenseGlove and the ROS master
          */
-        void start();
+        int start(); // 1 == success!
 
         /**
          * Stops the communication bus
@@ -39,7 +40,6 @@ namespace senseglove
 
     private:
         std::atomic<bool> is_operational_;
-        const int device_type_;
         const int max_slave_index_;
         const int cycle_time_ms_;
 

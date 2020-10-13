@@ -12,6 +12,7 @@
 #include <ros/ros.h>
 
 #include <senseglove_hardware/senseglove_robot.h>
+#include <senseglove_hardware/senseglove_setup.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
 #include <senseglove_shared_resources/SenseGloveState.h>
 
@@ -26,7 +27,7 @@ using RtPublisherPtr = std::unique_ptr<realtime_tools::RealtimePublisher<T>>;
 class SenseGloveHardwareInterface : public hardware_interface::RobotHW
 {
 public:
-    SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveRobot> robot);
+    SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveSetup> setup);
 
     /**
      * @brief Initialize the HardwareInterface by registering position interfaces
@@ -35,12 +36,12 @@ public:
     bool init(ros::NodeHandle& nh, ros::NodeHandle& robot_hw_nh) override;
 
     /**
-     * @brief Perform all safety checks that might crash the robot.
+     * @brief Perform all safety checks that might crash the sensegloves.
      */
     void validate();
 
     /**
-     * Reads (in realtime) the state from the senseglove robot.
+     * Reads (in realtime) the state from the sensegloves.
      *
      * @param time Current time
      * @param elapsed_time Duration since last write action
@@ -48,7 +49,7 @@ public:
     void read(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
     /**
-     * Writes (in realtime) the commands from the controllers to the senseglove robot.
+     * Writes (in realtime) the commands from the controllers to the sensegloves.
      *
      * @param time Current time
      * @param elapsed_time Duration since last write action
@@ -66,7 +67,7 @@ private:
     void updateSenseGloveState();
 
     /* SenseGlove hardware */
-    std::unique_ptr<senseglove::SenseGloveRobot> senseglove_robot_;
+    std::unique_ptr<senseglove::SenseGloveSetup> senseglove_setup_;
 
     /* Interfaces */
     hardware_interface::JointStateInterface joint_state_interface_;
@@ -75,17 +76,18 @@ private:
     hardware_interface::EffortJointInterface effort_joint_interface_;
 
     /* Shared memory */
+    size_t num_gloves_ = 0;
     size_t num_joints_ = 0;
 
-    std::vector<double> joint_position_;
-    std::vector<double> joint_position_command_;
+    std::vector<std::vector<double>> joint_position_;
+    std::vector<std::vector<double>> joint_position_command_;
 
-    std::vector<double> joint_velocity_;
-    std::vector<double> joint_velocity_command_;
+    std::vector<std::vector<double>> joint_velocity_;
+    std::vector<std::vector<double>> joint_velocity_command_;
 
-    std::vector<double> joint_effort_;
-    std::vector<double> joint_effort_command_;
-    std::vector<double> joint_last_effort_command_;
+    std::vector<std::vector<double>> joint_effort_;
+    std::vector<std::vector<double>> joint_effort_command_;
+    std::vector<std::vector<double>> joint_last_effort_command_;
 
     bool master_shutdown_allowed_command_ = false;
 

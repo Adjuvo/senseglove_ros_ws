@@ -4,6 +4,7 @@
 
 #include "senseglove_hardware/communication/sense_com.h"
 #include "senseglove_hardware/joint.h"
+#include "SenseGlove.h"
 
 #include <cstdint>
 #include <memory>
@@ -17,26 +18,19 @@ namespace senseglove
     class SenseGloveRobot
     {
     private:
-        ::std::vector<Joint> jointList;
+        ::std::vector<Joint> jointList_;
         urdf::Model urdf_;
-        Sensecom sensecom_;
+        SGCore::SG::SenseGlove senseglove_;
+        const std::string name_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
 
-        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int cycle_time, int device_type);
+        SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf);
 
         ~SenseGloveRobot();
 
-        /* Delete move constructor/assignment since atomic bool cannot be moved */
-//        SenseGloveRobot(SenseGloveRobot&&) = delete;
-//        SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
-
-        void startCommunication(bool /*reset*/);
-
-        void stopCommunication();
-
-        bool isCommunicationOperational();
+        std::string getName() const;
 
         Joint& getJoint(::std::string jointName);
 
@@ -52,14 +46,14 @@ namespace senseglove
         /** @brief Override comparison operator */
         friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
         {
-            if (lhs.jointList.size() != rhs.jointList.size())
+            if (lhs.jointList_.size() != rhs.jointList_.size())
             {
                 return false;
             }
-            for (unsigned int i = 0; i < lhs.jointList.size(); i++)
+            for (unsigned int i = 0; i < lhs.jointList_.size(); i++)
             {
-                const senseglove::Joint& lhsJoint = lhs.jointList.at(i);
-                const senseglove::Joint& rhsJoint = rhs.jointList.at(i);
+                const senseglove::Joint& lhsJoint = lhs.jointList_.at(i);
+                const senseglove::Joint& rhsJoint = rhs.jointList_.at(i);
                 if (lhsJoint != rhsJoint)
                 {
                     return false;
@@ -68,12 +62,17 @@ namespace senseglove
             return true;
         }
 
+        friend bool operator!=(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         /** @brief Override stream operator for clean printing */
         friend ::std::ostream& operator<<(std::ostream& os, const SenseGloveRobot& senseGloveRobot)
         {
-            for (unsigned int i = 0; i < senseGloveRobot.jointList.size(); i++)
+            for (unsigned int i = 0; i < senseGloveRobot.jointList_.size(); i++)
             {
-                os << senseGloveRobot.jointList.at(i) << "\n";
+                os << senseGloveRobot.jointList_.at(i) << "\n";
             }
             return os;
         }

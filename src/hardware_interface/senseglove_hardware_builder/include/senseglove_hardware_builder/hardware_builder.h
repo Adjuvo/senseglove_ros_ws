@@ -13,6 +13,7 @@
 #include <senseglove_hardware/actuation_mode.h>
 #include <senseglove_hardware/joint.h>
 #include <senseglove_hardware/senseglove_robot.h>
+#include <senseglove_hardware/senseglove_setup.h>
 
 /**
  * @brief Creates a SenseGloveRobot from a robot yaml and URDF.
@@ -48,7 +49,7 @@ public:
      * @throws HardwareConfigException When the urdf could not be loaded from the parameter server
      * @throws MissingKeyException When a required key is missing from the given config
      */
-    std::unique_ptr<senseglove::SenseGloveRobot> createSenseGloveRobot();
+    std::unique_ptr<senseglove::SenseGloveSetup> createSenseGloveSetup();
 
     /**
      * @brief Loops over all keys in the keyList and check if they exist in the

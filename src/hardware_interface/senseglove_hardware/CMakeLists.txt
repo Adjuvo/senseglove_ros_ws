@@ -13,6 +13,11 @@ find_library(SENSEGLOVE
         PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
+find_library(SENSEGLOVE_CONNECT
+        NAMES SGConnect.so
+        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+        REQUIRED)
+
 catkin_package(
         INCLUDE_DIRS include
         CATKIN_DEPENDS
@@ -29,8 +34,8 @@ include_directories(
         include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ../../SenseGlove_API/Core/SGCoreCpp/incl
         ../../SenseGlove_API/Core/SGConnect/incl
+        ../../SenseGlove_API/Core/SGCoreCpp/incl
 )
 
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
@@ -44,12 +49,14 @@ add_library(${PROJECT_NAME}
         include/${PROJECT_NAME}/communication/sense_com.h
         include/${PROJECT_NAME}/joint.h
         include/${PROJECT_NAME}/senseglove_robot.h
+        include/${PROJECT_NAME}/senseglove_setup.h
         src/communication/sense_com.cpp
         src/joint.cpp
         src/senseglove_robot.cpp
+        src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} ${SENSEGLOVE} ${catkin_LIBRARIES} pthread)
+target_link_libraries(${PROJECT_NAME} ${SENSEGLOVE} ${SENSEGLOVE_CONNECT} ${catkin_LIBRARIES} pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
