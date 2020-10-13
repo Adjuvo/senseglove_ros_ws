@@ -18,6 +18,14 @@ namespace senseglove
         Sensecom(int max_slave_index, int cycle_time);
         ~Sensecom();
 
+        /* Delete copy constructor/assignment since the member thread can not be copied */
+        Sensecom(const Sensecom&) = delete;
+        Sensecom& operator=(const Sensecom&) = delete;
+
+        /* Delete move constructor/assignment since atomic bool cannot be moved */
+        Sensecom(Sensecom&&) = delete;
+        Sensecom& operator=(Sensecom&&) = delete;
+
         bool isOperational() const;
 
         /**

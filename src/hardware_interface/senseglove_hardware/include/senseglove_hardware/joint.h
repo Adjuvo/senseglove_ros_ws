@@ -41,8 +41,8 @@ namespace senseglove
         Joint& operator=(const Joint&) = delete;
 
         /* Delete move assignment since string cannot be move assigned */
-//        Joint(Joint&&) = default;
-//        Joint& operator=(Joint&&) = delete;
+        Joint(Joint&&) = default;
+        Joint& operator=(Joint&&) = delete;
 
         bool initialize();
         void prepareActuation();
@@ -96,7 +96,7 @@ namespace senseglove
 
         double position_ = 0.0;
         double velocity_ = 0.0;
-        std::unique_ptr<SGCore::Finger> finger_;
+        std::unique_ptr<SGCore::Finger> finger_ = nullptr;
     };
 
 }  // namespace senseglove

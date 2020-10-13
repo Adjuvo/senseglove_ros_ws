@@ -47,14 +47,45 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
 
-    std::vector<senseglove::SenseGloveRobots> sensegloves = this->createRobots(joints, this->urdf_);
+    std::vector<senseglove::SenseGloveRobot> sensegloves = this->createRobots(std::move(joints), this->urdf_);
 
     ROS_INFO_STREAM("Robot config:\n" << config);
-    return std::make_unique<senseglove::SenseGloveSetup>(sensegloves, this->urdf_ /*left*/, this->urdf_ /*right*/, cycle_time);
+    return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves), this->urdf_ /*left*/, this->urdf_ /*right*/, cycle_time);
 }
 
 senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, const std::string& joint_name,
                                           const urdf::JointConstSharedPtr& urdf_joint)
+{
+    ROS_DEBUG("Starting creation of joint %s", joint_name.c_str());
+    if (!urdf_joint)
+    {
+        ROS_ERROR("No URDF joint given for joint %s", joint_name);
+    }
+    HardwareBuilder::validateRequiredKeysExist(joint_config, HardwareBuilder::JOINT_REQUIRED_KEYS, "joint");
+
+    auto joint_index = -1;
+    if (joint_config["jointIndex"])
+    {
+        joint_index = joint_config["jointIndex"].as<int>();
+    }
+    else
+    {
+        ROS_WARN("Joint %s does not have a netNumber", joint_name.c_str());
+    }
+
+    const auto allow_actuation = joint_config["allowActuation"].as<bool>();
+
+    senseglove::ActuationMode mode;
+    if (joint_config["actuationMode"])
+    {
+        mode = senseglove::ActuationMode(joint_config["actuationMode"].as<std::string>());
+    }
+
+    return { joint_name, joint_index, allow_actuation };
+}
+
+senseglove::Joint HardwareBuilder::createRobot(const YAML::Node& joint_config, const std::string& joint_name,
+                                               const urdf::JointConstSharedPtr& urdf_joint)
 {
     ROS_DEBUG("Starting creation of joint %s", joint_name.c_str());
     if (!urdf_joint)
@@ -140,4 +171,10 @@ std::vector<senseglove::Joint> HardwareBuilder::createJoints(const YAML::Node& j
 
     joints.shrink_to_fit();
     return joints;
+}
+
+std::vector<senseglove::SenseGloveRobot> createRobots(const YAML::Node& joints_config) const
+{
+    std::vector<senseglove::SenseGloveRobot> robots;
+    return robots;
 }

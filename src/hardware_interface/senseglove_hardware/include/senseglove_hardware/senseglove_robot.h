@@ -30,6 +30,14 @@ namespace senseglove
 
         ~SenseGloveRobot();
 
+        /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
+        SenseGloveRobot(SenseGloveRobot&) = delete;
+        SenseGloveRobot& operator=(SenseGloveRobot&) = delete;
+
+        /* Delete move assignment since string cannot be move assigned */
+        SenseGloveRobot(SenseGloveRobot&&) = default;
+        SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
+
         std::string getName() const;
 
         Joint& getJoint(::std::string jointName);

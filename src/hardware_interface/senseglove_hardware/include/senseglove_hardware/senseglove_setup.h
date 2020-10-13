@@ -30,9 +30,13 @@ namespace senseglove
 
         ~SenseGloveSetup();
 
-        /* Delete move constructor/assignment since atomic bool cannot be moved */
-//        SenseGloveRobot(SenseGloveRobot&&) = delete;
-//        SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
+        /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
+        SenseGloveSetup(SenseGloveSetup&) = delete;
+        SenseGloveSetup& operator=(SenseGloveSetup&) = delete;
+
+        /* Delete move assignment since string cannot be move assigned */
+        SenseGloveSetup(SenseGloveSetup&&) = delete;
+        SenseGloveSetup& operator=(SenseGloveSetup&&) = delete;
 
         void startCommunication(bool /*reset*/);
 

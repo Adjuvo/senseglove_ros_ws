@@ -14,8 +14,8 @@
 namespace senseglove
 {
     SenseGloveSetup::SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves, urdf::Model urdf_left, urdf::Model urdf_right, int cycle_time)
-            : sensegloves_(sensegloves), urdf_left_(std::move(urdf_left)), urdf_right_(std::move(urdf_right)),
-            sensecom_(/*max slave/robot index*/0, cycle_time)
+            : sensegloves_(std::move(sensegloves)), urdf_left_(std::move(urdf_left)), urdf_right_(std::move(urdf_right)),
+            sensecom_(this->size(), cycle_time)
     {
     }
 
