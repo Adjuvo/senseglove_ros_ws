@@ -29,15 +29,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/communication/sense_com.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/communication/sense_com.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_setup.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_setup.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +108,7 @@
       <workItem from="1601974389847" duration="184000" />
       <workItem from="1601974615078" duration="56411000" />
       <workItem from="1602878105117" duration="591000" />
-      <workItem from="1603178463937" duration="18030000" />
+      <workItem from="1603178463937" duration="18868000" />
     </task>
     <servers />
   </component>
