@@ -11,31 +11,61 @@
 
 #include <ros/ros.h>
 
+#include <SGConnect.h>
+
 namespace senseglove
 {
-    SenseGloveSetup::SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves, int cycle_time)
-            : sensegloves_(std::move(sensegloves)), sensecom_(this->size(), cycle_time)
+    SenseGloveSetup::SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves)
+            : sensegloves_(std::move(sensegloves))
     {
     }
 
     void SenseGloveSetup::startCommunication(bool /*reset*/)
     {
+        if (SGCore::DeviceList::SenseCommRunning())
+        {
+          ROS_WARN("Trying to start senseglove communication while it is already active.");
+          return;
+        }
 
+        if (!SGConnect::ScanningActive())
+        {
+          if(SGConnect::Init() != 1)
+          {
+            ROS_WARN("Something went wrong trying to initiate SGConnect");
+          }
+        }
+        else
+        {
+          ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
+        }
     }
 
     void SenseGloveSetup::stopCommunication()
     {
-
+        if (SGConnect::ScanningActive())
+        {
+          ROS_INFO("Stopping communication with Senseglove device");
+          int result = SGConnect::Dispose();
+          ROS_INFO("SGConnect Dispose returned with result: %d", result);
+        }
     }
 
     bool SenseGloveSetup::isCommunicationOperational()
     {
-        return false;
+        if (SGCore::DeviceList::SenseCommRunning())
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
     }
 
-    const SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(::std::string gloveName) const
+    SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(::std::string gloveName)
     {
-        if (!sensecom_.isOperational())
+        if (!SGCore::DeviceList::SenseCommRunning())
         {
             ROS_WARN("Trying to access joints while communication is not operational. This "
                      "may lead to incorrect sensor data.");
@@ -51,9 +81,9 @@ namespace senseglove
         throw std::out_of_range("Could not find glove with name " + gloveName);
     }
 
-    const SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(int index) const
+    SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(int index)
     {
-        if (!this->sensecom_.isOperational())
+        if (!SGCore::DeviceList::SenseCommRunning())
         {
             ROS_WARN("Trying to access joints while ethercat is not operational. This "
                      "may lead to incorrect sensor data.");
@@ -68,7 +98,7 @@ namespace senseglove
 
     SenseGloveSetup::iterator SenseGloveSetup::begin()
     {
-        if (!sensecom_.isOperational())
+        if (!SGCore::DeviceList::SenseCommRunning())
         {
             ROS_WARN("Trying to access sensegloves while communication is not operational. This "
                      "may lead to incorrect sensor data.");
@@ -86,9 +116,9 @@ namespace senseglove
         stopCommunication();
     }
 
-    const urdf::Model& SenseGloveSetup::getRobotUrdf(std::string glove_robot_name) const
+    const urdf::Model& SenseGloveSetup::getRobotUrdf(std::string glove_robot_name)
     {
-        return getSenseGloveRobot(glove_robot_name).getUrdf();
+        return this->getSenseGloveRobot(glove_robot_name).getUrdf();
     }
 
 }  // namespace senseglove

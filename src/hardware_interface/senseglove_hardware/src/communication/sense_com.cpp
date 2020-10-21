@@ -10,8 +10,7 @@
 
 namespace senseglove
 {
-    Sensecom::Sensecom(int max_slave_index, int cycle_time) : is_operational_(false),
-    max_slave_index_(max_slave_index), cycle_time_ms_(cycle_time)
+    Sensecom::Sensecom(int cycle_time) : is_operational_(false), cycle_time_ms_(cycle_time)
     {
     }
 
@@ -50,7 +49,6 @@ namespace senseglove
             ROS_INFO("Stopping communication with Senseglove device");
             this->is_operational_ = false;
             int result = SGConnect::Dispose();
-            this->communication_thread_.join();
             ROS_INFO("SGConnect Dispose returned with result: %d", result);
         }
     }

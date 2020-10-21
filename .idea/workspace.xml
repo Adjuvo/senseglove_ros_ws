@@ -29,9 +29,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/communication/sense_com.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/communication/sense_com.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_robot.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_setup.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/senseglove_setup.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/communication/sense_com.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder/hardware_builder.h" afterDir="false" />
@@ -42,9 +43,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ClangdSettings">
-    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -74,7 +72,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../march_ws" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
@@ -117,7 +115,9 @@
       <workItem from="1601046501080" duration="14000" />
       <workItem from="1601046535979" duration="26349000" />
       <workItem from="1601974389847" duration="184000" />
-      <workItem from="1601974615078" duration="42079000" />
+      <workItem from="1601974615078" duration="56411000" />
+      <workItem from="1602878105117" duration="591000" />
+      <workItem from="1603178463937" duration="18030000" />
     </task>
     <servers />
   </component>
@@ -141,6 +141,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="668" y="354" width="640" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1600761914251" />
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1603184602202">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1603184602202" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1601989800083">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -151,6 +155,10 @@
       <screen x="0" y="27" width="3840" height="1053" />
     </state>
     <state x="514" y="136" key="SettingsEditor/0.27.3840.1053@0.27.3840.1053" timestamp="1600780001528" />
+    <state x="603" y="166" width="770" height="773" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1603286924253">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="603" y="166" width="770" height="773" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1603286924253" />
     <state x="610" y="257" width="697" height="678" key="search.everywhere.popup" timestamp="1602620722151">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

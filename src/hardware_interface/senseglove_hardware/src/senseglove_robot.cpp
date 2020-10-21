@@ -12,55 +12,73 @@
 
 namespace senseglove
 {
-    SenseGloveRobot::SenseGloveRobot(::std::vector<Joint> jointList, urdf::Model urdf, int deviceType, int robotIndex)
-            : jointList_(std::move(jointList)), urdf_(std::move(urdf)), device_type_(deviceType), robot_index_(robotIndex)
-    {
-    }
+SenseGloveRobot::SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex)
+  : senseglove_(glove), joint_list_(std::move(jointList)), urdf_(std::move(urdf)), device_type_(this->senseglove_.GetDeviceType()), robot_index_(robotIndex)
+{
+}
 
-    std::string SenseGloveRobot::getName() const
-    {
-        return this->name_;
-    }
+std::string SenseGloveRobot::getName() const
+{
+  return this->name_;
+}
 
-    Joint& SenseGloveRobot::getJoint(::std::string jointName)
+Joint& SenseGloveRobot::getJoint(::std::string jointName)
+{
+  for (auto& joint : joint_list_)
+  {
+    if (joint.getName() == jointName)
     {
-        for (auto& joint : jointList_)
-        {
-            if (joint.getName() == jointName)
-            {
-                return joint;
-            }
-        }
-        throw std::out_of_range("Could not find joint with name " + jointName);
+      return joint;
     }
+  }
+  throw std::out_of_range("Could not find joint with name " + jointName);
+}
 
-    const Joint& SenseGloveRobot::getJoint(size_t index) const
-    {
-        return this->jointList_.at(index);
-    }
+Joint& SenseGloveRobot::getJoint(size_t index)
+{
+  return this->joint_list_.at(index);
+}
 
-    size_t SenseGloveRobot::size() const
-    {
-        return this->jointList_.size();
-    }
+size_t SenseGloveRobot::size() const
+{
+  return this->joint_list_.size();
+}
 
-    SenseGloveRobot::iterator SenseGloveRobot::begin()
-    {
-        return this->jointList_.begin();
-    }
+SenseGloveRobot::iterator SenseGloveRobot::begin()
+{
+  return this->joint_list_.begin();
+}
 
-    SenseGloveRobot::iterator SenseGloveRobot::end()
-    {
-        return this->jointList_.end();
-    }
+SenseGloveRobot::iterator SenseGloveRobot::end()
+{
+  return this->joint_list_.end();
+}
 
-    SenseGloveRobot::~SenseGloveRobot()
-    {
-    }
+SenseGloveRobot::~SenseGloveRobot()
+{
+}
 
-    const urdf::Model& SenseGloveRobot::getUrdf() const
+void SenseGloveRobot::updateGloveData(const ros::Duration period)
+{
+  if (senseglove_.GetSensorData(sensor_data_))  // if GetSensorData is true, we have sucesfully recieved data
+  {
+    ROS_DEBUG("successfully update glove sensor data");
+    for (auto& joint : joint_list_)
     {
-        return this->urdf_;
+      joint.position_ = sensor_data_.sensorAngles[joint.joint_index_ / 4][joint.joint_index_ % 4];
+      joint.velocity_ = (sensor_data_.sensorAngles[joint.joint_index_ / 4][joint.joint_index_ % 4] - joint.velocity_) /
+                        period.toSec();
     }
+  }
+  if (senseglove_.GetGlovePose(glove_pose_))
+  {
+    ROS_DEBUG("Successfully updated glove pose data");
+  }
+}
+
+const urdf::Model& SenseGloveRobot::getUrdf() const
+{
+  return this->urdf_;
+}
 
 }  // namespace senseglove

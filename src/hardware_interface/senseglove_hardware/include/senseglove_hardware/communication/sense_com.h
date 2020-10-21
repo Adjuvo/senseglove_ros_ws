@@ -15,12 +15,8 @@ namespace senseglove
     class Sensecom
     {
     public:
-        Sensecom(int max_slave_index, int cycle_time);
+        Sensecom(int cycle_time);
         ~Sensecom();
-
-        /* Delete copy constructor/assignment since the member thread can not be copied */
-        Sensecom(const Sensecom&) = delete;
-        Sensecom& operator=(const Sensecom&) = delete;
 
         /* Delete move constructor/assignment since atomic bool cannot be moved */
         Sensecom(Sensecom&&) = delete;
@@ -48,10 +44,7 @@ namespace senseglove
 
     private:
         std::atomic<bool> is_operational_;
-        const int max_slave_index_;
         const int cycle_time_ms_;
-
-        std::thread communication_thread_;
     };
 }
 

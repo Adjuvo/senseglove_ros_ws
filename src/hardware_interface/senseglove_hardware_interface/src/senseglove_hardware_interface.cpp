@@ -15,7 +15,7 @@ using hardware_interface::JointStateHandle;
 using hardware_interface::PositionJointInterface;
 
 SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveSetup> setup)
-        : senseglove_setup_(std::move(setup)), num_joints_(this->senseglove_setup_->size()){
+        : senseglove_setup_(std::move(setup)), num_gloves_(this->senseglove_setup_->size()){
 }
 
 
@@ -32,6 +32,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
 
     // Start ethercat cycle in the hardware
     this->senseglove_setup_->startCommunication(true);
+    num_joints_ = num_gloves_ * 20; // make dependent on size of senseglove robot
     for(size_t i = 0; i < num_gloves_; ++i){
         // Initialize interfaces for each joint
         for (size_t k = 0; k < num_joints_; ++k) {
@@ -65,7 +66,8 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
             velocity_joint_interface_.registerHandle(joint_velocity_handle);
 
             // Prepare joints for actuation
-            if (joint.canActuate()) {
+            if (joint.canActuate())
+            {
                 joint.prepareActuation();
 
                 // Set the first target as the current position
@@ -95,10 +97,11 @@ void SenseGloveHardwareInterface::validate()
     // TO DO
 }
 
-void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
-
+void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::Duration &elapsed_time)
+{
     // read senseglove robot data
     for (size_t i = 0; i < num_gloves_; ++i) {
+        senseglove_setup_->getSenseGloveRobot(i).updateGloveData(elapsed_time);
         for (size_t k = 0; k < num_joints_; k++) {
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 

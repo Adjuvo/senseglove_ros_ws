@@ -19,12 +19,11 @@ namespace senseglove
     {
     private:
         ::std::vector<senseglove::SenseGloveRobot> sensegloves_;
-        Sensecom sensecom_;
 
     public:
         using iterator = std::vector<senseglove::SenseGloveRobot>::iterator;
 
-        SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves, int cycle_time);
+        SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves);
 
         ~SenseGloveSetup();
 
@@ -42,16 +41,16 @@ namespace senseglove
 
         bool isCommunicationOperational();
 
-        const SenseGloveRobot& getSenseGloveRobot(::std::string gloveName) const;
+        SenseGloveRobot& getSenseGloveRobot(::std::string gloveName);
 
-        const SenseGloveRobot& getSenseGloveRobot(int index) const;
+        SenseGloveRobot& getSenseGloveRobot(int index);
 
         size_t size() const;
 
         iterator begin();
         iterator end();
 
-        const urdf::Model& getRobotUrdf(std::string glove_robot_name) const;
+        const urdf::Model& getRobotUrdf(std::string glove_robot_name);
 
         /** @brief Override comparison operator */
         friend bool operator==(const SenseGloveSetup& lhs, const SenseGloveSetup& rhs)
