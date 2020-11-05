@@ -9,13 +9,13 @@ find_package(catkin REQUIRED COMPONENTS
         )
 
 find_library(SENSEGLOVE
-        NAMES SGCore.so
-        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
+        NAMES libSGCORE.so
+        PATHS /usr/local/lib/SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
 find_library(SENSEGLOVE_CONNECT
         NAMES SGConnect.so
-        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+        PATHS /usr/local/lib/SenseGlove_API/Core/SGConnect/lib/Linux
         REQUIRED)
 
 catkin_package(
@@ -34,8 +34,8 @@ include_directories(
         include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ../../SenseGlove_API/Core/SGConnect/incl
-        ../../SenseGlove_API/Core/SGCoreCpp/incl
+        /usr/local/lib/SenseGlove_API/Core/SGConnect/incl
+        /usr/local/lib/SenseGlove_API/Core/SGCoreCpp/incl
 )
 
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
@@ -56,7 +56,11 @@ add_library(${PROJECT_NAME}
         src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} ${SENSEGLOVE} ${SENSEGLOVE_CONNECT} ${catkin_LIBRARIES} pthread)
+target_link_libraries(${PROJECT_NAME}
+        ${catkin_LIBRARIES}
+        ${SENSEGLOVE}
+        ${SENSEGLOVE_CONNECT}
+        pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

@@ -29,7 +29,15 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_launch/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,22 +72,22 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/march_backup_ws" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/hardware_interface" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots" />
-      <recent name="$PROJECT_DIR$/src/SenseGlove-API" />
-      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/cmake" />
-      <recent name="$PROJECT_DIR$/src/senseglove/senseglove_description/cmake" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/senseglove" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/include/senseglove_hardware_builder" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/lib" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/lib" />
+      <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/lib" />
+      <recent name="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/lib/Linux" />
+      <recent name="$PROJECT_DIR$/src/SenseGlove_API/Core/SGConnect/lib/Linux" />
     </key>
   </component>
   <component name="RunManager">
@@ -109,7 +117,11 @@
       <workItem from="1601974389847" duration="184000" />
       <workItem from="1601974615078" duration="56411000" />
       <workItem from="1602878105117" duration="591000" />
-      <workItem from="1603178463937" duration="20986000" />
+      <workItem from="1603178463937" duration="21637000" />
+      <workItem from="1603461312786" duration="614000" />
+      <workItem from="1603544844463" duration="1198000" />
+      <workItem from="1604064268824" duration="541000" />
+      <workItem from="1604411057600" duration="10346000" />
     </task>
     <servers />
   </component>
@@ -137,12 +149,12 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1603184602202" />
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1601989800083">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1604421854695">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="735" y="310" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1601977114542" />
     <state x="776" y="310" key="FileChooserDialogImpl/1920.0.1920.1080/67.27.1853.1053@67.27.1853.1053" timestamp="1601989800083" />
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1601047550249" />
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1604421854695" />
     <state x="514" y="136" key="SettingsEditor" timestamp="1600780001528">
       <screen x="0" y="27" width="3840" height="1053" />
     </state>

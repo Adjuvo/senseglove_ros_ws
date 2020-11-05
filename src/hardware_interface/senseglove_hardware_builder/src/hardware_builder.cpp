@@ -11,6 +11,7 @@
 #include <ros/ros.h>
 
 #include <SGConnect.h>
+#include "SenseGlove.h"
 
 // clang-format off
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };

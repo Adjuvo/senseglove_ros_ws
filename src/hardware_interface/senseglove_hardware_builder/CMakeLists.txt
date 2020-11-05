@@ -10,6 +10,16 @@ find_package(catkin REQUIRED COMPONENTS
         urdf
         )
 
+find_library(SENSEGLOVE
+    NAMES SGCore.so libSGCORE.so
+    PATHS /usr/local/lib/SenseGlove_API/Core/SGCoreCpp/lib/Linux
+    REQUIRED)
+
+find_library(SENSEGLOVE_CONNECT
+    NAMES SGConnect.so
+    PATHS /usr/local/lib/SenseGlove_API/Core/SGConnect/lib/Linux
+    REQUIRED)
+
 catkin_package(
         INCLUDE_DIRS include
         CATKIN_DEPENDS
@@ -29,8 +39,8 @@ catkin_package(
 include_directories(include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ../../SenseGlove_API/Core/SGConnect/incl
-        ../../SenseGlove_API/Core/SGCoreCpp/incl)
+        /usr/local/lib/SenseGlove_API/Core/SGConnect/incl
+        /usr/local/lib/SenseGlove_API/Core/SGCoreCpp/incl)
 
 add_library(${PROJECT_NAME}
         src/hardware_builder.cpp
@@ -38,6 +48,8 @@ add_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         ${catkin_LIBRARIES}
+        ${SENSEGLOVE}
+        ${SENSEGLOVE_CONNECT}
         yaml-cpp
         )
 

@@ -24,6 +24,7 @@
   <depend>senseglove_shared_resources</depend>
   <depend>std_msgs</depend>
   <depend>urdf</depend>
+  <depend>SENSEGLOVE</depend>
 
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>xacro</exec_depend>

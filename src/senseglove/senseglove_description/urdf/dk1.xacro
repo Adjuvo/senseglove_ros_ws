@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <!-- Revolute-Revolute Manipulator -->
 <robot name="dk1" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <!-- Switch between airgaiting or standing on the ground-->
-    <!--Value set to: 'world' fixes the robot to the world-->
-    <!--Value set to: 'base_link' makes the robot stand on the ground-->
-    <!--Important note: when changing value make sure rviz fixed frame is set to the same value (moveit.rviz)-->
 
     <!-- Constants for robot dimensions -->
     <xacro:property name="PI" value="3.1415926535897931"/>
@@ -37,6 +33,11 @@
         <child link="bar"/>
         <origin xyz="0 ${-joint_base_width} 0" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
+
+        <limit velocity="${10}"
+               effort="${10000}"
+               lower="${-5}"
+               upper="${5}"/>
     </joint>
 
     <!-- Joint Base-->
