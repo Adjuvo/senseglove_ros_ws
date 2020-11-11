@@ -29,9 +29,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +112,7 @@
       <workItem from="1603461312786" duration="614000" />
       <workItem from="1603544844463" duration="1198000" />
       <workItem from="1604064268824" duration="541000" />
-      <workItem from="1604411057600" duration="40453000" />
+      <workItem from="1604411057600" duration="41906000" />
     </task>
     <servers />
   </component>

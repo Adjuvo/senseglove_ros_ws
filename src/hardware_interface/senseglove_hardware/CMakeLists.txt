@@ -56,11 +56,7 @@ add_library(${PROJECT_NAME}
         src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME}
-        ${catkin_LIBRARIES}
-        ${SGCORE}
-        ${SGCONNECT}
-        pthread)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SGCORE} ${SGCONNECT} pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
