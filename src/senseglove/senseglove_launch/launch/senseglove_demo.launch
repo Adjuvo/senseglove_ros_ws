@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch">
+                <arg name="robot" value="dk1"/>
+    </include>
+</launch>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>senseglove_description</name>
+  <version>0.0.0</version>
+  <description>
+    provides descriptive features of the senseglove
+  </description>
+
+  <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>xacro</build_depend>
+</package>

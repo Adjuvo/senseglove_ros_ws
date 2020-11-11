@@ -1,0 +1,18 @@
+image: docker:git
+services:
+  - docker:dind
+before_script:
+  - apk add --update bash coreutils tar
+  - git clone --quiet --depth 1 https://github.com/ros-industrial/industrial_ci .industrial_ci -b master
+melodic:
+  script: .industrial_ci/gitlab.sh ROS_DISTRO=melodic
+  variables:
+    BUILDER: colcon
+    CATKIN_LINT: pedantic
+    CATKIN_LINT_ARGS: '--ignore external_directory'
+    #    CLANG_FORMAT_CHECK: file
+    ROSDEP_SKIP_KEYS: "SenseGlove_API"
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 week
