@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
         )
 
 find_library(SGCORE
-        NAMES SGCORE.so
+        NAMES SGCore.so
         PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
