@@ -15,7 +15,6 @@
 
   <depend>roscpp</depend>
   <depend>urdf</depend>
-  <depend>SGCORE</depend>
 
   <test_depend>code_coverage</test_depend>
   <test_depend>rosunit</test_depend>
