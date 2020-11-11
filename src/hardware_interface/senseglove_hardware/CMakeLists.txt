@@ -8,12 +8,12 @@ find_package(catkin REQUIRED COMPONENTS
         urdf
         )
 
-find_library(SENSEGLOVE
+find_library(SGCORE
         NAMES libSGCORE.so
         PATHS /usr/local/lib/SenseGlove_API/Core/SGCoreCpp/lib/Linux
         REQUIRED)
 
-find_library(SENSEGLOVE_CONNECT
+find_library(SGCONNECT
         NAMES SGConnect.so
         PATHS /usr/local/lib/SenseGlove_API/Core/SGConnect/lib/Linux
         REQUIRED)
@@ -58,8 +58,8 @@ add_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         ${catkin_LIBRARIES}
-        ${SENSEGLOVE}
-        ${SENSEGLOVE_CONNECT}
+        ${SGCORE}
+        ${SGCONNECT}
         pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/

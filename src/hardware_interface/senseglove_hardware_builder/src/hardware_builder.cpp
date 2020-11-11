@@ -46,25 +46,28 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 //    const auto cycle_time = config["communicationCycleTime"].as<int>();
 //    const auto device_type = config["deviceType"].as<int>();
 
-    if (!SGConnect::ScanningActive())
+    std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
+    ROS_DEBUG_STREAM("creating sensegloves");
+
+    if (SGCore::DeviceList::SenseCommRunning())
     {
-      if(SGConnect::Init() != 1)
+      ROS_INFO("Obtained the following gloves: ");
+      for (unsigned int i = 0; i < all_gloves.size(); ++i)
       {
-        ROS_WARN("Something went wrong trying to initiate SGConnect");
+        ROS_INFO("%s", all_gloves[i].ToString());
       }
+      this->initUrdf(all_gloves[0].GetDeviceType());
+      ROS_DEBUG_STREAM("Obtained devicetype from glove");
     }
     else
     {
-      ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
+      ROS_ERROR("No Sensegloves connected");
     }
-    std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
-
-    this->initUrdf(all_gloves[0].GetDeviceType());
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
-
+    ROS_DEBUG_STREAM("Created joints");
     std::vector<senseglove::SenseGloveRobot> sensegloves = this->createRobots(config, this->urdf_, std::move(joints), all_gloves);
-
+    ROS_DEBUG_STREAM("Created Robots");
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
 }
@@ -97,7 +100,7 @@ senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, c
         mode = senseglove::ActuationMode(joint_config["actuationMode"].as<std::string>());
     }
 
-    return { joint_name, joint_index, allow_actuation };
+    return { joint_name, joint_index, allow_actuation, mode };
 }
 
 senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot_config, urdf::Model urdf, std::vector<senseglove::Joint> jointList, SGCore::SG::SenseGlove glove, int robot_index)
@@ -142,7 +145,7 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
             break;
         }
 
-        if (!this->urdf_.initParam("/robot_description_" + type_string))
+        if (!this->urdf_.initParam("/robot_description"))
         {
             ROS_ERROR("Failed initializing the URDF: %s", type_string);
 //            throw senseglove::error::HardwareException(senseglove::error::ErrorType::INIT_URDF_FAILED);
@@ -164,6 +167,7 @@ std::vector<senseglove::Joint> HardwareBuilder::createJoints(const YAML::Node& j
         }
         joints.push_back(
                 HardwareBuilder::createJoint(joint_config[joint_name], joint_name, urdf_joint));
+
     }
 
     for (const auto& urdf_joint : this->urdf_.joints_)

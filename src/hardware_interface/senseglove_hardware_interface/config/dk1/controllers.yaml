@@ -1,6 +1,6 @@
-dk1:
+senseglove:
   controller:
-    glove_state:
+    joint_state:
       type: joint_state_controller/JointStateController
       publish_rate: 250
     hand_state:
@@ -10,8 +10,8 @@ dk1:
       type: position_controllers/JointTrajectoryController
       allow_partial_joints_goal: true
       joints:
-        - thumbCMC
-        - indexMCP
-        - middleMCP
-        - ringMCP
-        - pinkyMCP
+        - thumb_cmc
+        - index_mcp
+        - middle_mcp
+        - ring_mcp
+        - pinky_mcp

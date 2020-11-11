@@ -85,7 +85,7 @@ namespace senseglove
     {
         if (!SGCore::DeviceList::SenseCommRunning())
         {
-            ROS_WARN("Trying to access joints while ethercat is not operational. This "
+            ROS_WARN("Trying to access joints while communication is not operational. This "
                      "may lead to incorrect sensor data.");
         }
         return sensegloves_.at(index);

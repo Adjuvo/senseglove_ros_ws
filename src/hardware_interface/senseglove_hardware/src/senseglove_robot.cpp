@@ -62,17 +62,24 @@ void SenseGloveRobot::updateGloveData(const ros::Duration period)
 {
   if (senseglove_.GetSensorData(sensor_data_))  // if GetSensorData is true, we have sucesfully recieved data
   {
-    ROS_DEBUG("successfully update glove sensor data");
+    // ROS_DEBUG("successfully update glove sensor data");
     for (auto& joint : joint_list_)
     {
       joint.position_ = sensor_data_.sensorAngles[joint.joint_index_ / 4][joint.joint_index_ % 4];
-      joint.velocity_ = (sensor_data_.sensorAngles[joint.joint_index_ / 4][joint.joint_index_ % 4] - joint.velocity_) /
-                        period.toSec();
+      double intermediate_vel = (sensor_data_.sensorAngles[joint.joint_index_ / 4][joint.joint_index_ % 4] - joint.velocity_);
+      if (intermediate_vel != 0.0 and period.toSec() != 0.0)
+      {
+        joint.velocity_ = intermediate_vel / 1;
+      }
+      else
+      {
+        joint.velocity_ = 0.0;
+      }
     }
   }
-  if (senseglove_.GetGlovePose(glove_pose_))
+  if (!senseglove_.GetGlovePose(glove_pose_))
   {
-    ROS_DEBUG("Successfully updated glove pose data");
+    ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data");
   }
 }
 

@@ -18,3 +18,4 @@ TO DO:
 * adjust .gitlab-ci.yml to include clang only if it does not check the SenseGlove_API package due to style differences.
 * Give each SenseGlove a unique HWI so that multiple/varying controllers can be used at runtime
 * Implement sensecom.h class for consistent timing of data acquisition
+* Add CMake arguments to use provided package .so lib instead of manually installing with ldconfig and cp'ing into opt/ros/lib

@@ -29,13 +29,21 @@
   <component name="ChangeListManager">
     <list default="true" id="8f7242a6-36cf-43f7-81e5-25f4c5237138" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/include/senseglove_hardware/joint.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/joint.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_robot.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/src/senseglove_setup.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/dk1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/robots/dk1.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/src/hardware_builder.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/controllers.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1/controllers.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/src/senseglove_hardware_interface_node.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/src/senseglove/senseglove_description/urdf/dk1.xacro" afterDir="false" />
     </list>
@@ -72,7 +80,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/march_backup_ws" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/install/senseglove_hardware_interface/lib/senseglove_hardware_interface" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
@@ -83,11 +91,11 @@
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/config/dk1" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/install/senseglove_hardware_interface/lib/senseglove_hardware_interface" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware/lib" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_builder/lib" />
       <recent name="$PROJECT_DIR$/src/hardware_interface/senseglove_hardware_interface/lib" />
       <recent name="$PROJECT_DIR$/src/SenseGlove_API/Core/SGCoreCpp/lib/Linux" />
-      <recent name="$PROJECT_DIR$/src/SenseGlove_API/Core/SGConnect/lib/Linux" />
     </key>
   </component>
   <component name="RunManager">
@@ -121,7 +129,7 @@
       <workItem from="1603461312786" duration="614000" />
       <workItem from="1603544844463" duration="1198000" />
       <workItem from="1604064268824" duration="541000" />
-      <workItem from="1604411057600" duration="10346000" />
+      <workItem from="1604411057600" duration="38298000" />
     </task>
     <servers />
   </component>
@@ -163,6 +171,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="603" y="166" width="770" height="773" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1603286924253" />
+    <state x="657" y="253" key="run.anything.popup" timestamp="1605016021879">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="657" y="253" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1605016021879" />
     <state x="610" y="257" width="697" height="678" key="search.everywhere.popup" timestamp="1602620722151">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

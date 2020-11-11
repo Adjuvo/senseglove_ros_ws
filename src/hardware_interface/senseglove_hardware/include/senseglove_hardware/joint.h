@@ -28,12 +28,12 @@ namespace senseglove
         /**
          * Initializes a Joint without a finger
          */
-        Joint(std::string name, int net_number, bool allow_actuation);
+        Joint(std::string name, int net_number, bool allow_actuation, ActuationMode mode);
 
         /**
          * Initializes a Joint with a Finger
          */
-        Joint(std::string name, int net_number, bool allow_actuation, std::unique_ptr<SGCore::Finger> finger);
+        Joint(std::string name, int net_number, bool allow_actuation, ActuationMode mode, std::unique_ptr<SGCore::Finger> finger);
 
         virtual ~Joint() noexcept = default;
 
@@ -94,6 +94,7 @@ namespace senseglove
         const std::string name_;
         const int joint_index_;
         bool allow_actuation_ = false;
+        ActuationMode actuation_mode_;
 
         double position_ = 0.0;
         double velocity_ = 0.0;

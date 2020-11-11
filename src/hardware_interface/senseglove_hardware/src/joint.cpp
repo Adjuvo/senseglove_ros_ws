@@ -15,15 +15,20 @@ namespace senseglove
     {
     }
 
-    Joint::Joint(std::string name, int joint_index, bool allow_actuation)
+    Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode)
             : name_(std::move(name))
             , joint_index_(joint_index)
             , allow_actuation_(allow_actuation)
+            , actuation_mode_(mode)
     {
     }
 
-    Joint::Joint(std::string name, int joint_index, bool allow_actuation, std::unique_ptr<SGCore::Finger> finger)
-            : name_(std::move(name)), joint_index_(joint_index), allow_actuation_(allow_actuation), finger_(std::move(finger))
+    Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode, std::unique_ptr<SGCore::Finger> finger)
+            : name_(std::move(name))
+            , joint_index_(joint_index)
+            , allow_actuation_(allow_actuation)
+            , actuation_mode_(mode)
+            , finger_(std::move(finger))
     {
     }
 
@@ -104,6 +109,6 @@ namespace senseglove
 
     ActuationMode Joint::getActuationMode() const
     {
-        return this->getActuationMode();
+        return actuation_mode_;
     }
 }  // namespace senseglove

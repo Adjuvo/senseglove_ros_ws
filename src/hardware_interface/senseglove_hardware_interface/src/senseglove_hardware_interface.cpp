@@ -28,20 +28,25 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
 
     this->uploadJointNames(nh);
 
+    num_joints_ = 20; // make dependent on size of senseglove robot
     this->reserveMemory();
 
     // Start ethercat cycle in the hardware
     this->senseglove_setup_->startCommunication(true);
-    num_joints_ = num_gloves_ * 20; // make dependent on size of senseglove robot
+
     for(size_t i = 0; i < num_gloves_; ++i){
         // Initialize interfaces for each joint
         for (size_t k = 0; k < num_joints_; ++k) {
             senseglove::Joint &joint = this->senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
+            ROS_DEBUG_STREAM("Obtained necessary joint");
+            std::cout << num_gloves_ << " joint size: " << joint_velocity_[i].size() << "num_joints: " << num_joints_ << std::endl;
 
             // Create joint state interface
             JointStateHandle joint_state_handle(joint.getName(), &joint_position_[i][k], &joint_velocity_[i][k],
                                                 &joint_effort_[i][k]);
+            ROS_DEBUG_STREAM("joint state interface handle created");
             joint_state_interface_.registerHandle(joint_state_handle);
+            ROS_DEBUG_STREAM("joint state interface handle registered");
 
             if (joint.getActuationMode() == senseglove::ActuationMode::position) {
                 // Create position joint interface
@@ -60,27 +65,28 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     //            EffortJointSoftLimitsHandle joint_effort_limits_handle(joint_effort_handle_, limits, soft_limits_[i][k]);
     //            effort_joint_soft_limits_interface_.registerHandle(joint_effort_limits_handle);
             }
+            ROS_DEBUG_STREAM("Handles registered");
 
             // Create velocity joint interface
             JointHandle joint_velocity_handle(joint_state_handle, &joint_velocity_command_[i][k]);
             velocity_joint_interface_.registerHandle(joint_velocity_handle);
 
             // Prepare joints for actuation
-            if (joint.canActuate())
-            {
-                joint.prepareActuation();
-
-                // Set the first target as the current position
-                joint_position_[i][k] = joint.getPosition();
-                joint_velocity_[i][k] = joint.getVelocity();
-                joint_effort_[i][k] = 0;
-
-                if (joint.getActuationMode() == senseglove::ActuationMode::position) {
-                    joint_position_command_[i][k] = joint_position_[i][k];
-                } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
-                    joint_effort_command_[i][k] = 0;
-                }
-            }
+//            if (joint.canActuate())
+//            {
+//                joint.prepareActuation();
+//
+//                // Set the first target as the current position
+//                joint_position_[i][k] = joint.getPosition();
+//                joint_velocity_[i][k] = joint.getVelocity();
+//                joint_effort_[i][k] = 0;
+//
+//                if (joint.getActuationMode() == senseglove::ActuationMode::position) {
+//                    joint_position_command_[i][k] = joint_position_[i][k];
+//                } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
+//                    joint_effort_command_[i][k] = 0;
+//                }
+//            }
         }
     }
     ROS_INFO("Successfully actuated all joints");
@@ -102,17 +108,16 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
     // read senseglove robot data
     for (size_t i = 0; i < num_gloves_; ++i) {
         senseglove_setup_->getSenseGloveRobot(i).updateGloveData(elapsed_time);
-        for (size_t k = 0; k < num_joints_; k++) {
+        for (size_t k = 0; k < num_joints_; ++k) {
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 
             // Update position with he most accurate velocity
-            joint.readAngle();
+//            joint.readAngle();
             joint_position_[i][k] = joint.getPosition();
             joint_velocity_[i][k] = joint.getVelocity();
             joint_effort_[i][k] = joint.getTorque();
         }
     }
-
     this->updateSenseGloveState();
 }
 
@@ -163,33 +168,47 @@ void SenseGloveHardwareInterface::uploadJointNames(ros::NodeHandle &nh) const {
 }
 
 void SenseGloveHardwareInterface::reserveMemory() {
-    joint_position_.resize(num_joints_);
-    joint_position_command_.resize(num_joints_);
-    joint_velocity_.resize(num_joints_);
-    joint_velocity_command_.resize(num_joints_);
-    joint_effort_.resize(num_joints_);
-    joint_effort_command_.resize(num_joints_);
-    joint_last_effort_command_.resize(num_joints_);
+    joint_position_.resize(num_gloves_);
+    joint_position_command_.resize(num_gloves_);
+    joint_velocity_.resize(num_gloves_);
+    joint_velocity_command_.resize(num_gloves_);
+    joint_effort_.resize(num_gloves_);
+    joint_effort_command_.resize(num_gloves_);
+    joint_last_effort_command_.resize(num_gloves_);
+    for (unsigned int i = 0; i < num_gloves_; ++i)
+    {
+      joint_position_[i].resize(num_joints_);
+      joint_position_command_[i].resize(num_joints_);
+      joint_velocity_[i].resize(num_joints_);
+      joint_velocity_command_[i].resize(num_joints_);
+      joint_effort_[i].resize(num_joints_);
+      joint_effort_command_[i].resize(num_joints_);
+      joint_last_effort_command_[i].resize(num_joints_);
+    }
 
-    senseglove_state_pub_->msg_.joint_names.resize(num_joints_);
-    senseglove_state_pub_->msg_.position.resize(num_joints_);
-    senseglove_state_pub_->msg_.absolute_velocity.resize(num_joints_);
+    senseglove_state_pub_->msg_.joint_names.resize(num_gloves_*num_joints_);
+    senseglove_state_pub_->msg_.position.resize(num_gloves_*num_joints_);
+    senseglove_state_pub_->msg_.absolute_velocity.resize(num_gloves_*num_joints_);
 }
 
 void SenseGloveHardwareInterface::updateSenseGloveState() {
-//    if (!senseglove_state_pub_->trylock()) {
-//        return;
-//    }
-//
-//    senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
-//    for (size_t i = 0; i < num_joints_; i++) {
-//        senseglove::Joint &joint = senseglove_robot_->getJoint(i);
+    if (!senseglove_state_pub_->trylock()) {
+        return;
+    }
+
+    senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
+    for (size_t i = 0; i < num_gloves_; ++i)
+    {
+      for (size_t j = 0; j < num_joints_; ++j)
+      {
+        senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(i);
 //        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
-//        senseglove_state->msg_.header.stamp = ros::Time::now();
-//        senseglove_state->msg_.joint_names[i] = joint.getName();
-//        senseglove_state->msg_.position[i] = senseglove_state.position;
-//        senseglove_state->msg_.absolute_velocity[i] = senseglove_state.absoluteVelocity;
-//    }
-//
-//    senseglove_state->unlockAndPublish();
+        senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
+        senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
+        senseglove_state_pub_->msg_.position[i] = joint.getPosition();
+        senseglove_state_pub_->msg_.absolute_velocity[i] = joint.getVelocity();
+      }
+    }
+
+    senseglove_state_pub_->unlockAndPublish();
 }

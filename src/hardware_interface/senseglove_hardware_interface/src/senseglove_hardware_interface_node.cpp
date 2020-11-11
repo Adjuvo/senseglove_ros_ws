@@ -27,7 +27,21 @@ int main(int argc, char** argv)
 
     spinner.start();
 
+    if (!SGConnect::ScanningActive())
+    {
+      ROS_WARN("No SGConnect active, starting up SGConnect");
+      if(SGConnect::Init() != 1)
+      {
+        ROS_WARN("Something went wrong trying to initiate SGConnect");
+      }
+    }
+    else
+    {
+      ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
+    }
+
     SenseGloveHardwareInterface SenseGlove(build(selected_robot));
+    ROS_DEBUG_STREAM("Successfully built the robot");
 
     try
     {
