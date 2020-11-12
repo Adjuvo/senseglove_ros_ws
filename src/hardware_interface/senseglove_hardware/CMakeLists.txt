@@ -8,6 +8,9 @@ find_package(catkin REQUIRED COMPONENTS
         urdf
         )
 
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+
 find_library(SGCORE
         NAMES SGCore.so
         PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
