@@ -23,6 +23,8 @@ namespace senseglove
     public:
         using iterator = std::vector<senseglove::SenseGloveRobot>::iterator;
 
+        SenseGloveSetup(senseglove::SenseGloveRobot sensegloves);
+
         SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves);
 
         ~SenseGloveSetup();

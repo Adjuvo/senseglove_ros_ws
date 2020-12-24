@@ -25,7 +25,7 @@ public:
      * @brief Initialises a HardwareBuilder with a robotName enumerator.
      * @details Grabs the .yaml file associated with the robot name.
      */
-    explicit HardwareBuilder(AllowedRobot robot);
+    explicit HardwareBuilder(AllowedRobot robot, int nr_of_glove);
 
     /**
      * @brief Initialises with a robot name and URDF.
@@ -35,7 +35,7 @@ public:
     /**
      * @brief Initialises a HardwareBuilder with a path to a .yaml file.
      */
-    explicit HardwareBuilder(const std::string& yaml_path);
+    explicit HardwareBuilder(const std::string& yaml_path, int nr_of_glove);
 
     /**
      * @brief Initialises with a path to yaml and URDF.
@@ -86,6 +86,7 @@ private:
     YAML::Node robot_config_;
     urdf::Model urdf_;
     bool init_urdf_ = true;
+    int nr_of_glove_;
 };
 
 #endif //ROS_WORKSPACE_HARDWARE_BUILDER_H

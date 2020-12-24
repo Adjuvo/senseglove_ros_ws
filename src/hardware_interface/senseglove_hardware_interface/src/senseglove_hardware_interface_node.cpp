@@ -9,7 +9,7 @@
 #include <senseglove_hardware/senseglove_robot.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
 
-std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot);
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_glove);
 
 int main(int argc, char** argv)
 {
@@ -23,6 +23,7 @@ int main(int argc, char** argv)
         return 1;
     }
     AllowedRobot selected_robot = AllowedRobot(argv[1]);
+    int nr_of_glove = std::stoi(argv[2]) - 1;
     ROS_INFO_STREAM("Selected robot: " << selected_robot);
 
     spinner.start();
@@ -40,7 +41,7 @@ int main(int argc, char** argv)
       ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
     }
 
-    SenseGloveHardwareInterface SenseGlove(build(selected_robot));
+    SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove));
     ROS_DEBUG_STREAM("Successfully built the robot");
 
     try
@@ -85,9 +86,9 @@ int main(int argc, char** argv)
     return 0;
 }
 
-std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot)
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_gloves)
 {
-    HardwareBuilder builder(robot);
+    HardwareBuilder builder(robot, nr_of_gloves);
     try
     {
         return builder.createSenseGloveSetup();

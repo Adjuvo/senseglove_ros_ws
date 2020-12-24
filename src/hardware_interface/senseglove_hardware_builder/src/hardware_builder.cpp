@@ -18,7 +18,7 @@ const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowAc
 const std::vector<std::string> HardwareBuilder::ROBOT_REQUIRED_KEYS = { "deviceType" };
 // clang-format on
 
-HardwareBuilder::HardwareBuilder(AllowedRobot robot) : HardwareBuilder(robot.getFilePath())
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove) : HardwareBuilder(robot.getFilePath(), nr_of_glove)
 {
 }
 
@@ -27,7 +27,7 @@ HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdf)
 {
 }
 
-HardwareBuilder::HardwareBuilder(const std::string& yaml_path) : robot_config_(YAML::LoadFile(yaml_path))
+HardwareBuilder::HardwareBuilder(const std::string& yaml_path, int nr_of_glove) : robot_config_(YAML::LoadFile(yaml_path)), nr_of_glove_(nr_of_glove)
 {
 }
 
@@ -65,8 +65,8 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     }
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
-    ROS_DEBUG_STREAM("Created joints");
-    std::vector<senseglove::SenseGloveRobot> sensegloves = this->createRobots(config, this->urdf_, std::move(joints), all_gloves);
+    ROS_DEBUG_STREAM("Created joints " << nr_of_glove_);
+    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
     ROS_DEBUG_STREAM("Created Robots");
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));

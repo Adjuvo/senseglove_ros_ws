@@ -1,11 +1,11 @@
 <launch>
     <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, fino, beta, unknown."/>
-
-    <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
+    <arg name="nr_of_gloves" default="2" doc="specify the number of gloves connected (either 1 or 2)"/>
 
     <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf"/>
+    <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)_1/controllers.yaml" command="load"/>
 
-    <group ns="senseglove">
+    <group ns="/senseglove_1">
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
@@ -17,10 +17,34 @@
                 name="hardware_interface"
                 pkg="senseglove_hardware_interface"
                 type="senseglove_hardware_interface_node"
-                args="$(arg robot)"
+                args="$(arg robot) 1"
                 output="screen"
                 required="true"
         >
         </node>
     </group>
+
+
+    <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)_2/controllers.yaml" command="load"/>
+
+    <group ns="/senseglove_$(arg nr_of_gloves)">
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+        <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
+              output="screen"
+              args="spawn controller/joint_state controller/trajectory"
+        />
+
+        <node
+                name="hardware_interface"
+                pkg="senseglove_hardware_interface"
+                type="senseglove_hardware_interface_node"
+                args="$(arg robot) $(arg nr_of_gloves)"
+                output="screen"
+                required="true"
+        >
+        </node>
+    </group>
+
+
 </launch>

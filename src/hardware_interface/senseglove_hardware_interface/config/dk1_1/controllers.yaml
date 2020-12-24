@@ -1,4 +1,4 @@
-senseglove:
+senseglove_1:
   controller:
     joint_state:
       type: joint_state_controller/JointStateController

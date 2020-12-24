@@ -20,6 +20,11 @@ namespace senseglove
     {
     }
 
+    SenseGloveSetup::SenseGloveSetup(senseglove::SenseGloveRobot sensegloves)
+    {
+      sensegloves_.push_back(std::move(sensegloves));
+    }
+
     void SenseGloveSetup::startCommunication(bool /*reset*/)
     {
         if (SGCore::DeviceList::SenseCommRunning())
