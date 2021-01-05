@@ -1,6 +1,6 @@
-senseglove_1:
+nova:
   controller:
-    joint_state:
+    glove_state:
       type: joint_state_controller/JointStateController
       publish_rate: 250
     hand_state:
@@ -10,8 +10,8 @@ senseglove_1:
       type: position_controllers/JointTrajectoryController
       allow_partial_joints_goal: true
       joints:
-        - thumb_cmc
-        - index_mcp
-        - middle_mcp
-        - ring_mcp
-        - pinky_mcp
+        - thumbBrake
+        - indexBrake
+        - middleBrake
+        - ringBrake
+        - pinkyBrake
