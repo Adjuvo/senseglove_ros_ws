@@ -1,4 +1,4 @@
-fino:
+nova:
   controller:
     glove_state:
       type: joint_state_controller/JointStateController

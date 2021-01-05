@@ -1,5 +1,5 @@
 <launch>
-    <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, fino, beta, unknown."/>
+    <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, nova, beta, unknown."/>
     <arg name="nr_of_glove" default="1" doc="specify the number of gloves connected (either 1 or 2)"/>
 
     <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf"/>
