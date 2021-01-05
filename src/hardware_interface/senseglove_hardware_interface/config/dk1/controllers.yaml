@@ -1,0 +1,16 @@
+controller:
+  joint_state:
+    type: joint_state_controller/JointStateController
+    publish_rate: 250
+  hand_state:
+    type: joint_state_controller/JointStateController
+    publish_rate: 250
+  trajectory:
+    type: position_controllers/JointTrajectoryController
+    allow_partial_joints_goal: true
+    joints:
+      - thumb_cmc
+      - index_mcp
+      - middle_mcp
+      - ring_mcp
+      - pinky_mcp

@@ -3,9 +3,9 @@
     <arg name="nr_of_gloves" default="2" doc="specify the number of gloves connected (either 1 or 2)"/>
 
     <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf"/>
-    <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)_1/controllers.yaml" command="load"/>
 
     <group ns="/senseglove_1">
+        <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
@@ -24,10 +24,8 @@
         </node>
     </group>
 
-
-    <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)_2/controllers.yaml" command="load"/>
-
     <group ns="/senseglove_$(arg nr_of_gloves)">
+        <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
