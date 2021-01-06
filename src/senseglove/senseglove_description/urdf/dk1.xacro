@@ -385,8 +385,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="thumb_abduction" type="revolute">
@@ -397,20 +397,20 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="thumb_cmc" type="revolute">
         <parent link="thumb_flexion_one"/>
         <child link="thumb_flexion_two"/>
-        <origin xyz="0 0 ${first_bar_length}" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${0.25}"/>
     </joint>
 
     <joint name="thumb_mcp" type="revolute">
@@ -421,8 +421,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${0}"
+               upper="${2.5}"/>
     </joint>
 
     <joint name="thumb_pip" type="revolute">
@@ -433,8 +433,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-4.2}"
+               upper="${0}"/>
     </joint>
 
     <joint name="hub_to_index_brake" type="fixed">
@@ -451,8 +451,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="index_abduction" type="revolute">
@@ -463,8 +463,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="index_mcp" type="revolute">
@@ -475,8 +475,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${0.25}"/>
     </joint>
 
     <joint name="index_pip" type="revolute">
@@ -487,8 +487,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${0}"
+               upper="${2.5}"/>
     </joint>
 
     <joint name="index_dip" type="revolute">
@@ -499,8 +499,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-4.2}"
+               upper="${0}"/>
     </joint>
 
     <joint name="hub_to_middle_brake" type="fixed">
@@ -517,8 +517,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="middle_abduction" type="revolute">
@@ -529,8 +529,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="middle_mcp" type="revolute">
@@ -541,8 +541,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${0.25}"/>
     </joint>
 
     <joint name="middle_pip" type="revolute">
@@ -553,8 +553,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${0}"
+               upper="${2.5}"/>
     </joint>
 
     <joint name="middle_dip" type="revolute">
@@ -565,8 +565,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-4.2}"
+               upper="${0}"/>
     </joint>
 
     <joint name="hub_to_ring_brake" type="fixed">
@@ -583,8 +583,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="ring_abduction" type="revolute">
@@ -595,8 +595,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="ring_mcp" type="revolute">
@@ -607,8 +607,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${0.25}"/>
     </joint>
 
     <joint name="ring_pip" type="revolute">
@@ -619,8 +619,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${0}"
+               upper="${2.5}"/>
     </joint>
 
     <joint name="ring_dip" type="revolute">
@@ -631,8 +631,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-4.2}"
+               upper="${0}"/>
     </joint>
 
     <joint name="hub_to_pinky_brake" type="fixed">
@@ -649,8 +649,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="pinky_abduction" type="revolute">
@@ -661,8 +661,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${2}"/>
     </joint>
 
     <joint name="pinky_mcp" type="revolute">
@@ -673,8 +673,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-2}"
+               upper="${0.25}"/>
     </joint>
 
     <joint name="pinky_pip" type="revolute">
@@ -685,8 +685,8 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${0}"
+               upper="${2.5}"/>
     </joint>
 
     <joint name="pinky_dip" type="revolute">
@@ -697,7 +697,7 @@
 
         <limit velocity="${1}"
                effort="${10000}"
-               lower="${-1}"
-               upper="${1}"/>
+               lower="${-4.2}"
+               upper="${0}"/>
     </joint>
 </robot>
