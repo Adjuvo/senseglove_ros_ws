@@ -27,11 +27,12 @@ namespace senseglove
         const std::string name_;
         const SGCore::DeviceType device_type_;
         const int robot_index_;
+        bool is_right_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
 
-        SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex);
+        SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex, bool is_right);
 
         ~SenseGloveRobot();
 
