@@ -12,8 +12,8 @@
 
 namespace senseglove
 {
-SenseGloveRobot::SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex)
-  : senseglove_(glove), joint_list_(std::move(jointList)), urdf_(std::move(urdf)), name_("senseglove_" + std::to_string(robotIndex+1)), device_type_(this->senseglove_.GetDeviceType()), robot_index_(robotIndex)
+SenseGloveRobot::SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex, bool is_right)
+  : senseglove_(glove), joint_list_(std::move(jointList)), urdf_(std::move(urdf)), name_("senseglove_" + std::to_string(robotIndex+1)), device_type_(this->senseglove_.GetDeviceType()), robot_index_(robotIndex), is_right_(is_right)
 {
 }
 

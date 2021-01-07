@@ -107,8 +107,9 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
 {
     ROS_DEBUG("Starting creation of glove %d", robot_index);
     HardwareBuilder::validateRequiredKeysExist(robot_config, HardwareBuilder::ROBOT_REQUIRED_KEYS, "glove");
+    bool is_right = glove.IsRight();
 
-    return { glove, std::move(jointList), std::move(urdf), robot_index};
+    return { glove, std::move(jointList), std::move(urdf), robot_index, is_right};
 }
 
 void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const std::vector<std::string>& key_list,
