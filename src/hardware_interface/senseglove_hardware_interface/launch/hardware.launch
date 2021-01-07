@@ -1,8 +1,10 @@
 <launch>
     <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, nova, beta, unknown."/>
-    <arg name="nr_of_glove" default="1" doc="specify the number of gloves connected (either 1 or 2)"/>
+    <arg name="nr_of_glove" default="1" doc="specify the number of the glove"/>
+    <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
-    <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf"/>
+    <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_right.urdf" if="$(eval arg('is_right')==true)"/>
+    <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_left.urdf" if="$(eval arg('is_right')==false)"/>
 
     <group ns="/senseglove_$(arg nr_of_glove)">
         <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
