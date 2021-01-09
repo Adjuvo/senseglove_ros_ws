@@ -9,6 +9,15 @@ controller:
     type: position_controllers/JointTrajectoryController
     allow_partial_joints_goal: true
     joints:
+      - thumb_brake
+      - index_brake
+      - middle_brake
+      - ring_brake
+      - pinky_brake
+  buzzer:
+    type: position_controllers/JointTrajectoryController
+    allow_partial_joints_goal: true
+    joints:
       - thumb_cmc
       - index_mcp
       - middle_mcp

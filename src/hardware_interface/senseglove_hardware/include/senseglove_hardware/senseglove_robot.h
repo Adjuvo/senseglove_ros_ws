@@ -22,6 +22,10 @@ namespace senseglove
         SGCore::SG::SG_GloveInfo model_;
         SGCore::SG::SG_SensorData sensor_data_;
         SGCore::SG::SG_GlovePose glove_pose_;
+        SGCore::SG::SG_HandProfile hand_profile_;
+        SGCore::Kinematics::BasicHandModel hand_model_;
+        std::vector<SGCore::Kinematics::Vect3D> tip_positions_;
+        SGCore::HandPose hand_pose_;
         ::std::vector<Joint> joint_list_;
         urdf::Model urdf_;
         const std::string name_;
@@ -49,6 +53,8 @@ namespace senseglove
         Joint& getJoint(::std::string jointName);
 
         Joint& getJoint(size_t index);
+
+        float getHandPos(int i);
 
         // ros control works exclusively with doubles, but the sendHaptics function works with integers
         void actuateEffort(std::vector<double> effort_command);

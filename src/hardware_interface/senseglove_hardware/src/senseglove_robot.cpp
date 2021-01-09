@@ -13,7 +13,11 @@
 namespace senseglove
 {
 SenseGloveRobot::SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex, bool is_right)
-  : senseglove_(glove), joint_list_(std::move(jointList)), urdf_(std::move(urdf)), name_("senseglove_" + std::to_string(robotIndex+1)), device_type_(this->senseglove_.GetDeviceType()), robot_index_(robotIndex), is_right_(is_right)
+  : senseglove_(glove), hand_profile_(SGCore::SG::SG_HandProfile::Default(is_right)),
+  hand_model_(SGCore::Kinematics::BasicHandModel::Default(is_right)),
+  joint_list_(std::move(jointList)), urdf_(std::move(urdf)),
+  name_("senseglove_" + std::to_string(robotIndex+1)), device_type_(this->senseglove_.GetDeviceType()),
+  robot_index_(robotIndex), is_right_(is_right)
 {
 }
 
@@ -37,6 +41,14 @@ Joint& SenseGloveRobot::getJoint(::std::string jointName)
 Joint& SenseGloveRobot::getJoint(size_t index)
 {
   return this->joint_list_.at(index);
+}
+
+float SenseGloveRobot::getHandPos(int i)
+{
+  // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
+  // Determine the standardized axis of rotation
+  return hand_pose_.handAngles[std::floor(i/4)][i%4].x;
+  //return hand_pose_.jointRotations[std::floor(i/4)][i%4].ToEuler().x; // Valid alternative?? or even better??
 }
 
 void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
@@ -128,6 +140,13 @@ void SenseGloveRobot::updateGloveData(const ros::Duration period)
   if (!senseglove_.GetGlovePose(glove_pose_))
   {
     ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data");
+  }
+  else{
+    this->tip_positions_ = this->glove_pose_.CalculateFingerTips(this->hand_profile_);
+  }
+  if (!senseglove_.GetHandPose(this->hand_model_, this->hand_profile_, this->hand_pose_))
+  {
+    ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data");
   }
 }
 

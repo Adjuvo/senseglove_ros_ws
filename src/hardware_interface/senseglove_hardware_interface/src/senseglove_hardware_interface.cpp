@@ -176,6 +176,8 @@ void SenseGloveHardwareInterface::reserveMemory() {
     joint_effort_.resize(num_gloves_);
     joint_effort_command_.resize(num_gloves_);
     joint_last_effort_command_.resize(num_gloves_);
+    joint_buzz_command_.resize(num_gloves_);
+    joint_last_buzz_command_.resize(num_gloves_);
     for (unsigned int i = 0; i < num_gloves_; ++i)
     {
       joint_position_[i].resize(num_joints_);
@@ -192,6 +194,7 @@ void SenseGloveHardwareInterface::reserveMemory() {
     senseglove_state_pub_->msg_.joint_names.resize(num_gloves_*num_joints_);
     senseglove_state_pub_->msg_.position.resize(num_gloves_*num_joints_);
     senseglove_state_pub_->msg_.absolute_velocity.resize(num_gloves_*num_joints_);
+    senseglove_state_pub_->msg_.hand_position.resize(num_gloves_*num_joints_);
 }
 
 void SenseGloveHardwareInterface::updateSenseGloveState() {
@@ -202,14 +205,16 @@ void SenseGloveHardwareInterface::updateSenseGloveState() {
     senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
     for (size_t i = 0; i < num_gloves_; ++i)
     {
+      senseglove::SenseGloveRobot &robot = senseglove_setup_->getSenseGloveRobot(i);
       for (size_t j = 0; j < num_joints_; ++j)
       {
-        senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(i);
-//        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
+        senseglove::Joint& joint = robot.getJoint(i);
+        //        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
         senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
         senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
         senseglove_state_pub_->msg_.position[i] = joint.getPosition();
         senseglove_state_pub_->msg_.absolute_velocity[i] = joint.getVelocity();
+        senseglove_state_pub_->msg_.hand_position[i] = robot.getHandPos(i);
       }
     }
 
