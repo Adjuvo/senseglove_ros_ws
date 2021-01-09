@@ -50,6 +50,13 @@ namespace senseglove
 
         Joint& getJoint(size_t index);
 
+        // ros control works exclusively with doubles, but the sendHaptics function works with integers
+        void actuateEffort(std::vector<double> effort_command);
+        void actuateEffort(double e_0, double e_1, double e_2, double e_3, double e_4);
+        void actuateBuzz(std::vector<double> buzz_command);
+        void actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4);
+        void stopActuating();
+
         size_t size() const;
 
         iterator begin();

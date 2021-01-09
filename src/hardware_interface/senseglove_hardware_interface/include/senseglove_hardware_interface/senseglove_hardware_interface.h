@@ -88,6 +88,8 @@ private:
     std::vector<std::vector<double>> joint_effort_;
     std::vector<std::vector<double>> joint_effort_command_;
     std::vector<std::vector<double>> joint_last_effort_command_;
+    std::vector<std::vector<double>> joint_buzz_command_;
+    std::vector<std::vector<double>> joint_last_buzz_command_;
 
     bool master_shutdown_allowed_command_ = false;
 

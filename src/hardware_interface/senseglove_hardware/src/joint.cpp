@@ -49,14 +49,6 @@ namespace senseglove
         ROS_INFO("[%s] Successfully prepared for actuation", this->name_.c_str());
     }
 
-    void Joint::actuateRad(double target_position)
-    {
-        if (!this->canActuate())
-        {
-            ROS_ERROR("Joint %s is not allowed to actuate %d", this->name_.c_str(), target_position);
-        }
-    }
-
     double Joint::readAngle(/*const ros::Duration& elapsed_time*/)
     {
         // get angle from finger array at correct index
@@ -71,15 +63,6 @@ namespace senseglove
     double Joint::getVelocity() const
     {
         return this->velocity_;
-    }
-
-    void Joint::actuateTorque(int16_t target_torque)
-    {
-        if (!this->canActuate())
-        {
-            ROS_ERROR("Joint %s is not allowed to actuate %d", this->name_.c_str(), target_torque);
-        }
-//        forcefeedbackcommand();
     }
 
     double Joint::getTorque()

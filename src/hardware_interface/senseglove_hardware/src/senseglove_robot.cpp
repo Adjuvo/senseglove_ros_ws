@@ -39,6 +39,54 @@ Joint& SenseGloveRobot::getJoint(size_t index)
   return this->joint_list_.at(index);
 }
 
+void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
+{
+  if(effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] == 0)
+  {
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(SGCore::Haptics::SG_FFBCmd::off));
+  }
+  else
+  {
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(effort_command[0],
+                                                             effort_command[1],
+                                                             effort_command[2],
+                                                             effort_command[3],
+                                                             effort_command[4]));
+  }
+}
+
+void SenseGloveRobot::actuateEffort(double e_0, double e_1, double e_2, double e_3, double e_4)
+{
+  std::vector<double> efforts = {e_0, e_1, e_2, e_3, e_4};
+  this->actuateEffort(efforts);
+}
+
+void SenseGloveRobot::actuateBuzz(std::vector<double> buzz_command)
+{
+  if(buzz_command[0] + buzz_command[1] + buzz_command[2] + buzz_command[3] + buzz_command[4] == 0)
+  {
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(SGCore::Haptics::SG_BuzzCmd::off));
+  }
+  else
+  {
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(buzz_command[0],
+                                                             buzz_command[1],
+                                                             buzz_command[2],
+                                                             buzz_command[3],
+                                                             buzz_command[4]));
+  }
+}
+void SenseGloveRobot::actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4)
+{
+  std::vector<double> buzzes = {b_0, b_1, b_2, b_3, b_4};
+  this->actuateEffort(buzzes);
+}
+
+void SenseGloveRobot::stopActuating()
+{
+  this->senseglove_.StopHaptics();
+}
+
 size_t SenseGloveRobot::size() const
 {
   return this->joint_list_.size();

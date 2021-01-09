@@ -133,6 +133,9 @@ void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros:
 
         if (not has_actuated_) {
             bool found_non_zero = false;
+            senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(0, 0, 0, 0, 0); //turn off all Buzz Motors.
+            senseglove_setup_->getSenseGloveRobot(i).actuateEffort(0, 0, 0, 0, 0); //turn off all FFB Motors.
+            senseglove_setup_->getSenseGloveRobot(i).stopActuating();
             for (size_t k= 0; k < num_joints_; k++) {
                 if (joint_effort_command_[i][k] != 0) {
                     ROS_ERROR("Non-zero effort on first actuation for joint %s",
@@ -149,15 +152,10 @@ void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros:
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 
             if (joint.canActuate()) {
-                joint_last_effort_command_[i][k] = joint_effort_command_[i][k];
-
-                if (joint.getActuationMode() == senseglove::ActuationMode::position) {
-                    joint.actuateRad(joint_position_command_[i][k]);
-                } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
-                    joint.actuateTorque(std::round(joint_effort_command_[i][k]));
-                }
+                joint_last_effort_command_[i][k] = joint_effort_command_[i][(k+1)/4]; // 4 joints per finger
             }
         }
+        senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_effort_command_[i]);
     }
 }
 
@@ -185,8 +183,10 @@ void SenseGloveHardwareInterface::reserveMemory() {
       joint_velocity_[i].resize(num_joints_);
       joint_velocity_command_[i].resize(num_joints_);
       joint_effort_[i].resize(num_joints_);
-      joint_effort_command_[i].resize(num_joints_);
-      joint_last_effort_command_[i].resize(num_joints_);
+      joint_effort_command_[i].resize(5);
+      joint_last_effort_command_[i].resize(5);
+      joint_buzz_command_[i].resize(5);
+      joint_last_buzz_command_[i].resize(5);
     }
 
     senseglove_state_pub_->msg_.joint_names.resize(num_gloves_*num_joints_);
