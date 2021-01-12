@@ -12,13 +12,13 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 
 find_library(SGCORE
-        NAMES SGCore.so
-        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
+        NAMES libSGCoreCpp.so
+        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/linux/Release
         REQUIRED)
 
 find_library(SGCONNECT
-        NAMES SGConnect.so
-        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+        NAMES libSGConnectCpp.so
+        PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux/Release
         REQUIRED)
 
 catkin_package(
@@ -40,6 +40,9 @@ include_directories(
         ../../SenseGlove_API/Core/SGConnect/incl
         ../../SenseGlove_API/Core/SGCoreCpp/incl
 )
+
+set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}")
 
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
     find_package(code_coverage REQUIRED)

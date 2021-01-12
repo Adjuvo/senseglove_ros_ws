@@ -56,17 +56,10 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
                 JointHandle joint_position_handle(joint_state_handle, &joint_position_command_[i][k]);
                 position_joint_interface_.registerHandle(joint_position_handle);
 
-                // Create joint limit interface
-    //            PositionJointSoftLimitsHandle joint_limits_handle(joint_position_handle, limits, soft_limits_[i][k]);
-    //            position_joint_soft_limits_interface_.registerHandle(joint_limits_handle);
             } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
                 // Create effort joint interface
                 JointHandle joint_effort_handle_(joint_state_handle, &joint_effort_command_[i][k]);
                 effort_joint_interface_.registerHandle(joint_effort_handle_);
-
-                // Create joint effort limit interface
-    //            EffortJointSoftLimitsHandle joint_effort_limits_handle(joint_effort_handle_, limits, soft_limits_[i][k]);
-    //            effort_joint_soft_limits_interface_.registerHandle(joint_effort_limits_handle);
             }
             ROS_DEBUG_STREAM("Handles registered");
 
@@ -75,21 +68,20 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
             velocity_joint_interface_.registerHandle(joint_velocity_handle);
 
             // Prepare joints for actuation
-//            if (joint.canActuate())
-//            {
-//                joint.prepareActuation();
-//
-//                // Set the first target as the current position
-//                joint_position_[i][k] = joint.getPosition();
-//                joint_velocity_[i][k] = joint.getVelocity();
-//                joint_effort_[i][k] = 0;
-//
-//                if (joint.getActuationMode() == senseglove::ActuationMode::position) {
-//                    joint_position_command_[i][k] = joint_position_[i][k];
-//                } else if (joint.getActuationMode() == senseglove::ActuationMode::torque) {
-//                    joint_effort_command_[i][k] = 0;
-//                }
-//            }
+            if (joint.canActuate())
+            {
+                // Set the first target as the current position
+                senseglove_setup_->getSenseGloveRobot(i).updateGloveData(ros::Duration(0.0));
+                joint_position_[i][k] = joint.getPosition();
+                joint_velocity_[i][k] = joint.getVelocity();
+                joint_effort_[i][k] = 0.0;
+
+                if (joint.getActuationMode() == senseglove::ActuationMode::position) {
+                  joint_effort_command_[i][k] = 0.0;
+                } else if (joint.getActuationMode() == senseglove::ActuationMode::torque){
+                  joint_effort_command_[i][k] = 0.0;
+                }
+            }
         }
     }
     ROS_INFO("Successfully actuated all joints");
@@ -126,36 +118,69 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
 
 void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
     for (size_t i = 0; i < num_gloves_; ++i) {
-        for (size_t k = 0; k < num_joints_; k++) {
-            joint_effort_command_[i][k] = joint_last_effort_command_[i][k];
-            has_actuated_ |= (joint_effort_command_[i][k] != 0);
-        }
+//        for (size_t k = 0; k < num_joints_; k++)
+//        {
+//            senseglove::Joint &joint = this->senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
+//            if (joint.getActuationMode() == senseglove::ActuationMode::position)
+//            {
+//
+//              joint_position_command_[i][k] = joint_last_position_command_[i][k];
+//              has_actuated_ |= (joint_position_command_[i][k] != 0.0);
+//            }
+//            else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
+//            {
+//              joint_effort_command_[i][k] = joint_last_effort_command_[i][k];
+//              has_actuated_ |= (joint_effort_command_[i][k] != 0.0);
+//            }
+//        }
+//
+//        if (not has_actuated_) {
+//            bool found_non_zero = false;
+//            for (size_t k = 0; k < num_joints_; k++)
+//            {
+//                if (joint_effort_command_[i][k] != 0)
+//                {
+//                    ROS_ERROR("Non-zero effort on first actuation for joint %s",
+//                              senseglove_setup_->getSenseGloveRobot(i).getJoint(k).getName().c_str());
+//                    found_non_zero = true;
+//                }
+//            }
+//            if (found_non_zero) {
+//                throw std::runtime_error("Safety limits acted before actual controller started actuating");
+//            }
+//        }
 
-        if (not has_actuated_) {
-            bool found_non_zero = false;
-            senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(0, 0, 0, 0, 0); //turn off all Buzz Motors.
-            senseglove_setup_->getSenseGloveRobot(i).actuateEffort(0, 0, 0, 0, 0); //turn off all FFB Motors.
-            senseglove_setup_->getSenseGloveRobot(i).stopActuating();
-            for (size_t k= 0; k < num_joints_; k++) {
-                if (joint_effort_command_[i][k] != 0) {
-                    ROS_ERROR("Non-zero effort on first actuation for joint %s",
-                              senseglove_setup_->getSenseGloveRobot(i).getJoint(k).getName().c_str());
-                    found_non_zero = true;
-                }
-            }
-            if (found_non_zero) {
-                throw std::runtime_error("Safety limits acted before actual controller started actuating");
-            }
-        }
-
-        for (size_t k = 0; k < num_joints_; k++) {
+        // Splice joint_effort_command vector into vectors for ffb and buzz commands
+        int j = 0;
+        for (size_t k= 0; k < num_joints_; k++)
+        {
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
-
-            if (joint.canActuate()) {
-                joint_last_effort_command_[i][k] = joint_effort_command_[i][(k+1)/4]; // 4 joints per finger
+            if(joint.canActuate())
+            {
+                if (joint.getActuationMode() == senseglove::ActuationMode::position)
+                {
+                    joint_last_position_command_[i][j] = joint_position_command_[i][k];
+                    joint_last_buzz_command_[i][j] = joint_position_command_[i][k];
+                    if(j==4)
+                    {
+                      senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_last_position_command_[i]);
+                      senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(joint_last_buzz_command_[i]);
+                    }
+                }
+                else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
+                {
+                    joint_last_effort_command_[i][j] = joint_effort_command_[i][k];
+                    joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
+                    if(j==4)
+                    {
+                      senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_last_effort_command_[i]);
+                      senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(joint_last_buzz_command_[i]);
+                    }
+                }
+                j++;
             }
         }
-        senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_effort_command_[i]);
+        j = 0;
     }
 }
 
@@ -171,24 +196,24 @@ void SenseGloveHardwareInterface::uploadJointNames(ros::NodeHandle &nh) const {
 void SenseGloveHardwareInterface::reserveMemory() {
     joint_position_.resize(num_gloves_);
     joint_position_command_.resize(num_gloves_);
+    joint_last_position_command_.resize(num_gloves_);
     joint_velocity_.resize(num_gloves_);
     joint_velocity_command_.resize(num_gloves_);
     joint_effort_.resize(num_gloves_);
     joint_effort_command_.resize(num_gloves_);
     joint_last_effort_command_.resize(num_gloves_);
-    joint_buzz_command_.resize(num_gloves_);
     joint_last_buzz_command_.resize(num_gloves_);
     for (unsigned int i = 0; i < num_gloves_; ++i)
     {
-      joint_position_[i].resize(num_joints_);
-      joint_position_command_[i].resize(num_joints_);
-      joint_velocity_[i].resize(num_joints_);
-      joint_velocity_command_[i].resize(num_joints_);
-      joint_effort_[i].resize(num_joints_);
-      joint_effort_command_[i].resize(5);
-      joint_last_effort_command_[i].resize(5);
-      joint_buzz_command_[i].resize(5);
-      joint_last_buzz_command_[i].resize(5);
+      joint_position_[i].resize(num_joints_, 0.0);
+      joint_position_command_[i].resize(num_joints_, 0.0);
+      joint_last_position_command_[i].resize(5, 0.0);
+      joint_velocity_[i].resize(num_joints_, 0.0);
+      joint_velocity_command_[i].resize(num_joints_, 0.0);
+      joint_effort_[i].resize(num_joints_, 0.0);
+      joint_effort_command_[i].resize(num_joints_, 0.0);
+      joint_last_effort_command_[i].resize(5, 0.0);
+      joint_last_buzz_command_[i].resize(5, 0.0);
     }
 
     senseglove_state_pub_->msg_.joint_names.resize(num_gloves_*num_joints_);
@@ -206,15 +231,15 @@ void SenseGloveHardwareInterface::updateSenseGloveState() {
     for (size_t i = 0; i < num_gloves_; ++i)
     {
       senseglove::SenseGloveRobot &robot = senseglove_setup_->getSenseGloveRobot(i);
-      for (size_t j = 0; j < num_joints_; ++j)
+      for (size_t k = 0; k < num_joints_; ++k)
       {
-        senseglove::Joint& joint = robot.getJoint(i);
+        senseglove::Joint& joint = robot.getJoint(k);
         //        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
         senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
         senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
         senseglove_state_pub_->msg_.position[i] = joint.getPosition();
         senseglove_state_pub_->msg_.absolute_velocity[i] = joint.getVelocity();
-        senseglove_state_pub_->msg_.hand_position[i] = robot.getHandPos(i);
+        senseglove_state_pub_->msg_.hand_position[i] = robot.getHandPos(k);
       }
     }
 

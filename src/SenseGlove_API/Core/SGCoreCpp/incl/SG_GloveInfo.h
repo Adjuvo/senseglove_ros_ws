@@ -16,7 +16,7 @@ namespace SGCore
 {
 	namespace SG
 	{
-		/// <summary> Glove Information taken from a senseglove. Contains everything from unique ID, firmware version, etc. </summary>
+		/// <summary> Glove Information taken from a SenseGlove. Contains everything from unique ID, firmware version, etc. </summary>
 		class SGCORE_API SG_GloveInfo
 		{
 
@@ -47,7 +47,7 @@ namespace SGCore
 			///<summary> Check if this Sense Glove belongs to a left or right hand. </summary>
 			bool isRight;
 
-			/// <summary> The number of Sensors in this senseglove. </summary>
+			/// <summary> The number of Sensors in this SenseGlove. </summary>
 			int numberOfSensors;
 
 			///<summary> The IMU correction of this Sense Glove. </summary>

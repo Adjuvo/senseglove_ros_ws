@@ -5,6 +5,9 @@
 #include "senseglove_hardware/communication/sense_com.h"
 #include "senseglove_hardware/joint.h"
 #include "SenseGlove.h"
+#include "BasicHandModel.h"
+#include "HandPose.h"
+#include "DeviceList.h"
 
 #include <cstdint>
 #include <memory>
@@ -54,7 +57,7 @@ namespace senseglove
 
         Joint& getJoint(size_t index);
 
-        float getHandPos(int i);
+        double getHandPos(int i);
 
         // ros control works exclusively with doubles, but the sendHaptics function works with integers
         void actuateEffort(std::vector<double> effort_command);

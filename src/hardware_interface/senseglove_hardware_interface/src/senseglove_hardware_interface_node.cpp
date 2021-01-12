@@ -8,6 +8,7 @@
 
 #include <senseglove_hardware/senseglove_robot.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
+#include "SGConnect.h"
 
 std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_glove);
 
@@ -28,7 +29,8 @@ int main(int argc, char** argv)
 
     spinner.start();
 
-    if (!SGConnect::ScanningActive())
+    /*
+    if (!SGCONNECT_API::SGConnect::ScanningActive())
     {
       ROS_WARN("No SGConnect active, starting up SGConnect");
       if(SGConnect::Init() != 1)
@@ -40,6 +42,7 @@ int main(int argc, char** argv)
     {
       ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
     }
+*/
 
     SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove));
     ROS_DEBUG_STREAM("Successfully built the robot");

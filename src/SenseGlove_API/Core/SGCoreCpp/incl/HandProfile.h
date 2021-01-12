@@ -24,7 +24,7 @@ namespace SGCore
 		/// <summary> Whether this profile was created for a lef- or right hand. </summary>
 		bool isRight;
 
-		/// <summary> Profile for senseglove's </summary>
+		/// <summary> Profile for SenseGlove's </summary>
 		SG::SG_HandProfile senseGloveProfile;
 
 		/// <summary> User profile for Fino </summary>

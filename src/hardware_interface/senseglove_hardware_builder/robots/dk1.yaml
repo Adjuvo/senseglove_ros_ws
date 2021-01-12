@@ -4,127 +4,127 @@ dk1:
   # Ordered Alphabetically in joint state publisher
   joints:
     - thumb_cmc:
-        jointIndex: 0
-        actuationMode: torque
-        allowActuation: false
+        jointIndex: 1
+        actuationMode: position
+        allowActuation: true
         minPosition: 0
         maxPosition: 1
     - thumb_mcp:
-        jointIndex: 1
-        actuationMode: torque
+        jointIndex: 2
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - thumb_pip:
-        jointIndex: 2
-        actuationMode: torque
+        jointIndex: 3
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - thumb_brake:
-        jointIndex: 3
-        actuationMode: torque
+        jointIndex: 0
+        actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 1
 
     - index_mcp:
-        jointIndex: 4
-        actuationMode: torque
-        allowActuation: false
+        jointIndex: 5
+        actuationMode: position
+        allowActuation: true
         minPosition: 0
         maxPosition: 1
     - index_pip:
-        jointIndex: 5
-        actuationMode: torque
+        jointIndex: 6
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - index_dip:
-        jointIndex: 6
-        actuationMode: torque
+        jointIndex: 7
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - index_brake:
-        jointIndex: 7
-        actuationMode: torque
+        jointIndex: 4
+        actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 1
 
     - middle_mcp:
-        jointIndex: 8
-        actuationMode: torque
-        allowActuation: false
+        jointIndex: 9
+        actuationMode: position
+        allowActuation: true
         minPosition: 0
         maxPosition: 1
     - middle_pip:
-        jointIndex: 9
-        actuationMode: torque
+        jointIndex: 10
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - middle_dip:
-        jointIndex: 10
-        actuationMode: torque
+        jointIndex: 11
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - middle_brake:
-        jointIndex: 11
-        actuationMode: torque
+        jointIndex: 8
+        actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 1
 
 
     - ring_mcp:
-        jointIndex: 12
-        actuationMode: torque
-        allowActuation: false
+        jointIndex: 13
+        actuationMode: position
+        allowActuation: true
         minPosition: 0
         maxPosition: 1
     - ring_pip:
-        jointIndex: 13
-        actuationMode: torque
+        jointIndex: 14
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - ring_dip:
-        jointIndex: 14
-        actuationMode: torque
+        jointIndex: 15
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - ring_brake:
-        jointIndex: 15
-        actuationMode: torque
+        jointIndex: 12
+        actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 1
 
     - pinky_mcp:
-        jointIndex: 16
-        actuationMode: torque
-        allowActuation: false
+        jointIndex: 17
+        actuationMode: position
+        allowActuation: true
         minPosition: 0
         maxPosition: 1
     - pinky_pip:
-        jointIndex: 17
-        actuationMode: torque
+        jointIndex: 18
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - pinky_dip:
-        jointIndex: 18
-        actuationMode: torque
+        jointIndex: 19
+        actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
     - pinky_brake:
-        jointIndex: 19
-        actuationMode: torque
+        jointIndex: 16
+        actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 1

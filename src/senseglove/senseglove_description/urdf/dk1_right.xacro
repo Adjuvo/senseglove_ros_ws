@@ -51,8 +51,8 @@
 
     <xacro:property name="hover_height" value="0.5"/>
 
-    <!-- Used for fixing robot to Gazebo 'base_link' -->
-    <link name="base_link"/>
+    <!-- Used for fixing robot to Gazebo 'world' -->
+    <link name="world"/>
 
     <!-- glove hub -->
     <link name="glove_hub">
@@ -366,7 +366,7 @@
 
     <!-- Joints -->
     <joint name="joint_base_fixed_parent_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="world"/>
         <child link="glove_hub"/>
         <origin xyz="0 0 ${hover_height}" rpy="0 0 0"/>
     </joint>
@@ -389,23 +389,18 @@
                upper="${2}"/>
     </joint>
 
-    <joint name="thumb_abduction" type="revolute">
+    <joint name="thumb_abduction" type="fixed">
         <parent link="thumb_abduction"/>
         <child link="thumb_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
-               lower="${-2}"
-               upper="${2}"/>
     </joint>
 
     <joint name="thumb_cmc" type="revolute">
         <parent link="thumb_flexion_one"/>
         <child link="thumb_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -417,7 +412,7 @@
         <parent link="thumb_flexion_two"/>
         <child link="thumb_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -429,7 +424,7 @@
         <parent link="thumb_flexion_three"/>
         <child link="thumb_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -455,23 +450,17 @@
                upper="${2}"/>
     </joint>
 
-    <joint name="index_abduction" type="revolute">
+    <joint name="index_abduction" type="fixed">
         <parent link="index_abduction"/>
         <child link="index_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-
-        <limit velocity="${1}"
-               effort="${10000}"
-               lower="${-2}"
-               upper="${2}"/>
     </joint>
 
     <joint name="index_mcp" type="revolute">
         <parent link="index_flexion_one"/>
         <child link="index_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -483,7 +472,7 @@
         <parent link="index_flexion_two"/>
         <child link="index_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -495,7 +484,7 @@
         <parent link="index_flexion_three"/>
         <child link="index_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -521,23 +510,17 @@
                upper="${2}"/>
     </joint>
 
-    <joint name="middle_abduction" type="revolute">
+    <joint name="middle_abduction" type="fixed">
         <parent link="middle_abduction"/>
         <child link="middle_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-
-        <limit velocity="${1}"
-               effort="${10000}"
-               lower="${-2}"
-               upper="${2}"/>
     </joint>
 
     <joint name="middle_mcp" type="revolute">
         <parent link="middle_flexion_one"/>
         <child link="middle_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -549,7 +532,7 @@
         <parent link="middle_flexion_two"/>
         <child link="middle_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -561,7 +544,7 @@
         <parent link="middle_flexion_three"/>
         <child link="middle_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -587,23 +570,17 @@
                upper="${2}"/>
     </joint>
 
-    <joint name="ring_abduction" type="revolute">
+    <joint name="ring_abduction" type="fixed">
         <parent link="ring_abduction"/>
         <child link="ring_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-
-        <limit velocity="${1}"
-               effort="${10000}"
-               lower="${-2}"
-               upper="${2}"/>
     </joint>
 
     <joint name="ring_mcp" type="revolute">
         <parent link="ring_flexion_one"/>
         <child link="ring_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -615,7 +592,7 @@
         <parent link="ring_flexion_two"/>
         <child link="ring_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -627,7 +604,7 @@
         <parent link="ring_flexion_three"/>
         <child link="ring_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -653,23 +630,17 @@
                upper="${2}"/>
     </joint>
 
-    <joint name="pinky_abduction" type="revolute">
+    <joint name="pinky_abduction" type="fixed">
         <parent link="pinky_abduction"/>
         <child link="pinky_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-
-        <limit velocity="${1}"
-               effort="${10000}"
-               lower="${-2}"
-               upper="${2}"/>
     </joint>
 
     <joint name="pinky_mcp" type="revolute">
         <parent link="pinky_flexion_one"/>
         <child link="pinky_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -681,7 +652,7 @@
         <parent link="pinky_flexion_two"/>
         <child link="pinky_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"
@@ -693,7 +664,7 @@
         <parent link="pinky_flexion_three"/>
         <child link="pinky_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
+        <axis xyz="-1 0 0"/>
 
         <limit velocity="${1}"
                effort="${10000}"

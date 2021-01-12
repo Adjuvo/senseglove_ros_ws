@@ -14,7 +14,7 @@ var searchData=
   ['hapticglove_2ecpp_190',['HapticGlove.cpp',['../_haptic_glove_8cpp.html',1,'']]],
   ['hapticglove_2eh_191',['HapticGlove.h',['../_haptic_glove_8h.html',1,'']]],
   ['haptics_192',['haptics',['../class_s_g_core_1_1_shared_mem.html#a9acbdf4ee9e15149df197cebe119383b',1,'SGCore::SharedMem']]],
-  ['hapticsbyte_193',['hapticsByte',['../class_s_g_core_1_1_fino_1_1_fino.html#a623420919f843e3c5f2a6c2f01e3c9d1',1,'SGCore::Fino::Fino::hapticsByte()'],['../class_s_g_core_1_1_s_g_1_1_sense_glove.html#a125ae2c65e6995c4b4fb3bc050a6bf82',1,'SGCore::SG::senseglove::hapticsByte()']]],
+  ['hapticsbyte_193',['hapticsByte',['../class_s_g_core_1_1_fino_1_1_fino.html#a623420919f843e3c5f2a6c2f01e3c9d1',1,'SGCore::Fino::Fino::hapticsByte()'],['../class_s_g_core_1_1_s_g_1_1_sense_glove.html#a125ae2c65e6995c4b4fb3bc050a6bf82',1,'SGCore::SG::SenseGlove::hapticsByte()']]],
   ['hardwarever_194',['hardwareVer',['../class_s_g_core_1_1_device_model.html#a8af46d3b3bcdfb207d9bf430bcce99ff',1,'SGCore::DeviceModel::hardwareVer()'],['../class_s_g_core_1_1_fino_1_1_fino___glove_info.html#a483d536133eba3550882c4bf48a3ce41',1,'SGCore::Fino::Fino_GloveInfo::hardwareVer()'],['../class_s_g_core_1_1_s_g_1_1_s_g___glove_info.html#af9eaab54d2d2f6e6806b2c25422d95ab',1,'SGCore::SG::SG_GloveInfo::hardwareVer()']]],
   ['hwversion_195',['hwVersion',['../class_s_g_core_1_1_beta_device.html#a9fe116ec2fa0110cc669b6882f737fc3',1,'SGCore::BetaDevice']]]
 ];

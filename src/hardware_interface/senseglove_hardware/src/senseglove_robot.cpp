@@ -9,6 +9,10 @@
 #include <vector>
 
 #include <ros/ros.h>
+#include "SenseGlove.h"
+#include "BasicHandModel.h"
+#include "HandPose.h"
+#include "DeviceList.h"
 
 namespace senseglove
 {
@@ -43,27 +47,25 @@ Joint& SenseGloveRobot::getJoint(size_t index)
   return this->joint_list_.at(index);
 }
 
-float SenseGloveRobot::getHandPos(int i)
+double SenseGloveRobot::getHandPos(int i)
 {
   // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
   // Determine the standardized axis of rotation
-  return hand_pose_.handAngles[std::floor(i/4)][i%4].x;
-  //return hand_pose_.jointRotations[std::floor(i/4)][i%4].ToEuler().x; // Valid alternative?? or even better??
+  //  return (double)hand_pose_.handAngles[std::floor(i/4)][i%4].z;
+  return (double)hand_pose_.jointPositions[std::floor(i/4)][i%4].z; // Valid alternative?? or even better??
 }
 
 void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
 {
-  if(effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] == 0)
+  if (SGCore::DeviceList::SenseCommRunning()) //check if the Sense Comm is running. If not, warn the end user.
   {
-    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(SGCore::Haptics::SG_FFBCmd::off));
-  }
-  else
-  {
-    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(effort_command[0],
-                                                             effort_command[1],
-                                                             effort_command[2],
-                                                             effort_command[3],
-                                                             effort_command[4]));
+    std::vector<int> int_effort(effort_command.begin(), effort_command.end());
+    if (effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] == 0.0)
+    {
+      this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(SGCore::Haptics::SG_FFBCmd::off));
+    }
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(int_effort));
+
   }
 }
 
@@ -75,17 +77,14 @@ void SenseGloveRobot::actuateEffort(double e_0, double e_1, double e_2, double e
 
 void SenseGloveRobot::actuateBuzz(std::vector<double> buzz_command)
 {
-  if(buzz_command[0] + buzz_command[1] + buzz_command[2] + buzz_command[3] + buzz_command[4] == 0)
+  std::vector<int> int_buzz(buzz_command.begin(), buzz_command.end());
+  if(buzz_command[0] + buzz_command[1] + buzz_command[2] + buzz_command[3] + buzz_command[4] == 0.0)
   {
     this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(SGCore::Haptics::SG_BuzzCmd::off));
   }
   else
   {
-    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(buzz_command[0],
-                                                             buzz_command[1],
-                                                             buzz_command[2],
-                                                             buzz_command[3],
-                                                             buzz_command[4]));
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(int_buzz));
   }
 }
 void SenseGloveRobot::actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4)

@@ -41,6 +41,9 @@ namespace SGCore
             /// <summary> Converts a buzz-motor command into bytes that the Fino can understand. </summary>
             static std::string ToBytes(Haptics::SG_BuzzCmd cmd);
 
+            /// <summary> Minumum calibration value distance until we apply the range. </summary>
+            static Kinematics::Vect3D minCalRange;
+
 		public:
 
             //---------------------------------------------------------------------------------------------------------------------
@@ -191,7 +194,7 @@ namespace SGCore
             /// <returns></returns>
             bool GetCalibrationValues(std::vector<SGCore::Kinematics::Vect3D>& values) override;
 
-            /// <summary> Convert a senseglove GlovePose into calibrationValues. </summary>
+            /// <summary> Convert a SenseGlove GlovePose into calibrationValues. </summary>
             /// <param name="sData"></param>
             /// <returns></returns>
             static std::vector<Kinematics::Vect3D> GetCalibrationValues(Fino_SensorData sData);
@@ -202,7 +205,7 @@ namespace SGCore
             void ApplyCalibration(HandProfile& profile) override;
             
 
-            /// <summary> Applies the calibration range of this senseglove to a Fino_Profile </summary>
+            /// <summary> Applies the calibration range of this SenseGlove to a Fino_Profile </summary>
             /// <param name="profile"></param>
             void ApplyCalibration(Fino_Profile& profile);
 

@@ -31,7 +31,8 @@ namespace senseglove
 
     int Sensecom::start()
     {
-        if (!SGConnect::ScanningActive())
+      /*
+        if (SGConnect::ScanningActive() != 1)
         {
             return SGConnect::Init();
         }
@@ -39,6 +40,7 @@ namespace senseglove
         {
             ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
         }
+        */
         return 0;
     }
 
@@ -48,8 +50,8 @@ namespace senseglove
         {
             ROS_INFO("Stopping communication with Senseglove device");
             this->is_operational_ = false;
-            int result = SGConnect::Dispose();
-            ROS_INFO("SGConnect Dispose returned with result: %d", result);
+            //int result = SGConnect::Dispose();
+            ROS_INFO("SGConnect Dispose returned with result: %d", 0);
         }
     }
 }

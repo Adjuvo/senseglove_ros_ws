@@ -11,7 +11,7 @@
 
 #include <ros/ros.h>
 
-#include <SGConnect.h>
+//#include "SGConnect.h"
 
 namespace senseglove
 {
@@ -32,8 +32,8 @@ namespace senseglove
           ROS_WARN("Trying to start senseglove communication while it is already active.");
           return;
         }
-
-        if (!SGConnect::ScanningActive())
+        /*
+        if (SGConnect::ScanningActive() != 1)
         {
           if(SGConnect::Init() != 1)
           {
@@ -44,16 +44,20 @@ namespace senseglove
         {
           ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
         }
+         */
     }
 
     void SenseGloveSetup::stopCommunication()
     {
-        if (SGConnect::ScanningActive())
+        this->getSenseGloveRobot(0).stopActuating();
+        /*
+        if (SGConnect::ScanningActive() == 1)
         {
           ROS_INFO("Stopping communication with Senseglove device");
           int result = SGConnect::Dispose();
           ROS_INFO("SGConnect Dispose returned with result: %d", result);
         }
+         */
     }
 
     bool SenseGloveSetup::isCommunicationOperational()

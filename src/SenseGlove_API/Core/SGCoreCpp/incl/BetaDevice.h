@@ -14,7 +14,7 @@
 
 namespace SGCore
 {
-	/// <summary> A Device that adheres to the senseglove communications protocol, but which has no implementation in this API. </summary>
+	/// <summary> A Device that adheres to the SenseGlove communications protocol, but which has no implementation in this API. </summary>
 	class SGCORE_API BetaDevice : public SGDevice
 	{
 
@@ -52,7 +52,7 @@ namespace SGCore
 		//--------------------------------------------------------------------------------------
 		// Accessors
 
-		///<summary> Get the DeviceType enumerator of this senseglove, used in DeviceList enumeration. </summary>
+		///<summary> Get the DeviceType enumerator of this SenseGlove, used in DeviceList enumeration. </summary>
 		DeviceType GetDeviceType() override { return DeviceType::BETADEVICE; }
 
 		/// <summary> Get the unique identifier of this device. </summary>

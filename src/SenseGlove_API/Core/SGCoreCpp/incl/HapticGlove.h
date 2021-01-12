@@ -23,7 +23,7 @@
 
 namespace SGCore
 {
-	/// <summary> A glove developed by senseglove, that has hand tracking and/or haptic feedback functionality. </summary>
+	/// <summary> A glove developed by SenseGlove, that has hand tracking and/or haptic feedback functionality. </summary>
 	class SGCORE_API HapticGlove : public SGDevice
 	{
 
@@ -50,7 +50,7 @@ namespace SGCore
         //--------------------------------------------------------------------------------------
         // SGDevice Methods
 
-		///<summary> Get the DeviceType enumerator of this device; used to check if its a senseglove/Fino/etc. </summary>
+		///<summary> Get the DeviceType enumerator of this device; used to check if its a SenseGlove/Fino/etc. </summary>
 		DeviceType GetDeviceType() override { return DeviceType::UNKNOWN; }
 
 		/// <summary> Retrieve this glove's unique identifier. </summary>
@@ -159,13 +159,13 @@ namespace SGCore
         /// <summary> Get the first Haptic Glove detected on this System </summary>
         /// <param name="glove"></param>
         /// <returns></returns>
-        static bool GetGlove(std::shared_ptr<HapticGlove> glove);
+        static bool GetGlove(std::shared_ptr<HapticGlove>& glove);
 
 
         /// <summary> Get the first left/right Haptic Glove detected on this System </summary>
         /// <param name="glove"></param>
         /// <returns></returns>
-        static bool GetGlove(bool rightHanded, std::shared_ptr<HapticGlove> glove);
+        static bool GetGlove(bool rightHanded, std::shared_ptr<HapticGlove>& glove);
 
         //--------------------------------------------------------------------------------------
         // Calibration Methods
@@ -184,6 +184,11 @@ namespace SGCore
 
         /// <summary> Updates calibration values only </summary>
         virtual void UpdateCalibrationRange(std::vector<Kinematics::Vect3D> calibrationValues);
+
+        /// <summary> Access the minumum- and maximum sensor values measured by this Haptic Glove, in this session. </summary>
+        /// <param name="minimumVals"></param>
+        /// <param name="maximumVals"></param>
+        virtual void GetCalibrationRange(std::vector<Kinematics::Vect3D>& minimumVals, std::vector<Kinematics::Vect3D>& maximumVals);
 
 
         /// <summary> Updates Calibration values and applies it to the Profile. </summary>
