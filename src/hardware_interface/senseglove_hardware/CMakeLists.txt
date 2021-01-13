@@ -73,8 +73,6 @@ install(TARGETS ${PROJECT_NAME}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         )
 
-install(TARGETS ${SGConnect} ${SGCore})
-
 ### Add gtest based cpp test target and link libraries
 #if(CATKIN_ENABLE_TESTING)
 #    catkin_add_gmock(${PROJECT_NAME}_test
