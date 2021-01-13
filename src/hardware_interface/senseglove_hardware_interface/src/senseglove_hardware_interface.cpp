@@ -42,7 +42,6 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
         for (size_t k = 0; k < num_joints_; ++k) {
             senseglove::Joint &joint = this->senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
             ROS_DEBUG_STREAM("Obtained necessary joint");
-            std::cout << num_gloves_ << " joint size: " << joint_velocity_[i].size() << "num_joints: " << num_joints_ << std::endl;
 
             // Create joint state interface
             JointStateHandle joint_state_handle(joint.getName(), &joint_position_[i][k], &joint_velocity_[i][k],
@@ -71,10 +70,12 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
             if (joint.canActuate())
             {
                 // Set the first target as the current position
-                senseglove_setup_->getSenseGloveRobot(i).updateGloveData(ros::Duration(0.0));
-                joint_position_[i][k] = joint.getPosition();
-                joint_velocity_[i][k] = joint.getVelocity();
-                joint_effort_[i][k] = 0.0;
+                if(senseglove_setup_->getSenseGloveRobot(i).updateGloveData(ros::Duration(0.0)))
+                {
+                  joint_position_[i][k] = joint.getPosition();
+                  joint_velocity_[i][k] = joint.getVelocity();
+                  joint_effort_[i][k] = 0.0;
+                }
 
                 if (joint.getActuationMode() == senseglove::ActuationMode::position) {
                   joint_effort_command_[i][k] = 0.0;
@@ -102,8 +103,9 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
 {
     // read senseglove robot data
     for (size_t i = 0; i < num_gloves_; ++i) {
-        senseglove_setup_->getSenseGloveRobot(i).updateGloveData(elapsed_time);
-        for (size_t k = 0; k < num_joints_; ++k) {
+        if(senseglove_setup_->getSenseGloveRobot(i).updateGloveData(elapsed_time))
+        {
+          for (size_t k = 0; k < num_joints_; ++k) {
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 
             // Update position with he most accurate velocity
@@ -111,9 +113,10 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
             joint_position_[i][k] = joint.getPosition();
             joint_velocity_[i][k] = joint.getVelocity();
             joint_effort_[i][k] = joint.getTorque();
+          }
+          this->updateSenseGloveState();
         }
     }
-    this->updateSenseGloveState();
 }
 
 void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
@@ -152,35 +155,54 @@ void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros:
 
         // Splice joint_effort_command vector into vectors for ffb and buzz commands
         int j = 0;
+        int h = 0;
+        senseglove::SenseGloveRobot &robot = senseglove_setup_->getSenseGloveRobot(i);
         for (size_t k= 0; k < num_joints_; k++)
         {
-            senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
+            senseglove::Joint &joint = robot.getJoint(k);
             if(joint.canActuate())
             {
                 if (joint.getActuationMode() == senseglove::ActuationMode::position)
                 {
-                    joint_last_position_command_[i][j] = joint_position_command_[i][k];
-                    joint_last_buzz_command_[i][j] = joint_position_command_[i][k];
-                    if(j==4)
+                    if (j % 2 == 1)
                     {
-                      senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_last_position_command_[i]);
-                      senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(joint_last_buzz_command_[i]);
+                        joint_last_position_command_[i][h] = joint_position_command_[i][k];
+                        h++;
+                    }
+                    else
+                    {
+                        joint_last_buzz_command_[i][h] = joint_position_command_[i][k];
+                    }
+
+                    if (j == 9)
+                    {
+                        robot.actuateEffort(joint_last_position_command_[i]);
+                        robot.actuateBuzz(joint_last_buzz_command_[i]);
                     }
                 }
                 else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
                 {
-                    joint_last_effort_command_[i][j] = joint_effort_command_[i][k];
-                    joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
-                    if(j==4)
+                    if (j % 2 == 1)
                     {
-                      senseglove_setup_->getSenseGloveRobot(i).actuateEffort(joint_last_effort_command_[i]);
-                      senseglove_setup_->getSenseGloveRobot(i).actuateBuzz(joint_last_buzz_command_[i]);
+                        joint_last_effort_command_[i][j] = joint_effort_command_[i][k];
+                        h++;
+                    }
+                    else
+                    {
+                        joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
+                    }
+
+                    if (j == 9)
+                    {
+                        robot.actuateEffort(joint_last_effort_command_[i]);
+                        robot.actuateBuzz(joint_last_buzz_command_[i]);
                     }
                 }
                 j++;
             }
         }
         j = 0;
+        h = 0;
     }
 }
 

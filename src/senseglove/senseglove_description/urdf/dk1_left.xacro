@@ -383,8 +383,8 @@
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
                upper="${2}"/>
     </joint>
@@ -401,10 +401,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${0.25}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="thumb_mcp" type="revolute">
@@ -413,10 +413,10 @@
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${0}"
-               upper="${2.5}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="thumb_pip" type="revolute">
@@ -425,10 +425,10 @@
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-4.2}"
-               upper="${0}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="hub_to_index_brake" type="fixed">
@@ -443,10 +443,10 @@
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${2}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="index_abduction" type="fixed">
@@ -462,10 +462,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${0.25}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="index_pip" type="revolute">
@@ -474,10 +474,10 @@
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${0}"
-               upper="${2.5}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="index_dip" type="revolute">
@@ -486,10 +486,10 @@
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-4.2}"
-               upper="${0}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="hub_to_middle_brake" type="fixed">
@@ -504,10 +504,10 @@
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${2}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="middle_abduction" type="fixed">
@@ -523,10 +523,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${0.25}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="middle_pip" type="revolute">
@@ -535,10 +535,10 @@
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${0}"
-               upper="${2.5}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="middle_dip" type="revolute">
@@ -547,10 +547,10 @@
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-4.2}"
-               upper="${0}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="hub_to_ring_brake" type="fixed">
@@ -565,10 +565,10 @@
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${2}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="ring_abduction" type="fixed">
@@ -584,10 +584,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${0.25}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="ring_pip" type="revolute">
@@ -596,10 +596,10 @@
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${0}"
-               upper="${2.5}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="ring_dip" type="revolute">
@@ -608,10 +608,10 @@
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-4.2}"
-               upper="${0}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="hub_to_pinky_brake" type="fixed">
@@ -626,10 +626,10 @@
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${2}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="pinky_abduction" type="fixed">
@@ -644,10 +644,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-2}"
-               upper="${0.25}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="pinky_pip" type="revolute">
@@ -656,10 +656,10 @@
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${0}"
-               upper="${2.5}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="pinky_dip" type="revolute">
@@ -668,9 +668,9 @@
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
-        <limit velocity="${1}"
-               effort="${10000}"
+        <limit velocity="${1000}"
+               effort="${100}"
                lower="${-4.2}"
-               upper="${0}"/>
+               upper="${100}"/>
     </joint>
 </robot>

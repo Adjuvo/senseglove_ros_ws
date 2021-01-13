@@ -22,7 +22,6 @@
                 args="$(arg robot) $(arg nr_of_glove)"
                 output="screen"
                 required="true"
-
         >
         </node>
     </group>

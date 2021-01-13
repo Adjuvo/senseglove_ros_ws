@@ -35,6 +35,7 @@ namespace senseglove
         const SGCore::DeviceType device_type_;
         const int robot_index_;
         bool is_right_;
+        bool updated_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
@@ -73,7 +74,7 @@ namespace senseglove
 
         const urdf::Model& getUrdf() const;
 
-        void updateGloveData(const ros::Duration period);
+        bool updateGloveData(const ros::Duration period);
 
         /** @brief Override comparison operator */
         friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)

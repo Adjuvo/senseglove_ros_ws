@@ -21,7 +21,7 @@ SenseGloveRobot::SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joi
   hand_model_(SGCore::Kinematics::BasicHandModel::Default(is_right)),
   joint_list_(std::move(jointList)), urdf_(std::move(urdf)),
   name_("senseglove_" + std::to_string(robotIndex+1)), device_type_(this->senseglove_.GetDeviceType()),
-  robot_index_(robotIndex), is_right_(is_right)
+  robot_index_(robotIndex), is_right_(is_right), updated_(false)
 {
 }
 
@@ -117,8 +117,10 @@ SenseGloveRobot::~SenseGloveRobot()
 {
 }
 
-void SenseGloveRobot::updateGloveData(const ros::Duration period)
+bool SenseGloveRobot::updateGloveData(const ros::Duration period)
 {
+  bool glove_update = false;
+  bool hand_update = false;
   if (senseglove_.GetSensorData(sensor_data_))  // if GetSensorData is true, we have sucesfully recieved data
   {
     // ROS_DEBUG("successfully update glove sensor data");
@@ -142,11 +144,18 @@ void SenseGloveRobot::updateGloveData(const ros::Duration period)
   }
   else{
     this->tip_positions_ = this->glove_pose_.CalculateFingerTips(this->hand_profile_);
+    glove_update = true;
   }
   if (!senseglove_.GetHandPose(this->hand_model_, this->hand_profile_, this->hand_pose_))
   {
     ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data");
   }
+  else
+  {
+    hand_update = true;
+  }
+  updated_ |= (glove_update and hand_update);
+  return updated_;
 }
 
 const urdf::Model& SenseGloveRobot::getUrdf() const

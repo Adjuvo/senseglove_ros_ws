@@ -65,7 +65,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     }
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
-    ROS_DEBUG_STREAM("Created joints " << nr_of_glove_);
+    ROS_DEBUG_STREAM("Created joints ");
     senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
     ROS_DEBUG_STREAM("Created Robots");
     ROS_INFO_STREAM("Robot config:\n" << config);
