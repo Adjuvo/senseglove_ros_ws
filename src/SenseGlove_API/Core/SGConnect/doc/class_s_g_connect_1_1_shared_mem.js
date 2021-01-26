@@ -5,6 +5,7 @@ var class_s_g_connect_1_1_shared_mem =
     [ "TimeSinceLastUpdate", "class_s_g_connect_1_1_shared_mem.html#a4838cbbd46bfccd02cf3a9654ecfc60b", null ],
     [ "UpdateTime", "class_s_g_connect_1_1_shared_mem.html#a9f74fd405c923d51dab28055d7cd2a79", null ],
     [ "WriteTo", "class_s_g_connect_1_1_shared_mem.html#a82e7888770a9d6e734bf2f31e02ef6c1", null ],
+    [ "WriteTo_NotCreate", "class_s_g_connect_1_1_shared_mem.html#ae4dea9b13405f35c2e9735b479135a86", null ],
     [ "data", "class_s_g_connect_1_1_shared_mem.html#acbea35a44a22f48932b83c0c6da1d335", null ],
     [ "devices", "class_s_g_connect_1_1_shared_mem.html#aadc549b6ea166d7320317c80c64e49ae", null ],
     [ "haptics", "class_s_g_connect_1_1_shared_mem.html#a776ca2bbc7ae7bf8acf66f06541b1ac1", null ],

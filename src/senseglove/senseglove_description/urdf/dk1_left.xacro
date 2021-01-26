@@ -386,7 +386,7 @@
         <limit velocity="${1000}"
                effort="${100}"
                lower="${-2}"
-               upper="${2}"/>
+               upper="${100}"/>
     </joint>
 
     <joint name="thumb_abduction" type="fixed">

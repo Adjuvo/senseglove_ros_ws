@@ -210,7 +210,7 @@ Functions</h2></td></tr>
 <tr class="memitem:afff9fc611d04840aae09e60440eb7840"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#afff9fc611d04840aae09e60440eb7840">GetDebugMessages</a> (char *output)</td></tr>
 <tr class="memdesc:afff9fc611d04840aae09e60440eb7840"><td class="mdescLeft">&#160;</td><td class="mdescRight">summary&gt; Copy debug messages from the queue and clears it.  <a href="namespace_s_g_connect.html#afff9fc611d04840aae09e60440eb7840">More...</a><br /></td></tr>
 <tr class="separator:afff9fc611d04840aae09e60440eb7840"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab414ecef402ca732d2903b7304dec4d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#ab414ecef402ca732d2903b7304dec4d1">GetDebugMessages_S</a> (std::string &amp;output)</td></tr>
+<tr class="memitem:ab414ecef402ca732d2903b7304dec4d1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#ab414ecef402ca732d2903b7304dec4d1">GetDebugMessages_S</a> (std::string &amp;output)</td></tr>
 <tr class="memdesc:ab414ecef402ca732d2903b7304dec4d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">summary&gt; Turn debug queue on / off. If turned on, we will begin buffering connection messages.  <a href="namespace_s_g_connect.html#ab414ecef402ca732d2903b7304dec4d1">More...</a><br /></td></tr>
 <tr class="separator:ab414ecef402ca732d2903b7304dec4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f793b9f537054be05a00cd55f2a331"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#af2f793b9f537054be05a00cd55f2a331">SetDebugQueue</a> (bool active)</td></tr>
@@ -225,8 +225,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ad5280a06e6085ba24369475483dd2801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count the active devices within the SenseComm shared memory.  <a href="namespace_s_g_connect.html#ad5280a06e6085ba24369475483dd2801">More...</a><br /></td></tr>
 <tr class="separator:ad5280a06e6085ba24369475483dd2801"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13af47b634dac7c46144576825313300"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#a13af47b634dac7c46144576825313300">ScanningActive</a> ()</td></tr>
-<tr class="memdesc:a13af47b634dac7c46144576825313300"><td class="mdescLeft">&#160;</td><td class="mdescRight">summary&gt; Get the raw (unprocessed) device data of the <a class="el" href="class_s_g_connect_1_1_s_g_device.html" title="A SensGlove Device that has been detected on this system.">SGDevice</a> at index, as discovered by SenseCom  <a href="namespace_s_g_connect.html#a13af47b634dac7c46144576825313300">More...</a><br /></td></tr>
 <tr class="separator:a13af47b634dac7c46144576825313300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae15802a012c6ca0a9b82c50a2ce16ff2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#ae15802a012c6ca0a9b82c50a2ce16ff2">ScanningState</a> ()</td></tr>
+<tr class="memdesc:ae15802a012c6ca0a9b82c50a2ce16ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the scanningState of the <a class="el" href="namespace_s_g_connect.html">SGConnect</a> library. Used by ScanningActive.  <a href="namespace_s_g_connect.html#ae15802a012c6ca0a9b82c50a2ce16ff2">More...</a><br /></td></tr>
+<tr class="separator:ae15802a012c6ca0a9b82c50a2ce16ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a4fcf1ba6c802cf1c4866be0e9194a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_s_g_connect_8h.html#a57eced24f1d74001629f2dbf5b5ffebc">SGCONNECT_API</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_g_connect.html#a4a4fcf1ba6c802cf1c4866be0e9194a9">GetDeviceString</a> (const char *deviceAddress, char *output)</td></tr>
 <tr class="memdesc:a4a4fcf1ba6c802cf1c4866be0e9194a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">summary&gt; Get the raw (unprocessed) sensor data of the <a class="el" href="class_s_g_connect_1_1_s_g_device.html" title="A SensGlove Device that has been detected on this system.">SGDevice</a> at index, as discovered by SenseCom  <a href="namespace_s_g_connect.html#a4a4fcf1ba6c802cf1c4866be0e9194a9">More...</a><br /></td></tr>
 <tr class="separator:a4a4fcf1ba6c802cf1c4866be0e9194a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -725,7 +727,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Begin Scanning for Sense Glove Devices and set up communications with them. </p>
+<dl class="section return"><dt>Returns</dt><dd>-3 : An Unexpected error occured. Please try again. -2 : Device Scanning is already running within a different program. -1 : Device Scanning already being initialized (function called twice in short succession). 0 : Device Scanning is already running in within this program. 1 : Succesfully started up DeviceScanning from the current program. </dd></dl>
+<p>If the Init function returns a value &gt; 0 it's a success, and your program should also dispose of it at the end of its life. </p>
 <p>summary&gt; Dispose of unmanaged resources and finalize Sense Glove devices. </p>
+<dl class="section return"><dt>Returns</dt><dd>-3 : An Unexpected error occured. Please try again. -2 : Not allowed to dispose of Device Scanning because this is not the program which started it. -1 : Device Scanning is currently being disposed off. This takes a second or two. (function called twice in short succession). 0 : There is no deviceScanner running from any program, so disposing is skipped. 1 : Succesfully disposed of <a class="el" href="class_s_g_connect_1_1_device_scanner.html" title="A threading resource that scans the computer for connections and Sense Gloves.">DeviceScanner</a> resources. </dd></dl>
+<p>If the Dispose function returns 1, the resources were neatly disposed of. Only a value of -3 is cause for concern. </p>
 
 </div>
 </div>
@@ -744,7 +750,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>summary&gt; Get the raw (unprocessed) device data of the <a class="el" href="class_s_g_connect_1_1_s_g_device.html" title="A SensGlove Device that has been detected on this system.">SGDevice</a> at index, as discovered by SenseCom </p>
+</div>
+</div>
+<a id="ae15802a012c6ca0a9b82c50a2ce16ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae15802a012c6ca0a9b82c50a2ce16ff2">&#9670;&nbsp;</a></span>ScanningState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SGConnect::ScanningState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the scanningState of the <a class="el" href="namespace_s_g_connect.html">SGConnect</a> library. Used by ScanningActive. </p>
+<dl class="section return"><dt>Returns</dt><dd>-3 : Error while checking; something is wrong. -&gt; not sure -2 : Sharedmemory exists, but it's timed out -&gt; false -1 : The current process has an instance of <a class="el" href="class_s_g_connect_1_1_device_scanner.html" title="A threading resource that scans the computer for connections and Sense Gloves.">DeviceScanner</a>, but it is no longer live... -&gt; false 0 : No scanning whatsoever is active -&gt; false 1 : The current process has an instance of <a class="el" href="class_s_g_connect_1_1_device_scanner.html" title="A threading resource that scans the computer for connections and Sense Gloves.">DeviceScanner</a>, and it is live -&gt; true 2 : SharedMemory exists, and it's still up to date -&gt; true /returns&gt; summary&gt; Get the raw (unprocessed) device data of the <a class="el" href="class_s_g_connect_1_1_s_g_device.html" title="A SensGlove Device that has been detected on this system.">SGDevice</a> at index, as discovered by SenseCom </dd></dl>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newsgdevice_242',['NewSGDevice',['../class_s_g_connect_1_1_new_s_g_device.html',1,'SGConnect']]]
+  ['newsgdevice_245',['NewSGDevice',['../class_s_g_connect_1_1_new_s_g_device.html',1,'SGConnect']]]
 ];

@@ -1,5 +1,6 @@
 build/
 install/
 log/
+SenseGlove_API/
 
 .idea/*

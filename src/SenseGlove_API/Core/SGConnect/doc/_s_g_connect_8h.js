@@ -17,6 +17,7 @@ var _s_g_connect_8h =
     [ "GetSensorString", "_s_g_connect_8h.html#a67743b81e20497effbbc621281cfde31", null ],
     [ "Init", "_s_g_connect_8h.html#a69b8ae19ebea90738f51cabcaaf875d4", null ],
     [ "ScanningActive", "_s_g_connect_8h.html#a13af47b634dac7c46144576825313300", null ],
+    [ "ScanningState", "_s_g_connect_8h.html#ae15802a012c6ca0a9b82c50a2ce16ff2", null ],
     [ "SetDebugQueue", "_s_g_connect_8h.html#af2f793b9f537054be05a00cd55f2a331", null ],
     [ "WriteCmdString", "_s_g_connect_8h.html#a3354887a3ea34112a5005adbff995eb3", null ],
     [ "WriteHaptics", "_s_g_connect_8h.html#a5d9b70da3469816c4765eba9cc91187f", null ],

@@ -17,8 +17,8 @@ find_library(SGCORE
         REQUIRED)
 
 find_library(SGCONNECT
-        NAMES libSGConnectCpp.so
-        PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux/Release
+        NAMES libSGConnect.so
+        PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
         REQUIRED)
 
 catkin_package(
@@ -62,7 +62,7 @@ add_library(${PROJECT_NAME}
         src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SGCORE} ${SGCONNECT} pthread)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SGCONNECT} ${SGCORE} pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

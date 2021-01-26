@@ -25,8 +25,8 @@ find_library(SGCORE
     REQUIRED)
 
 find_library(SGCONNECT
-    NAMES libSGConnectCpp.so
-    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux/Release
+    NAMES libSGConnect.so
+    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
     REQUIRED)
 
 catkin_package(
@@ -61,8 +61,8 @@ add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(${PROJECT_NAME}_node
     ${catkin_LIBRARIES}
-    ${SGCORE}
-    ${SGCONNECT})
+    ${SGCONNECT}
+    ${SGCORE})
 # From senseglove_hardware/cmake
 ros_enable_rpath(${PROJECT_NAME}_node)
 
