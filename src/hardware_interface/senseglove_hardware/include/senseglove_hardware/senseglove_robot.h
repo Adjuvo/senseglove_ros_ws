@@ -2,9 +2,11 @@
 #ifndef ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
 #define ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
 
-#include "senseglove_hardware/communication/sense_com.h"
 #include "senseglove_hardware/joint.h"
 #include "SenseGlove.h"
+#include "BasicHandModel.h"
+#include "HandPose.h"
+#include "DeviceList.h"
 
 #include <cstdint>
 #include <memory>
@@ -22,12 +24,17 @@ namespace senseglove
         SGCore::SG::SG_GloveInfo model_;
         SGCore::SG::SG_SensorData sensor_data_;
         SGCore::SG::SG_GlovePose glove_pose_;
+        SGCore::SG::SG_HandProfile hand_profile_;
+        SGCore::Kinematics::BasicHandModel hand_model_;
+        std::vector<SGCore::Kinematics::Vect3D> tip_positions_;
+        SGCore::HandPose hand_pose_;
         ::std::vector<Joint> joint_list_;
         urdf::Model urdf_;
         const std::string name_;
         const SGCore::DeviceType device_type_;
         const int robot_index_;
         bool is_right_;
+        bool updated_;
 
     public:
         using iterator = std::vector<Joint>::iterator;
@@ -50,6 +57,15 @@ namespace senseglove
 
         Joint& getJoint(size_t index);
 
+        double getHandPos(int i);
+
+        // ros control works exclusively with doubles, but the sendHaptics function works with integers
+        void actuateEffort(std::vector<double> effort_command);
+        void actuateEffort(double e_0, double e_1, double e_2, double e_3, double e_4);
+        void actuateBuzz(std::vector<double> buzz_command);
+        void actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4);
+        void stopActuating();
+
         size_t size() const;
 
         iterator begin();
@@ -57,7 +73,7 @@ namespace senseglove
 
         const urdf::Model& getUrdf() const;
 
-        void updateGloveData(const ros::Duration period);
+        bool updateGloveData(const ros::Duration period);
 
         /** @brief Override comparison operator */
         friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)

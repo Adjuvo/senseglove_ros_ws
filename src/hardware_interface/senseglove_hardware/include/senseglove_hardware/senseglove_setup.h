@@ -2,7 +2,6 @@
 #ifndef ROS_WORKSPACE_SENSEGLOVE_SETUP_H
 #define ROS_WORKSPACE_SENSEGLOVE_SETUP_H
 
-#include "senseglove_hardware/communication/sense_com.h"
 #include "senseglove_hardware/joint.h"
 #include "SenseGlove.h"
 

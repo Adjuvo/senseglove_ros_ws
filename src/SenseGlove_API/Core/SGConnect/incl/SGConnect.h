@@ -44,16 +44,63 @@ extern "C"
 		// Resource Management
 
 		///<summary> Begin Scanning for Sense Glove Devices and set up communications with them. </summary>
+		/// <returns> 
+		/// -3 : An Unexpected error occured. Please try again.
+		/// -2 : Device Scanning is already running within a different program.
+		/// -1 : Device Scanning already being initialized (function called twice in short succession).
+		///  0 : Device Scanning is already running in within this program.
+		///  1 : Succesfully started up DeviceScanning from the current program.
+		/// </returns>
+		/// <remarks> If the Init function returns a value > 0 it's a success, and your program should also dispose of it at the end of its life. </remarks>
 		SGCONNECT_API int Init();
 
 		///<summary> Dispose of unmanaged resources and finalize Sense Glove devices. </summary>
+		/// <returns> 
+		/// -3 : An Unexpected error occured. Please try again.
+		/// -2 : Not allowed to dispose of Device Scanning because this is not the program which started it.
+		/// -1 : Device Scanning is currently being disposed off. This takes a second or two. (function called twice in short succession).
+		///  0 : There is no deviceScanner running from any program, so disposing is skipped.
+		///  1 : Succesfully disposed of DeviceScanner resources.
+		/// </returns>
+		/// <remarks> If the Dispose function returns 1, the resources were neatly disposed of. Only a value of -3 is cause for concern. </remarks>
 		SGCONNECT_API int Dispose();
+
+
+		// ---------------------------------------------------------------------------------------------
+		// Util
+
+		///<summary> Copies a string placed in Shared Memory into a char* </summary>
+		int CopyIPCStr(std::string block, std::string address, char* output);
+
+		///<summary> Copies a string contained in a char* to a block of shared memory </summary>
+		int WriteIPCStr(std::string block, std::string address, const char* value);
+
+
+		///<summary> Retrieve all ports that might be Sense Gloves, that can be safely connected to. </summary>
+		SGCONNECT_API int GetPorts(bool withBT, char* output);
+
+		///<summary> Retrieve all Serial Ports, their PID/VIDs and Description. Used to debug ports.  </summary>
+		SGCONNECT_API int GetPortInfo(bool withBT, char* output);
 
 		///<summary> Clears ScanningActive for debug purposes. </summary>
 		SGCONNECT_API void ClearSharedMem();
 
+		///<summary> Copy debug messages from the queue and clears it. </summary>
+		SGCONNECT_API int GetDebugMessages(char* output);
 
+		///<summary> Copy debug messages from the queue and clears it. </summary>
+		int GetDebugMessages_S(std::string& output);
+
+		///<summary> Turn debug queue on / off. If turned on, we will begin buffering connection messages. </summary>
+		SGCONNECT_API void SetDebugQueue(bool active);
 		
+
+	    ///<summary> Check which version of SGConnect you are using. </summary>
+		SGCONNECT_API int GetLibraryVersion_I(char* output);
+
+		///<summary> Check which version of SGConnect you are using. </summary>
+		SGCONNECT_API std::string GetLibraryVersion();
+
 		// ---------------------------------------------------------------------------------------------
 		// C# / IPC interface
 
@@ -63,5 +110,33 @@ extern "C"
 		///<summary> Returns true if a Device Scanning instance is already running. </summary>
 		SGCONNECT_API bool ScanningActive();
 
+
+		/// <summary> Returns the scanningState of the SGConnect library. Used by ScanningActive. </summary>
+		/// <returns>
+		/// -3 : Error while checking; something is wrong. -> not sure
+		/// -2 : Sharedmemory exists, but it's timed out -> false
+		/// -1 : The current process has an instance of DeviceScanner, but it is no longer live... -> false
+		///  0 : No scanning whatsoever is active -> false
+		///  1 : The current process has an instance of DeviceScanner, and it is live -> true
+		///  2 : SharedMemory exists, and it's still up to date -> true
+		///</returns>
+		SGCONNECT_API int ScanningState();
+
+		///<summary> Get the raw (unprocessed) device data of the SGDevice at index, as discovered by SenseCom </summary>
+		SGCONNECT_API int GetDeviceString(const char* deviceAddress, char* output);
+
+
+		///<summary> Get the raw (unprocessed) sensor data of the SGDevice at index, as discovered by SenseCom  </summary>
+		SGCONNECT_API int GetSensorString(const char* deviceAddress, char* output);
+
+		///<summary> Write a haptics string to the shared memory of a particular device. </summary>
+		SGCONNECT_API int WriteHaptics(const char* deviceAddress, const char* haptics);
+
+
+		///<summary> Write a command string to the shared memory of a particular device. </summary>
+		SGCONNECT_API int WriteCmdString(const char* deviceAddress, const char* commands);
+
+		///<summary> Retrieve the last received command from the device </summary>
+		SGCONNECT_API int GetCmdResponse(const char* deviceAddress, char* output);
 	}
 }

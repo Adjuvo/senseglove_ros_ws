@@ -81,6 +81,7 @@ private:
 
     std::vector<std::vector<double>> joint_position_;
     std::vector<std::vector<double>> joint_position_command_;
+    std::vector<std::vector<double>> joint_last_position_command_;
 
     std::vector<std::vector<double>> joint_velocity_;
     std::vector<std::vector<double>> joint_velocity_command_;
@@ -88,6 +89,7 @@ private:
     std::vector<std::vector<double>> joint_effort_;
     std::vector<std::vector<double>> joint_effort_command_;
     std::vector<std::vector<double>> joint_last_effort_command_;
+    std::vector<std::vector<double>> joint_last_buzz_command_; // inherited from effort_command
 
     bool master_shutdown_allowed_command_ = false;
 

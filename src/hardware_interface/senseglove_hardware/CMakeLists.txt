@@ -12,13 +12,13 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 
 find_library(SGCORE
-        NAMES SGCore.so
-        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
+        NAMES libSGCoreCpp.so
+        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/linux/Release
         REQUIRED)
 
 find_library(SGCONNECT
-        NAMES SGConnect.so
-        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+        NAMES libSGConnect.so
+        PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
         REQUIRED)
 
 catkin_package(
@@ -41,6 +41,9 @@ include_directories(
         ../../SenseGlove_API/Core/SGCoreCpp/incl
 )
 
+set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}")
+
 if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
     find_package(code_coverage REQUIRED)
     # Add compiler flags for coverage instrumentation before defining any targets
@@ -49,17 +52,15 @@ endif()
 
 add_library(${PROJECT_NAME}
         include/${PROJECT_NAME}/actuation_mode.h
-        include/${PROJECT_NAME}/communication/sense_com.h
         include/${PROJECT_NAME}/joint.h
         include/${PROJECT_NAME}/senseglove_robot.h
         include/${PROJECT_NAME}/senseglove_setup.h
-        src/communication/sense_com.cpp
         src/joint.cpp
         src/senseglove_robot.cpp
         src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SGCORE} ${SGCONNECT} pthread)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${SGCONNECT} ${SGCORE} pthread)
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

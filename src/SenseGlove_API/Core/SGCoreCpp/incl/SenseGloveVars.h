@@ -49,7 +49,7 @@ namespace SGCore
 		};
 	}
 
-	namespace SG //separate sub-namespace for senseglove(s)
+	namespace SG //separate sub-namespace for SenseGlove(s)
 	{
 		//--------------------------------------------------------------------------------
 		// Glove Data and Constants

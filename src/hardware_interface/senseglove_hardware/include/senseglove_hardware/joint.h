@@ -48,8 +48,6 @@ namespace senseglove
         bool initialize();
         void prepareActuation();
 
-        void actuateRad(double target_position);
-        void actuateTorque(int16_t target_torque);
         double readAngle();
 
         double getPosition() const;

@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['data_41',['data',['../class_s_g_connect_1_1_shared_mem.html#acbea35a44a22f48932b83c0c6da1d335',1,'SGConnect::SharedMem']]],
+  ['data_5fbits_42',['DATA_BITS',['../class_s_g_connect_1_1_serial_connection.html#ab94f025c2c5bd276d33bfd9039c2722e',1,'SGConnect::SerialConnection']]],
+  ['debugger_43',['Debugger',['../class_s_g_connect_1_1_debugger.html',1,'SGConnect']]],
+  ['debugger_2ecpp_44',['Debugger.cpp',['../_debugger_8cpp.html',1,'']]],
+  ['debugger_2eh_45',['Debugger.h',['../_debugger_8h.html',1,'']]],
+  ['debuglevel_46',['debugLevel',['../class_s_g_connect_1_1_debugger.html#ad80f5f34dd6c8560d9537eeda2eda711',1,'SGConnect::Debugger']]],
+  ['defaultlevel_47',['defaultLevel',['../class_s_g_connect_1_1_debugger.html#aae7ea892b6ec2c462029a95a9e4aa356',1,'SGConnect::Debugger']]],
+  ['deviceinfo_48',['DeviceInfo',['../class_s_g_connect_1_1_s_g_device.html#abc601cfc24c19b3b23caed8da0317d10',1,'SGConnect::SGDevice']]],
+  ['devices_49',['devices',['../class_s_g_connect_1_1_shared_mem.html#aadc549b6ea166d7320317c80c64e49ae',1,'SGConnect::SharedMem']]],
+  ['devicescanner_50',['DeviceScanner',['../class_s_g_connect_1_1_device_scanner.html',1,'SGConnect::DeviceScanner'],['../class_s_g_connect_1_1_device_scanner.html#a3347ef1772430b7498921a9cb8326f22',1,'SGConnect::DeviceScanner::DeviceScanner()'],['../_s_g_connect_8cpp.html#a331098b25bf4e9ad2338df0f99777fac',1,'deviceScanner():&#160;SGConnect.cpp']]],
+  ['devicescanner_2ecpp_51',['DeviceScanner.cpp',['../_device_scanner_8cpp.html',1,'']]],
+  ['devicescanner_2eh_52',['DeviceScanner.h',['../_device_scanner_8h.html',1,'']]],
+  ['devicetype_53',['deviceType',['../class_s_g_connect_1_1_i_d_response.html#a3f139bec35d05404d6901d54058e4b8a',1,'SGConnect::IDResponse']]],
+  ['disabled_54',['DISABLED',['../_debugger_8h.html#ad72cf0c406d4bd46269f75ed9a21e6f9',1,'Debugger.h']]],
+  ['disconnect_55',['Disconnect',['../class_s_g_connect_1_1_connection.html#aebbf10b2ceb7e8c268422336886b5b6a',1,'SGConnect::Connection::Disconnect()'],['../class_s_g_connect_1_1_device_scanner.html#abcf446f9b47cd921a4e9a232e1a40ee3',1,'SGConnect::DeviceScanner::Disconnect()'],['../class_s_g_connect_1_1_serial_connection.html#a32530f2044483b28bdaa6c800ba7a309',1,'SGConnect::SerialConnection::Disconnect()']]],
+  ['dispose_56',['Dispose',['../class_s_g_connect_1_1_shared_mem.html#a0b7d405f2767ec076e74390f257d1694',1,'SGConnect::SharedMem::Dispose()'],['../namespace_s_g_connect.html#a0ecd569823aa8a2af4faa1333be7c6b1',1,'SGConnect::Dispose()']]],
+  ['disposing_57',['disposing',['../_s_g_connect_8cpp.html#a0c31e1d8fbf97175c8d72f6c1dabb387',1,'SGConnect.cpp']]],
+  ['dscheck_58',['DScheck',['../class_s_g_connect_1_1_connection_tester.html#a48a70d415fedfb5c3a76659f02c40a64',1,'SGConnect::ConnectionTester']]]
+];

@@ -6,11 +6,16 @@ controller:
     type: joint_state_controller/JointStateController
     publish_rate: 250
   trajectory:
-    type: position_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController # Position interface because we are directly passing on commands
     allow_partial_joints_goal: true
     joints:
-      - thumb_cmc
-      - index_mcp
-      - middle_mcp
-      - ring_mcp
-      - pinky_mcp
+      - thumb_brake # FFB
+      - index_brake # FFB
+      - middle_brake # FFB
+      - ring_brake # FFB
+      - pinky_brake # FFB
+      - thumb_cmc # Buzzer
+      - index_mcp # Buzzer
+      - middle_mcp # Buzzer
+      - ring_mcp # Buzzer
+      - pinky_mcp # Buzzer

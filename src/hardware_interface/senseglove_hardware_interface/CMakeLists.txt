@@ -20,14 +20,14 @@ find_package(catkin REQUIRED COMPONENTS
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_library(SGCORE
-        NAMES SGCore.so
-        PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
-        REQUIRED)
+    NAMES libSGCoreCpp.so
+    PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/linux/Release
+    REQUIRED)
 
 find_library(SGCONNECT
-        NAMES SGConnect.so
-        PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
-        REQUIRED)
+    NAMES libSGConnect.so
+    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
+    REQUIRED)
 
 catkin_package(
         INCLUDE_DIRS include
@@ -43,11 +43,8 @@ catkin_package(
         urdf
 )
 
-#if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
-#    find_package(code_coverage REQUIRED)
-#    # Add compiler flags for coverage instrumentation before defining any targets
-#    append_coverage_compiler_flags()
-#endif()
+set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}")
 
 include_directories(include
         SYSTEM
@@ -64,8 +61,8 @@ add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(${PROJECT_NAME}_node
     ${catkin_LIBRARIES}
-    ${SGCORE}
-    ${SGCONNECT})
+    ${SGCONNECT}
+    ${SGCORE})
 # From senseglove_hardware/cmake
 ros_enable_rpath(${PROJECT_NAME}_node)
 

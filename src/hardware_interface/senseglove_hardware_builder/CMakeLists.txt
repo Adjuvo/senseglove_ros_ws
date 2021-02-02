@@ -13,13 +13,13 @@ find_package(catkin REQUIRED COMPONENTS
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_library(SGCORE
-    NAMES SGCore.so libSGCORE.so
-    PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/Linux
+    NAMES libSGCoreCpp.so
+    PATHS ../../SenseGlove_API/Core/SGCoreCpp/lib/linux/Release
     REQUIRED)
 
 find_library(SGCONNECT
-    NAMES SGConnect.so
-    PATHS ../../SenseGlove_API/Core/SGConnect/lib/Linux
+    NAMES libSGConnect.so
+    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
     REQUIRED)
 
 catkin_package(

@@ -62,7 +62,7 @@ namespace SGCore
 			/// <remarks> Implemented here because the conversion may depend on firmware/hardware version. </remarks>
 			std::string ToBytes(Haptics::SG_FingerCmd cmd);
 
-			/// <summary> Convert a Thumper command into a string that this senseglove can understand. </summary>
+			/// <summary> Convert a Thumper command into a string that this SenseGlove can understand. </summary>
 			/// <param name="cmd"></param>
 			/// <returns></returns>
 			std::string ToBytes(Haptics::ThumperCmd cmd);
@@ -84,7 +84,7 @@ namespace SGCore
 			//--------------------------------------------------------------------------------------
 			// SGDevice Methods
 
-			///<summary> Get the DeviceType enumerator of this senseglove, used in DeviceList enumeration. </summary>
+			///<summary> Get the DeviceType enumerator of this SenseGlove, used in DeviceList enumeration. </summary>
 			DeviceType GetDeviceType() override { return DeviceType::SENSEGLOVE; }
 
 			/// <summary> Retrieve this Sense Glove's unique identifier. </summary>
@@ -186,7 +186,7 @@ namespace SGCore
 
 
 			/// <summary> Retrieve all Sense Gloves connected to this system. </summary>
-			static std::vector<SenseGlove> GetSenseGloves();
+			static std::vector<SenseGlove> GetSenseGloves(bool onlyConnected = true);
 
 			/// <summary> Retrieve the first connected Sense Glove there is. </summary>
 			static bool GetSenseGlove(SenseGlove& glove);
@@ -200,8 +200,12 @@ namespace SGCore
 			/// <summary> Retrieve calibration values of this glove, as an array of size 5, containing x (roll), y (flexion), z (abduction) values. </summary>
 			bool GetCalibrationValues(std::vector<SGCore::Kinematics::Vect3D>& values) override;
 
-			/// <summary> Convert a senseglove GlovePose into calibrationValues. </summary>
+			/// <summary> Convert a SenseGlove GlovePose into calibrationValues. </summary>
 			static std::vector<SGCore::Kinematics::Vect3D> GetCalibrationValues(SG_GlovePose glovePose);
+
+		
+			/// <summary> Apply this glove's calibration range to a handProfile </summary>
+			void ResetCalibrationRange() override;
 
 
 			/// <summary> Apply this glove's calibration range to a handProfile </summary>
