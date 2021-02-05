@@ -3,10 +3,11 @@
     <arg name="nr_of_glove" default="1" doc="specify the number of the glove"/>
     <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
-    <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_right.urdf" if="$(eval arg('is_right')==true)"/>
-    <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_left.urdf" if="$(eval arg('is_right')==false)"/>
-
     <group ns="/senseglove_$(arg nr_of_glove)">
+
+        <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_right.urdf" if="$(eval arg('is_right')==true)"/>
+        <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_left.urdf" if="$(eval arg('is_right')==false)"/>
+
         <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 

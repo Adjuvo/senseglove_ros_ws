@@ -146,7 +146,8 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
             break;
         }
 
-        if (!this->urdf_.initParam("/robot_description"))
+        std::string robot_descriptor = "/senseglove_" + std::to_string(nr_of_glove_ + 1) + "/robot_description";
+        if (!this->urdf_.initParam(robot_descriptor))
         {
             ROS_ERROR("Failed initializing the URDF: %s", type_string);
 //            throw senseglove::error::HardwareException(senseglove::error::ErrorType::INIT_URDF_FAILED);
