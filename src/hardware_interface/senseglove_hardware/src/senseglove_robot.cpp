@@ -47,12 +47,11 @@ Joint& SenseGloveRobot::getJoint(size_t index)
   return this->joint_list_.at(index);
 }
 
-double SenseGloveRobot::getHandPos(int i)
+SGCore::Kinematics::Vect3D SenseGloveRobot::getHandPos(int i)
 {
   // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
-  // Determine the standardized axis of rotation
-  //  return (double)hand_pose_.handAngles[std::floor(i/4)][i%4].z;
-  return (double)hand_pose_.jointPositions[std::floor(i/4)][i%4].z; // Valid alternative?? or even better??
+  // SG uses vector of vectors and ROS uses one long array
+  return hand_pose_.jointPositions[std::floor(i/4)][i%4];
 }
 
 void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
