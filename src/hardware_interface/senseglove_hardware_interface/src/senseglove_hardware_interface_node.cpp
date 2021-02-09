@@ -58,7 +58,6 @@ int main(int argc, char** argv)
             last_update_time = now;
 
             SenseGlove.read(now, elapsed_time);
-            SenseGlove.validate();
             controller_manager.update(now, elapsed_time);
             SenseGlove.write(now, elapsed_time);
         }

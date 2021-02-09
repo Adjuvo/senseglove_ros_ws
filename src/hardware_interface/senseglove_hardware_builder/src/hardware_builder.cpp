@@ -13,10 +13,8 @@
 #include <SGConnect.h>
 #include "SenseGlove.h"
 
-// clang-format off
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
 const std::vector<std::string> HardwareBuilder::ROBOT_REQUIRED_KEYS = { "deviceType" };
-// clang-format on
 
 HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove) : HardwareBuilder(robot.getFilePath(), nr_of_glove)
 {
@@ -43,8 +41,6 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 
     // Remove top level robot name key
     YAML::Node config = this->robot_config_[robot_name];
-//    const auto cycle_time = config["communicationCycleTime"].as<int>();
-//    const auto device_type = config["deviceType"].as<int>();
 
     std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
     ROS_DEBUG_STREAM("creating sensegloves");
@@ -150,7 +146,6 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
         if (!this->urdf_.initParam(robot_descriptor))
         {
             ROS_ERROR("Failed initializing the URDF: %s", type_string);
-//            throw senseglove::error::HardwareException(senseglove::error::ErrorType::INIT_URDF_FAILED);
         }
         this->init_urdf_ = false;
     }
@@ -197,7 +192,6 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
     int i = 0;
     for (auto& glove : all_gloves)
     {
-//        const auto robot_name = robots_config.begin()->first.as<std::string>();
         robots.push_back(
                 HardwareBuilder::createRobot(robots_config, urdf, std::move(jointList), glove, i));
         i++;

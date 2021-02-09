@@ -11,8 +11,6 @@
 
 #include <ros/ros.h>
 
-//#include "SGConnect.h"
-
 namespace senseglove
 {
     SenseGloveSetup::SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves)
@@ -32,32 +30,11 @@ namespace senseglove
           ROS_WARN("Trying to start senseglove communication while it is already active.");
           return;
         }
-        /*
-        if (SGConnect::ScanningActive() != 1)
-        {
-          if(SGConnect::Init() != 1)
-          {
-            ROS_WARN("Something went wrong trying to initiate SGConnect");
-          }
-        }
-        else
-        {
-          ROS_WARN("SGConnect Scanning is already Active! Will not instantiate a new SGConnect object");
-        }
-         */
     }
 
     void SenseGloveSetup::stopCommunication()
     {
         this->getSenseGloveRobot(0).stopActuating();
-        /*
-        if (SGConnect::ScanningActive() == 1)
-        {
-          ROS_INFO("Stopping communication with Senseglove device");
-          int result = SGConnect::Dispose();
-          ROS_INFO("SGConnect Dispose returned with result: %d", result);
-        }
-         */
     }
 
     bool SenseGloveSetup::isCommunicationOperational()

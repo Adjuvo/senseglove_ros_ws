@@ -33,10 +33,6 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     // Start ethercat cycle in the hardware
     this->senseglove_setup_->startCommunication(true);
 
-    //std::string senseglove_name = this->senseglove_setup_->getSenseGloveRobot(0).getName();
-
-
-
     for(size_t i = 0; i < num_gloves_; ++i){
         // Initialize interfaces for each joint
         for (size_t k = 0; k < num_joints_; ++k) {
@@ -94,11 +90,6 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     return true;
 }
 
-void SenseGloveHardwareInterface::validate()
-{
-    // TO DO
-}
-
 void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::Duration &elapsed_time)
 {
     // read senseglove robot data
@@ -108,8 +99,6 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
           for (size_t k = 0; k < num_joints_; ++k) {
             senseglove::Joint &joint = senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
 
-            // Update position with he most accurate velocity
-//            joint.readAngle();
             joint_position_[i][k] = joint.getPosition();
             joint_velocity_[i][k] = joint.getVelocity();
             joint_effort_[i][k] = joint.getTorque();
@@ -121,37 +110,6 @@ void SenseGloveHardwareInterface::read(const ros::Time & /* time */, const ros::
 
 void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros::Duration &/*&elapsed_time*/) {
     for (size_t i = 0; i < num_gloves_; ++i) {
-//        for (size_t k = 0; k < num_joints_; k++)
-//        {
-//            senseglove::Joint &joint = this->senseglove_setup_->getSenseGloveRobot(i).getJoint(k);
-//            if (joint.getActuationMode() == senseglove::ActuationMode::position)
-//            {
-//
-//              joint_position_command_[i][k] = joint_last_position_command_[i][k];
-//              has_actuated_ |= (joint_position_command_[i][k] != 0.0);
-//            }
-//            else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
-//            {
-//              joint_effort_command_[i][k] = joint_last_effort_command_[i][k];
-//              has_actuated_ |= (joint_effort_command_[i][k] != 0.0);
-//            }
-//        }
-//
-//        if (not has_actuated_) {
-//            bool found_non_zero = false;
-//            for (size_t k = 0; k < num_joints_; k++)
-//            {
-//                if (joint_effort_command_[i][k] != 0)
-//                {
-//                    ROS_ERROR("Non-zero effort on first actuation for joint %s",
-//                              senseglove_setup_->getSenseGloveRobot(i).getJoint(k).getName().c_str());
-//                    found_non_zero = true;
-//                }
-//            }
-//            if (found_non_zero) {
-//                throw std::runtime_error("Safety limits acted before actual controller started actuating");
-//            }
-//        }
 
         // Splice joint_effort_command vector into vectors for ffb and buzz commands
         int j = 0;
@@ -256,7 +214,6 @@ void SenseGloveHardwareInterface::updateSenseGloveState() {
       for (size_t k = 0; k < num_joints_; ++k)
       {
         senseglove::Joint& joint = robot.getJoint(k);
-        //        senseglove::SenseGloveState senseglove_state = joint.getSenseGloveState();
         senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
         senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
         senseglove_state_pub_->msg_.position[i] = joint.getPosition();
