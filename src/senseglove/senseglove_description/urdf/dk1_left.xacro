@@ -381,7 +381,7 @@
         <parent link="thumb_brake"/>
         <child link="thumb_abduction"/>
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
 
         <limit velocity="${1000}"
                effort="${100}"
@@ -441,7 +441,7 @@
         <parent link="index_brake"/>
         <child link="index_abduction"/>
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
 
         <limit velocity="${1000}"
                effort="${100}"
@@ -502,7 +502,7 @@
         <parent link="middle_brake"/>
         <child link="middle_abduction"/>
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
 
         <limit velocity="${1000}"
                effort="${100}"
@@ -563,7 +563,7 @@
         <parent link="ring_brake"/>
         <child link="ring_abduction"/>
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
 
         <limit velocity="${1000}"
                effort="${100}"
@@ -624,7 +624,7 @@
         <parent link="pinky_brake"/>
         <child link="pinky_abduction"/>
         <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
 
         <limit velocity="${1000}"
                effort="${100}"
