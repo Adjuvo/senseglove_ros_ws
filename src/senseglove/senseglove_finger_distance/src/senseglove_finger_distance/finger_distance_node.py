@@ -32,19 +32,18 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistances()
-        finger_distance_message.thumb_index = (self.finger_tips[4] - self.finger_tips[0]).magnitude()
-        finger_distance_message.thumb_middle = (self.finger_tips[4] - self.finger_tips[1]).magnitude()
-        finger_distance_message.thumb_ring = (self.finger_tips[4] - self.finger_tips[2]).magnitude()
-        finger_distance_message.thumb_pinky = (self.finger_tips[4] - self.finger_tips[3]).magnitude()
+        finger_distance_message.thumb_index = (self.finger_tips[0] - self.finger_tips[1]).magnitude()
+        finger_distance_message.thumb_middle = (self.finger_tips[0] - self.finger_tips[2]).magnitude()
+        finger_distance_message.thumb_ring = (self.finger_tips[0] - self.finger_tips[3]).magnitude()
+        finger_distance_message.thumb_pinky = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
     def callback(self, data):
-        k = 0
-        for i in self.finger_nrs:
-            self.finger_tips[k].x = data.hand_position[i].x
-            self.finger_tips[k].y = data.hand_position[i].y
-            self.finger_tips[k].z = data.hand_position[i].z
-            k += 1
+
+        for i in range(len(self.finger_nrs)):
+            self.finger_tips[i].x = data.finger_tip_positions[i].x
+            self.finger_tips[i].y = data.finger_tip_positions[i].y
+            self.finger_tips[i].z = data.finger_tip_positions[i].z
         self.distance_publish()
 
 
