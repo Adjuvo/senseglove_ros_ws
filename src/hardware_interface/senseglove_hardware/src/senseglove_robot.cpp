@@ -58,7 +58,7 @@ SGCore::Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i)
 {
   // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
   // SG uses vector of vectors and ROS uses one long array
-  return glove_pose_.CalculateFingerTips(this->hand_profile_)[i];
+  return glove_pose_.CalculateFingerTips(hand_profile_)[i];
 }
 
 void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)

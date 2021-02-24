@@ -200,6 +200,7 @@ void SenseGloveHardwareInterface::reserveMemory() {
     senseglove_state_pub_->msg_.position.resize(num_gloves_*num_joints_);
     senseglove_state_pub_->msg_.absolute_velocity.resize(num_gloves_*num_joints_);
     senseglove_state_pub_->msg_.hand_position.resize(num_gloves_*num_joints_);
+    senseglove_state_pub_->msg_.finger_tip_positions.resize(5);
 }
 
 void SenseGloveHardwareInterface::updateSenseGloveState() {
