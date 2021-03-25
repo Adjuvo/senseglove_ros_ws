@@ -16,10 +16,10 @@ add_message_files(
     SenseGloveState.msg
 )
 
-#add_service_files(
-#    FILES
-#    .srv
-#)
+add_service_files(
+    FILES
+    Calibrate.srv
+)
 
 #add_action_files(
 #    DIRECTORY action

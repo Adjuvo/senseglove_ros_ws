@@ -11,15 +11,13 @@ from senseglove_shared_resources.msg import FingerDistances
 
 class Calibration:
 
-    def __init__(self, glove_nr, name):
+    def __init__(self, glove_nr=1, name="default"):
         self.glove_nr = glove_nr
         self.name = name  # Calibration profile name
 
         # Defaults
-        self.offset_calibration = [[-6.8, -36.7, 14.4],
-                                   [-6.8, -29.7, 18.7],
-                                   [-6.8, -25.8, 9.1]]  # [index, middle, ring][x, y, z]
-        self.length_calibration = [51.3, 70.6, 63.6]  # [index, middle, ring]
+        self.pinch_calibration_min = [-6.8, -25.8, 9.1]  # [index, middle, ring][x, y, z] random values from Kees
+        self.pinch_calibration_max = [51.3, 70.6, 63.6]  # [index, middle, ring]
 
         self.avg_open_flat = [0.0, 0.0, 0.0]  # distances between thumb&index thumb&middle thumb&ring
         self.avg_thumb_index_pinch = [0.0, 0.0, 0.0]
@@ -166,19 +164,18 @@ class Calibration:
         coordinates based on their differences in size.
         """
 
-        for i, _ in enumerate(['index', 'middle', 'ring']):
-            # offset for every finger = [x-offset first finger, y-offset current finger, z-offset current finger]
-            self.offset_calibration[i] = [self.avg_open_flat[0][0], self.avg_open_flat[i][1], self.avg_pinch[i][2]]
-            # length: flat z-position - bent (90 deg) z-position of finger
-            self.length_calibration[i] = self.avg_open_flat[i][2] - self.avg_pinch[i][2]
-            if self.length_calibration[i] == 0.0:
-                rospy.logwarn("Got finger length zero. Is your glove still connected?")
-                return False
+        # offset for every finger = [x-offset first finger, y-offset current finger, z-offset current finger]
+        self.pinch_calibration_min = [self.avg_thumb_index_pinch[0], self.avg_thumb_middle_pinch[1], self.avg_thumb_ring_pinch[2]]
+        # length: flat z-position - bent (90 deg) z-position of finger
+        self.pinch_calibration_max = self.avg_open_flat
+        if self.length_calibration == 0.0:
+            rospy.logwarn("Got finger length zero. Is your glove still connected?")
+            return False
 
 
         rospy.loginfo("The calibration for '%s' is done. These are the numbers:" % self.name)
-        rospy.loginfo("Finger offsets: %s\n" % self.offset_calibration)
-        rospy.loginfo("Finger lengths: %s\n" % self.length_calibration)
+        rospy.loginfo("Pinch calibration min: %s\n" % self.pinch_calibration_min)
+        rospy.loginfo("Pinch calibration max: %s\n" % self.pinch_calibration_max)
         rospy.loginfo("Type [y] + [Enter] when OK, or [q] + [Enter] to discard and quit.")
 
         self.key_press_interface()
@@ -187,9 +184,9 @@ class Calibration:
         rospy.loginfo("Setting on param server and saving to file...")
 
         # Set parameters
-        rospy.set_param('~offset_calibration', self.offset_calibration)
-        rospy.set_param('~length_calibration', self.length_calibration)
-        config_folder = rospkg.RosPack().get_path('senseglove_ros') + "/calib"
+        rospy.set_param('~pinch_calibration_min', self.pinch_calibration_min)
+        rospy.set_param('~pinch_calibration_max', self.pinch_calibration_max)
+        config_folder = rospkg.RosPack().get_path('senseglove_shared_resources') + "/calib"
 
         if not isdir(config_folder):
             rospy.logwarn("Could not locate calibration folder %s, not saving." % config_folder)
