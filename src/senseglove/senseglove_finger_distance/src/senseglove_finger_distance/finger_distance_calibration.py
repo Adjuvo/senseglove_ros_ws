@@ -47,7 +47,7 @@ class Calibration:
         Call when user pinches index finger and thumb
         """
         if not self.finished_open_flat:
-            print("First calibrate the flat hand, then the bent position!")
+            print("First calibrate the flat hand, then the pinching position!")
             return
 
         self.avg_thumb_index_pinch = [avg_positions_msg.thumb_index, avg_positions_msg.thumb_middle, avg_positions_msg.thumb_ring]
@@ -62,7 +62,7 @@ class Calibration:
         Call when user pinches middle finger and thumb
         """
         if not self.finished_open_flat:
-            print("First calibrate the flat hand, then the bent position!")
+            print("First calibrate the flat hand, then the pinching position!")
             return
 
         self.avg_thumb_middle_pinch = [avg_positions_msg.thumb_index, avg_positions_msg.thumb_middle, avg_positions_msg.thumb_ring]
@@ -77,7 +77,7 @@ class Calibration:
         Call when user pinches ring finger and thumb
         """
         if not self.finished_open_flat:
-            print("First calibrate the flat hand, then the bent position!")
+            print("First calibrate the flat hand, then the pinching position!")
             return
 
         self.avg_thumb_ring_pinch = [avg_positions_msg.thumb_index, avg_positions_msg.thumb_middle, avg_positions_msg.thumb_ring]
