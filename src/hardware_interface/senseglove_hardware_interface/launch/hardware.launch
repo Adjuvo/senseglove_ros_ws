@@ -1,6 +1,6 @@
 <launch>
     <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, nova, beta, unknown."/>
-    <arg name="nr_of_glove" default="1" doc="specify the number of the glove"/>
+    <arg name="nr_of_glove" default="1" doc="specify the number of the glove, it's an identifier. Not the amount of gloves connected."/>
     <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
     <group ns="/senseglove_$(arg nr_of_glove)">

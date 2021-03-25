@@ -1,7 +1,7 @@
 import rospy
 from senseglove_shared_resources.msg import SenseGloveState, FingerDistances
 from math import sqrt, pow
-
+import sys
 
 class FingerTipVector:
     def __init__(self, x=0.0, y=0.0, z=0.0):
@@ -47,10 +47,10 @@ class FingerTipHandler:
         self.distance_publish()
 
 
-def main():
+def main(glove_nr):
     rospy.init_node('senseglove_finger_distance_node')
     rospy.loginfo("initialize finger distance node")
-    FingerTipHandler()
+    FingerTipHandler(glove_nr=glove_nr)
 
     while not rospy.is_shutdown():
         rospy.sleep(0.5)

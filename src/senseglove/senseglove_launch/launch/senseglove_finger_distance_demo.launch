@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="senseglove_launch" type="startGlove.sh" name="startGlove" args="$(find hardware_interface)" output="screen" respawn="false" />
+
+    <node name="senseglove_finger_distance" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1"/>
+    <node name="senseglove_finger_distance" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="2"/>
+</launch>

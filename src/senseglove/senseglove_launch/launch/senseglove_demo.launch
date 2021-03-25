@@ -1,13 +1,3 @@
 <launch>
-    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch">
-                <arg name="robot" value="dk1"/>
-                <arg name="nr_of_glove" value="1"/>
-                <arg name="is_right" value="false"/>
-    </include>
-
-    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch">
-                <arg name="robot" value="dk1"/>
-                <arg name="nr_of_glove" value="2"/>
-                <arg name="is_right" value="true"/>
-    </include>
+    <node pkg="senseglove_hardware_interface" type="startGlove.bash" name="startGlove.bash" args="$(find hardware_interface)" output="screen" respawn="false" />
 </launch>
