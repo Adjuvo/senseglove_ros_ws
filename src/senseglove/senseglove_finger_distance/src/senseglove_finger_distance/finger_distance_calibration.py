@@ -114,7 +114,7 @@ class Calibration:
         self.key_press_interface()
         self.log_finger_distances()
 
-        # Set average values for bent fingers
+        # Set average values for pinch between thumb and index finger
         self.set_thumb_index_pinch(self.get_avg_finger_distances())
         if not self.finished_thumb_index_pinch:
             rospy.logerr("Could not finish thumb to index pinch calibration, calibration failed")
@@ -128,7 +128,7 @@ class Calibration:
         self.key_press_interface()
         self.log_finger_distances()
 
-        # Set average values for bent fingers
+        # Set average values for pinch between thumb and middle finger
         self.set_thumb_middle_pinch(self.get_avg_finger_distances())
         if not self.finished_thumb_middle_pinch:
             rospy.logerr("Could not finish thumb to middle pinch calibration, calibration failed")
@@ -142,7 +142,7 @@ class Calibration:
         self.key_press_interface()
         self.log_finger_distances()
 
-        # Set average values for bent fingers
+        # Set average values for pinch between thumb and ring finger
         self.set_thumb_ring_pinch(self.get_avg_finger_distances())
         if not self.finished_thumb_ring_pinch:
             rospy.logerr("Could not finish thumb to index pinch calibration, calibration failed")
@@ -159,9 +159,9 @@ class Calibration:
         be found, but whatever \_(:/)_/
         """
 
-        # offset for every finger = [x-offset first finger, y-offset current finger, z-offset current finger]
+        # minimum value of the finger distance when pinching with two fingers in three combinations
         self.pinch_calibration_min = [self.avg_thumb_index_pinch[0], self.avg_thumb_middle_pinch[1], self.avg_thumb_ring_pinch[2]]
-        # length: flat z-position - bent (90 deg) z-position of finger
+        # maximum value between fingers and the thumb to find corresponding interpolation data
         self.pinch_calibration_max = self.avg_open_flat
         if self.pinch_calibration_max == 0.0:
             rospy.logwarn("Got max value zero. Is your glove still connected?")
