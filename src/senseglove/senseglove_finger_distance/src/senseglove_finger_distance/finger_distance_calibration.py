@@ -44,7 +44,7 @@ class Calibration:
 
     def set_thumb_index_pinch(self, avg_positions_msg):
         """
-        Call when user holds fingers in 90 deg bent position
+        Call when user pinches index finger and thumb
         """
         if not self.finished_open_flat:
             print("First calibrate the flat hand, then the bent position!")
@@ -59,7 +59,7 @@ class Calibration:
 
     def set_thumb_middle_pinch(self, avg_positions_msg):
         """
-        Call when user holds fingers in 90 deg bent position
+        Call when user pinches middle finger and thumb
         """
         if not self.finished_open_flat:
             print("First calibrate the flat hand, then the bent position!")
@@ -74,7 +74,7 @@ class Calibration:
 
     def set_thumb_ring_pinch(self, avg_positions_msg):
         """
-        Call when user holds fingers in 90 deg bent position
+        Call when user pinches ring finger and thumb
         """
         if not self.finished_open_flat:
             print("First calibrate the flat hand, then the bent position!")
@@ -148,28 +148,23 @@ class Calibration:
             rospy.logerr("Could not finish thumb to index pinch calibration, calibration failed")
             return False
 
-        rospy.loginfo("Step 4 done")
-
-
+        rospy.loginfo("Step 4 (Final step) done")
 
         rospy.loginfo("Computing calibration parameters...")
 
         """
         Calibration data:
-        - finger offset: measured offset between human hand and senseglove. The senseglove sees the base of the glove's 
-        first finger as (0,0,0). With these offsets applied, the base of the human's first finger becomes (0,0,0). 
-        For instance, the base of the human's middle finger then is measured at location (x, 0, 0) with x the distance 
-        between the attachments of the first and middle finger.
-        - finger length: to determine the proper scaling that should be applied between human and shadow hand 
-        coordinates based on their differences in size.
+        - pinch minimum: The corresponding value when the user pinches their fingers for step 2 until 4
+        - pinch maximum: for conveniences sake simply the open flat position. A different maximum value could probably 
+        be found, but whatever \_(:/)_/
         """
 
         # offset for every finger = [x-offset first finger, y-offset current finger, z-offset current finger]
         self.pinch_calibration_min = [self.avg_thumb_index_pinch[0], self.avg_thumb_middle_pinch[1], self.avg_thumb_ring_pinch[2]]
         # length: flat z-position - bent (90 deg) z-position of finger
         self.pinch_calibration_max = self.avg_open_flat
-        if self.length_calibration == 0.0:
-            rospy.logwarn("Got finger length zero. Is your glove still connected?")
+        if self.pinch_calibration_max == 0.0:
+            rospy.logwarn("Got max value zero. Is your glove still connected?")
             return False
 
 
