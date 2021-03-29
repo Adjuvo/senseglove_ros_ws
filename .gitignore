@@ -2,5 +2,6 @@ build/
 install/
 log/
 SenseGlove_API/
+src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
 
 .idea/*

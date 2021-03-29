@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Start SenseCom
-printf "%s\n" "$1"
-$1/SenseCom/Linux/SenseCom.x86_64 &
+chmod +x $1/Linux/SenseCom.x86_64
+$1/Linux/SenseCom.x86_64 &
 
 # Allow SenseComm to start
 sleep 15
