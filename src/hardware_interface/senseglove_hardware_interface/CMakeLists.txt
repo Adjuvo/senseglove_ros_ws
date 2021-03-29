@@ -78,6 +78,8 @@ install(DIRECTORY config launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         )
 
+install(PROGRAMS launch/startGlove.sh DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 ## Add gtest based cpp test target and link libraries
 #if(CATKIN_ENABLE_TESTING)
 #    catkin_add_gtest(${PROJECT_NAME}_test

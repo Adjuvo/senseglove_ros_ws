@@ -14,11 +14,17 @@ class FingerTipHandler:
 
         self.calibration = Calibration("default")
 
+    def apply_calib(self, pinch_value=0.0, pinch_combination=1, mode='normalized'):
+        if mode == 'minimum':
+            return pinch_value - self.calibration.pinch_calibration_min[pinch_combination]
+        elif mode == 'normalized':
+            return 100 * (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / self.calibration.pinch_calibration_max[pinch_combination]
+
     def distance_publish(self):
         finger_distance_message = FingerDistances()
-        finger_distance_message.thumb_index = (self.finger_tips[0] - self.finger_tips[1]).magnitude() - self.calibration.pinch_calibration_min[0]
-        finger_distance_message.thumb_middle = (self.finger_tips[0] - self.finger_tips[2]).magnitude() - self.calibration.pinch_calibration_min[1]
-        finger_distance_message.thumb_ring = (self.finger_tips[0] - self.finger_tips[3]).magnitude() - self.calibration.pinch_calibration_min[2]
+        finger_distance_message.thumb_index = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'normalized')
+        finger_distance_message.thumb_middle = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'normalized')
+        finger_distance_message.thumb_ring = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'normalized')
         finger_distance_message.thumb_pinky = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
