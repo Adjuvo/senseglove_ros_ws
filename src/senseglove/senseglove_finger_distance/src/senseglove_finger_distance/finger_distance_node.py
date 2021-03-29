@@ -16,9 +16,11 @@ class FingerTipHandler:
 
     def apply_calib(self, pinch_value=0.0, pinch_combination=1, mode='normalized'):
         if mode == 'minimum':
+            # Return the values so that pinching your fingers results in a finger distance of zero
             return pinch_value - self.calibration.pinch_calibration_min[pinch_combination]
         elif mode == 'normalized':
-            return 100 * (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / self.calibration.pinch_calibration_max[pinch_combination]
+            # Return normalized finger distance value between 0 and 1
+            return (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / self.calibration.pinch_calibration_max[pinch_combination]
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
