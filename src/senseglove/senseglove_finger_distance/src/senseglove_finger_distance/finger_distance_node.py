@@ -24,9 +24,9 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'normalized')
-        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'normalized')
-        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'normalized')
+        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'minimum')
+        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'minimum')
+        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'minimum')
         finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
