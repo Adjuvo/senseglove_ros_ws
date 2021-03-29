@@ -7,7 +7,7 @@ from os.path import isdir, exists
 import rospkg
 import numpy as np
 
-from senseglove_shared_resources.msg import FingerDistances
+from senseglove_shared_resources.msg import FingerDistanceFloats
 
 class Calibration:
 
@@ -95,7 +95,7 @@ class Calibration:
         Run an interactive (CLI) session for calibration.
         """
 
-        rospy.Subscriber('senseglove_' + str(self.glove_nr) + '/finger_distances', FingerDistances, callback=self.senseglove_callback)
+        rospy.Subscriber('senseglove_' + str(self.glove_nr) + '/finger_distances', FingerDistanceFloats, callback=self.senseglove_callback)
 
         rospy.loginfo("Calibration of senseglove started, please flatten your hand.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
@@ -199,7 +199,7 @@ class Calibration:
 
     def get_avg_finger_distances(self):
 
-        avg_positions_msg = FingerDistances()
+        avg_positions_msg = FingerDistanceFloats()
 
         thumb_indexdata = [x.thumb_index for x in self.databuffer]
         if len(thumb_indexdata) == 0:

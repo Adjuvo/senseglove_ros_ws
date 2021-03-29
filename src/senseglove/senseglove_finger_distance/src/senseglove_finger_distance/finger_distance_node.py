@@ -1,5 +1,5 @@
 import rospy
-from senseglove_shared_resources.msg import SenseGloveState, FingerDistances
+from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
 from finger_distance_calibration import Calibration
 from math import sqrt, pow
 
@@ -10,7 +10,7 @@ class FingerTipHandler:
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
         rospy.Subscriber("/senseglove_" + str(glove_nr) + "/senseglove_states", SenseGloveState,
                          callback=self.callback)
-        self.pub = rospy.Publisher("senseglove_" + str(glove_nr) + "/finger_distances", FingerDistances, queue_size=10)
+        self.pub = rospy.Publisher("senseglove_" + str(glove_nr) + "/finger_distances", FingerDistanceFloats, queue_size=10)
 
         self.calibration = Calibration("default")
 
@@ -21,7 +21,7 @@ class FingerTipHandler:
             return 100 * (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / self.calibration.pinch_calibration_max[pinch_combination]
 
     def distance_publish(self):
-        finger_distance_message = FingerDistances()
+        finger_distance_message = FingerDistanceFloats()
         finger_distance_message.thumb_index = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'normalized')
         finger_distance_message.thumb_middle = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'normalized')
         finger_distance_message.thumb_ring = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'normalized')
