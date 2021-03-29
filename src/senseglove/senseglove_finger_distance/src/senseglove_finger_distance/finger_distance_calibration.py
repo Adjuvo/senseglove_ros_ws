@@ -50,7 +50,7 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_index_pinch = [avg_positions_msg.th_ff, avg_positions_msg.th_mf, avg_positions_msg.th_rf]
+        self.avg_thumb_index_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
         if self.avg_thumb_index_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -65,7 +65,7 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_middle_pinch = [avg_positions_msg.th_ff, avg_positions_msg.th_mf, avg_positions_msg.th_rf]
+        self.avg_thumb_middle_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
         if self.avg_thumb_middle_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -80,7 +80,7 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_ring_pinch = [avg_positions_msg.th_ff, avg_positions_msg.th_mf, avg_positions_msg.th_rf]
+        self.avg_thumb_ring_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
         if self.avg_thumb_ring_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -201,23 +201,23 @@ class Calibration:
 
         avg_positions_msg = FingerDistanceFloats()
 
-        thumb_indexdata = [x.th_ff for x in self.databuffer]
+        thumb_indexdata = [x.th_ff.data for x in self.databuffer]
         if len(thumb_indexdata) == 0:
             rospy.logwarn("No data received! Is your glove still connected?")
         else:
-            avg_positions_msg.th_ff = sum(thumb_indexdata) / len(thumb_indexdata)
+            avg_positions_msg.th_ff.data = sum(thumb_indexdata) / len(thumb_indexdata)
 
-        thumb_middledata = [x.th_mf for x in self.databuffer]
+        thumb_middledata = [x.th_mf.data for x in self.databuffer]
         if len(thumb_middledata) == 0:
             rospy.logwarn("No data received! Is your glove still connected?")
         else:
-            avg_positions_msg.th_mf = sum(thumb_middledata) / len(thumb_middledata)
+            avg_positions_msg.th_mf.data = sum(thumb_middledata) / len(thumb_middledata)
 
-        thumb_ringdata = [x.th_rf for x in self.databuffer]
+        thumb_ringdata = [x.th_rf.data for x in self.databuffer]
         if len(thumb_ringdata) == 0:
             rospy.logwarn("No data received! Is your glove still connected?")
         else:
-            avg_positions_msg.th_rf = sum(thumb_ringdata) / len(thumb_ringdata)
+            avg_positions_msg.th_rf.data = sum(thumb_ringdata) / len(thumb_ringdata)
 
         return avg_positions_msg
 
