@@ -14,7 +14,9 @@ class FingerTipHandler:
 
         self.calibration = Calibration("default")
 
-    def apply_calib(self, pinch_value=0.0, pinch_combination=1, mode='normalized'):
+    def apply_calib(self, pinch_value=0.0, pinch_combination=0, mode='nothing'):
+        if mode == 'nothing':
+            return pinch_value
         if mode == 'minimum':
             # Return the values so that pinching your fingers results in a finger distance of zero
             return pinch_value - self.calibration.pinch_calibration_min[pinch_combination]
@@ -24,9 +26,9 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'minimum')
-        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'minimum')
-        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'minimum')
+        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0)
+        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1)
+        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2)
         finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
