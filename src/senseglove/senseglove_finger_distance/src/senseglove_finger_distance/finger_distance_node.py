@@ -22,10 +22,10 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.thumb_index = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'normalized')
-        finger_distance_message.thumb_middle = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'normalized')
-        finger_distance_message.thumb_ring = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'normalized')
-        finger_distance_message.thumb_pinky = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
+        finger_distance_message.th_ff = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, 'normalized')
+        finger_distance_message.th_mf = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, 'normalized')
+        finger_distance_message.th_rf = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, 'normalized')
+        finger_distance_message.th_lf = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
     def callback(self, data):
