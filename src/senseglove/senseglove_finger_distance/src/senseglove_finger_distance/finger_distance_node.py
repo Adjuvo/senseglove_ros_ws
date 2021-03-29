@@ -5,8 +5,9 @@ from math import sqrt, pow
 
 
 class FingerTipHandler:
-    def __init__(self, glove_nr=1, finger_nrs=[3, 7, 11, 15, 19]):
+    def __init__(self, glove_nr=1, calib_mode='nothing', finger_nrs=[3, 7, 11, 15, 19]):
         self.finger_nrs = finger_nrs
+        self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
         rospy.Subscriber("/senseglove_" + str(glove_nr) + "/senseglove_states", SenseGloveState,
                          callback=self.callback)
@@ -26,9 +27,9 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0)
-        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1)
-        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2)
+        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, self.calib_mode)
+        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, self.calib_mode)
+        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, self.calib_mode)
         finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
@@ -69,10 +70,10 @@ class FingerTipVector:
         return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2))
 
 
-def main(glove_nr):
+def main(glove_nr, calib_mode):
     rospy.init_node('senseglove_finger_distance_node')
     rospy.loginfo("initialize finger distance node")
-    FingerTipHandler(glove_nr=glove_nr)
+    FingerTipHandler(glove_nr=glove_nr, calib_mode=calib_mode)
 
     while not rospy.is_shutdown():
         rospy.sleep(0.5)

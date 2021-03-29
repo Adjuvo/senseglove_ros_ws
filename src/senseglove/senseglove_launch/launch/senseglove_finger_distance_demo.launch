@@ -1,6 +1,8 @@
 <launch>
+    <arg name="calibration_mode" default="nothing" doc="Choose the calibration mode of the senseglove; nothing, minimum, normalized"/>
+
     <node pkg="senseglove_launch" type="startGlove.sh" name="startGlove" args="$(find senseglove_hardware)" output="screen" respawn="false" />
 
-    <node name="senseglove_finger_distance_1" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1"/>
-    <node name="senseglove_finger_distance_2" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="2"/>
+    <node name="senseglove_finger_distance_1" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1 $(arg calibration_mode)"/>
+    <node name="senseglove_finger_distance_2" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="2 $(arg calibration_mode)"/>
 </launch>
