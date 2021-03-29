@@ -17,7 +17,7 @@ class Calibration:
 
         # Defaults
         self.pinch_calibration_min = [0.0, 0.0, 0.0]  # [index, middle, ring][x, y, z] random values from Kees
-        self.pinch_calibration_max = [0.0, 0.0, 0.0]  # [index, middle, ring]
+        self.pinch_calibration_max = [1.0, 1.0, 1.0]  # [index, middle, ring]
 
         self.avg_open_flat = [0.0, 0.0, 0.0]  # distances between thumb&index thumb&middle thumb&ring
         self.avg_thumb_index_pinch = [0.0, 0.0, 0.0]
