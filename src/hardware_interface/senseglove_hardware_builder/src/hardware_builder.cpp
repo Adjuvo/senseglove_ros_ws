@@ -107,7 +107,7 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
 
     if (is_right and robot_index%2>0)
     {
-      ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!");
+      ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).");
     }
 
     return { glove, std::move(jointList), std::move(urdf), robot_index, is_right};
