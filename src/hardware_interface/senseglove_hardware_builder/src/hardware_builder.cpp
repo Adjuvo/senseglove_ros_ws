@@ -105,6 +105,11 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
     HardwareBuilder::validateRequiredKeysExist(robot_config, HardwareBuilder::ROBOT_REQUIRED_KEYS, "glove");
     bool is_right = glove.IsRight();
 
+    if (is_right and robot_index%2>0)
+    {
+      ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!");
+    }
+
     return { glove, std::move(jointList), std::move(urdf), robot_index, is_right};
 }
 
