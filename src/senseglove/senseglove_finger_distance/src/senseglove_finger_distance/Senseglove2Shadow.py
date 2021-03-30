@@ -5,9 +5,9 @@ import numpy as np
 
 from std_msgs.msg import Float64
 from geometry_msgs.msg import WrenchStamped, Vector3Stamped
-from shadow_ros_control.msg import FingerTipPositions
-from senseglove_ros.msg import SenseGloveTipPositions
-from senseglove_ros.msg import SenseGloveFeedback
+from senseglove_shared_resources.msg import FingerTipPositions
+from senseglove_shared_resources.msg import SenseGloveTipPositions
+from senseglove_shared_resources.msg import SenseGloveFeedback
 
 from senseglove_shared_resources.srv import Calibrate
 from finger_distance_calibration import Calibration
