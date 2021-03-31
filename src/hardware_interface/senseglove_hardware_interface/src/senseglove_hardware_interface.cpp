@@ -25,7 +25,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /*
     this->senseglove_state_pub_ =
         std::make_unique < realtime_tools::RealtimePublisher < senseglove_shared_resources::SenseGloveState >> (
             nh, "/" + this->senseglove_setup_->getSenseGloveRobot(0).getName() + "/" +
-                    pinor[this->senseglove_setup_->getSenseGloveRobot(0).getIndex()%2] + "/senseglove_states/", 1);
+                    pinor[this->senseglove_setup_->getSenseGloveRobot(0).getRight()] + "/senseglove_states/", 1);
 
     this->uploadJointNames(nh);
 

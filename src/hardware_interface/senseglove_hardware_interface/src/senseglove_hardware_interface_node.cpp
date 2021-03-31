@@ -24,11 +24,12 @@ int main(int argc, char** argv)
     }
     AllowedRobot selected_robot = AllowedRobot(argv[1]);
     int nr_of_glove = std::stoi(argv[2]);
+    bool is_right = std::stoi(argv[3]);
     ROS_INFO_STREAM("Selected robot: " << selected_robot);
 
     spinner.start();
 
-    SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove));
+    SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove, is_right));
     ROS_DEBUG_STREAM("Successfully built the robot");
 
     try

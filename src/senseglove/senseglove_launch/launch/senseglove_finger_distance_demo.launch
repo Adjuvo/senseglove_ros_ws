@@ -3,10 +3,10 @@
 
     <node pkg="senseglove_launch" type="startGlove.sh" name="startGlove" args="$(find senseglove_hardware)" output="screen" respawn="false" />
 
-    <node name="senseglove_finger_distance_1" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="0 $(arg calibration_mode)">
+    <node name="senseglove_finger_distance_1" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="0 0 $(arg calibration_mode)">
 	    <remap from="/senseglove/0/lh/finger_distances" to="/lh/senseglove/finger_distances"/>
     </node>
-    <node name="senseglove_finger_distance_2" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1 $(arg calibration_mode)">
+    <node name="senseglove_finger_distance_2" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1 1 $(arg calibration_mode)">
 	    <remap from="/senseglove/0/rh/finger_distances" to="/rh/senseglove/finger_distances"/>
     </node>
 </launch>

@@ -21,7 +21,7 @@
                 name="hardware_interface"
                 pkg="senseglove_hardware_interface"
                 type="senseglove_hardware_interface_node"
-                args="$(arg robot) $(arg nr_of_glove)"
+                args="$(arg robot) $(arg nr_of_glove) $(arg is_right)"
                 output="screen"
                 required="true"
         >
@@ -46,7 +46,7 @@
                 name="hardware_interface"
                 pkg="senseglove_hardware_interface"
                 type="senseglove_hardware_interface_node"
-                args="$(arg robot) $(arg nr_of_glove)"
+                args="$(arg robot) $(arg nr_of_glove) $(arg is_right)"
                 output="screen"
                 required="true"
         >

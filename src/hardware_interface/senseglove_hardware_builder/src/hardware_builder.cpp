@@ -16,21 +16,21 @@
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
 const std::vector<std::string> HardwareBuilder::ROBOT_REQUIRED_KEYS = { "deviceType" };
 
-HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove) : HardwareBuilder(robot.getFilePath(), nr_of_glove)
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove, bool is_right) : HardwareBuilder(robot.getFilePath(), nr_of_glove, is_right)
 {
 }
 
-HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdf)
-        : robot_config_(YAML::LoadFile(robot.getFilePath())), urdf_(std::move(urdf)), init_urdf_(false)
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdf, bool is_right)
+        : robot_config_(YAML::LoadFile(robot.getFilePath())), urdf_(std::move(urdf)), init_urdf_(false), is_right_(is_right)
 {
 }
 
-HardwareBuilder::HardwareBuilder(const std::string& yaml_path, int nr_of_glove) : robot_config_(YAML::LoadFile(yaml_path)), nr_of_glove_(nr_of_glove)
+HardwareBuilder::HardwareBuilder(const std::string& yaml_path, int nr_of_glove, bool is_right) : robot_config_(YAML::LoadFile(yaml_path)), nr_of_glove_(nr_of_glove), is_right_(is_right)
 {
 }
 
-HardwareBuilder::HardwareBuilder(const std::string& yaml_path, urdf::Model urdf)
-        : robot_config_(YAML::LoadFile(yaml_path)), urdf_(std::move(urdf)), init_urdf_(false)
+HardwareBuilder::HardwareBuilder(const std::string& yaml_path, urdf::Model urdf, bool is_right)
+        : robot_config_(YAML::LoadFile(yaml_path)), urdf_(std::move(urdf)), init_urdf_(false), is_right_(is_right)
 {
 }
 
@@ -105,7 +105,7 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
     HardwareBuilder::validateRequiredKeysExist(robot_config, HardwareBuilder::ROBOT_REQUIRED_KEYS, "glove");
     bool is_right = glove.IsRight();
 
-    if (is_right and robot_index%2>0)
+    if ((is_right and robot_index%2>0) or (this->is_right_ xor is_right))
     {
       ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).");
     }
