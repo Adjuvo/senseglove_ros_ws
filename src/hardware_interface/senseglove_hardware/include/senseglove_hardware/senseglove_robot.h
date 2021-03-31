@@ -52,6 +52,7 @@ namespace senseglove
         SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
 
         std::string getName() const;
+        int getIndex() const;
 
         Joint& getJoint(::std::string jointName);
 

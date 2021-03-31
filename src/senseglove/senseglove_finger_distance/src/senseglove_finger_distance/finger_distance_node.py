@@ -5,13 +5,16 @@ from math import sqrt, pow
 
 
 class FingerTipHandler:
-    def __init__(self, glove_nr=1, calib_mode='nothing', finger_nrs=[3, 7, 11, 15, 19]):
+    handedness_list = ["/lh", "/rh"]
+
+    def __init__(self, glove_nr="1", calib_mode='nothing', finger_nrs=[3, 7, 11, 15, 19]):
         self.finger_nrs = finger_nrs
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
-        rospy.Subscriber("/senseglove_" + str(glove_nr) + "/senseglove_states", SenseGloveState,
-                         callback=self.callback)
-        self.pub = rospy.Publisher("senseglove_" + str(glove_nr) + "/finger_distances", FingerDistanceFloats, queue_size=10)
+        self.senseglove_ns = "/senseglove/" + str(int(glove_nr)/2) + str(self.handedness_list[int(glove_nr) % 2])
+        rospy.Subscriber(self.senseglove_ns + "/senseglove_states", SenseGloveState,
+                         callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
+        self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloats, queue_size=1)
 
         self.calibration = Calibration("default")
 

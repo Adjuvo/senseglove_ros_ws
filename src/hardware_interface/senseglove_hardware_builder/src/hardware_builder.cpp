@@ -61,9 +61,9 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     }
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
-    ROS_DEBUG_STREAM("Created joints ");
+    ROS_INFO_STREAM("Created joints " << nr_of_glove_);
     senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
-    ROS_DEBUG_STREAM("Created Robots");
+    ROS_INFO_STREAM("Created Robots " << sensegloves.getName());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
 }
@@ -146,8 +146,8 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
             type_string = "fino";
             break;
         }
-
-        std::string robot_descriptor = "/senseglove_" + std::to_string(nr_of_glove_ + 1) + "/robot_description";
+        std::string handedness[2] = {"/lh", "/rh"};
+        std::string robot_descriptor = "/senseglove/" + std::to_string(int((nr_of_glove_)/2)) + handedness[(nr_of_glove_) % 2] + "/robot_description";
         if (!this->urdf_.initParam(robot_descriptor))
         {
             ROS_ERROR("Failed initializing the URDF: %s", type_string);
@@ -197,11 +197,11 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
     int i = 0;
     for (auto& glove : all_gloves)
     {
-        robots.push_back(
-                HardwareBuilder::createRobot(robots_config, urdf, std::move(jointList), glove, i));
+        robots.push_back(HardwareBuilder::createRobot(robots_config, urdf, std::move(jointList), glove, i));
         i++;
     }
 
     robots.shrink_to_fit();
+    ROS_ERROR("Amount of glove robots: %d", robots.size());
     return robots;
 }

@@ -9,6 +9,7 @@ import numpy as np
 
 from senseglove_shared_resources.msg import FingerDistanceFloats
 
+
 class Calibration:
 
     def __init__(self, glove_nr=1, name="default"):
@@ -37,8 +38,7 @@ class Calibration:
         """
         Call when user holds a flat hand
         """
-        for i, position in enumerate([avg_positions_msg.index, avg_positions_msg.middle, avg_positions_msg.ring]):
-            self.avg_open_flat = [position.x, position.y, position.z]
+        self.avg_open_flat = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
 
         self.finished_open_flat = True
 
@@ -94,8 +94,8 @@ class Calibration:
         """
         Run an interactive (CLI) session for calibration.
         """
-
-        rospy.Subscriber('senseglove_' + str(self.glove_nr) + '/finger_distances', FingerDistanceFloats, callback=self.senseglove_callback)
+        topic_name = 'senseglove_' + str(self.glove_nr) + '/finger_distances'
+        rospy.Subscriber(topic_name, FingerDistanceFloats, callback=self.senseglove_callback, queue_size=1)
 
         rospy.loginfo("Calibration of senseglove started, please flatten your hand.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")

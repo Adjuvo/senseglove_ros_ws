@@ -23,7 +23,7 @@ int main(int argc, char** argv)
         return 1;
     }
     AllowedRobot selected_robot = AllowedRobot(argv[1]);
-    int nr_of_glove = std::stoi(argv[2]) - 1;
+    int nr_of_glove = std::stoi(argv[2]);
     ROS_INFO_STREAM("Selected robot: " << selected_robot);
 
     spinner.start();
