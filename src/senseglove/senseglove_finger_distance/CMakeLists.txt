@@ -14,6 +14,6 @@ catkin_package(
     std_msgs
 )
 
-catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node
+catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node scripts/senseglove_haptics_node
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )
