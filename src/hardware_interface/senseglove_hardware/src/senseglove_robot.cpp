@@ -35,6 +35,11 @@ int SenseGloveRobot::getIndex() const
   return this->robot_index_;
 }
 
+bool SenseGloveRobot::getRight()
+{
+  return this->senseglove_.IsRight();
+}
+
 Joint& SenseGloveRobot::getJoint(::std::string jointName)
 {
   for (auto& joint : joint_list_)

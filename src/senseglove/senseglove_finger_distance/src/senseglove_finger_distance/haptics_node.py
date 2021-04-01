@@ -10,7 +10,7 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 def main():
     rospy.init_node('senseglove_haptics_node')
     rospy.loginfo("initialize haptics node")
-    hap_pub = rospy.Publisher('/senseglove/0/lh/joint_trajectory_controller/command', JointTrajectory, queue_size=5)
+    hap_pub = rospy.Publisher('/senseglove/0/lh/controller/trajectory/command', JointTrajectory, queue_size=5)
     if rospy.has_param('/senseglove/0/lh/controller/trajectory/joints'):
         joint_list = rospy.get_param('/senseglove/0/lh/controller/trajectory/joints')
 
@@ -19,9 +19,10 @@ def main():
         hap_cmd.header = Header()
         hap_cmd.header.stamp = rospy.Time.now()
         hap_cmd.joint_names = joint_list
-        print("joint list: ", joint_list[0], ", ", joint_list[1], ", ", joint_list[2], ", ", joint_list[3], ", ", joint_list[4], ", ", len(joint_list))
+        print("joint list: ", hap_cmd.header.stamp)
         point = JointTrajectoryPoint()
-        point.effort = [100, 100, 100, 100, 100, 0, 0, 0, 0, 0]# what you will!
+        point.positions = [100, 0, 0, 0, 0, 0, 0, 0, 0, 0]# what you will!
+        point.time_from_start = rospy.Duration.from_sec(0.001)
         hap_cmd.points.append(point)
         hap_pub.publish(hap_cmd)
         rospy.sleep(0.5)

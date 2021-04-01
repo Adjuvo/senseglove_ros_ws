@@ -53,6 +53,7 @@ namespace senseglove
 
         std::string getName() const;
         int getIndex() const;
+        bool getRight();
 
         Joint& getJoint(::std::string jointName);
 

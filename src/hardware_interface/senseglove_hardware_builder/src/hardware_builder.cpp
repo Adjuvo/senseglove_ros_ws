@@ -61,9 +61,9 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     }
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
-    ROS_INFO_STREAM("Created joints " << nr_of_glove_);
+    ROS_INFO_STREAM("Created joints " << nr_of_glove_ );
     senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
-    ROS_INFO_STREAM("Created Robots " << sensegloves.getName());
+    ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", is right: " << sensegloves.getRight());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
 }
@@ -105,9 +105,10 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
     HardwareBuilder::validateRequiredKeysExist(robot_config, HardwareBuilder::ROBOT_REQUIRED_KEYS, "glove");
     bool is_right = glove.IsRight();
 
-    if (is_right and robot_index%2>0)
+    if ((is_right xor (robot_index%2>0)))
     {
-      ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).");
+      ROS_WARN("robot_index/ glove_nr and right-handedness do not match!\n %d, %d"
+                "\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).", is_right, robot_index%2>0);
     }
 
     return { glove, std::move(jointList), std::move(urdf), robot_index, is_right};
@@ -148,6 +149,7 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
         }
         std::string handedness[2] = {"/lh", "/rh"};
         std::string robot_descriptor = "/senseglove/" + std::to_string(int((nr_of_glove_)/2)) + handedness[(nr_of_glove_) % 2] + "/robot_description";
+        ROS_INFO_STREAM("Looking for robot description: " << robot_descriptor);
         if (!this->urdf_.initParam(robot_descriptor))
         {
             ROS_ERROR("Failed initializing the URDF: %s", type_string);
@@ -202,6 +204,5 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
     }
 
     robots.shrink_to_fit();
-    ROS_ERROR("Amount of glove robots: %d", robots.size());
     return robots;
 }
