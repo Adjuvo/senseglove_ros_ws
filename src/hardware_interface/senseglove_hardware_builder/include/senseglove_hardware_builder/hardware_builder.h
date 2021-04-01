@@ -87,7 +87,6 @@ private:
     urdf::Model urdf_;
     bool init_urdf_ = true;
     int nr_of_glove_;
-    bool is_right_;
 };
 
 #endif //ROS_WORKSPACE_HARDWARE_BUILDER_H

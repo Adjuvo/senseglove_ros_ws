@@ -7,11 +7,11 @@ from math import sqrt, pow
 class FingerTipHandler:
     handedness_list = ["/lh", "/rh"]
 
-    def __init__(self, glove_nr="1", is_right="1", calib_mode='nothing', finger_nrs=[3, 7, 11, 15, 19]):
+    def __init__(self, glove_nr="1", calib_mode='nothing', finger_nrs=[3, 7, 11, 15, 19]):
         self.finger_nrs = finger_nrs
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
-        self.senseglove_ns = "/senseglove/" + str(int(glove_nr)/2) + str(self.handedness_list[int(is_right)])
+        self.senseglove_ns = "/senseglove/" + str(int(glove_nr)/2) + str(self.handedness_list[int(glove_nr) % 2])
         rospy.Subscriber(self.senseglove_ns + "/senseglove_states", SenseGloveState,
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
         self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloats, queue_size=1)
@@ -73,10 +73,10 @@ class FingerTipVector:
         return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2))
 
 
-def main(glove_nr, is_right, calib_mode):
+def main(glove_nr, calib_mode):
     rospy.init_node('senseglove_finger_distance_node')
     rospy.loginfo("initialize finger distance node")
-    FingerTipHandler(glove_nr=glove_nr, is_right=is_right, calib_mode=calib_mode)
+    FingerTipHandler(glove_nr=glove_nr, calib_mode=calib_mode)
 
     while not rospy.is_shutdown():
         rospy.sleep(0.5)

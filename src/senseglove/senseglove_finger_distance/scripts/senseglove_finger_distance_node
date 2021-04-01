@@ -3,4 +3,4 @@ import senseglove_finger_distance.finger_distance_node
 import sys
 
 if __name__ == '__main__':
-    senseglove_finger_distance.finger_distance_node.main(sys.argv[1], sys.argv[2], sys.argv[3])
+    senseglove_finger_distance.finger_distance_node.main(sys.argv[1], sys.argv[2])

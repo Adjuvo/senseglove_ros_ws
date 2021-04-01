@@ -32,12 +32,7 @@ std::string SenseGloveRobot::getName() const
 
 int SenseGloveRobot::getIndex() const
 {
-  return int(this->robot_index_);
-}
-
-int SenseGloveRobot::getRight() const
-{
-  return this->is_right_;
+  return this->robot_index_;
 }
 
 Joint& SenseGloveRobot::getJoint(::std::string jointName)
