@@ -15,6 +15,7 @@ class Calibration:
     def __init__(self, glove_nr=1, name="default"):
         self.glove_nr = glove_nr
         self.name = name  # Calibration profile name
+        self.handedness_list = ["/lh", "/rh"]
 
         # Defaults
         self.pinch_calibration_min = [0.0, 0.0, 0.0]  # [index, middle, ring][x, y, z] random values from Kees
@@ -94,7 +95,7 @@ class Calibration:
         """
         Run an interactive (CLI) session for calibration.
         """
-        topic_name = 'senseglove_' + str(self.glove_nr) + '/finger_distances'
+        topic_name = str(self.handedness_list[int(self.glove_nr) % 2]) + '/senseglove/finger_distances'
         rospy.Subscriber(topic_name, FingerDistanceFloats, callback=self.senseglove_callback, queue_size=1)
 
         rospy.loginfo("Calibration of senseglove started, please flatten your hand.")
