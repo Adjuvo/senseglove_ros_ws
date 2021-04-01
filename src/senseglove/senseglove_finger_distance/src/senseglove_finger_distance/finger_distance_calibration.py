@@ -5,14 +5,20 @@ import rosparam
 import sys
 from os.path import isdir, exists
 import rospkg
-import numpy as np
-
 from senseglove_shared_resources.msg import FingerDistanceFloats
 
 
 class Calibration:
-
+    """
+    Class used by a finger distance controller to calibrate the distances between the fingertips of the user.
+    The objects of this class are used as an interface to execute calibrating commands.
+    """
     def __init__(self, glove_nr=1, name="default"):
+        """
+        Initializes an object of the class Calibration.
+        :param glove_nr: a value bigger or equal to 0. Even numbers are left hands and right hands get an uneven number. Every increment of 2 results in a new set of gloves. 0 & 1 are a set and so are 2 & 3.
+        :param name: The name of the calibration, useful when saving calibration data.
+        """
         self.glove_nr = glove_nr
         self.name = name  # Calibration profile name
         self.handedness_list = ["/lh", "/rh"]
