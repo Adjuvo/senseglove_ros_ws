@@ -21,11 +21,11 @@ SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<sensegl
 
 bool SenseGloveHardwareInterface::init(ros::NodeHandle &nh, ros::NodeHandle & /* robot_hw_nh */) {
     // Initialize realtime publisher for the SenseGlove states
-    std::string pinor[2] = {"/lh", "/rh"};
+    std::string handedness[2] = {"/lh", "/rh"};
     this->senseglove_state_pub_ =
         std::make_unique < realtime_tools::RealtimePublisher < senseglove_shared_resources::SenseGloveState >> (
             nh, "/" + this->senseglove_setup_->getSenseGloveRobot(0).getName() +
-                    pinor[this->senseglove_setup_->getSenseGloveRobot(0).getRight()] + "/senseglove_states/", 1);
+                handedness[this->senseglove_setup_->getSenseGloveRobot(0).getRight()] + "/senseglove_states/", 1);
 
     this->uploadJointNames(nh);
 

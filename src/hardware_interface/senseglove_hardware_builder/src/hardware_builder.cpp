@@ -52,7 +52,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
       {
         ROS_INFO("%s", all_gloves[i].ToString());
       }
-      this->initUrdf(all_gloves[0].GetDeviceType());
+      this->initUrdf(all_gloves[nr_of_glove_].GetDeviceType(), all_gloves[nr_of_glove_].IsRight());
       ROS_DEBUG_STREAM("Obtained devicetype from glove");
     }
     else
@@ -63,7 +63,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
     ROS_INFO_STREAM("Created joints " << nr_of_glove_ );
     senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
-    ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", is right: " << sensegloves.getRight());
+    ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", " << nr_of_glove_ << ", is right: " << sensegloves.getRight() << " is urdfright: " << all_gloves[nr_of_glove_].IsRight());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
 }
@@ -127,7 +127,7 @@ void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const 
     }
 }
 
-void HardwareBuilder::initUrdf(SGCore::DeviceType type)
+void HardwareBuilder::initUrdf(SGCore::DeviceType type, bool is_right)
 {
     std::string type_string;
     if (this->init_urdf_)
@@ -148,7 +148,7 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type)
             break;
         }
         std::string handedness[2] = {"/lh", "/rh"};
-        std::string robot_descriptor = "/senseglove/" + std::to_string(int((nr_of_glove_)/2)) + handedness[(nr_of_glove_) % 2] + "/robot_description";
+        std::string robot_descriptor = "/senseglove/" + std::to_string(int((nr_of_glove_)/2)) + handedness[int(is_right)] + "/robot_description";
         ROS_INFO_STREAM("Looking for robot description: " << robot_descriptor);
         if (!this->urdf_.initParam(robot_descriptor))
         {
