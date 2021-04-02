@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0.2)
 project(senseglove_finger_distance)
 
 find_package(catkin REQUIRED COMPONENTS
+    genmsg
+    actionlib_msgs
+    actionlib
     senseglove_shared_resources
     std_msgs
     )

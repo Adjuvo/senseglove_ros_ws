@@ -16,6 +16,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "senseglove_hardware_interface");
     ros::NodeHandle nh;
     ros::AsyncSpinner spinner(2);
+    int publish_rate;
 
     if (argc < 2)
     {
@@ -49,6 +50,9 @@ int main(int argc, char** argv)
     controller_manager::ControllerManager controller_manager(&SenseGlove, nh);
     ros::Time last_update_time = ros::Time::now();
 
+    ros::param::get("/senseglove/0/lh/controller/hand_state/publish_rate", publish_rate);
+    ros::Rate rate(publish_rate); // ROS Rate at 5Hz
+
     while (ros::ok())
     {
         try
@@ -67,6 +71,7 @@ int main(int argc, char** argv)
             ROS_FATAL("%s", e.what());
             return 1;
         }
+        rate.sleep();
     }
 
     return 0;
