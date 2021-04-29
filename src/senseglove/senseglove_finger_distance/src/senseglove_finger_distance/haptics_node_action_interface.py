@@ -2,6 +2,7 @@ import rospy
 import sys
 from std_msgs.msg import Header
 import actionlib
+import numpy as np
 
 from copy import copy
 
@@ -15,7 +16,8 @@ from trajectory_msgs.msg import (
 
 
 class Trajectory(object):
-    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=1):
+    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=1, timeout=0.01):
+        self.wait_for_goal_timeout = timeout
         self._joint_names = joint_names
         self._client = actionlib.SimpleActionClient(
             ns + "follow_joint_trajectory",
@@ -46,8 +48,11 @@ class Trajectory(object):
     def stop(self):
         self._client.cancel_goal()
 
-    def wait(self, timeout=15.0):
-        self._client.wait_for_result(timeout=rospy.Duration(timeout))
+    def wait(self, timeout=0):
+        if timeout == 0:
+            self._client.wait_for_result(timeout=rospy.Duration(self.wait_for_goal_timeout))
+        else:
+            self._client.wait_for_result(timeout=rospy.Duration(timeout))
 
     def result(self):
         return self._client.get_result()
@@ -70,18 +75,28 @@ def main():
     if rospy.has_param(ns + 'hand_state/publish_rate'):
         publish_rate = rospy.get_param(ns + 'hand_state/publish_rate')
 
-
     rate = rospy.Rate(publish_rate)
     n_sec = 0.01
 
-    rand_traj_points = [100, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # what you will!
+    i = 0
+    f = 10  # Hz
+    amp = 50  # percentage
+    wave = np.linspace(0, np.pi*f, 201)
+    rand_traj_points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # what you will!
     while not rospy.is_shutdown():
-        traj = Trajectory(action_ns, joint_list, 0.01)
+        if i >= 201:
+            i = 0
+        traj = Trajectory(ns=action_ns, joint_names=joint_list, goal_time_tol=0.01)
+        rand_traj_points[0] = amp*np.sin(wave[i]) + amp
         traj.add_point(rand_traj_points, n_sec)
         traj.start()
         traj.wait()
         rate.sleep()
+        traj.clear()
+        i += 1
+
         # [thumb_brake, index_brake, middle_brake, ring_brake, pinky_brake, thumb_cmc, index_mcp,
+        #   middle_mcp, ring_mcp, pinky_mcp]
         #   middle_mcp, ring_mcp, pinky_mcp]
     if rospy.is_shutdown():
         traj.stop()

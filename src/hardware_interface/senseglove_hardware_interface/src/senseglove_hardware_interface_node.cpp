@@ -17,6 +17,7 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
     ros::AsyncSpinner spinner(2);
     int publish_rate;
+    bool pr_param_fail = false;
 
     if (argc < 2)
     {
@@ -50,7 +51,27 @@ int main(int argc, char** argv)
     controller_manager::ControllerManager controller_manager(&SenseGlove, nh);
     ros::Time last_update_time = ros::Time::now();
 
-    ros::param::get("/senseglove/0/lh/controller/hand_state/publish_rate", publish_rate);
+    try{
+      ros::param::get("/senseglove/0/lh/controller/hand_state/publish_rate", publish_rate);
+    }
+    catch(...){
+      pr_param_fail = true;
+      ROS_ERROR("Failed to obtain the left handed publish rate");
+    }
+    try{
+      ros::param::get("/senseglove/0/rh/controller/hand_state/publish_rate", publish_rate);
+    }
+    catch(...){
+      pr_param_fail = true;
+      ROS_ERROR("Failed to obtain the right handed publish rate");
+    }
+
+    if (pr_param_fail)
+    {
+      ROS_FATAL("publish rate for left and right hands is not published");
+      std::exit(1);
+    }
+
     ros::Rate rate(publish_rate); // ROS Rate at 5Hz
 
     while (ros::ok())
