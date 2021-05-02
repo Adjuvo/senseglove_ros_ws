@@ -16,7 +16,7 @@ from trajectory_msgs.msg import (
 
 
 class Trajectory(object):
-    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=1, timeout=0.01):
+    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=1.0, timeout=0.01):
         self.wait_for_goal_timeout = timeout
         self._joint_names = joint_names
         self._client = actionlib.SimpleActionClient(
@@ -86,7 +86,7 @@ def main():
     while not rospy.is_shutdown():
         if i >= 201:
             i = 0
-        traj = Trajectory(ns=action_ns, joint_names=joint_list, goal_time_tol=0.01)
+        traj = Trajectory(ns=action_ns, joint_names=joint_list, goal_time_tol=1.0, timeout=0.001)
         rand_traj_points[0] = amp*np.sin(wave[i]) + amp
         traj.add_point(rand_traj_points, n_sec)
         traj.start()
