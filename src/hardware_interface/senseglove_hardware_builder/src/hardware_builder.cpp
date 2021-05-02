@@ -43,6 +43,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     YAML::Node config = this->robot_config_[robot_name];
 
     std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
+    auto current_glove = all_gloves[nr_of_glove_]; // Will be update later
     ROS_DEBUG_STREAM("creating sensegloves");
 
     if (SGCore::DeviceList::SenseCommRunning())
@@ -52,18 +53,20 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
       {
         ROS_INFO("%s", all_gloves[i].ToString());
       }
-      this->initUrdf(all_gloves[nr_of_glove_].GetDeviceType(), all_gloves[nr_of_glove_].IsRight());
+      current_glove = correct_glove(all_gloves);
+      this->initUrdf(current_glove.GetDeviceType(), current_glove.IsRight());
       ROS_DEBUG_STREAM("Obtained devicetype from glove");
     }
     else
     {
       ROS_ERROR("No Sensegloves connected");
+      std::exit(1);
     }
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
     ROS_INFO_STREAM("Created joints " << nr_of_glove_ );
-    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_, is_right_);
-    ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", " << nr_of_glove_ << ", is right: " << sensegloves.getRight() << " is urdfright: " << all_gloves[nr_of_glove_].IsRight());
+    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), current_glove, nr_of_glove_, is_right_);
+    ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", " << nr_of_glove_ << ", is right: " << sensegloves.getRight() << " is urdfright: " << current_glove.IsRight());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
 }
@@ -206,4 +209,20 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
 
     robots.shrink_to_fit();
     return robots;
+}
+
+SGCore::SG::SenseGlove HardwareBuilder::correct_glove(std::vector<SGCore::SG::SenseGlove> gloves)
+{
+  int mod = nr_of_glove_%2;
+  auto choice_a = gloves[nr_of_glove_];
+  bool not_equal = choice_a.IsRight() xor is_right_;
+  if (mod == 0 and not_equal)
+  {
+    return gloves[nr_of_glove_ + 1];
+  }
+  else if (mod == 1 and not_equal)
+  {
+    return gloves[nr_of_glove_ - 1];
+  }
+  return choice_a;
 }

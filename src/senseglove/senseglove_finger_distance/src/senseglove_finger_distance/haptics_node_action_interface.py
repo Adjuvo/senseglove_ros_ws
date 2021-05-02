@@ -16,7 +16,7 @@ from trajectory_msgs.msg import (
 
 
 class Trajectory(object):
-    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=1.0, timeout=0.01):
+    def __init__(self, ns='', joint_names=['empty'], goal_time_tol=0.01, timeout=0.001):
         self.wait_for_goal_timeout = timeout
         self._joint_names = joint_names
         self._client = actionlib.SimpleActionClient(
