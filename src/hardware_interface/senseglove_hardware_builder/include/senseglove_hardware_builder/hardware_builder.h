@@ -25,7 +25,7 @@ public:
      * @brief Initialises a HardwareBuilder with a robotName enumerator.
      * @details Grabs the .yaml file associated with the robot name.
      */
-    explicit HardwareBuilder(AllowedRobot robot, int nr_of_glove);
+    explicit HardwareBuilder(AllowedRobot robot, int nr_of_glove, bool is_right);
 
     /**
      * @brief Initialises with a robot name and URDF.
@@ -35,7 +35,7 @@ public:
     /**
      * @brief Initialises a HardwareBuilder with a path to a .yaml file.
      */
-    explicit HardwareBuilder(const std::string& yaml_path, int nr_of_glove);
+    explicit HardwareBuilder(const std::string& yaml_path, int nr_of_glove, bool is_right);
 
     /**
      * @brief Initialises with a path to yaml and URDF.
@@ -62,7 +62,7 @@ public:
 
     static senseglove::Joint createJoint(const YAML::Node& joint_config, const std::string& joint_name,
                                     const urdf::JointConstSharedPtr& urdf_joint);
-    static senseglove::SenseGloveRobot createRobot(const YAML::Node& joint_config, urdf::Model urdf, std::vector<senseglove::Joint> joints, SGCore::SG::SenseGlove glove, int robot_index);
+    static senseglove::SenseGloveRobot createRobot(const YAML::Node& joint_config, urdf::Model urdf, std::vector<senseglove::Joint> joints, SGCore::SG::SenseGlove glove, int robot_index, bool is_arg_right);
 
     static const std::vector<std::string> JOINT_REQUIRED_KEYS;
     static const std::vector<std::string> ROBOT_REQUIRED_KEYS;
@@ -87,6 +87,7 @@ private:
     urdf::Model urdf_;
     bool init_urdf_ = true;
     int nr_of_glove_;
+    bool is_right_;
 };
 
 #endif //ROS_WORKSPACE_HARDWARE_BUILDER_H

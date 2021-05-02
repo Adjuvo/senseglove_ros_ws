@@ -16,7 +16,7 @@
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
 const std::vector<std::string> HardwareBuilder::ROBOT_REQUIRED_KEYS = { "deviceType" };
 
-HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove) : HardwareBuilder(robot.getFilePath(), nr_of_glove)
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, int nr_of_glove, bool is_right) : HardwareBuilder(robot.getFilePath(), nr_of_glove, is_right)
 {
 }
 
@@ -25,7 +25,7 @@ HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdf)
 {
 }
 
-HardwareBuilder::HardwareBuilder(const std::string& yaml_path, int nr_of_glove) : robot_config_(YAML::LoadFile(yaml_path)), nr_of_glove_(nr_of_glove)
+HardwareBuilder::HardwareBuilder(const std::string& yaml_path, int nr_of_glove, bool is_right) : robot_config_(YAML::LoadFile(yaml_path)), nr_of_glove_(nr_of_glove), is_right_(is_right)
 {
 }
 
@@ -62,7 +62,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
     ROS_INFO_STREAM("Created joints " << nr_of_glove_ );
-    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_);
+    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), all_gloves[nr_of_glove_], nr_of_glove_, is_right_);
     ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", " << nr_of_glove_ << ", is right: " << sensegloves.getRight() << " is urdfright: " << all_gloves[nr_of_glove_].IsRight());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
@@ -99,19 +99,20 @@ senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, c
     return { joint_name, joint_index, allow_actuation, mode };
 }
 
-senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot_config, urdf::Model urdf, std::vector<senseglove::Joint> jointList, SGCore::SG::SenseGlove glove, int robot_index)
+senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot_config, urdf::Model urdf, std::vector<senseglove::Joint> jointList, SGCore::SG::SenseGlove glove, int robot_index, bool is_arg_right)
 {
     ROS_DEBUG("Starting creation of glove %d", robot_index);
     HardwareBuilder::validateRequiredKeysExist(robot_config, HardwareBuilder::ROBOT_REQUIRED_KEYS, "glove");
-    bool is_right = glove.IsRight();
+    bool is_glove_right = glove.IsRight();
 
-    if ((is_right xor (robot_index%2>0)))
+    if (is_glove_right xor is_arg_right)
     {
-      ROS_WARN("robot_index/ glove_nr and right-handedness do not match!\n %d, %d"
-                "\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).", is_right, robot_index%2>0);
+      ROS_ERROR("robot_index/ glove_nr and right-handedness do not match!\n %d, %d"
+                "\nPlease launch with correct nr_of_glove argument (1 for left, 2 for right).", is_glove_right, is_arg_right);
+      std::exit(1);
     }
 
-    return { glove, std::move(jointList), std::move(urdf), robot_index, is_right};
+    return { glove, std::move(jointList), std::move(urdf), robot_index, is_glove_right};
 }
 
 void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const std::vector<std::string>& key_list,
@@ -199,7 +200,7 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
     int i = 0;
     for (auto& glove : all_gloves)
     {
-        robots.push_back(HardwareBuilder::createRobot(robots_config, urdf, std::move(jointList), glove, i));
+        robots.push_back(HardwareBuilder::createRobot(robots_config, urdf, std::move(jointList), glove, i, true)); // dubious fix
         i++;
     }
 

@@ -2,6 +2,11 @@
 #include "senseglove_hardware_interface/senseglove_hardware_interface.h"
 
 #include <cstdlib>
+#include <sstream>
+#include <string>
+#include <iomanip>
+#include <algorithm>
+#include <cctype>
 
 #include <controller_manager/controller_manager.h>
 #include <ros/ros.h>
@@ -9,7 +14,8 @@
 #include <senseglove_hardware/senseglove_robot.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
 
-std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_glove);
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_glove, bool is_right);
+bool to_bool(std::string str);
 
 int main(int argc, char** argv)
 {
@@ -19,18 +25,19 @@ int main(int argc, char** argv)
     int publish_rate;
     bool pr_param_fail = false;
 
-    if (argc < 2)
+    if (argc < 3)
     {
-        ROS_FATAL("Missing robot argument\nusage: SG_hardware_interface_node ROBOT");
+        ROS_FATAL("Missing robot arguments\nusage: senseglove_hardware_interface_node ROBOT nr_of_glove is_right");
         return 1;
     }
     AllowedRobot selected_robot = AllowedRobot(argv[1]);
     int nr_of_glove = std::stoi(argv[2]);
+    bool is_right = to_bool(argv[3]);
     ROS_INFO_STREAM("Selected robot: " << selected_robot);
 
     spinner.start();
 
-    SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove));
+    SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove, is_right));
     ROS_DEBUG_STREAM("Successfully built the robot");
 
     try
@@ -98,9 +105,9 @@ int main(int argc, char** argv)
     return 0;
 }
 
-std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_gloves)
+std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of_glove, bool is_right)
 {
-    HardwareBuilder builder(robot, nr_of_gloves);
+    HardwareBuilder builder(robot, nr_of_glove, is_right);
     try
     {
         return builder.createSenseGloveSetup();
@@ -111,5 +118,13 @@ std::unique_ptr<senseglove::SenseGloveSetup> build(AllowedRobot robot, int nr_of
         ROS_FATAL("%s", e.what());
         std::exit(1);
     }
+}
+
+bool to_bool(std::string str) {
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  std::istringstream is(str);
+  bool b;
+  is >> std::boolalpha >> b;
+  return b;
 }
 
