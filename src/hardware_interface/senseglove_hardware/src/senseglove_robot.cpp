@@ -76,12 +76,14 @@ void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
   if (SGCore::DeviceList::SenseCommRunning()) //check if the Sense Comm is running. If not, warn the end user.
   {
     std::vector<int> int_effort(effort_command.begin(), effort_command.end());
-    if (effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] == 0.0)
+    if (effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] < 10.0) // less than noticable ffb
     {
       this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(SGCore::Haptics::SG_FFBCmd::off));
     }
-    this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(int_effort));
-
+    else
+    {
+      this->senseglove_.SendHaptics(SGCore::Haptics::SG_FFBCmd(int_effort[0], int_effort[1], int_effort[2], int_effort[3], int_effort[4]));
+    }
   }
 }
 
@@ -94,19 +96,19 @@ void SenseGloveRobot::actuateEffort(double e_0, double e_1, double e_2, double e
 void SenseGloveRobot::actuateBuzz(std::vector<double> buzz_command)
 {
   std::vector<int> int_buzz(buzz_command.begin(), buzz_command.end());
-  if(buzz_command[0] + buzz_command[1] + buzz_command[2] + buzz_command[3] + buzz_command[4] == 0.0)
+  if(buzz_command[0] + buzz_command[1] + buzz_command[2] + buzz_command[3] + buzz_command[4] < 10.0) // less than noticable buzz
   {
     this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(SGCore::Haptics::SG_BuzzCmd::off));
   }
   else
   {
-    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(int_buzz));
+    this->senseglove_.SendHaptics(SGCore::Haptics::SG_BuzzCmd(int_buzz[0], int_buzz[1], int_buzz[2], int_buzz[3], int_buzz[4]));
   }
 }
 void SenseGloveRobot::actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4)
 {
   std::vector<double> buzzes = {b_0, b_1, b_2, b_3, b_4};
-  this->actuateEffort(buzzes);
+  this->actuateBuzz(buzzes);
 }
 
 void SenseGloveRobot::stopActuating()

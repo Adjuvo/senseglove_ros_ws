@@ -134,7 +134,7 @@ void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros:
                         joint_last_buzz_command_[i][h] = joint_position_command_[i][k];
                     }
 
-                    if (j == 9)
+                    if (j == 9) // actuators 0 - 9
                     {
                         robot.actuateEffort(joint_last_position_command_[i]);
                         robot.actuateBuzz(joint_last_buzz_command_[i]);
@@ -152,7 +152,7 @@ void SenseGloveHardwareInterface::write(const ros::Time & /* time */, const ros:
                         joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
                     }
 
-                    if (j == 9)
+                    if (j == 9) // actuators 0 - 9
                     {
                         robot.actuateEffort(joint_last_effort_command_[i]);
                         robot.actuateBuzz(joint_last_buzz_command_[i]);
