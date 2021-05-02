@@ -1,6 +1,5 @@
 dk1:
   deviceType: 0
-  communicationCycleTime: 10
   # Ordered Alphabetically in joint state publisher
   joints:
     - thumb_cmc:
