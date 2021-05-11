@@ -1,7 +1,11 @@
 build/
+devel/
 install/
 log/
+logs/
 SenseGlove_API/
 src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
+src/CMakeLists.txt
 
 .idea/*
+.catkin_tools/*
