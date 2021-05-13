@@ -10,7 +10,7 @@ melodic:
     CATKIN_LINT: pedantic
     CATKIN_LINT_ARGS: '--ignore uninstalled_script --ignore external_directory'
     CLANG_TIDY: 'true'
-    CLANG_TIDY_ARGS: '-style=file'
+    # CLANG_TIDY_ARGS: '-style=file'
     ROSDEP_SKIP_KEYS: "SenseGlove_API hardware_interface/senseglove_hardware/SenseCom/*"
   artifacts:
     paths:
