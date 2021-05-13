@@ -82,7 +82,7 @@ private:
      */
     std::vector<senseglove::Joint> createJoints(const YAML::Node& joints_config) const;
     std::vector<senseglove::SenseGloveRobot> createRobots(const YAML::Node& robots_config, urdf::Model urdf, std::vector<senseglove::Joint> joints, std::vector<SGCore::SG::SenseGlove> all_gloves) const;
-    SGCore::SG::SenseGlove correct_glove(std::vector<SGCore::SG::SenseGlove> gloves);
+    SGCore::SG::SenseGlove correct_glove(std::vector<SGCore::SG::SenseGlove> gloves) const;
 
     YAML::Node robot_config_;
     urdf::Model urdf_;

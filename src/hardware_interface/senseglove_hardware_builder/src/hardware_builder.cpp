@@ -49,9 +49,9 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     if (SGCore::DeviceList::SenseCommRunning())
     {
       ROS_INFO("Obtained the following gloves: ");
-      for (unsigned int i = 0; i < all_gloves.size(); ++i)
+      for (auto & all_glove : all_gloves)
       {
-        ROS_INFO("%s", all_gloves[i].ToString());
+        ROS_INFO("%s", all_glove.ToString().c_str());
       }
       current_glove = correct_glove(all_gloves);
       this->initUrdf(current_glove.GetDeviceType(), current_glove.IsRight());
@@ -65,7 +65,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 
     std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
     ROS_INFO_STREAM("Created joints " << nr_of_glove_ );
-    senseglove::SenseGloveRobot sensegloves = this->createRobot(config, this->urdf_, std::move(joints), current_glove, nr_of_glove_, is_right_);
+    senseglove::SenseGloveRobot sensegloves = HardwareBuilder::createRobot(config, this->urdf_, std::move(joints), current_glove, nr_of_glove_, is_right_);
     ROS_INFO_STREAM("Created Robots " << sensegloves.getName() << ", " << nr_of_glove_ << ", is right: " << sensegloves.getRight() << " is urdfright: " << current_glove.IsRight());
     ROS_INFO_STREAM("Robot config:\n" << config);
     return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
@@ -77,7 +77,7 @@ senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, c
     ROS_DEBUG("Starting creation of joint %s", joint_name.c_str());
     if (!urdf_joint)
     {
-        ROS_ERROR("No URDF joint given for joint %s", joint_name);
+        ROS_ERROR("No URDF joint given for joint %s", joint_name.c_str());
     }
     HardwareBuilder::validateRequiredKeysExist(joint_config, HardwareBuilder::JOINT_REQUIRED_KEYS, "joint");
 
@@ -156,7 +156,7 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type, bool is_right)
         ROS_INFO_STREAM("Looking for robot description: " << robot_descriptor);
         if (!this->urdf_.initParam(robot_descriptor))
         {
-            ROS_ERROR("Failed initializing the URDF: %s", type_string);
+            ROS_ERROR("Failed initializing the URDF: %s", type_string.c_str());
         }
         this->init_urdf_ = false;
     }
@@ -211,7 +211,7 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(const YAM
     return robots;
 }
 
-SGCore::SG::SenseGlove HardwareBuilder::correct_glove(std::vector<SGCore::SG::SenseGlove> gloves)
+SGCore::SG::SenseGlove HardwareBuilder::correct_glove(std::vector<SGCore::SG::SenseGlove> gloves) const
 {
   int mod = nr_of_glove_%2;
   auto choice_a = gloves[nr_of_glove_];
