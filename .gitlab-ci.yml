@@ -1,18 +1,11 @@
 image: docker:git
 services:
-  - docker:dind
+  - docker:19.03.5-dind
 before_script:
-  - apk add --update bash coreutils tar
+  - apk add --update bash coreutils tar grep
   - git clone --quiet --depth 1 https://github.com/ros-industrial/industrial_ci .industrial_ci -b master
 melodic:
-  script: .industrial_ci/gitlab.sh ROS_DISTRO=melodic
+  script: .industrial_ci/gitlab.sh
   variables:
-    BUILDER: colcon
-    CATKIN_LINT: pedantic
-    CATKIN_LINT_ARGS: '--ignore uninstalled_script'
-    #    CLANG_FORMAT_CHECK: file
-    ROSDEP_SKIP_KEYS: "SenseGlove_API hardware_interface/senseglove_hardware/SenseCom/*"
-  artifacts:
-    paths:
-      - node_modules/
-    expire_in: 1 week
+    ROS_DISTRO: "melodic"
+    PRERELEASE: "true"
