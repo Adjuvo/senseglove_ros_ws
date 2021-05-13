@@ -11,7 +11,7 @@ class FingerTipHandler:
         self.finger_nrs = finger_nrs
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
-        self.senseglove_ns = "/senseglove/" + str(int(glove_nr)/2) + str(self.handedness_list[int(glove_nr) % 2])
+        self.senseglove_ns = "/senseglove/" + str(int(glove_nr) / 2) + str(self.handedness_list[int(glove_nr) % 2])
         rospy.Subscriber(self.senseglove_ns + "/senseglove_states", SenseGloveState,
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
         self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloats, queue_size=1)
@@ -26,13 +26,17 @@ class FingerTipHandler:
             return pinch_value - self.calibration.pinch_calibration_min[pinch_combination]
         elif mode == 'normalized':
             # Return normalized finger distance value between 0 and 1
-            return (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / self.calibration.pinch_calibration_max[pinch_combination]
+            return (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / \
+                   self.calibration.pinch_calibration_max[pinch_combination]
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(), 0, self.calib_mode)
-        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(), 1, self.calib_mode)
-        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(), 2, self.calib_mode)
+        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(),
+                                                              0, self.calib_mode)
+        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(),
+                                                              1, self.calib_mode)
+        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(),
+                                                              2, self.calib_mode)
         finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
         self.pub.publish(finger_distance_message)
 
