@@ -9,7 +9,7 @@ melodic:
   variables:
     BUILDER: colcon
     CATKIN_LINT: pedantic
-    CATKIN_LINT_ARGS: '--ignore external_directory uninstalled_script'
+    CATKIN_LINT_ARGS: '--ignore uninstalled_script'
     #    CLANG_FORMAT_CHECK: file
     ROSDEP_SKIP_KEYS: "SenseGlove_API hardware_interface/senseglove_hardware/SenseCom/*"
   artifacts:
