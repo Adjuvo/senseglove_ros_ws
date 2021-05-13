@@ -1,7 +1,17 @@
 build/
+devel/
 install/
 log/
-SenseGlove_API/
+logs/
+venv/
+
+SenseGlove_API/Core/*
+SenseGlove_API/Examples/*
+SenseGlove_API/.gitignore
+SenseGlove_API/README.md
+
 src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
+src/CMakeLists.txt
 
 .idea/*
+.catkin_tools/*

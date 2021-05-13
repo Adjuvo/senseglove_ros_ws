@@ -13,6 +13,7 @@ class Calibration:
     Class used by a finger distance controller to calibrate the distances between the fingertips of the user.
     The objects of this class are used as an interface to execute calibrating commands.
     """
+
     def __init__(self, glove_nr=1, name="default"):
         """
         Initializes an object of the class Calibration.
@@ -57,7 +58,8 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_index_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
+        self.avg_thumb_index_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data,
+                                      avg_positions_msg.th_rf.data]
         if self.avg_thumb_index_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -72,7 +74,8 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_middle_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
+        self.avg_thumb_middle_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data,
+                                       avg_positions_msg.th_rf.data]
         if self.avg_thumb_middle_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -87,7 +90,8 @@ class Calibration:
             print("First calibrate the flat hand, then the pinching position!")
             return
 
-        self.avg_thumb_ring_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data, avg_positions_msg.th_rf.data]
+        self.avg_thumb_ring_pinch = [avg_positions_msg.th_ff.data, avg_positions_msg.th_mf.data,
+                                     avg_positions_msg.th_rf.data]
         if self.avg_thumb_ring_pinch == self.avg_open_flat:
             rospy.logwarn("Identical measurements! Cannot calibrate. Is your glove still connected?")
             return
@@ -167,13 +171,13 @@ class Calibration:
         """
 
         # minimum value of the finger distance when pinching with two fingers in three combinations
-        self.pinch_calibration_min = [self.avg_thumb_index_pinch[0], self.avg_thumb_middle_pinch[1], self.avg_thumb_ring_pinch[2]]
+        self.pinch_calibration_min = [self.avg_thumb_index_pinch[0], self.avg_thumb_middle_pinch[1],
+                                      self.avg_thumb_ring_pinch[2]]
         # maximum value between fingers and the thumb to find corresponding interpolation data
         self.pinch_calibration_max = self.avg_open_flat
         if self.pinch_calibration_max == 0.0:
             rospy.logwarn("Got max value zero. Is your glove still connected?")
             return False
-
 
         rospy.loginfo("The calibration for '%s' is done. These are the numbers:" % self.name)
         rospy.loginfo("Pinch calibration min: %s\n" % self.pinch_calibration_min)
@@ -229,19 +233,19 @@ class Calibration:
         return avg_positions_msg
 
     def key_press_interface(self):
-        k = raw_input()
+        k = raw_input()  # In python2 this works in python3 use input() instead
 
         while not (k == 'q' or k == 'y'):
             rospy.loginfo("Not valid: %s. Type [y] + [Enter] when ready, or [q] + [Enter] to quit." % k)
-            k = raw_input()
+            k = raw_input()  # In python2 this works in python3 use input() instead
 
         if k == "q":
             rospy.loginfo("Calibration aborted!")
             return False
 
     def log_finger_distances(self):
-        self.databuffer.clear() # Start with a fresh buffer
-        for i in range(int(self.calib_time/0.05)):
+        self.databuffer.clear()  # Start with a fresh buffer
+        for i in range(int(self.calib_time / 0.05)):
             print(".", end="")
             sys.stdout.flush()
             rospy.sleep(0.05)
