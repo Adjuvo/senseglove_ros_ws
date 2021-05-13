@@ -12,3 +12,7 @@ melodic:
     CATKIN_LINT_ARGS: '--ignore uninstalled_script'
     #    CLANG_FORMAT_CHECK: file
     ROSDEP_SKIP_KEYS: "SenseGlove_API hardware_interface/senseglove_hardware/SenseCom/*"
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 week
