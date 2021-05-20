@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+import senseglove_finger_distance.haptics_node_action_interface
+
+if __name__ == '__main__':
+    senseglove_finger_distance.haptics_node_action_interface.main()

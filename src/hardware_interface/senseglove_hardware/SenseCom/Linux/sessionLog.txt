@@ -1,4 +1,4 @@
-Session: 2021-02-03 20-28-36
+Session: 2021-03-29 13-42-40
 Running SenseCom v0.10
 OS: Linux - Linux 4.15 Ubuntu 18.04 64bit
 
@@ -13,8 +13,6 @@ Shutdown initiated from SenseCom_Base. Final Device information:
 Ports:
 
 Devices:
-0: SenseGlove DK1.2-L0015 (DK1.2) running firmware v4.9. Connected via Serial (/dev/ttyACM0)
-1: SenseGlove DK1.3-R0026 (DK1.3) running firmware v4.9. Disconnected
 
 Attempting to close connections and dispose of resources...
 Disposed of communications with code: 1

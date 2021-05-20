@@ -1,0 +1,13 @@
+<launch>
+    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch">
+                <arg name="robot" value="dk1"/>
+                <arg name="nr_of_glove" value="0"/>
+                <arg name="is_right" value="false"/>
+    </include>
+
+    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch">
+                <arg name="robot" value="dk1"/>
+                <arg name="nr_of_glove" value="1"/>
+                <arg name="is_right" value="true"/>
+    </include>
+</launch>

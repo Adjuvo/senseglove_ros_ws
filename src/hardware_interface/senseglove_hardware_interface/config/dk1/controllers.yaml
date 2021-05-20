@@ -1,13 +1,14 @@
 controller:
   joint_state:
     type: joint_state_controller/JointStateController
-    publish_rate: 250
+    publish_rate: 50
   hand_state:
     type: joint_state_controller/JointStateController
-    publish_rate: 250
+    publish_rate: 50
   trajectory:
     type: position_controllers/JointTrajectoryController # Position interface because we are directly passing on commands
     allow_partial_joints_goal: true
+    publish_rate: 50
     joints:
       - thumb_brake # FFB
       - index_brake # FFB

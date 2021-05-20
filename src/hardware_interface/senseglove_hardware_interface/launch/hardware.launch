@@ -1,9 +1,9 @@
 <launch>
     <arg name="robot" default="dk1" doc="The robot to run. Can be: dk1, nova, beta, unknown."/>
-    <arg name="nr_of_glove" default="1" doc="specify the number of the glove"/>
+    <arg name="nr_of_glove" default="1" doc="specify the number of the glove, it's an identifier. Not the amount of gloves connected."/>
     <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
-    <group ns="/senseglove_$(arg nr_of_glove)">
+    <group ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/rh')" if="$(eval is_right)">
 
         <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_right.urdf" if="$(eval arg('is_right')==true)"/>
         <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_left.urdf" if="$(eval arg('is_right')==false)"/>
@@ -13,7 +13,7 @@
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
               output="screen"
-              ns="/senseglove_$(arg nr_of_glove)"
+              ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/rh')"
               args="spawn controller/joint_state controller/trajectory"
         />
 
@@ -21,7 +21,32 @@
                 name="hardware_interface"
                 pkg="senseglove_hardware_interface"
                 type="senseglove_hardware_interface_node"
-                args="$(arg robot) $(arg nr_of_glove)"
+                args="$(arg robot) $(arg nr_of_glove) $(arg is_right)"
+                output="screen"
+                required="true"
+        >
+        </node>
+    </group>
+
+    <group ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/lh')" unless="$(eval is_right)">
+
+        <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_right.urdf" if="$(eval arg('is_right')==true)"/>
+        <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot)_left.urdf" if="$(eval arg('is_right')==false)"/>
+
+        <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+        <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
+              output="screen"
+              ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/lh')"
+              args="spawn controller/joint_state controller/trajectory"
+        />
+
+        <node
+                name="hardware_interface"
+                pkg="senseglove_hardware_interface"
+                type="senseglove_hardware_interface_node"
+                args="$(arg robot) $(arg nr_of_glove) $(arg is_right)"
                 output="screen"
                 required="true"
         >
