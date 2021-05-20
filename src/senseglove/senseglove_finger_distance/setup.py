@@ -5,7 +5,8 @@ from setuptools import setup
 setup_args = generate_distutils_setup(
     packages=['senseglove_finger_distance'],
     package_dir={'': 'src'},
-    scripts=['scripts/senseglove_finger_distance_node', 'scripts/senseglove_haptics_node', 'src/senseglove_finger_distance/finger_distance_calibration.py'],
+    scripts=['scripts/senseglove_finger_distance_node', 'scripts/senseglove_haptics_node',
+             'src/senseglove_finger_distance/finger_distance_calibration.py'],
 )
 
 setup(**setup_args)
