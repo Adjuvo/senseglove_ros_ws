@@ -11,6 +11,7 @@ SenseGlove_API/.gitignore
 SenseGlove_API/README.md
 
 src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
+src/cmake-build-debug/*
 src/CMakeLists.txt
 
 .idea/*
