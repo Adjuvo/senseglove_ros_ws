@@ -3,7 +3,7 @@ A workspace for the integration of the SenseGlove into ROS Melodic.
 This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
 
 ## 1. For ROS beginners: ##
-If you are totally unfamiliar with ROS we advice you to take a look at the ROS-wiki for a quick startup guide.
+If you are totally unfamiliar with ROS we advise you to take a look at the ROS-wiki for a quick startup guide.
 We especially recommend the following tutorials:
 * http://wiki.ros.org/melodic/Installation/Ubuntu
 * http://wiki.ros.org/ROS/StartGuide
@@ -49,7 +49,7 @@ write additions to this package, beware that this repository is still subject to
 This practice will allow others to troubleshoot their own problems quicker.
 
 ### Example; using two sensegloves in ROS: ###
-1. source you workspace
+1. source your workspace
 2. make sure your sensegloves are connected through usb or bluetooth
     1. if you checked your connection with sensecom, be sure to exit the application before proceeding
 3. run: `roslaunch senseglove_demo.launch`
