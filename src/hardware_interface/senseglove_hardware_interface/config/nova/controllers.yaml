@@ -2,10 +2,10 @@ nova:
   controller:
     glove_state:
       type: joint_state_controller/JointStateController
-      publish_rate: 250
+      publish_rate: 30
     hand_state:
       type: joint_state_controller/JointStateController
-      publish_rate: 250
+      publish_rate: 30
     trajectory:
       type: position_controllers/JointTrajectoryController
       allow_partial_joints_goal: true

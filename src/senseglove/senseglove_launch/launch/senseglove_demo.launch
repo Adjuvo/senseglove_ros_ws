@@ -1,3 +1,8 @@
 <launch>
+    <arg name="model" default="$(find senseglove_description)/urdf/dk1_left.xacro"/>
+    <arg name="rvizconfig" default="$(find senseglove_description)/urdf.rviz"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
     <node pkg="senseglove_launch" type="startGlove.sh" name="startGlove" args="$(find senseglove_hardware)" output="screen" respawn="false" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
 </launch>

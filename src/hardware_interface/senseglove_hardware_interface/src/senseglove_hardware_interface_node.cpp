@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     std::exit(1);
   }
 
-  // ros::Rate rate(publish_rate); // ROS Rate at 5Hz
+  ros::Rate rate(publish_rate); // ROS Rate at 5Hz
 
   while (ros::ok())
   {
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
       ROS_FATAL("%s", e.what());
       return 1;
     }
-    // rate.sleep();
+    rate.sleep();
   }
   ros::spin();
   return 0;
