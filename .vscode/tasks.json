@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "catkin build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+			"problemMatcher": [
+				"$catkin-gcc"
+			],
+			"label": "catkin_build"
+		},
+		{
+			"type": "catkin",
+			"args": [
+				"clean",
+				"--yes"
+			],
+			"problemMatcher": [
+				"$catkin-gcc"
+			],
+			"label": "catkin_clean"
+		},
+		{
+			"command": "${workspaceFolder}/merge_compile_commands.sh",
+			"type": "shell",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "catkin: build",
+			"problemMatcher": [],
+			"dependsOn": [
+				"catkin_build"
+			]
+		},
+		{
+			"command": "rm ${workspaceFolder}/compile_commands.json",
+			"type": "shell",
+			"problemMatcher": [],
+			"group": "build",
+			"label": "catkin: clean",
+			"dependsOn": [
+				"catkin_clean"
+			]
+		}
+  ]
+}
