@@ -1,6 +1,8 @@
 # Senseglove ros_workspace
-A workspace for the integration of the SenseGlove into ROS Melodic.
+A workspace for the integration of the SenseGlove into _ROS Melodic_.
 This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
+
+Florent Audonnet has done some work on support for ROS2 Galactic. In case you are interested, have a look at https://github.com/09ubberboy90/senseglove_ros_ws/tree/ros2
 
 ## 1. For ROS beginners: ##
 If you are totally unfamiliar with ROS we advise you to take a look at the ROS-wiki for a quick startup guide.
@@ -15,7 +17,7 @@ A large part of understanding/working with ROS is the ability to search for the 
 In our experience, simply googling for an error or issue you have can do the trick. Do keep in mind that there exists a
 vast amount of documentation, though it can be tedious to sort through its information.
 
-### setting up the workspace for the senseglove: ###
+### Setting up the workspace for the senseglove: ###
 1. Make sure you are on a Ubuntu 18.04 system (not necessary, but all code has been checked with docker images running in ubuntu).
 2. Download ros-melodic as described in the ros-wiki.
 3. clone our workspace by either using `git clone https://github.com/Adjuvo/senseglove_ros_ws.git` or through the webbrowser here on the Github website.
