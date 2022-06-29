@@ -224,7 +224,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
       Name: RobotModel
-      Robot Description: robot_description
+      Robot Description: /senseglove/0/lh/robot_description
       TF Prefix: ""
       Update Interval: 0
       Value: true

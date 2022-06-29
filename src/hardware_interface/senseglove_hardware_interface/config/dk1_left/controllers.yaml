@@ -10,13 +10,13 @@ controller:
     allow_partial_joints_goal: true
     publish_rate: 30
     joints:
-      - thumb_brake # FFB
-      - index_brake # FFB
-      - middle_brake # FFB
-      - ring_brake # FFB
-      - pinky_brake # FFB
-      - thumb_cmc # Buzzer
-      - index_mcp # Buzzer
-      - middle_mcp # Buzzer
-      - ring_mcp # Buzzer
-      - pinky_mcp # Buzzer
+      - l_thumb_brake # FFB
+      - l_index_brake # FFB
+      - l_middle_brake # FFB
+      - l_ring_brake # FFB
+      - l_pinky_brake # FFB
+      - l_thumb_cmc # Buzzer
+      - l_index_mcp # Buzzer
+      - l_middle_mcp # Buzzer
+      - l_ring_mcp # Buzzer
+      - l_pinky_mcp # Buzzer

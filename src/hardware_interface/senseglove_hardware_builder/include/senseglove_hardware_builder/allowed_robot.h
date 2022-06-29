@@ -13,16 +13,21 @@ class AllowedRobot
 public:
   enum Value : int
   {
-    dk1,
+    dk1_left,
+    dk1_right,
     fino,
   };
 
   AllowedRobot() = default;
   explicit AllowedRobot(const std::string& robot_name)
   {
-    if (robot_name == "dk1")
+    if (robot_name == "dk1_left")
     {
-      this->value = dk1;
+      this->value = dk1_left;
+    }
+    else if (robot_name == "dk1_right")
+    {
+      this->value = dk1_right;
     }
     else if (robot_name == "fino")
     {
@@ -31,23 +36,27 @@ public:
     else
     {
       ROS_WARN_STREAM("Unknown robot " << robot_name);
-      this->value = AllowedRobot::dk1;
+      this->value = AllowedRobot::dk1_left;
     }
   }
 
   std::string getFilePath()
   {
     std::string base_path = ros::package::getPath("senseglove_hardware_builder");
-    if (this->value == AllowedRobot::dk1)
+    if (this->value == AllowedRobot::dk1_left)
     {
-      return base_path.append("/robots/dk1.yaml");
+      return base_path.append("/robots/dk1_left.yaml");
+    }
+    else if (this->value == AllowedRobot::dk1_right)
+    {
+      return base_path.append("/robots/dk1_right.yaml");
     }
     else if (this->value == AllowedRobot::fino)
     {
       return base_path.append("/robots/fino.yaml");
     }
     ROS_ERROR("Robotname not implemented. Using controllers.yaml...");
-    return base_path.append("/robots/dk1.yaml");
+    return base_path.append("/robots/dk1_left.yaml");
   }
 
   constexpr AllowedRobot(Value allowed_robot) : value(allowed_robot)
@@ -67,8 +76,11 @@ public:
   {
     switch (c.value)
     {
-      case dk1:
-        out << "dk1";
+      case dk1_left:
+        out << "dk1_left";
+        break;
+      case dk1_right:
+        out << "dk1_right";
         break;
       case fino:
         out << "fino";

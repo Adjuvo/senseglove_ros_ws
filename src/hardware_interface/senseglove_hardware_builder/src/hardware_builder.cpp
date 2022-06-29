@@ -44,7 +44,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 
   // Remove top level robot name key
   YAML::Node config = this->robot_config_[robot_name];
-
+  ROS_DEBUG_STREAM("Size of robot config " << this->robot_config_.size());
   std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
   auto current_glove = all_gloves[nr_of_glove_];  // Will be update later
   ROS_DEBUG_STREAM("creating sensegloves");
