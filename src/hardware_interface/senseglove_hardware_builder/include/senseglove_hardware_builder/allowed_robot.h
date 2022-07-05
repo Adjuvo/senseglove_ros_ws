@@ -36,7 +36,7 @@ public:
     else
     {
       ROS_WARN_STREAM("Unknown robot " << robot_name);
-      this->value = AllowedRobot::dk1_left;
+      this->value = AllowedRobot::dk1_left; //Defaulting to left because the left glove is initialized before the right glove 
     }
   }
 
