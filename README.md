@@ -4,6 +4,8 @@ This workspace makes use of ros_control for automatically initiating publisher a
 
 Florent Audonnet has done some work on support for ROS2 Galactic. In case you are interested, have a look at https://github.com/09ubberboy90/senseglove_ros_ws/tree/ros2
 
+If the current build (after the visualization branch merge) breaks your current work environment, please refer to [this older version]: https://github.com/Adjuvo/senseglove_ros_ws/commit/f0126b165fc865e1ce0be19db2f68bf725c221da of this workspace. 
+
 ## 1. For ROS beginners: ##
 If you are totally unfamiliar with ROS we advise you to take a look at the ROS-wiki for a quick startup guide.
 We especially recommend the following tutorials:

@@ -1,5 +1,5 @@
 <launch>
-    <arg name="robot" default="dk1_right" doc="The robot to run. Can be: dk1, nova, beta, unknown."/>
+    <arg name="robot" default="dk1_right" doc="The robot to run. Can be _left/_right of: dk1, nova, unknown."/>
     <arg name="nr_of_glove" default="1" doc="specify the number of the glove, it's an identifier. Not the amount of gloves connected."/>
     <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
