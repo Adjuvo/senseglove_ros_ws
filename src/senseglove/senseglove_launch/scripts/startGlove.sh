@@ -9,7 +9,7 @@ sleep 15
 
 # Start SenseGlove node
 source ~/.bashrc
-roslaunch senseglove_launch senseglove_hardware_demo.launch
+roslaunch senseglove_launch senseglove_hardware_demo.launch left:=$2 right:=$3
 
 # Kill SenseComm when node is killed
 killall -9 SenseCom.x86_64

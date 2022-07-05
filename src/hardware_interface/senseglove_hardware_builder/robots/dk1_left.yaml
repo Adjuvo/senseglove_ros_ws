@@ -1,126 +1,126 @@
-dk1:
+dk1_left:
   deviceType: 0
   # Ordered Alphabetically in joint state publisher
   joints:
-    - thumb_cmc:
+    - l_thumb_cmc:
         jointIndex: 1
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - thumb_mcp:
+    - l_thumb_mcp:
         jointIndex: 2
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - thumb_pip:
+    - l_thumb_pip:
         jointIndex: 3
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - thumb_brake:
+    - l_thumb_brake:
         jointIndex: 0
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
 
-    - index_mcp:
+    - l_index_mcp:
         jointIndex: 5
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - index_pip:
+    - l_index_pip:
         jointIndex: 6
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - index_dip:
+    - l_index_dip:
         jointIndex: 7
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - index_brake:
+    - l_index_brake:
         jointIndex: 4
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
 
-    - middle_mcp:
+    - l_middle_mcp:
         jointIndex: 9
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - middle_pip:
+    - l_middle_pip:
         jointIndex: 10
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - middle_dip:
+    - l_middle_dip:
         jointIndex: 11
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - middle_brake:
+    - l_middle_brake:
         jointIndex: 8
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
 
-    - ring_mcp:
+    - l_ring_mcp:
         jointIndex: 13
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - ring_pip:
+    - l_ring_pip:
         jointIndex: 14
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - ring_dip:
+    - l_ring_dip:
         jointIndex: 15
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - ring_brake:
+    - l_ring_brake:
         jointIndex: 12
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
 
-    - pinky_mcp:
+    - l_pinky_mcp:
         jointIndex: 17
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - pinky_pip:
+    - l_pinky_pip:
         jointIndex: 18
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - pinky_dip:
+    - l_pinky_dip:
         jointIndex: 19
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - pinky_brake:
+    - l_pinky_brake:
         jointIndex: 16
         actuationMode: position
         allowActuation: true
