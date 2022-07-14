@@ -1,4 +1,5 @@
 <launch>
+    <arg name="use_rviz" default="true"/>
     <arg name="use_left" default="true"/>
     <arg name="use_right" default="true"/>
     <arg name="use_both" value="$(eval arg('use_left') and arg('use_right'))"/>
@@ -9,5 +10,5 @@
     <arg name="rvizconfig" value="$(find senseglove_description)/urdf_both.rviz" if="$(eval use_both)"/>
 
     <node pkg="senseglove_launch" type="startGlove.sh" name="startGlove" args="$(find senseglove_hardware) $(arg use_left) $(arg use_right)" output="screen" respawn="false" />
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" if="$(eval use_rviz)"/>
 </launch>
