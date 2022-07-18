@@ -4,7 +4,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
 
 Florent Audonnet has done some work on support for ROS2 Galactic. In case you are interested, have a look at https://github.com/09ubberboy90/senseglove_ros_ws/tree/ros2
 
-If the current build (after the visualization branch merge) breaks your current work environment, please refer to [this older version]: https://github.com/Adjuvo/senseglove_ros_ws/commit/f0126b165fc865e1ce0be19db2f68bf725c221da of this workspace. 
+If the current build (after the visualization branch merge) breaks your current work environment, please refer to [this older version](https://github.com/Adjuvo/senseglove_ros_ws/commit/f0126b165fc865e1ce0be19db2f68bf725c221da) of this workspace. 
 
 
 ## 1. For ROS beginners: ##
@@ -82,7 +82,7 @@ We now also offer docker images that allow you to use the sensegloves from insid
 
 Furthermore, these images rely on hardware acceleration capabilities and therefore, as far as I know, require NVIDIA GPUs. To make use of the USB ports the --privileged argument is also used. This is not the safest implementation from what I have read, but will suffice for a quick tryout of the hardware.
 
-Sadly Windows will not support host device access for Linux containers. This means that we cannot access our hardware when running ur containers on a windows host device. It's still possible to build and test the code, but using our workspace currently requires gloves to be accessible for communication.
+[Sadly Windows will not support host device access for Linux containers](https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/hardware-devices-in-containers). This means that we cannot access our hardware when running ur containers on a windows host device. It's still possible to build and test the code, but using our workspace currently requires gloves to be accessible for communication.
 
 ## 4. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
