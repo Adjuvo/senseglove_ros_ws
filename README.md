@@ -84,6 +84,8 @@ Furthermore, these images rely on hardware acceleration capabilities and therefo
 
 [Sadly Windows will not support host device access for Linux containers](https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/hardware-devices-in-containers). This means that we cannot access our hardware when running ur containers on a windows host device. It's still possible to build and test the code, but using our workspace currently requires gloves to be accessible for communication.
 
+If you still want to run the docker image on windows you can still do so using 'docker run -it dockerfile_$DISTRO_windows'
+
 ## 4. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
 * Custom Exceptions for easy debugging
