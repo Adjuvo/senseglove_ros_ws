@@ -76,7 +76,15 @@ As such, the user has to define which glove is connected to the system.
 5. source your workspace
 6. proceed as if you were dealing with 2 sensegloves
 
-## 3. To do: ##
+## 3. Docker Support ##
+We now also offer docker images that allow you to use the sensegloves from inside a docker container. Startup scripts are provided in the corresponding distro directories. We currently assume that your sensegloves are found as devices on your Ubuntu distribution as /dev/ttyACMx where x is 0 or 1. If this is not the case for you please adjust the run_docker_$DISTRO.sh file accordingly. The new names can be found by running SenseCom on your host, right clicking on the connected gloves and clicking details. You should then find the name on the line "Connection:    Serial(/relevant_serial_name)" Copy paste /relevant serial name into the bash script and you should be good to go.
+
+
+Furthermore, these images rely on hardware acceleration capabilities and therefore, as far as I know, require NVIDIA GPUs. To make use of the USB ports the --privileged argument is also used. This is not the safest implementation from what I have read, but will suffice for a quick tryout of the hardware.
+
+Sadly Windows will not support host device access for Linux containers. This means that we cannot access our hardware when running ur containers on a windows host device. It's still possible to build and test the code, but using our workspace currently requires gloves to be accessible for communication.
+
+## 4. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
 * Custom Exceptions for easy debugging
 * Provide specialized script for using a single senseglove
