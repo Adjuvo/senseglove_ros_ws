@@ -1,0 +1,23 @@
+FROM osrf/ros:noetic-desktop-full
+ 
+# Change the default shell to Bash
+SHELL [ "/bin/bash" , "-c" ]
+ 
+# Install Git & ros_control
+RUN apt-get update && apt-get install -y git \
+ && apt-get install -y ros-noetic-ros-control ros-noetic-ros-controllers \
+ && apt-get install -y python3-catkin-tools \
+ && apt-get install -y build-essential
+ 
+# Create a Catkin workspace and clone TurtleBot3 repos
+RUN source /opt/ros/noetic/setup.bash \
+ && git clone https://github.com/Adjuvo/senseglove_ros_ws
+ 
+# Build the Catkin workspace and ensure it's sourced
+RUN source /opt/ros/noetic/setup.bash \
+ && cd senseglove_ros_ws/ \
+ && catkin_make
+RUN echo "source /senseglove_ros_ws/devel/setup.bash" >> ~/.bashrc
+ 
+# Set the working folder at startup
+WORKDIR /senseglove_ros_ws
