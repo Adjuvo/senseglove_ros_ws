@@ -33,12 +33,10 @@ class FingerTipHandler:
             print("No calibration data found, using defaults")
 
         # Declare calibration service
-        self.calib_srv = rospy.Service("shadow_ros_control/calibrate", Calibrate, self.calibrate_service)  # ~
-        # self.calib_srv = rospy.Service(self.ns + "/shadow_ros_control/Calibrate", Calibrate, self.calibrate_service)
+        self.calib_srv = rospy.Service("~Calibrate", Calibrate, self.calibrate_service)
         self.calibrating = False
         print(self.calib_srv.resolved_name)
         print("Done setting up calibration")
-
 
     def apply_calib(self, pinch_value=0.0, pinch_combination=0, mode='nothing'):
         if mode == 'nothing':
