@@ -14,7 +14,12 @@ src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
 src/cmake-build-debug/*
 src/CMakeLists.txt
 
+src/senseglove/senseglove_finger_distance/src/senseglove_finger_distance/__pycache__
+src/senseglove/senseglove_launch/scripts/sessionLog.txt
 src/senseglove/senseglove_shared_resources/calibration/*
+
+senseglove_ros_ws.code-workspace
 
 .idea/*
 .catkin_tools/*
+.vscode/
