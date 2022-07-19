@@ -76,8 +76,9 @@ As such, the user has to define which glove is connected to the system.
 5. source your workspace
 6. proceed as if you were dealing with 2 sensegloves
 
+### Remarks for using the finger distance node: ###
+The finger distance package is meant to publish the distance between the fingertips through a rosnode as a means to control robotic grippers. This package also provides a calibration class that provides a service server. The service is easily called from the rqt_service_caller plugin.Instructions for the calibration are printed on your terminal.
 ## 3. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
 * Custom Exceptions for easy debugging
-* Provide specialized script for using a single senseglove
 * Provide speed and acceleration data of the fingertippositions as well as for the encoder data.
