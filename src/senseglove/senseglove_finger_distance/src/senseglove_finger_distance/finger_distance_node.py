@@ -39,6 +39,27 @@ class FingerTipHandler:
         print(self.calib_srv.resolved_name)
         print("Done setting up calibration")
 
+    def calibrate_service(self, call):
+        # Stop publishing commands & feedback
+        print("Executing calibration service")
+        self.calibrating = True
+
+        old_calib = self.calibration
+        if call.name is None:
+            call.name = "Unnamed_" + str(rospy.get_time())
+        print("calibration from call.name: ", call.name)
+        glove_nr = 0 if self.ns == '/lh/' else 1
+        self.calibration = Calibration(name=call.name, glove_nr=glove_nr)
+        result = self.calibration.run_interactive_calibration()
+
+        if not result:
+            # Failed; Restore previous calibration
+            self.calibration = old_calib
+
+        # Resume publishing
+        self.calibrating = False
+        return result
+
     def apply_calib(self, pinch_value=0.0, pinch_combination=0, mode='nothing'):
         if mode == 'nothing':
             return pinch_value
