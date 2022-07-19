@@ -54,7 +54,7 @@ class FingerTipHandler:
 
         if not result:
             # Failed; Restore previous calibration
-            
+            rospy.logwarn("Calibration was unsuccesful: using old calibration")
             self.calibration = old_calib
 
         # Resume publishing
