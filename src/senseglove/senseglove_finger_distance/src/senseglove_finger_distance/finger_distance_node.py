@@ -86,7 +86,7 @@ class FingerTipHandler:
         if not self.calibration.is_calibrated():
             # If calibration on param server, load it
             if rospy.has_param('~pinch_calibration_min') and rospy.has_param('~pinch_calibration_max'):
-                rospy.loginfo("Found calibration data on server")
+                rospy.logdebug_throttle(60, "Found calibration data on server")
                 self.calibration = Calibration("from_param_server")
                 self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
                 self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
