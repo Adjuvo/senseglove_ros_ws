@@ -16,7 +16,29 @@ class FingerTipHandler:
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
         self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloats, queue_size=1)
 
-        self.calibration = Calibration("default")
+        self._setup_calibration()
+
+    def _setup_calibration(self):
+        print("Setting up calibration")
+        # Calibration: setup default
+        self.calibration = Calibration(name="default")
+
+        # If calibration already on param server, load it
+        if rospy.has_param('~pinch_calibration_min') and rospy.has_param('~pinch_calibration_max'):
+            print("Found calibration data on server")
+            self.calibration = Calibration("from_param_server")
+            self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
+            self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
+        else:
+            print("No calibration data found, using defaults")
+
+        # Declare calibration service
+        self.calib_srv = rospy.Service("shadow_ros_control/calibrate", Calibrate, self.calibrate_service)  # ~
+        # self.calib_srv = rospy.Service(self.ns + "/shadow_ros_control/Calibrate", Calibrate, self.calibrate_service)
+        self.calibrating = False
+        print(self.calib_srv.resolved_name)
+        print("Done setting up calibration")
+
 
     def apply_calib(self, pinch_value=0.0, pinch_combination=0, mode='nothing'):
         if mode == 'nothing':
