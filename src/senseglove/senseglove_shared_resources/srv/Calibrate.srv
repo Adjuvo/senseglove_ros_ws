@@ -1,0 +1,5 @@
+# A service to request calibration
+
+string name  # Optional: name for this calibration profile
+---
+bool success
