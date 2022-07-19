@@ -192,7 +192,7 @@ class Calibration:
         # Set parameters
         rospy.set_param('~pinch_calibration_min', self.pinch_calibration_min)
         rospy.set_param('~pinch_calibration_max', self.pinch_calibration_max)
-        config_folder = rospkg.RosPack().get_path('senseglove_shared_resources') + "/calib"
+        config_folder = rospkg.RosPack().get_path('senseglove_shared_resources') + "/calibration"
 
         if not isdir(config_folder):
             rospy.logwarn("Could not locate calibration folder %s, not saving." % config_folder)
