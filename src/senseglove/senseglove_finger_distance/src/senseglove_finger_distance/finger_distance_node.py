@@ -12,6 +12,7 @@ class FingerTipHandler:
         self.finger_nrs = finger_nrs
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
+        self.glove_nr = glove_nr
         self.senseglove_ns = "/senseglove/" + str(int(glove_nr) / 2) + str(self.handedness_list[int(glove_nr) % 2])
         rospy.Subscriber(self.senseglove_ns + "/senseglove_states", SenseGloveState,
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
@@ -48,8 +49,7 @@ class FingerTipHandler:
         if call.name is None:
             call.name = "Unnamed_" + str(rospy.get_time())
         print("calibration from call.name: ", call.name)
-        glove_nr = 0 if self.ns == '/lh/' else 1
-        self.calibration = Calibration(name=call.name, glove_nr=glove_nr)
+        self.calibration = Calibration(name=call.name, glove_nr=self.glove_nr)
         result = self.calibration.run_interactive_calibration()
 
         if not result:
