@@ -14,5 +14,7 @@ src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
 src/cmake-build-debug/*
 src/CMakeLists.txt
 
+src/senseglove/senseglove_shared_resources/calibration/*
+
 .idea/*
 .catkin_tools/*
