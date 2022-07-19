@@ -4,7 +4,7 @@ import rospy
 import rosparam
 import sys
 from os.path import isdir, exists
-#import rospkg
+import rospkg
 from senseglove_shared_resources.msg import FingerDistanceFloats
 
 
