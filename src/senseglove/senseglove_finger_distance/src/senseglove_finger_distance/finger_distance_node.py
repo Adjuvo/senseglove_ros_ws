@@ -54,6 +54,7 @@ class FingerTipHandler:
 
         if not result:
             # Failed; Restore previous calibration
+            
             self.calibration = old_calib
 
         # Resume publishing
@@ -91,7 +92,7 @@ class FingerTipHandler:
                 self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
                 self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
             else:
-                rospy.logwarn_throttle(30, "No calibration data found, using defaults")
+                rospy.logwarn_throttle(60, "No calibration data found, using defaults")
 
         for i in range(len(self.finger_nrs)):
             self.finger_tips[i].x = data.finger_tip_positions[i].x
