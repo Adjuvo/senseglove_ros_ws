@@ -21,24 +21,23 @@ class FingerTipHandler:
         self._setup_calibration()
 
     def _setup_calibration(self):
-        print("Setting up calibration")
+        rospy.loginfo("Setting up calibration")
         # Calibration: setup default
         self.calibration = Calibration(name="default")
 
         # If calibration already on param server, load it
         if rospy.has_param('~pinch_calibration_min') and rospy.has_param('~pinch_calibration_max'):
-            print("Found calibration data on server")
+            rospy.loginfo("Found calibration data on server")
             self.calibration = Calibration("from_param_server")
             self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
             self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
         else:
-            print("No calibration data found, using defaults")
+            rospy.logwarn("No calibration data found, using defaults")
 
         # Declare calibration service
         self.calib_srv = rospy.Service("~Calibrate", Calibrate, self.calibrate_service)
         self.calibrating = False
-        print(self.calib_srv.resolved_name)
-        print("Done setting up calibration")
+        rospy.loginfo("Done setting up calibration for %s", self.calib_srv.resolved_name)
 
     def calibrate_service(self, call):
         # Stop publishing commands & feedback
@@ -48,7 +47,7 @@ class FingerTipHandler:
         old_calib = self.calibration
         if call.name is None:
             call.name = "Unnamed_" + str(rospy.get_time())
-        print("calibration from call.name: ", call.name)
+        rospy.loginfo("calibration from call.name: %s", call.name)
         self.calibration = Calibration(name=call.name, glove_nr=self.glove_nr)
         result = self.calibration.run_interactive_calibration()
 
@@ -92,7 +91,7 @@ class FingerTipHandler:
                 self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
                 self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
             else:
-                rospy.logwarn_throttle(60, "No calibration data found, using defaults")
+                rospy.logwarn_throttle(60, "No calibration data found when publishing fingerdistances, using defaults")
 
         for i in range(len(self.finger_nrs)):
             self.finger_tips[i].x = data.finger_tip_positions[i].x
