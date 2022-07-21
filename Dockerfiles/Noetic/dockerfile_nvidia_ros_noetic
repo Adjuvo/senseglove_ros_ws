@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y git \
  
 # Create a Catkin workspace and clone TurtleBot3 repos
 RUN source /opt/ros/noetic/setup.bash \
- && git clone https://github.com/Adjuvo/senseglove_ros_ws
+ && git clone https://github.com/Adjuvo/senseglove_noetic
  
 # Build the Catkin workspace and ensure it's sourced
 RUN source /opt/ros/noetic/setup.bash \
- && cd senseglove_ros_ws/ \
+ && cd senseglove_noetic/ \
  && catkin_make
-RUN echo "source /senseglove_ros_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "source /senseglove_noetic/devel/setup.bash" >> ~/.bashrc
  
 # Set the working folder at startup
-WORKDIR /senseglove_ros_ws
+WORKDIR /senseglove_noetic
