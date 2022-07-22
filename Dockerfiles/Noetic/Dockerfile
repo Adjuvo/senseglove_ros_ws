@@ -55,3 +55,7 @@ RUN apt-get update && apt-get install -y git \
  && apt-get install -y ros-noetic-ros-control ros-noetic-ros-controllers \
  && apt-get install -y python3-catkin-tools \
  && apt-get install -y build-essential
+
+# Change shell + set environment variables
+SHELL [ "/bin/bash" , "-c" ]
+RUN source /opt/ros/noetic/setup.bash
