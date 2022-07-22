@@ -77,14 +77,38 @@ As such, the user has to define which glove is connected to the system.
 6. proceed as if you were dealing with 2 sensegloves
 
 ## 3. Docker Support ##
-We now also offer docker images that allow you to use the sensegloves from inside a docker container. Startup scripts are provided in the corresponding distro directories. We currently assume that your sensegloves are found as devices on your Ubuntu distribution as /dev/ttyACMx where x is 0 or 1. If this is not the case for you please adjust the run_docker_$DISTRO.sh file accordingly. The new names can be found by running SenseCom on your host, right clicking on the connected gloves and clicking details. You should then find the name on the line "Connection:    Serial(/relevant_serial_name)" Copy paste /relevant serial name into the bash script and you should be good to go.
-
-
-Furthermore, these images rely on hardware acceleration capabilities and therefore, as far as I know, require NVIDIA GPUs. To make use of the USB ports the --privileged argument is also used. This is not the safest implementation from what I have read, but will suffice for a quick tryout of the hardware.
+We now also offer docker images that allow you to use a Senseglove from inside a
+docker container. Dockerfiles for Melodic and Noetic are provided in the
+Dockerfiles directory. Furthermore, these images rely on hardware acceleration
+capabilities and therefore, as far as I know, require NVIDIA GPUs. To make use
+of the USB ports the --privileged argument is also used. This is not the safest
+implementation from what I have read, but will suffice for a quick tryout of the
+hardware.
 
 [Sadly Windows will not support host device access for Linux containers](https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/hardware-devices-in-containers). This means that we cannot access our hardware when running ur containers on a windows host device. It's still possible to build and test the code, but using our workspace currently requires gloves to be accessible for communication.
 
-If you still want to run the docker image on windows you can still do so. First run 'docker build -f dockerfile_$DISTRO_windows -t dockerfile_$DISTRO_windows .' and then execute it by running: 'docker run -it dockerfile_$DISTRO_windows' in your Powershell.
+### Build docker images
+``cd Dockerfiles``
+``./build-image [noetic|melodic]``
+
+### Run interactive container
+You can use the example run-container.sh script to run a container. Alternatively, you can invoke:
+docker run --rm -it --privileged --net=host --gpus all \
+    --device=/dev/ttyACM0 \
+    --device=/dev/ttyACM1 \
+    --env="NVIDIA_DRIVER_CAPABILITIES=all" \
+    --env="DISPLAY" \
+    --env="QT_X11_NO_MITSHM=1" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    -v $PWD:/project -w /project senseglove-melodic-ros:latest
+
+This assumes you are using ROS Melodic, hardware is connected through ttyACM{0,1} and
+that $PWD is the cloned local ROS workspace. With the -v command your local
+workspace is mapped in the docker container.
+
+### Build and source (inside container)
+``catkin_make``
+``echo "source /senseglove_ros_ws/devel/setup.bash" >> ~/.bashrc``
 
 ## 4. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
