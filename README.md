@@ -92,6 +92,7 @@ hardware.
 ``./build-image [noetic|melodic]``
 
 ### Run interactive container
+You can use the example run-container.sh script to run a container. Alternatively, you can invoke:
 docker run --rm -it --privileged --net=host --gpus all \
     --device=/dev/ttyACM0 \
     --device=/dev/ttyACM1 \
@@ -105,9 +106,9 @@ This assumes you are using ROS Melodic, hardware is connected through ttyACM{0,1
 that $PWD is the cloned local ROS workspace. With the -v command your local
 workspace is mapped in the docker container.
 
-### Source and build (inside container)
-``source /opt/ros/melodic/setup.bash``
+### Build and source (inside container)
 ``catkin_make``
+``echo "source /senseglove_ros_ws/devel/setup.bash" >> ~/.bashrc``
 
 ## 4. To do: ##
 This is a small to do list for the upcoming features in this repository these will be added as issues as well.
