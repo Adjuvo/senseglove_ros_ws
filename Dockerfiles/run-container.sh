@@ -2,7 +2,7 @@
 
 # Example script to run a container
 # Please adjust accordingly
-SENSEGLOVE_DEV0=/dev/tty0
+SENSEGLOVE_DEV0=/dev/ttyACM0
 SENSEGLOVE_DEV1=/dev/ttyACM1
 
 WORKSPACE_DIR=~/senseglove-ros
