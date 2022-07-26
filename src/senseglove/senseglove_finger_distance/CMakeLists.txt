@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
     actionlib
     actionlib_msgs
     genmsg
+    rospy
     senseglove_shared_resources
     std_msgs
     )

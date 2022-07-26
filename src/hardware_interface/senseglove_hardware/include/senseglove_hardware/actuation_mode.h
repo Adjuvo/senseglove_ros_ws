@@ -1,4 +1,4 @@
-// Copyright 2019 Project March.
+// Copyright 2022 Senseglove.
 
 #ifndef SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
 #define SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
