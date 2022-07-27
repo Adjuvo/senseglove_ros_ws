@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Start SenseCom
+sudo chmod 666 /dev/ttyACM0
+sudo chmod 666 /dev/ttyACM1
+
 chmod +x $1/SenseCom/Linux/SenseCom.x86_64
 $1/SenseCom/Linux/SenseCom.x86_64 &
 

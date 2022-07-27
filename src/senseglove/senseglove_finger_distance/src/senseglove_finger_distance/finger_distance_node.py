@@ -1,5 +1,6 @@
+from functools import total_ordering
 import rospy
-from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
+from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats, FingerDistanceFloatsCalibrated
 from senseglove_shared_resources.srv import Calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
@@ -16,7 +17,7 @@ class FingerTipHandler:
         self.senseglove_ns = "/senseglove/" + str(int(int(glove_nr) / 2)) + str(self.handedness_list[int(glove_nr) % 2])
         rospy.Subscriber(self.senseglove_ns + "/senseglove_states", SenseGloveState,
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
-        self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloats, queue_size=1)
+        self.pub = rospy.Publisher(self.senseglove_ns + "/finger_distances", FingerDistanceFloatsCalibrated, queue_size=1)
 
         self._setup_calibration()
 
@@ -67,31 +68,42 @@ class FingerTipHandler:
             # Return the values so that pinching your fingers results in a finger distance of zero
             return pinch_value - self.calibration.pinch_calibration_min[pinch_combination]
         elif mode == 'normalized':
+            minimum = self.calibration.pinch_calibration_min[pinch_combination]
+            maximum = self.calibration.pinch_calibration_max[pinch_combination]
             # Return normalized finger distance value between 0 and 1
-            return (pinch_value - self.calibration.pinch_calibration_min[pinch_combination]) / \
-                   self.calibration.pinch_calibration_max[pinch_combination]
+            return (pinch_value - minimum) / (maximum - minimum)
 
     def distance_publish(self):
-        finger_distance_message = FingerDistanceFloats()
-        finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(),
+        finger_distance_calibrated = FingerDistanceFloats()
+        rospy.logwarn_throttle(3, "Using calibration mode: " + self.calib_mode)
+        finger_distance_calibrated.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(),
                                                               0, self.calib_mode)
-        finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(),
+        finger_distance_calibrated.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(),
                                                               1, self.calib_mode)
-        finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(),
+        finger_distance_calibrated.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(),
                                                               2, self.calib_mode)
-        finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
-        self.pub.publish(finger_distance_message)
+        finger_distance_calibrated.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
+
+        finger_distance_default = FingerDistanceFloats()
+        finger_distance_default.th_ff.data = (self.finger_tips[0] - self.finger_tips[1]).magnitude()
+        finger_distance_default.th_mf.data = (self.finger_tips[0] - self.finger_tips[2]).magnitude()
+        finger_distance_default.th_rf.data = (self.finger_tips[0] - self.finger_tips[3]).magnitude()
+        finger_distance_default.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
+        total_msg = FingerDistanceFloatsCalibrated()
+        total_msg.calibrated = finger_distance_calibrated
+        total_msg.default = finger_distance_default
+        self.pub.publish(total_msg)
 
     def callback(self, data):
         if not self.calibration.is_calibrated():
             # If calibration on param server, load it
-            if rospy.has_param('~pinch_calibration_min') and rospy.has_param('~pinch_calibration_max'):
-                rospy.logdebug_throttle(60, "Found calibration data on server")
+            if rospy.has_param('/pinch_calibration_min') and rospy.has_param('/pinch_calibration_max'):
+                rospy.logwarn_throttle(3, "Found calibration data on server" + self.senseglove_ns)
                 self.calibration = Calibration("from_param_server")
-                self.calibration.pinch_calibration_min = rospy.get_param('~pinch_calibration_min')
-                self.calibration.pinch_calibration_max = rospy.get_param('~pinch_calibration_max')
+                self.calibration.pinch_calibration_min = rospy.get_param('/pinch_calibration_min')
+                self.calibration.pinch_calibration_max = rospy.get_param('/pinch_calibration_max')
             else:
-                rospy.logwarn_throttle(60, "No calibration data found when publishing fingerdistances, using defaults")
+                rospy.logwarn_throttle(3, "No calibration data found when publishing fingerdistances, using defaults " + self.senseglove_ns)
 
         for i in range(len(self.finger_nrs)):
             self.finger_tips[i].x = data.finger_tip_positions[i].x

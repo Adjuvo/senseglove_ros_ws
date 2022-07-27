@@ -5,7 +5,7 @@ import rosparam
 import sys
 from os.path import isdir, exists
 import rospkg
-from senseglove_shared_resources.msg import FingerDistanceFloats
+from senseglove_shared_resources.msg import FingerDistanceFloats, FingerDistanceFloatsCalibrated
 
 
 class Calibration:
@@ -26,7 +26,7 @@ class Calibration:
 
         # Defaults
         self.pinch_calibration_min = [0.0, 0.0, 0.0]  # [index, middle, ring][x, y, z] random values from Kees
-        self.pinch_calibration_max = [100.0, 100.0, 100.0]  # [index, middle, ring] in mm
+        self.pinch_calibration_max = [500.0, 500.0, 500.0]  # [index, middle, ring] in mm
 
         self.avg_open_flat = [0.0, 0.0, 0.0]  # distances between thumb&index thumb&middle thumb&ring
         self.avg_thumb_index_pinch = [0.0, 0.0, 0.0]
@@ -106,7 +106,7 @@ class Calibration:
         Run an interactive (CLI) session for calibration.
         """
         topic_name = str(self.handedness_list[int(self.glove_nr) % 2]) + '/senseglove/finger_distances'
-        rospy.Subscriber(topic_name, FingerDistanceFloats, callback=self.senseglove_callback, queue_size=1)
+        rospy.Subscriber(topic_name, FingerDistanceFloatsCalibrated, callback=self.senseglove_callback, queue_size=1)
 
         rospy.loginfo("Calibration of senseglove started, please flatten your hand.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
@@ -206,7 +206,7 @@ class Calibration:
         return True
 
     def senseglove_callback(self, finger_distance_msg):
-        self.databuffer.appendleft(finger_distance_msg)
+        self.databuffer.appendleft(finger_distance_msg.default)
 
     def get_avg_finger_distances(self):
 
@@ -233,11 +233,11 @@ class Calibration:
         return avg_positions_msg
 
     def key_press_interface(self):
-        k = raw_input()  # In python2 this works in python3 use input() instead
+        k = input()  # In python2 this works in python3 use input() instead
 
         while not (k == 'q' or k == 'y'):
             rospy.loginfo("Not valid: %s. Type [y] + [Enter] when ready, or [q] + [Enter] to quit." % k)
-            k = raw_input()  # In python2 this works in python3 use input() instead
+            k = input()  # In python2 this works in python3 use input() instead
 
         if k == "q":
             rospy.loginfo("Calibration aborted!")
