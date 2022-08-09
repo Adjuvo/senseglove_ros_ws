@@ -97,11 +97,11 @@ class FingerTipHandler:
     def callback(self, data):
         if not self.calibration.is_calibrated():
             # If calibration on param server, load it
-            if rospy.has_param('/pinch_calibration_min') and rospy.has_param('/pinch_calibration_max'):
+            if rospy.has_param(self.senseglove_ns + '/pinch_calibration_min') and rospy.has_param( self.senseglove_ns +'/pinch_calibration_max'):
                 rospy.logwarn_throttle(3, "Found calibration data on server" + self.senseglove_ns)
                 self.calibration = Calibration("from_param_server")
-                self.calibration.pinch_calibration_min = rospy.get_param('/pinch_calibration_min')
-                self.calibration.pinch_calibration_max = rospy.get_param('/pinch_calibration_max')
+                self.calibration.pinch_calibration_min = rospy.get_param(self.senseglove_ns + '/pinch_calibration_min')
+                self.calibration.pinch_calibration_max = rospy.get_param(self.senseglove_ns + '/pinch_calibration_max')
             else:
                 rospy.logwarn_throttle(3, "No calibration data found when publishing fingerdistances, using defaults " + self.senseglove_ns)
 

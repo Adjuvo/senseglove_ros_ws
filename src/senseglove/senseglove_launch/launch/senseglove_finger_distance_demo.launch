@@ -17,11 +17,11 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" if="$(eval use_rviz)"/>
 
     <node name="senseglove_finger_distance_left" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="0 $(arg calibration_mode)" output="screen" >
-	    <remap from="/senseglove/0/lh/finger_distances" to="/lh/senseglove/finger_distances"/>
+	    <!-- <remap from="/senseglove/0/lh/finger_distances" to="/lh/senseglove/finger_distances"/> -->
         <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_left).yaml" unless="$(eval calibration_file_left=='None')"/>
     </node>
     <node name="senseglove_finger_distance_right" pkg="senseglove_finger_distance" type="senseglove_finger_distance_node" args="1 $(arg calibration_mode)" output="screen" >
-	    <remap from="/senseglove/0/rh/finger_distances" to="/rh/senseglove/finger_distances"/>
+	    <!-- <remap from="/senseglove/0/rh/finger_distances" to="/rh/senseglove/finger_distances"/> -->
         <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
     </node>
 </launch>
