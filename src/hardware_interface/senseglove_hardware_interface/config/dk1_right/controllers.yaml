@@ -20,3 +20,6 @@ controller:
       - r_middle_mcp # Buzzer
       - r_ring_mcp # Buzzer
       - r_pinky_mcp # Buzzer
+    
+    constraints:
+      goal_time: 0.1                                    # Trajectory succeeds if it reaches the goal within 0.1 +/-
