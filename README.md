@@ -6,9 +6,18 @@ Florent Audonnet has done some work on support for ROS2 Galactic. In case you ar
 
 If the current build (after the visualization branch merge) breaks your current work environment, please refer to [this older version]: https://github.com/Adjuvo/senseglove_ros_ws/commit/f0126b165fc865e1ce0be19db2f68bf725c221da of this workspace. 
 
+**`NOTE FOR EXISTING LOCAL-CLONE USERS:`**
+
+Kindly update your local clone as the default branch has been renamed to `melodic-devel`. From the local clone of the repository on a computer, run the following commands to update the name of the default branch.
+``` 
+$ git branch -m master melodic-devel
+$ git fetch origin
+$ git branch -u origin/melodic-devel melodic-devel
+$ git remote set-head origin -a
+``` 
 
 ## 1. For ROS beginners: ##
-If you are totally unfamiliar with ROS we advise you to take a look at the ROS-wiki for a quick startup guide.
+If you are totally unfamiliar with ROS, we advise you to take a look at the ROS-wiki for a quick startup guide.
 We especially recommend the following tutorials:
 * http://wiki.ros.org/melodic/Installation/Ubuntu
 * http://wiki.ros.org/ROS/StartGuide
@@ -16,9 +25,7 @@ We especially recommend the following tutorials:
     * http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment
     * http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28c%2B%2B%29
 
-A large part of understanding/working with ROS is the ability to search for the issues you are dealing with.
-In our experience, simply googling for an error or issue you have can do the trick. Do keep in mind that there exists a
-vast amount of documentation, though it can be tedious to sort through its information.
+A large part of understanding/working with ROS is the ability to search for the issues you are dealing with. In our experience, simply googling for an error or issue you have can do the trick. Do keep in mind that there exists a vast amount of documentation, though it can be tedious to sort through its information.
 
 ### Setting up the workspace for the senseglove: ###
 1. Make sure you are on a Ubuntu 18.04 system (not necessary, but all code has been checked with docker images running in ubuntu).
