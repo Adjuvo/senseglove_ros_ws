@@ -1,7 +1,7 @@
 <launch>
     <arg name="calibration_mode"    default="nothing" doc="Choose the calibration mode of the senseglove; nothing, minimum, normalized"/>
-    <arg name="calibration_file_left" default="left" doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
-    <arg name="calibration_file_right" default="right" doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
+    <arg name="calibration_file_left" default="None" doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
+    <arg name="calibration_file_right" default="None" doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
 
     <arg name="use_rviz" default="false"/>
     <arg name="use_left" default="true"/>
