@@ -233,11 +233,11 @@ class Calibration:
         return avg_positions_msg
 
     def key_press_interface(self):
-        k = raw_input()  # In python2 this works in python3 use input() instead
+        k = input()  # In python3, input() is used instead of raw_input (python2.7)
 
         while not (k == 'q' or k == 'y'):
             rospy.loginfo("Not valid: %s. Type [y] + [Enter] when ready, or [q] + [Enter] to quit." % k)
-            k = raw_input()  # In python2 this works in python3 use input() instead
+            k = input()  # In python3, input() is used instead of raw_input (python2.7)
 
         if k == "q":
             rospy.loginfo("Calibration aborted!")

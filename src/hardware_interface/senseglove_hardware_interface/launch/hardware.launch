@@ -3,7 +3,7 @@
     <arg name="nr_of_glove" default="1" doc="specify the number of the glove, it's an identifier. Not the amount of gloves connected."/>
     <arg name="is_right" default="true" doc="specify the righthandedness of the glove"/>
 
-    <group ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/rh')" if="$(eval is_right)">
+    <group ns="$(eval '/senseglove/' + str(int(arg('nr_of_glove')/2)) + '/rh')" if="$(eval is_right)">
 
         <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf" if="$(eval arg('is_right')==true)"/>
 
@@ -14,7 +14,7 @@
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
               output="screen"
-              ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/rh')"
+              ns="$(eval '/senseglove/' + str(int(arg('nr_of_glove')/2)) + '/rh')"
               args="spawn controller/joint_state controller/trajectory"
         />
 
@@ -29,7 +29,7 @@
         </node>
     </group>
 
-    <group ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/lh')" unless="$(eval is_right)">
+    <group ns="$(eval '/senseglove/' + str(int(arg('nr_of_glove')/2)) + '/lh')" unless="$(eval is_right)">
 
         <param name="robot_description" textfile="$(find senseglove_description)/urdf/$(arg robot).urdf" if="$(eval arg('is_right')==false)"/>
 
@@ -39,7 +39,7 @@
         </node>
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
               output="screen"
-              ns="$(eval '/senseglove/' + str((arg('nr_of_glove')/2)) + '/lh')"
+              ns="$(eval '/senseglove/' + str(int(arg('nr_of_glove')/2)) + '/lh')"
               args="spawn controller/joint_state controller/trajectory"
         />
 

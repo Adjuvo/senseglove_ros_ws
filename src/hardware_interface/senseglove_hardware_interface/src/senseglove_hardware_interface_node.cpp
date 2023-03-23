@@ -105,7 +105,7 @@ int main(int argc, char** argv)
     }
     rate.sleep();
   }
-  ros::spin();
+  ros::waitForShutdown();
   return 0;
 }
 
