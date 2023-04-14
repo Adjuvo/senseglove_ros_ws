@@ -5,7 +5,7 @@
 
     <arg name="use_rviz" default="false"/>
     <arg name="use_left" default="true"/>
-    <arg name="use_right" default="true"/>
+    <arg name="use_right" default="false"/>
     <arg name="use_both" value="$(eval arg('use_left') and arg('use_right'))"/>
 
     <!--Passing through here ensures the use of the correct urdf_x.rviz file by overwriting if necessary-->

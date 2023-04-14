@@ -14,6 +14,7 @@ using hardware_interface::JointHandle;
 using hardware_interface::JointStateHandle;
 using hardware_interface::PositionJointInterface;
 
+
 SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<senseglove::SenseGloveSetup> setup)
   : senseglove_setup_(std::move(setup)), num_gloves_(this->senseglove_setup_->size())
 {
@@ -22,13 +23,17 @@ SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<sensegl
 bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* robot_hw_nh */)
 {
   // Initialize realtime publisher for the SenseGlove states
-  std::string handedness[2] = { "/lh", "/rh" };
   this->senseglove_state_pub_ =
       std::make_unique<realtime_tools::RealtimePublisher<senseglove_shared_resources::SenseGloveState>>(
           nh,
           "/" + this->senseglove_setup_->getSenseGloveRobot(0).getName() +
               handedness[this->senseglove_setup_->getSenseGloveRobot(0).getRight()] + "/senseglove_states/",
           1);
+
+  // topic, queue_size, functionPointer (to call when message has arived on topic), object to call functionPointer on
+  senseglove_haptics_sub_ = nh.subscribe("/" + this->senseglove_setup_->getSenseGloveRobot(0).getName() +
+                                         handedness[this->senseglove_setup_->getSenseGloveRobot(0).getRight()] + "/senseglove_haptics/",
+                                         1, &SenseGloveHardwareInterface::hapticSubscriber, this); 
 
   this->uploadJointNames(nh);
 
@@ -103,7 +108,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
 }
 
 void SenseGloveHardwareInterface::read(const ros::Time& /* time */, const ros::Duration& elapsed_time)
-{
+{ 
   // read senseglove robot data
   for (size_t i = 0; i < num_gloves_; ++i)
   {
@@ -128,60 +133,112 @@ void SenseGloveHardwareInterface::read(const ros::Time& /* time */, const ros::D
   }
 }
 
-void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::Duration& /*&elapsed_time*/)
-{
-  for (size_t i = 0; i < num_gloves_; ++i)
+void SenseGloveHardwareInterface::hapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg)
+{ 
+  for (size_t i = 0; i < num_gloves_; ++i) 
   {
-    // Splice joint_effort_command vector into vectors for ffb and buzz commands
-    int j = 0;
-    int h = 0;
     senseglove::SenseGloveRobot& robot = senseglove_setup_->getSenseGloveRobot(i);
-    for (size_t k = 0; k < num_joints_; k++)
+
+    if (ros::param::has("~use_ros_control"))
     {
-      senseglove::Joint& joint = robot.getJoint(k);
-      if (joint.canActuate())
+      ros::param::set("~use_ros_control", false);  
+    } 
+
+    for (size_t j = 0; j < 10; j++)
+    {
+      if (j < 5)
       {
-        if (joint.getActuationMode() == senseglove::ActuationMode::position)
-        {
-          if (j % 2 == 1)
-          {
-            joint_last_position_command_[i][h] = joint_position_command_[i][k];
-            h++;
-          }
-          else
-          {
-            joint_last_buzz_command_[i][h] = joint_position_command_[i][k];
-          }
+        senseglove_force_command_[i].push_back(msg->data[j]);
+      }
+      else
+      {
+        senseglove_buzz_command_[i].push_back(msg->data[j]);
+      }
 
-          if (j == 9)  // actuators 0 - 9
-          {
-            robot.actuateEffort(joint_last_position_command_[i]);
-            robot.actuateBuzz(joint_last_buzz_command_[i]);
-          }
-        }
-        else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
-        {
-          if (j % 2 == 1)
-          {
-            joint_last_effort_command_[i][j] = joint_effort_command_[i][k];
-            h++;
-          }
-          else
-          {
-            joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
-          }
-
-          if (j == 9)  // actuators 0 - 9
-          {
-            robot.actuateEffort(joint_last_effort_command_[i]);
-            robot.actuateBuzz(joint_last_buzz_command_[i]);
-          }
-        }
-        j++;
+      if (j == 9)  // actuators 0 - 9
+      {
+        robot.actuateEffort(senseglove_force_command_[i]);
+        robot.actuateBuzz(senseglove_buzz_command_[i]);
+        senseglove_force_command_[i].clear();
+        senseglove_buzz_command_[i].clear();
       }
     }
-    j = 0;
-    h = 0;
+  }
+  
+}
+
+void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::Duration& /*&elapsed_time*/)
+{
+  if (ros::param::has("~use_ros_control"))
+  {
+    ros::param::get("~use_ros_control",use_ros_control_);
+  }
+
+  if (use_ros_control_)
+  {
+    ROS_INFO_ONCE("Using ROS-Control for SenseGlove Haptic Feedback");
+  }
+  else
+  {
+    ROS_INFO_ONCEGIT("ROS-Control not used. Waiting for messages from /senseglove_haptics topic");
+  }
+
+  if (use_ros_control_)
+  {
+    for (size_t i = 0; i < num_gloves_; ++i)
+    {
+      // Splice joint_effort_command vector into vectors for ffb and buzz commands
+      int j = 0;
+      int h = 0;
+      senseglove::SenseGloveRobot& robot = senseglove_setup_->getSenseGloveRobot(i);
+
+      for (size_t k = 0; k < num_joints_; k++)
+      {
+        senseglove::Joint& joint = robot.getJoint(k);
+        if (joint.canActuate())
+        {
+          if (joint.getActuationMode() == senseglove::ActuationMode::position)
+          {
+            if (j % 2 == 1)
+            {
+              joint_last_position_command_[i][h] = joint_position_command_[i][k];
+              h++;
+            }
+            else
+            {
+              joint_last_buzz_command_[i][h] = joint_position_command_[i][k];
+            }
+
+            if (j == 9)  // actuators 0 - 9
+            {
+              robot.actuateEffort(joint_last_position_command_[i]);
+              robot.actuateBuzz(joint_last_buzz_command_[i]);
+            }
+          }
+          else if (joint.getActuationMode() == senseglove::ActuationMode::torque)
+          {
+            if (j % 2 == 1)
+            {
+              joint_last_effort_command_[i][j] = joint_effort_command_[i][k];
+              h++;
+            }
+            else
+            {
+              joint_last_buzz_command_[i][j] = joint_effort_command_[i][k];
+            }
+
+            if (j == 9)  // actuators 0 - 9
+            {
+              robot.actuateEffort(joint_last_effort_command_[i]);
+              robot.actuateBuzz(joint_last_buzz_command_[i]);
+            }
+          }
+          j++;
+        }
+      }
+      j = 0;
+      h = 0;
+    }
   }
 }
 
@@ -207,6 +264,9 @@ void SenseGloveHardwareInterface::reserveMemory()
   joint_effort_command_.resize(num_gloves_);
   joint_last_effort_command_.resize(num_gloves_);
   joint_last_buzz_command_.resize(num_gloves_);
+  senseglove_force_command_.resize(num_gloves_);
+  senseglove_buzz_command_.resize(num_gloves_);
+
   for (unsigned int i = 0; i < num_gloves_; ++i)
   {
     joint_position_[i].resize(num_joints_, 0.0);
@@ -218,6 +278,8 @@ void SenseGloveHardwareInterface::reserveMemory()
     joint_effort_command_[i].resize(num_joints_, 0.0);
     joint_last_effort_command_[i].resize(5, 0.0);
     joint_last_buzz_command_[i].resize(5, 0.0);
+    senseglove_force_command_[i].resize(5, 0.0);
+    senseglove_buzz_command_[i].resize(5, 0.0);
   }
 
   senseglove_state_pub_->msg_.joint_names.resize(num_gloves_ * num_joints_);

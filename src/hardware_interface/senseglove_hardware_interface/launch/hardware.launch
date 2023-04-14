@@ -9,7 +9,7 @@
 
         <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-            <param name="publish_frequency" value="20"/>
+            <param name="publish_frequency" value="100"/>
         </node>
 
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
@@ -26,6 +26,7 @@
                 output="screen"
                 required="true"
         >
+        <param name="use_ros_control" type="bool" value="false"/>
         </node>
     </group>
 
@@ -35,7 +36,7 @@
 
         <rosparam file="$(find senseglove_hardware_interface)/config/$(arg robot)/controllers.yaml" command="load"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-            <param name="publish_frequency" value="20"/>
+            <param name="publish_frequency" value="100"/>
         </node>
         <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
               output="screen"
@@ -51,6 +52,7 @@
                 output="screen"
                 required="true"
         >
+        <param name="use_ros_control" type="bool" value="true"/>
         </node>
     </group>
 </launch>

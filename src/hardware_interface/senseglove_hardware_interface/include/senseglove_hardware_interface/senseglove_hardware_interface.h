@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <vector>
+#include "std_msgs/Float64MultiArray.h"
 
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
@@ -56,6 +57,8 @@ public:
    */
   void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
+  void hapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg);
+
 private:
   void uploadJointNames(ros::NodeHandle& nh) const;
   /**
@@ -68,6 +71,8 @@ private:
 
   /* SenseGlove hardware */
   std::unique_ptr<senseglove::SenseGloveSetup> senseglove_setup_;
+
+  std::string handedness[2] = { "/lh", "/rh" };
 
   /* Interfaces */
   hardware_interface::JointStateInterface joint_state_interface_;
@@ -91,11 +96,17 @@ private:
   std::vector<std::vector<double>> joint_last_effort_command_;
   std::vector<std::vector<double>> joint_last_buzz_command_;  // inherited from effort_command
 
+  std::vector<std::vector<double>> senseglove_force_command_;
+  std::vector<std::vector<double>> senseglove_buzz_command_;
+
   bool master_shutdown_allowed_command_ = false;
 
   bool has_actuated_ = false;
 
+  bool use_ros_control_;
+
   RtPublisherPtr<senseglove_shared_resources::SenseGloveState> senseglove_state_pub_;
+  ros::Subscriber senseglove_haptics_sub_;
 };
 
 #endif  // ROS_WORKSPACE_SG_HARDWARE_INTERFACE_H

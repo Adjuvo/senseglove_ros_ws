@@ -92,6 +92,13 @@ void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
       this->senseglove_.SendHaptics(
           SGCore::Haptics::SG_FFBCmd(int_effort[0], int_effort[1], int_effort[2], int_effort[3], int_effort[4]));
     }
+
+    // std::stringstream ss;
+    // ss << "Data Retrieved: \n";
+    // std::copy(int_effort.begin(), int_effort.end(), std::ostream_iterator<double>(ss, " "));
+    // ss << std::endl;
+      
+    // ROS_INFO_STREAM(ss.str());
   }
 }
 
