@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['sensorangles_549',['SensorAngles',['../class_s_g_core_1_1_s_g_1_1_s_g___sensor_data.html#a1d27747e0a65b0208c5f64885f71efb1',1,'SGCore::SG::SG_SensorData']]],
-  ['startjointpositions_550',['StartJointPositions',['../class_s_g_core_1_1_kinematics_1_1_basic_hand_model.html#aa65133085690120ea3e6aa0ee6349b8e',1,'SGCore::Kinematics::BasicHandModel']]],
-  ['startjointrotations_551',['StartJointRotations',['../class_s_g_core_1_1_kinematics_1_1_basic_hand_model.html#a8a7e9614a232bfa891cd5d5f15d18861',1,'SGCore::Kinematics::BasicHandModel']]],
-  ['startpositions_552',['StartPositions',['../class_s_g_core_1_1_s_g_1_1_s_g___glove_info.html#a3ae7e9fb81bb9e431945f6e2a2e9ec98',1,'SGCore::SG::SG_GloveInfo']]],
-  ['startrotations_553',['StartRotations',['../class_s_g_core_1_1_s_g_1_1_s_g___glove_info.html#a55fcd19378bd59ad3caa6e56511f7f9b',1,'SGCore::SG::SG_GloveInfo']]],
-  ['subfirmwarever_554',['SubFirmwareVer',['../class_s_g_core_1_1_device_model.html#a9c841c51861dbc0a24ae6ba7de903a35',1,'SGCore::DeviceModel']]]
+  ['parsedvalues_1181',['ParsedValues',['../class_s_g_core_1_1_nova_1_1_nova___sensor_data.html#ab3810ff93df00613f632e6416faa7604',1,'SGCore.Nova.Nova_SensorData.ParsedValues()'],['../class_s_g_core_1_1_s_g_1_1_s_g___sensor_data.html#a02691e6253782aad142ed6a8c3b9b40a',1,'SGCore.SG.SG_SensorData.ParsedValues()']]],
+  ['pingtime_5fms_1182',['pingTime_ms',['../class_s_g_core_1_1_util_1_1_u_d_p_receiver.html#a0ef1153c4eaad4ecd283da8690b345d7',1,'SGCore::Util::UDPReceiver']]],
+  ['pinkylvl_1183',['PinkyLvl',['../class_s_g_core_1_1_haptics_1_1_s_g___finger_cmd.html#a12c9d05647bb4381805c411d785f8b74',1,'SGCore::Haptics::SG_FingerCmd']]],
+  ['port_1184',['Port',['../class_s_g_core_1_1_util_1_1_u_d_p_socket.html#a48f69c47f248d515ee9771815d370458',1,'SGCore::Util::UDPSocket']]],
+  ['profiledirectory_1185',['ProfileDirectory',['../class_s_g_core_1_1_h_g___hand_profiles.html#adb75fca47d904bc597c21119ae2da971',1,'SGCore::HG_HandProfiles']]]
 ];

@@ -25,7 +25,7 @@ SenseGloveSetup::SenseGloveSetup(senseglove::SenseGloveRobot sensegloves)
 
 void SenseGloveSetup::startCommunication(bool /*reset*/)
 {
-  if (SGCore::DeviceList::SenseCommRunning())
+  if (SGCore::DeviceList::SenseComRunning())
   {
     ROS_WARN("Trying to start senseglove communication while it is already active.");
     return;
@@ -39,7 +39,7 @@ void SenseGloveSetup::stopCommunication()
 
 bool SenseGloveSetup::isCommunicationOperational()
 {
-  if (SGCore::DeviceList::SenseCommRunning())
+  if (SGCore::DeviceList::SenseComRunning())
   {
     return true;
   }
@@ -51,7 +51,7 @@ bool SenseGloveSetup::isCommunicationOperational()
 
 SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(::std::string gloveName)
 {
-  if (!SGCore::DeviceList::SenseCommRunning())
+  if (!SGCore::DeviceList::SenseComRunning())
   {
     ROS_WARN("Trying to access joints while communication is not operational. This "
              "may lead to incorrect sensor data.");
@@ -69,7 +69,7 @@ SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(::std::string gloveName)
 
 SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(int index)
 {
-  if (!SGCore::DeviceList::SenseCommRunning())
+  if (!SGCore::DeviceList::SenseComRunning())
   {
     ROS_WARN("Trying to access joints while communication is not operational. This "
              "may lead to incorrect sensor data.");
@@ -84,7 +84,7 @@ size_t SenseGloveSetup::size() const
 
 SenseGloveSetup::iterator SenseGloveSetup::begin()
 {
-  if (!SGCore::DeviceList::SenseCommRunning())
+  if (!SGCore::DeviceList::SenseComRunning())
   {
     ROS_WARN("Trying to access sensegloves while communication is not operational. This "
              "may lead to incorrect sensor data.");

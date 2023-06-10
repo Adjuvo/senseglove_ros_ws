@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['parsedvalues_546',['ParsedValues',['../class_s_g_core_1_1_s_g_1_1_s_g___sensor_data.html#a02691e6253782aad142ed6a8c3b9b40a',1,'SGCore::SG::SG_SensorData']]],
-  ['pinkylvl_547',['PinkyLvl',['../class_s_g_core_1_1_haptics_1_1_s_g___finger_cmd.html#a12c9d05647bb4381805c411d785f8b74',1,'SGCore::Haptics::SG_FingerCmd']]]
+  ['numberofsensors_1179',['NumberOfSensors',['../class_s_g_core_1_1_nova_1_1_nova___glove_info.html#af206fa73b9758b70f2c23ab291a9675f',1,'SGCore.Nova.Nova_GloveInfo.NumberOfSensors()'],['../class_s_g_core_1_1_s_g_1_1_s_g___glove_info.html#a0487ca31ee32c2da242cfc78401d1afc',1,'SGCore.SG.SG_GloveInfo.NumberOfSensors()']]]
 ];

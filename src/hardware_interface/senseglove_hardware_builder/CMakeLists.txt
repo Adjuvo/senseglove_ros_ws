@@ -19,7 +19,7 @@ find_library(SGCORE
 
 find_library(SGCONNECT
     NAMES libSGConnect.so
-    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux
+    PATHS ../../SenseGlove_API/Core/SGConnect/lib/linux/Release
     REQUIRED)
 
 catkin_package(

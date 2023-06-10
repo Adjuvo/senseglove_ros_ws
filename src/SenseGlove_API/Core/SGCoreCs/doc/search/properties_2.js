@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['fingerlengths_524',['FingerLengths',['../class_s_g_core_1_1_kinematics_1_1_basic_hand_model.html#a24627f270ece9d95904cab4c28bb6930',1,'SGCore::Kinematics::BasicHandModel']]],
-  ['fingerratios_525',['FingerRatios',['../class_s_g_core_1_1_kinematics_1_1_basic_hand_model.html#ade8f7ab184e5baa1fdb61c54175e7eee',1,'SGCore::Kinematics::BasicHandModel']]],
-  ['fingersolver_526',['FingerSolver',['../class_s_g_core_1_1_s_g_1_1_s_g___hand_profile.html#a4ccf58389736b74577bc873332b31f24',1,'SGCore::SG::SG_HandProfile']]],
-  ['fingerthimbleoffset_527',['FingerThimbleOffset',['../class_s_g_core_1_1_s_g_1_1_s_g___hand_profile.html#a6a17a983a7ec735c8ed5b61403fe1ff2',1,'SGCore::SG::SG_HandProfile']]],
-  ['firmwarever_528',['FirmwareVer',['../class_s_g_core_1_1_device_model.html#a4b34046df2fdd9f3fcc8e08036042e35',1,'SGCore::DeviceModel']]]
+  ['calibrationstage_1124',['CalibrationStage',['../class_s_g_core_1_1_calibration_1_1_h_g___cal_check.html#a9e9a20e4c4db957fae8a22dc06b770df',1,'SGCore::Calibration::HG_CalCheck']]],
+  ['cananimate_1125',['CanAnimate',['../class_s_g_core_1_1_calibration_1_1_h_g___quick_calibration.html#a79fedae1a6e1912e071b5fd8d96ce37f',1,'SGCore::Calibration::HG_QuickCalibration']]],
+  ['cmcstartrot_1126',['CmcStartRot',['../class_s_g_core_1_1_kinematics_1_1_hand_interpolator.html#a05d97f4fcc7fd6ad6d026cbd3d15e0fa',1,'SGCore::Kinematics::HandInterpolator']]],
+  ['completed_1127',['Completed',['../class_s_g_core_1_1_calibration_1_1_h_g___calibration_sequence.html#ae057074f0d9944cd622a214a869746c2',1,'SGCore::Calibration::HG_CalibrationSequence']]],
+  ['connected_1128',['Connected',['../class_s_g_core_1_1_util_1_1_server_data.html#ab6343cf83af056957918cdd968a18a2e',1,'SGCore.Util.ServerData.Connected()'],['../class_s_g_core_1_1_util_1_1_u_d_p_socket.html#ad86812ec1adc57de2020c2d750cb8b6b',1,'SGCore.Util.UDPSocket.Connected()']]],
+  ['connectiontype_1129',['ConnectionType',['../class_s_g_core_1_1_util_1_1_connection_status.html#a9d3979d7bb409ae2ad6e49f724aa1d10',1,'SGCore::Util::ConnectionStatus']]],
+  ['currentstageint_1130',['CurrentStageInt',['../class_s_g_core_1_1_calibration_1_1_h_g___calibration_sequence.html#adb67d6d143528a713c3d3e14c1edb30e',1,'SGCore::Calibration::HG_CalibrationSequence']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['object_5fgrasp_5f100_504',['Object_Grasp_100',['../namespace_s_g_core_1_1_haptics.html#acdd890e7d15ed5c63596b293f75dacb2a657014b625cd6a6192c5858c07a5f9e3',1,'SGCore::Haptics']]],
-  ['object_5fgrasp_5f30_505',['Object_Grasp_30',['../namespace_s_g_core_1_1_haptics.html#acdd890e7d15ed5c63596b293f75dacb2a992acf74be8bcdb5f0a7d9f04c55c06b',1,'SGCore::Haptics']]],
-  ['object_5fgrasp_5f60_506',['Object_Grasp_60',['../namespace_s_g_core_1_1_haptics.html#acdd890e7d15ed5c63596b293f75dacb2aec2b5d4427e17036a05a009058db58a2',1,'SGCore::Haptics']]]
+  ['none_1093',['None',['../namespace_s_g_core_1_1_haptics.html#acdd890e7d15ed5c63596b293f75dacb2a6adf97f83acf6453d4a6a4b1070f3754',1,'SGCore::Haptics']]],
+  ['nova_1094',['NOVA',['../namespace_s_g_core.html#a2edb79e25cc919b7d63cf0cf33b039e2a553648c8088b83c091b0be46f9ee7498',1,'SGCore']]]
 ];

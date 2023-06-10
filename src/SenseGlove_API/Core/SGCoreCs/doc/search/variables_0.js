@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_5f2pi_437',['_2PI',['../class_s_g_core_1_1_kinematics_1_1_values.html#ab9605bdc28701e38b7d533bad9d1eb93',1,'SGCore::Kinematics::Values']]]
+  ['autoendafter_947',['autoEndAfter',['../class_s_g_core_1_1_calibration_1_1_h_g___quick_calibration.html#a2d081696635ddeb3bbedaf5e86c28f30',1,'SGCore::Calibration::HG_QuickCalibration']]],
+  ['autoendtime_948',['autoEndTime',['../class_s_g_core_1_1_calibration_1_1_h_g___quick_calibration.html#a4ae01bdeddef3b9a0472cc96b54d5cc3',1,'SGCore::Calibration::HG_QuickCalibration']]]
 ];

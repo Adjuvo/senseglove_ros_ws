@@ -1,3 +1,12 @@
+#Gitignore for SenseGlove_API
+#Don't need 200+ files just to show how SGConnect::Init() and SGConnect::Dispose() work
+Core/SGConnect/doc* 
+
+#ignore any session logs created by SenseCom during testing
+*sessionLog.txt
+
+#bak files made using programs like Notepad++.
+*.bak
 
 # Visual Studio cache directory
 .vs/

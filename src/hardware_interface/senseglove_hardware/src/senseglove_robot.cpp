@@ -79,7 +79,7 @@ SGCore::Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i)
 
 void SenseGloveRobot::actuateEffort(std::vector<double> effort_command)
 {
-  if (SGCore::DeviceList::SenseCommRunning())  // check if the Sense Comm is running. If not, warn the end user.
+  if (SGCore::DeviceList::SenseComRunning())  // check if the Sense Comm is running. If not, warn the end user.
   {
     std::vector<int> int_effort(effort_command.begin(), effort_command.end());
     if (effort_command[0] + effort_command[1] + effort_command[2] + effort_command[3] + effort_command[4] <

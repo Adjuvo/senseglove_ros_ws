@@ -49,7 +49,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   auto current_glove = all_gloves[nr_of_glove_];  // Will be update later
   ROS_DEBUG_STREAM("creating sensegloves");
 
-  if (SGCore::DeviceList::SenseCommRunning())
+  if (SGCore::DeviceList::SenseComRunning())
   {
     ROS_INFO("Obtained the following gloves: ");
     for (auto& all_glove : all_gloves)
@@ -156,8 +156,8 @@ void HardwareBuilder::initUrdf(SGCore::DeviceType type, bool is_right)
       case SGCore::DeviceType::SENSEGLOVE:
         type_string = "dk1";
         break;
-      case SGCore::DeviceType::FINO:
-        type_string = "fino";
+      case SGCore::DeviceType::NOVA:
+        type_string = "nova";
         break;
     }
     std::string handedness[2] = { "/lh", "/rh" };

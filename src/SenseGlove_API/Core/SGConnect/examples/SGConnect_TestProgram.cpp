@@ -8,6 +8,7 @@ int main()
 	std::cout << "Testing " << SGConnect::GetLibraryVersion() << std::endl;
 	std::cout << "=========================================" << std::endl;
 
+	SGConnect::SetDebugLevel(0);
 	bool scanActive = SGConnect::ScanningActive();
 	if (!scanActive)
 	{
@@ -22,6 +23,10 @@ int main()
 			std::cout << "" << std::endl;
 			while (std::cin.get() != '\n') {} //Wait for the user to confirm before exiting.
 			std::cout << "" << std::endl;
+
+
+			std::cout << "Showing the list at the end:" << std::endl;
+			std::cout << SGConnect::GetConnectionStates() << std::endl << std::endl;
 
 			//If you have access to SGCoreCpp or SGCoreCs, you can interface with SenseGlove devices
 

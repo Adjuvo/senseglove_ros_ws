@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['basichandmodel_269',['BasicHandModel',['../class_s_g_core_1_1_kinematics_1_1_basic_hand_model.html',1,'SGCore::Kinematics']]],
-  ['betadevice_270',['BetaDevice',['../class_s_g_core_1_1_beta_device.html',1,'SGCore']]]
+  ['caldatapoint_586',['CalDataPoint',['../class_s_g_core_1_1_calibration_1_1_cal_data_point.html',1,'SGCore::Calibration']]],
+  ['connectionstatus_587',['ConnectionStatus',['../class_s_g_core_1_1_util_1_1_connection_status.html',1,'SGCore::Util']]]
 ];

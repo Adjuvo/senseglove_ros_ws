@@ -13,7 +13,7 @@
 
 namespace SGCore
 {
-	/// <summary> A Sense Glove device that can send / recieve data via the SenseComm program. </summary>
+	/// <summary> A Sense Glove device that can send / recieve data via the SenseCom program. </summary>
 	class SGCORE_API SGDevice
 	{
 
@@ -22,7 +22,7 @@ namespace SGCore
 		//--------------------------------------------------------------------------------------
 		// Properties
 
-		/// <summary> The index of this device inside the SenseComm program. Used to access shared memory. </summary>
+		/// <summary> The index of this device inside the SenseCom program. Used to access shared memory. </summary>
 		int deviceIndex = -1;
 
 		/// <summary> Address of this Device for inter-process communications. </summary>
@@ -41,7 +41,9 @@ namespace SGCore
 			/// <summary> USB Serial communication. </summary>
 			Serial,
 			/// <summary> A bluetooth connection that creates up to two Serial Ports. </summary>
-			BluetoothSerial
+			BluetoothSerial,
+			/// <summary> Bluetooth Connection Via Android/Java SDK </summary>
+			BluetoothAndroid
 		};
 
 
@@ -88,14 +90,34 @@ namespace SGCore
 		ConnectionType GetConnectionType();
 
 		/// <summary> Retrieve the device's Packets per Second Variable </summary>
-		int PacketsPerSecond();
+		int PacketsPerSecondReceived();
 
+		/// <summary> Retrieve the device's Packets per Second Variable </summary>
+		int PacketsPerSecondSent();
 
-		/// <summary> Retrieve the index of this device within SenseComm. </summary>
+		/// <summary> Retrieve the index of this device within SenseCom. </summary>
 		int GetDeviceIndex();
 
-		/// <summary> Change this device's index within the SenseComm. Warning: Can cause errors. </summary>
+		/// <summary> Change this device's index within the SenseCom. Warning: Can cause errors. </summary>
 		void SetDeviceIndex(int newIndex);
+
+
+		/// <summary> Returns true if this device is connected over a connection other than usb cable. </summary>
+		/// <returns></returns>
+		virtual bool IsWireless();
+
+		/// <summary> Returns true if this device operates on a battery </summary>
+		/// <returns></returns>
+		virtual bool HasBattery();
+
+		/// <summary> Returns true if this device is currently charging </summary>
+		/// <returns></returns>
+		virtual bool IsCharging();
+
+		/// <summary> Returns the device's battery level, as a value between 0 (empty) and 1 (full). </summary>
+		/// <param name="battLvl"></param>
+		/// <returns></returns>
+		virtual bool GetBatteryLevel(float& battLvl);
 
 
 		//--------------------------------------------------------------------------------------
@@ -108,5 +130,6 @@ namespace SGCore
 		/// <summary> Parse a main and sub firmware version from its raw (v4.12) notation </summary>
 		static void ParseFirmware(std::string rawFW, int& mainVer, int& subVer);
 
+		static std::string ToString(DeviceType device);
 	};
 }
