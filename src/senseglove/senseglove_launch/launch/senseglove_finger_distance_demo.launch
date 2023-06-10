@@ -4,7 +4,7 @@
     <arg name="calibration_file_right" default="None" doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
 
     <arg name="use_rviz" default="false"/>
-    <arg name="use_left" default="true"/>
+    <arg name="use_left" default="false"/>
     <arg name="use_right" default="true"/>
     <arg name="use_both" value="$(eval arg('use_left') and arg('use_right'))"/>
 
