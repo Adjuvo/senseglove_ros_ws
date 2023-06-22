@@ -10,6 +10,7 @@ include(cmake/${PROJECT_NAME}-extras.cmake)
 set(XACRO_FILES
         urdf/dk1_left.xacro
         urdf/dk1_right.xacro
+        urdf/nova.xacro
         )
 build_and_install_xacro_files(${XACRO_FILES})
 

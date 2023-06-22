@@ -1,0 +1,674 @@
+<?xml version="1.0"?>
+<!-- Revolute-Revolute Manipulator -->
+<robot name="dk1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Constants for robot dimensions -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="joint_base_mass" value="1"/> <!-- arbitrary value for joint_base_mass -->
+    <xacro:property name="joint_base_width" value="0.05"/> <!-- Cube dimensions (width x width x width) of joint base -->
+
+    <!-- Bar lengths -->
+    <xacro:property name="brake_length" value="0.0418"/>
+    <xacro:property name="brake_thickness" value="0.022279"/>
+    <xacro:property name="brake_height" value="0.0313"/>
+    <xacro:property name="first_bar_length" value="0.026"/>
+    <xacro:property name="second_bar_length" value="0.0876"/>
+    <xacro:property name="third_bar_length" value="0.0664"/>
+
+
+    <!-- Origins on hub for fingers -->
+    <xacro:property name="thumb_hub_X" value="-0.052034"/>
+    <xacro:property name="thumb_hub_Y" value="-0.0221293"/>
+    <xacro:property name="thumb_hub_Z" value="0.04656"/>
+
+    <xacro:property name="index_hub_X" value="-0.03309"/>
+    <xacro:property name="index_hub_Y" value="0.00645"/>
+    <xacro:property name="index_hub_Z" value="-0.04436"/>
+
+    <xacro:property name="middle_hub_X" value="-0.011"/>
+    <xacro:property name="middle_hub_Y" value="0.008"/>
+    <xacro:property name="middle_hub_Z" value="-0.06222"/>
+
+    <xacro:property name="ring_hub_X" value="0.011"/>
+    <xacro:property name="ring_hub_Y" value="0.008"/>
+    <xacro:property name="ring_hub_Z" value="-0.05422"/>
+
+    <xacro:property name="pinky_hub_X" value="0.03307"/>
+    <xacro:property name="pinky_hub_Y" value="0.00695"/>
+    <xacro:property name="pinky_hub_Z" value="-0.04125"/>
+
+
+
+    <xacro:property name="bar_length" value="${0.39}"/>
+    <xacro:property name="bar_mass" value="1.080"/>
+    <xacro:property name="bar_width" value="0.05"/>
+
+    <xacro:property name="joint_buffer" value="${3*pi/180}"/> <!-- rad -->
+    <xacro:property name="joint_lower_limit" value="${-8.5*pi/180}"/> <!-- rad -->
+    <xacro:property name="joint_upper_limit" value="${8.5*pi/180}"/> <!-- rad -->
+    <xacro:property name="joint_effort_limit" value="10927.0"/>
+    <xacro:property name="joint_velocity_limit" value="1.0"/> <!-- rad/s -->
+
+    <xacro:property name="hover_height" value="0.5"/>
+
+    <!-- Used for fixing robot to Gazebo 'world' -->
+    <link name="world"/>
+
+    <!-- glove hub -->
+    <link name="r_glove_hub">
+        <visual>
+            <origin xyz="-0.056692 -0.01955 -0.06803" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_HUB.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb brake -->
+    <link name="r_thumb_brake">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb abduction -->
+    <link name="r_thumb_abduction">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb flexion one -->
+    <link name="r_thumb_flexion_one">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb flexion two -->
+    <link name="r_thumb_flexion_two">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb flexion three -->
+    <link name="r_thumb_flexion_three">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- thumb thimble -->
+    <link name="r_thumb_thimble">
+        <visual>
+            <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index brake -->
+    <link name="r_index_brake">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index abduction -->
+    <link name="r_index_abduction">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index flexion one -->
+    <link name="r_index_flexion_one">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index flexion two -->
+    <link name="r_index_flexion_two">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index flexion three -->
+    <link name="r_index_flexion_three">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- index thimble -->
+    <link name="r_index_thimble">
+        <visual>
+            <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle brake -->
+    <link name="r_middle_brake">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle abduction -->
+    <link name="r_middle_abduction">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle flexion one -->
+    <link name="r_middle_flexion_one">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle flexion two -->
+    <link name="r_middle_flexion_two">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle flexion three -->
+    <link name="r_middle_flexion_three">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- middle thimble -->
+    <link name="r_middle_thimble">
+        <visual>
+            <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring brake -->
+    <link name="r_ring_brake">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring abduction -->
+    <link name="r_ring_abduction">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring flexion one -->
+    <link name="r_ring_flexion_one">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring flexion two -->
+    <link name="r_ring_flexion_two">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring flexion three -->
+    <link name="r_ring_flexion_three">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- ring thimble -->
+    <link name="r_ring_thimble">
+        <visual>
+            <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky brake -->
+    <link name="r_pinky_brake">
+        <visual>
+            <origin xyz="${-brake_thickness/2-0.0004} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky abduction -->
+    <link name="r_pinky_abduction">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky flexion one -->
+    <link name="r_pinky_flexion_one">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky flexion two -->
+    <link name="r_pinky_flexion_two">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky flexion three -->
+    <link name="r_pinky_flexion_three">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- pinky thimble -->
+    <link name="r_pinky_thimble">
+        <visual>
+            <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Joints -->
+    <joint name="joint_base_fixed_parent_joint" type="fixed">
+        <parent link="world"/>
+        <child link="r_glove_hub"/>
+        <origin xyz="0.5 0 ${hover_height}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_hub_to_thumb_brake" type="fixed">
+        <parent link="r_glove_hub"/>
+        <child link="r_thumb_brake"/>
+        <origin xyz="${thumb_hub_X} ${thumb_hub_Y} ${thumb_hub_Z}" rpy="${111.5*PI/180} ${40*PI/180} ${170.0*PI/180.0}"/>
+    </joint>
+
+    <joint name="r_thumb_brake" type="revolute">
+        <parent link="r_thumb_brake"/>
+        <child link="r_thumb_abduction"/>
+        <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_thumb_abduction" type="fixed">
+        <parent link="r_thumb_abduction"/>
+        <child link="r_thumb_flexion_one"/>
+        <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
+
+    </joint>
+
+    <joint name="r_thumb_cmc" type="revolute">
+        <parent link="r_thumb_flexion_one"/>
+        <child link="r_thumb_flexion_two"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_thumb_mcp" type="revolute">
+        <parent link="r_thumb_flexion_two"/>
+        <child link="r_thumb_flexion_three"/>
+        <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_thumb_pip" type="revolute">
+        <parent link="r_thumb_flexion_three"/>
+        <child link="r_thumb_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_hub_to_index_brake" type="fixed">
+        <parent link="r_glove_hub"/>
+        <child link="r_index_brake"/>
+        <origin xyz="${index_hub_X} ${index_hub_Y} ${index_hub_Z}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_index_brake" type="revolute">
+        <parent link="r_index_brake"/>
+        <child link="r_index_abduction"/>
+        <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_index_abduction" type="fixed">
+        <parent link="r_index_abduction"/>
+        <child link="r_index_flexion_one"/>
+        <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_index_mcp" type="revolute">
+        <parent link="r_index_flexion_one"/>
+        <child link="r_index_flexion_two"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_index_pip" type="revolute">
+        <parent link="r_index_flexion_two"/>
+        <child link="r_index_flexion_three"/>
+        <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_index_dip" type="revolute">
+        <parent link="r_index_flexion_three"/>
+        <child link="r_index_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-4.2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_hub_to_middle_brake" type="fixed">
+        <parent link="r_glove_hub"/>
+        <child link="r_middle_brake"/>
+        <origin xyz="${middle_hub_X} ${middle_hub_Y} ${middle_hub_Z}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_middle_brake" type="revolute">
+        <parent link="r_middle_brake"/>
+        <child link="r_middle_abduction"/>
+        <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_middle_abduction" type="fixed">
+        <parent link="r_middle_abduction"/>
+        <child link="r_middle_flexion_one"/>
+        <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_middle_mcp" type="revolute">
+        <parent link="r_middle_flexion_one"/>
+        <child link="r_middle_flexion_two"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_middle_pip" type="revolute">
+        <parent link="r_middle_flexion_two"/>
+        <child link="r_middle_flexion_three"/>
+        <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_middle_dip" type="revolute">
+        <parent link="r_middle_flexion_three"/>
+        <child link="r_middle_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-4.2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_hub_to_ring_brake" type="fixed">
+        <parent link="r_glove_hub"/>
+        <child link="r_ring_brake"/>
+        <origin xyz="${ring_hub_X} ${ring_hub_Y} ${ring_hub_Z}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_ring_brake" type="revolute">
+        <parent link="r_ring_brake"/>
+        <child link="r_ring_abduction"/>
+        <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_ring_abduction" type="fixed">
+        <parent link="r_ring_abduction"/>
+        <child link="r_ring_flexion_one"/>
+        <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_ring_mcp" type="revolute">
+        <parent link="r_ring_flexion_one"/>
+        <child link="r_ring_flexion_two"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_ring_pip" type="revolute">
+        <parent link="r_ring_flexion_two"/>
+        <child link="r_ring_flexion_three"/>
+        <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_ring_dip" type="revolute">
+        <parent link="r_ring_flexion_three"/>
+        <child link="r_ring_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-4.2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_hub_to_pinky_brake" type="fixed">
+        <parent link="r_glove_hub"/>
+        <child link="r_pinky_brake"/>
+        <origin xyz="${pinky_hub_X} ${pinky_hub_Y} ${pinky_hub_Z}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_pinky_brake" type="revolute">
+        <parent link="r_pinky_brake"/>
+        <child link="r_pinky_abduction"/>
+        <origin xyz="0 0.0074 ${-0.0}" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_pinky_abduction" type="fixed">
+        <parent link="r_pinky_abduction"/>
+        <child link="r_pinky_flexion_one"/>
+        <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="r_pinky_mcp" type="revolute">
+        <parent link="r_pinky_flexion_one"/>
+        <child link="r_pinky_flexion_two"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_pinky_pip" type="revolute">
+        <parent link="r_pinky_flexion_two"/>
+        <child link="r_pinky_flexion_three"/>
+        <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${0}"
+               upper="${100}"/>
+    </joint>
+
+    <joint name="r_pinky_dip" type="revolute">
+        <parent link="r_pinky_flexion_three"/>
+        <child link="r_pinky_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-4.2}"
+               upper="${100}"/>
+    </joint>
+</robot>

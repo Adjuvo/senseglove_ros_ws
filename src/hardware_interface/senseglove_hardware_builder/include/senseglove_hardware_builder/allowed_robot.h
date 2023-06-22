@@ -15,7 +15,7 @@ public:
   {
     dk1_left,
     dk1_right,
-    fino,
+    nova,
   };
 
   AllowedRobot() = default;
@@ -29,9 +29,9 @@ public:
     {
       this->value = dk1_right;
     }
-    else if (robot_name == "fino")
+    else if (robot_name == "nova")
     {
-      this->value = fino;
+      this->value = nova;
     }
     else
     {
@@ -51,9 +51,9 @@ public:
     {
       return base_path.append("/robots/dk1_right.yaml");
     }
-    else if (this->value == AllowedRobot::fino)
+    else if (this->value == AllowedRobot::nova)
     {
-      return base_path.append("/robots/fino.yaml");
+      return base_path.append("/robots/nova.yaml");
     }
     ROS_ERROR("Robotname not implemented. Using controllers.yaml...");
     return base_path.append("/robots/dk1_left.yaml");
@@ -82,8 +82,8 @@ public:
       case dk1_right:
         out << "dk1_right";
         break;
-      case fino:
-        out << "fino";
+      case nova:
+        out << "nova";
         break;
       default:
         out << "(Unknown)";
