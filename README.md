@@ -1,4 +1,6 @@
-# Senseglove ros_workspace
+# Senseglove ros_workspace for DK1
+" **NO SUPPORT FOR SENSEGLOVE NOVA YET** "
+
 A workspace for the integration of the SenseGlove into _ROS Noetic_.
 This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
 
