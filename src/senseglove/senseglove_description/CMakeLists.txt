@@ -1,5 +1,13 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(senseglove_description)
+# Copyright (c) 2020 - 2023 SenseGlove
+
+cmake_minimum_required(VERSION 3.21...3.25)
+
+project(senseglove_description
+        VERSION 0.0.0
+        DESCRIPTION "The senseglove_description to provide descriptive features of the senseglove"
+        HOMEPAGE_URL "https://senseglove.com"
+        LANGUAGES CXX
+        )
 
 find_package(catkin REQUIRED COMPONENTS xacro)
 

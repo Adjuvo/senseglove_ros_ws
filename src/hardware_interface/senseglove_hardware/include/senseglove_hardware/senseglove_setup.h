@@ -3,7 +3,6 @@
 #define ROS_WORKSPACE_SENSEGLOVE_SETUP_H
 
 #include "senseglove_hardware/joint.h"
-#include "SenseGlove.h"
 
 #include <cstdint>
 #include <memory>

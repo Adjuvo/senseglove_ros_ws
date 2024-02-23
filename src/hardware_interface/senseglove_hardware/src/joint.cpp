@@ -21,7 +21,7 @@ Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationM
 }
 
 Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode,
-             std::unique_ptr<SGCore::Finger> finger)
+             std::unique_ptr<SGCore::EFinger> finger)
   : name_(std::move(name))
   , joint_index_(joint_index)
   , allow_actuation_(allow_actuation)
@@ -73,7 +73,7 @@ void Joint::setAllowActuation(bool allow_actuation)
   this->allow_actuation_ = allow_actuation;
 }
 
-int Joint::getNetNumber() const
+int Joint::getIndex() const
 {
   return this->joint_index_;
 }

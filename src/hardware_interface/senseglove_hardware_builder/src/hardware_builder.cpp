@@ -10,8 +10,6 @@
 
 #include <ros/ros.h>
 
-#include <SGConnect.h>
-#include "SenseGlove.h"
 
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition",
                                                                         "maxPosition" };
@@ -74,6 +72,7 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
                                     << sensegloves.getRight() << " is urdfright: " << current_glove.IsRight());
   ROS_INFO_STREAM("Robot config:\n" << config);
   return std::make_unique<senseglove::SenseGloveSetup>(std::move(sensegloves));
+  //return std::unique_ptr(new senseglove::SenseGloveSetup(std::move(sensegloves)));
 }
 
 senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, const std::string& joint_name,
@@ -140,24 +139,27 @@ void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const 
   }
 }
 
-void HardwareBuilder::initUrdf(SGCore::DeviceType type, bool is_right)
+void HardwareBuilder::initUrdf(SGCore::EDeviceType type, bool is_right)
 {
   std::string type_string;
   if (this->init_urdf_)
   {
     switch (type)
     {
-      case SGCore::DeviceType::UNKNOWN:
+      case SGCore::EDeviceType::Unknown:
         type_string = "unknown";
         break;
-      case SGCore::DeviceType::BETADEVICE:
+      case SGCore::EDeviceType::BetaDevice:
         type_string = "beta_device";
         break;
-      case SGCore::DeviceType::SENSEGLOVE:
+      case SGCore::EDeviceType::SenseGlove:
         type_string = "dk1";
         break;
-      case SGCore::DeviceType::NOVA:
+      case SGCore::EDeviceType::Nova:
         type_string = "nova";
+        break;
+      case SGCore::EDeviceType::Nova2:
+        type_string = "nova2";
         break;
     }
     std::string handedness[2] = { "/lh", "/rh" };

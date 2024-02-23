@@ -73,7 +73,7 @@ private:
   /**
    * Initializes the URDF if necessary.
    */
-  void initUrdf(SGCore::DeviceType type, bool is_right);
+  void initUrdf(SGCore::EDeviceType type, bool is_right);
 
   /**
    * Returns all joints found in the given config.

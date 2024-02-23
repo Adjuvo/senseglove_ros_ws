@@ -1,10 +1,13 @@
-# CMake function to add rpath to target
+# CMake function to add an rpath (runtime search path) to a given target
+# Ensures that the target executable can find its dependent libraries at runtime.
 # Copied from https://github.com/shadow-robot/ros_ethercat/blob/kinetic-devel/ros_ethercat_hardware/cmake/ros_ethercat_hardware-extras.cmake.em
+
 function(ros_enable_rpath target)
-   # Set ${target} with RPATH built in so that we can install it suid
+
+   # Set ${target} with RPATH built in so that we can install it
    set_target_properties(${target} PROPERTIES SKIP_BUILD_RPATH FALSE)
 
-   # Set the install RPATH to the install path
+   # Set the install 'RPATH' to hold the install path where the libraries will be installed
    set(RPATH "${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}")
 
    # If LD_LIBRARY_PATH is set, add it to the install RPATH

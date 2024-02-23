@@ -245,15 +245,15 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
       senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
       senseglove_state_pub_->msg_.position[i] = joint.getPosition();
       senseglove_state_pub_->msg_.absolute_velocity[i] = joint.getVelocity();
-      senseglove_state_pub_->msg_.hand_position[k].x = robot.getHandPos(k).x;
-      senseglove_state_pub_->msg_.hand_position[k].y = robot.getHandPos(k).y;
-      senseglove_state_pub_->msg_.hand_position[k].z = robot.getHandPos(k).z;
+      senseglove_state_pub_->msg_.hand_position[k].x = robot.getHandPos(k).GetX();
+      senseglove_state_pub_->msg_.hand_position[k].y = robot.getHandPos(k).GetY();
+      senseglove_state_pub_->msg_.hand_position[k].z = robot.getHandPos(k).GetZ();
     }
     for (int j = 0; j < 5; ++j)
     {
-      senseglove_state_pub_->msg_.finger_tip_positions[j].x = robot.getFingerTip(j).x;
-      senseglove_state_pub_->msg_.finger_tip_positions[j].y = robot.getFingerTip(j).y;
-      senseglove_state_pub_->msg_.finger_tip_positions[j].z = robot.getFingerTip(j).z;
+      senseglove_state_pub_->msg_.finger_tip_positions[j].x = robot.getFingerTip(j).GetX();
+      senseglove_state_pub_->msg_.finger_tip_positions[j].y = robot.getFingerTip(j).GetY();
+      senseglove_state_pub_->msg_.finger_tip_positions[j].z = robot.getFingerTip(j).GetZ();
     }
   }
 
