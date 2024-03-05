@@ -9,6 +9,10 @@
 #include <fstream>
 
 #include <ros/ros.h>
+#include "HandLayer.hpp"
+#include "HapticGlove.hpp"
+
+using namespace SGCore;
 
 
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition",
@@ -35,16 +39,53 @@ HardwareBuilder::HardwareBuilder(const std::string& yaml_path, urdf::Model urdf)
 {
 }
 
+/**
+ * Initializes connection to SenseGloves, selects appropriate glove based on configuration.
+ * Initializes the Robot's Joints and URDF modeURDF model based on the configuration.
+ */
 std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSetup()
 {
+  if (!DeviceList::SenseComRunning())
+  {
+    ROS_ERROR("SenseCom is not running. Ensure that the SenseGlove communication service is active.");
+    throw std::runtime_error("SenseCom is not running");
+  }
+
   const auto robot_name = this->robot_config_.begin()->first.as<std::string>();
   ROS_DEBUG_STREAM("Starting creation of robot " << robot_name);
 
   // Remove top level robot name key
   YAML::Node config = this->robot_config_[robot_name];
   ROS_DEBUG_STREAM("Size of robot config " << this->robot_config_.size());
-  std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves();
+
+ /////////////////Debugging/////////////////////////////////////////////////////////////////////////////////////////////////
+
+  if (DeviceList::SenseComRunning())
+  {
+    static std::size_t as = DeviceList::ActiveDevices();
+    ROS_INFO_STREAM("gloves activate: " << as);
+    
+    int32_t gloveAmount = HandLayer::GlovesConnected();
+    ROS_INFO_STREAM("gloves amount: " << gloveAmount);
+    
+  }
+    else
+  {
+    ROS_ERROR("No Sensegloves connected");
+    std::exit(1);
+  }
+
+
+  static std::vector<SGCore::SG::SenseGlove> all_hapticgloves = SGCore::SG::SenseGlove::GetSenseGloves(false);
+  ROS_INFO_STREAM("gloves: " << all_hapticgloves.size());
+
+
+ /////////////////Debugging/////////////////////////////////////////////////////////////////////////////////////////////////
+
+  std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves(true);
   auto current_glove = all_gloves[nr_of_glove_];  // Will be update later
+
+  ROS_INFO_STREAM("Dead");
   ROS_DEBUG_STREAM("creating sensegloves");
 
   if (SGCore::DeviceList::SenseComRunning())
@@ -64,7 +105,8 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     std::exit(1);
   }
 
-  std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]);
+
+  std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]); //TODO: Chnage name of senseglove nampsapce to sensegloveHW
   ROS_INFO_STREAM("Created joints " << nr_of_glove_);
   senseglove::SenseGloveRobot sensegloves =
       HardwareBuilder::createRobot(config, this->urdf_, std::move(joints), current_glove, nr_of_glove_, is_right_);
@@ -75,37 +117,43 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   //return std::unique_ptr(new senseglove::SenseGloveSetup(std::move(sensegloves)));
 }
 
+
+/**
+ * Initializes and returns a senseglove::Joint object based on the provided configuration. 
+ * Parses the YAML node for joint configuration, validating the presence of required keys, and setting up actuation modes.
+ */
 senseglove::Joint HardwareBuilder::createJoint(const YAML::Node& joint_config, const std::string& joint_name,
                                                const urdf::JointConstSharedPtr& urdf_joint)
 {
   ROS_DEBUG("Starting creation of joint %s", joint_name.c_str());
+  
   if (!urdf_joint)
   {
-    ROS_ERROR("No URDF joint given for joint %s", joint_name.c_str());
+    throw std::runtime_error("No URDF joint found for joint " + joint_name);
   }
-  HardwareBuilder::validateRequiredKeysExist(joint_config, HardwareBuilder::JOINT_REQUIRED_KEYS, "joint");
+  HardwareBuilder::validateRequiredKeysExist(joint_config, HardwareBuilder::JOINT_REQUIRED_KEYS, joint_name);
 
-  auto joint_index = -1;
-  if (joint_config["jointIndex"])
-  {
-    joint_index = joint_config["jointIndex"].as<int>();
-  }
-  else
+  int joint_index = joint_config["jointIndex"] ? joint_config["jointIndex"].as<int>() : -1;
+  bool allow_actuation = joint_config["allowActuation"].as<bool>(false); // Default to false if not specified
+  
+  if (!joint_config["jointIndex"])
   {
     ROS_WARN("Joint %s does not have a netNumber", joint_name.c_str());
   }
 
-  const auto allow_actuation = joint_config["allowActuation"].as<bool>();
-
-  senseglove::ActuationMode mode;
+  senseglove::ActuationMode mode = senseglove::ActuationMode::position;
   if (joint_config["actuationMode"])
   {
     mode = senseglove::ActuationMode(joint_config["actuationMode"].as<std::string>());
   }
 
-  return { joint_name, joint_index, allow_actuation, mode };
+  return {joint_name, joint_index, allow_actuation, mode};
 }
 
+/**
+* Constructs a SenseGloveRobot object by combining information about the glove, joint configurations, and the URDF model. 
+* Ensures that the glove's handedness matches the expected configuration.
+*/
 senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot_config, urdf::Model urdf,
                                                          std::vector<senseglove::Joint> jointList,
                                                          SGCore::SG::SenseGlove glove, int robot_index,
@@ -126,6 +174,10 @@ senseglove::SenseGloveRobot HardwareBuilder::createRobot(const YAML::Node& robot
   return { glove, std::move(jointList), std::move(urdf), robot_index, is_glove_right };
 }
 
+/**
+* Utility function to ensure that all necessary keys are present in a given YAML node.
+* Throws an error if any key is missing.
+*/
 void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const std::vector<std::string>& key_list,
                                                 const std::string& /*object_name*/)
 {
@@ -139,6 +191,12 @@ void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const 
   }
 }
 
+/**
+ * Initializes the URDF model based on the specified device type and handedness.
+ * This function sets up the URDF parameters to match the SenseGlove used.
+ * @param type The device type of the SenseGlove.
+ * @param is_right Whether the glove is for the right hand.
+ */
 void HardwareBuilder::initUrdf(SGCore::EDeviceType type, bool is_right)
 {
   std::string type_string;
@@ -174,6 +232,10 @@ void HardwareBuilder::initUrdf(SGCore::EDeviceType type, bool is_right)
   }
 }
 
+/**
+* Parses the joint configurations from the YAML file.
+* Creates a list of senseglove::Joint objects that match the specifications in the URDF model.
+*/
 std::vector<senseglove::Joint> HardwareBuilder::createJoints(const YAML::Node& joints_config) const
 {
   std::vector<senseglove::Joint> joints;
@@ -205,6 +267,10 @@ std::vector<senseglove::Joint> HardwareBuilder::createJoints(const YAML::Node& j
   return joints;
 }
 
+/**
+* This function creates a SenseGloveRobot for each glove, from the list of gloves and their configurations.
+* Ensures correct set-up based on the YAML and URDF configurations.
+*/
 std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(
     const YAML::Node& robots_config, urdf::Model urdf, std::vector<senseglove::Joint> jointList,
     std::vector<SGCore::SG::SenseGlove> all_gloves) const
@@ -223,6 +289,10 @@ std::vector<senseglove::SenseGloveRobot> HardwareBuilder::createRobots(
   return robots;
 }
 
+/**
+* A helper function to select the correct glove from a list, based on the specified hand orientation and glove number. 
+* Ensures the selected glove matches the expected configuration.
+*/
 SGCore::SG::SenseGlove HardwareBuilder::correct_glove(std::vector<SGCore::SG::SenseGlove> gloves) const
 {
   int mod = nr_of_glove_ % 2;

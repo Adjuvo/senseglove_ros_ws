@@ -1,17 +1,15 @@
 /**
- * @file
+ * @file actuation_mode.h
  *
- * @author  Rogier
- * @author  Akshay Radhamohan Menon <akshay@senseglove.com>
+ * @brief A class to represent different actuation modes, with methods for 
+ * conversion, comparison, and numerical & string representation of actuation modes.
  *
  * @section LICENSE
- *
  * Copyright (c) 2020 - 2024 SenseGlove
  *
- * @section DESCRIPTION
- *
- * A class to represent different actuation modes, with methods for 
- * conversion, comparison, and numerical & string representation of actuation modes.
+ * @section AUTHOR
+ * - Rogier
+ * - Akshay Radhamohan Menon <akshay@senseglove.com>
  */
 
 #ifndef SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
@@ -25,7 +23,7 @@ namespace senseglove
   class ActuationMode
   {
   public:
-    // <summary> Enum representing different actuation modes </summary>
+    // Enum representing different actuation modes
     enum Value : int
     {
       position,
@@ -33,24 +31,24 @@ namespace senseglove
       unknown,
     };
 
-    // <summary> Constructors </summary>
+    // Constructors
     ActuationMode() : value_(unknown) {}
     ActuationMode(Value value) : value_(value) {}
 
-    // <summary> Constructor from string, parsing the input string to set the mode </summary>
+    // Constructor from string, parsing the input string to set the mode
     explicit ActuationMode(const std::string& actuationMode)
     {
       if (actuationMode == "position")
       {
         this->value_ = position;
       }
-      else if (actuationMode == "unknown")
-      {
-        this->value_ = unknown;
-      }
       else if (actuationMode == "torque")
       {
         this->value_ = torque;
+      }
+      else if (actuationMode == "unknown")
+      {
+        this->value_ = unknown;
       }
       else
       {
@@ -59,7 +57,7 @@ namespace senseglove
       }
     }
 
-    // <summary> Method for conversion to numerical representation </summary>
+    // Method for conversion to numerical representation
     uint8_t toModeNumber()
     {
       switch (this->value_)

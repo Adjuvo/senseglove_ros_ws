@@ -22,6 +22,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "senseglove_hardware_interface");
   ros::NodeHandle nh;
   ros::AsyncSpinner spinner(2);
+
   int publish_rate;
   bool pr_param_fail = false;
 
@@ -34,7 +35,6 @@ int main(int argc, char** argv)
   int nr_of_glove = std::stoi(argv[2]);
   bool is_right = to_bool(argv[3]);
   ROS_INFO_STREAM("Selected robot: " << selected_robot);
-
   spinner.start();
 
   SenseGloveHardwareInterface SenseGlove(build(selected_robot, nr_of_glove, is_right));

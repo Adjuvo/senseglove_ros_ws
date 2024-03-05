@@ -2,24 +2,13 @@ nova:
   deviceType: 2
   communicationCycleTime: 10
   joints:
-    - tumbCMC:
+    - Thumb:
         jointIndex: 0
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 1
-    - thumbMCP:
-        jointIndex: 1
-        actuationMode: position
-        allowActuation: false
-        minPosition: 0
-        maxPosition: 1
-    - thumbIP:
-        jointIndex: 2
-        actuationMode: position
-        allowActuation: false
-        minPosition: 0
-        maxPosition: 1
+
     - thumbBrake:
         jointIndex: 3
         actuationMode: position

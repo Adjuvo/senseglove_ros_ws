@@ -53,7 +53,7 @@ catkin_package(
         senseglove_hardware
         urdf
         LIBRARIES ${PROJECT_NAME}
-)
+        )
 
 
 include_directories(include

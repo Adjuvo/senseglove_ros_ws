@@ -1,17 +1,16 @@
 /**
- * @file
+ * @file joint.h
  *
- * @author  Rogier
- * @author  Akshay Radhamohan Menon <akshay@senseglove.com>
+ * @brief A class to represent a joint in the Senseglove.
  *
  * @section LICENSE
- *
  * Copyright (c) 2020 - 2024 SenseGlove
  *
- * @section DESCRIPTION
- *
- * A class to represent a joint in the Senseglove.
+ * @section AUTHOR
+ * - Rogier
+ * - Akshay Radhamohan Menon <akshay@senseglove.com>
  */
+
 
 #ifndef ROS_WORKSPACE_JOINT_H
 #define ROS_WORKSPACE_JOINT_H
