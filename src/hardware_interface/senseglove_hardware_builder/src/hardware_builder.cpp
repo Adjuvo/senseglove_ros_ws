@@ -58,30 +58,6 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   YAML::Node config = this->robot_config_[robot_name];
   ROS_DEBUG_STREAM("Size of robot config " << this->robot_config_.size());
 
- /////////////////Debugging/////////////////////////////////////////////////////////////////////////////////////////////////
-
-  if (DeviceList::SenseComRunning())
-  {
-    static std::size_t as = DeviceList::ActiveDevices();
-    ROS_INFO_STREAM("gloves activate: " << as);
-    
-    int32_t gloveAmount = HandLayer::GlovesConnected();
-    ROS_INFO_STREAM("gloves amount: " << gloveAmount);
-    
-  }
-    else
-  {
-    ROS_ERROR("No Sensegloves connected");
-    std::exit(1);
-  }
-
-
-  static std::vector<SGCore::SG::SenseGlove> all_hapticgloves = SGCore::SG::SenseGlove::GetSenseGloves(false);
-  ROS_INFO_STREAM("gloves: " << all_hapticgloves.size());
-
-
- /////////////////Debugging/////////////////////////////////////////////////////////////////////////////////////////////////
-
   std::vector<SGCore::SG::SenseGlove> all_gloves = SGCore::SG::SenseGlove::GetSenseGloves(true);
   auto current_glove = all_gloves[nr_of_glove_];  // Will be update later
 
@@ -104,7 +80,6 @@ std::unique_ptr<senseglove::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
     ROS_ERROR("No Sensegloves connected");
     std::exit(1);
   }
-
 
   std::vector<senseglove::Joint> joints = this->createJoints(config["joints"]); //TODO: Chnage name of senseglove nampsapce to sensegloveHW
   ROS_INFO_STREAM("Created joints " << nr_of_glove_);

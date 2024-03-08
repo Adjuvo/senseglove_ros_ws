@@ -136,14 +136,28 @@ public:
     //--------------------------------------------------------------------------------------
     // Haptics
 
-    /// <summary> Sends all haptics in the queue for the Left / Right hand. </summary>
-    /// <param name="bRightHanded"></param>
-    static bool SendHaptics(bool bRightHanded);
-
     /// <summary> Stop all haptics on the chosen hand. </summary>
     /// <param name="bRightHanded"></param>
     /// <returns></returns>
     static void StopAllHaptics(bool bRightHanded);
+
+    /// <summary> Sends all haptics in the queue for the Left / Right hand. </summary>
+    /// <param name="bRightHanded"></param>
+    static bool SendHaptics(bool bRightHanded);
+
+    /// <summary> Returns true if the glove for this hand supports a custom waveform vibration on said location.
+    /// </summary>
+    /// <param name="bRightHanded"></param>
+    /// <param name="atLocation"></param>
+    /// <returns></returns>
+    static bool SupportsCustomWaveform(bool bRightHanded, EHapticLocation atLocation);
+
+    /// <summary> Send a Custom Waveform to a glove at a specific location. </summary>
+    /// <param name="bRightHanded"></param>
+    /// <param name="out_waveform"></param>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    static bool SendCustomWaveform(bool bRightHanded, CustomWaveform& out_waveform, EHapticLocation location);
 
     /// <summary> Tell a specific hand to hold the force-feedback at a certain level. </summary>
     /// <param name="bRightHanded"></param>
@@ -162,33 +176,29 @@ public:
     /// <summary> Queue a command to set the vibration level(s) of a Haptic Glove's finger. Note: This is only for
     /// Nova 1.0 and DK1.0. </summary>
     /// <param name="bRightHanded"></param>
-    /// <param name="finger"></param>
-    /// <param name="level01"></param>
+    /// <param name="levels01"></param>
     /// <param name="bSendImmediate"></param>
     /// <returns></returns>
-    static bool QueueCommand_SetVibroLevel(bool bRightHanded, int32_t finger, float level01, bool bSendImmediate);
+    static bool QueueCommand_VibroLevels(bool bRightHanded, const std::vector<float>& levels01, bool bSendImmediate);
 
     /// <summary> Queue a command to set the vibration level(s) of a Haptic Glove's finger. Note: This is only for
     /// Nova 1.0 and DK1.0. </summary>
     /// <param name="bRightHanded"></param>
-    /// <param name="levels01"></param>
+    /// <param name="finger"></param>
+    /// <param name="level01"></param>
     /// <param name="bSendImmediate"></param>
     /// <returns></returns>
-    static bool QueueCommand_SetVibroLevels(bool bRightHanded, const std::vector<float>& levels01, bool bSendImmediate);
+    static bool QueueCommand_VibroLevel(bool bRightHanded, int32_t finger, float level01, bool bSendImmediate);
 
-    /// <summary> Returns true if the glove for this hand supports a custom waveform vibration on said location.
-    /// </summary>
+    /// <summary> Queue a vibration level command for a specific HapticLocation. If the gloves has this vibration motor
+    /// installed. Cross-compatible with Nova 2.0. </summary>
     /// <param name="bRightHanded"></param>
-    /// <param name="atLocation"></param>
+    /// <param name="finger"></param>
+    /// <param name="level01"></param>
+    /// <param name="bSendImmediate"></param>
     /// <returns></returns>
-    static bool SupportsCustomWaveform(bool bRightHanded, EHapticLocation atLocation);
-
-    /// <summary> Send a Custom Waveform to a glove at a specific location. </summary>
-    /// <param name="bRightHanded"></param>
-    /// <param name="out_waveform"></param>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    static bool SendCustomWaveform(bool bRightHanded, CustomWaveform& out_waveform, EHapticLocation location);
+    static bool QueueCommand_VibroLevel(
+            bool bRightHanded, EHapticLocation atLocation, float level01, bool bSendImmediate);
 
     /// <summary> Returns true if the chosen glove supports active contact feedback on the Wrist. </summary>
     /// <param name="bRightHanded"></param>

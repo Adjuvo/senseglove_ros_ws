@@ -29,19 +29,19 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_library(SGCORE
         NAMES libsgcore.so
-        PATHS ../../SenseGlove_API/lib/linux/v20/x86-64/release/
+        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so
-        PATHS ../../SenseGlove_API/lib/linux/v20/x86-64/release/
+        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so
-        PATHS ../../SenseGlove_API/lib/linux/v20/x86-64/release/
+        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 

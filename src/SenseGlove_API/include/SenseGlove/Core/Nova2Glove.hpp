@@ -346,6 +346,23 @@ public:
     /// <returns></returns>
     virtual bool QueueForceFeedbackLevel(int32_t finger, float level01) override;
 
+    // Vibration
+
+    /// <summary> Queue a list of vibration levels, between 0.0 and 1.0. Your list should be sorted from thumb to
+    /// pinky. </summary>
+    /// <param name="levels01"> Array containing the vibration levels, from 0.0 (no vibration) to 1.0. A value < 0.0f
+    /// will be ignored. </param>
+    /// <remarks> Devices that 'only' have on/off FFB will treat any value > 0.0 as 1.0. </remarks>
+    /// <returns></returns>
+    virtual bool QueueVibroLevels(const std::vector<float>& levels01) override;
+
+    /// <summary> Queue a command to set the (continuous) vibration level at a specific location to a set amplitude.
+    /// This is to support backwards compatibility for older plugins. Use of Customwaveforms is encouraged. </summary>
+    /// <param name="location"></param>
+    /// <param name="level01">Value will be clamped between [0...1], where 0.0f means no vibration, and 1.0 means
+    /// full vibration.</param>
+    /// <returns></returns>
+    virtual bool QueueVibroLevel(EHapticLocation location, float level01) override;
 
     // Wrist Squeeze a.k.a. Active Contact Feedback
 

@@ -57,6 +57,9 @@ namespace SGCore
 
         /// <summary> Oculus Touch Controller that comes with the Meta Quest Pro. </summary>
         QuestProController,
+
+        /// <summary> Oculus Quest 3 Controller. </summary>
+        Quest3Controller,
     };
 
     class SGCORE_API Tracking;
@@ -128,10 +131,10 @@ public:
 
     //Quest 1 / Rift S
 
-    /// <summary> Oculus Touch origin to Finger rotational offset </summary>
+    /// <summary> Oculus Touch origin to Finger rotational offset. </summary>
     static const Kinematics::Vect3D& GetSenseGloveOculusTouchToAttachPosition();
 
-    /// <summary> Oculus Touch origin to Finger rotational offset </summary>
+    /// <summary> Oculus Touch origin to Finger rotational offset. </summary>
     static const Kinematics::Quat& GetSenseGloveOculusTouchToAttachRotation();
 
     //---------------------------------------------------------------------------
@@ -165,11 +168,21 @@ public:
     static const Kinematics::Vect3D& GetLeftNovaQuestProToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaQuestProToAttachRotation();
 
+    // Vive Focus 3 Tracker
+
     static const Kinematics::Vect3D& GetRightNovaViveFocus3ToAttachPosition();
     static const Kinematics::Quat& GetRightNovaViveFocus3ToAttachRotation();
 
     static const Kinematics::Vect3D& GetLeftNovaViveFocus3ToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaViveFocus3ToAttachRotation();
+
+    // Quest 3 Controller
+
+    static const Kinematics::Vect3D& GetRightNovaQuest3ToAttachPosition();
+    static const Kinematics::Quat& GetRightNovaQuest3ToAttachRotation();
+
+    static const Kinematics::Vect3D& GetLeftNovaQuest3ToAttachPosition();
+    static const Kinematics::Quat& GetLeftNovaQuest3ToAttachRotation();
 
     /// <summary> Returns the Offsets that will bring us from the Nova origin to the wrist position. </summary>
     /// <param name="bRightHanded"></param>
@@ -190,7 +203,7 @@ public:
     //---------------------------------------------------------------------------
     // Nova 2.0 Related
 
-    //Nova Hub Origin (Middle of USB port) to Wrist
+    // Nova Hub Origin (Middle of USB port) to Wrist
 
     static const Kinematics::Vect3D& GetRightNova2ToWristPositionOffset();
     static const Kinematics::Quat& GetRightNova2ToWristRotationOffset();
@@ -229,6 +242,14 @@ public:
 
     static const Kinematics::Vect3D& GetLeftNova2ViveWristTrackerToAttachPosition();
     static const Kinematics::Quat& GetLeftNova2ViveWristTrackerToAttachRotation();
+
+    // Quest 3 Controller
+
+    static const Kinematics::Vect3D& GetRightNova2Quest3ToAttachPosition();
+    static const Kinematics::Quat& GetRightNova2Quest3ToAttachRotation();
+
+    static const Kinematics::Vect3D& GetLeftNova2Quest3ToAttachPosition();
+    static const Kinematics::Quat& GetLeftNova2Quest3ToAttachRotation();
 
     /// <summary> Returns the Offsets that will bring us from the Nova origin to the wrist position. </summary>
     /// <param name="bRightHanded"></param>

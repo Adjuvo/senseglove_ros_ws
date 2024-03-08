@@ -77,7 +77,8 @@ namespace SGCore
 
     class HandPose;
 
-    /// <summary> A glove developed by SenseGlove, that has hand tracking and/or haptic feedback functionality. </summary>
+    /// <summary> A glove developed by SenseGlove, that has hand tracking and/or haptic feedback functionality.
+    /// </summary>
     class SGCORE_API HapticGlove;
 };// namespace SGCore
 
@@ -236,6 +237,18 @@ public:
     /// <returns> Returns true if the message was successfully sent to SenseCom. </returns>
     virtual bool SendHaptics();
 
+    /// <summary> Returns true if the HapticGlove supports vibration feedback on the specified location. </summary>
+    /// <param name="atLocation"></param>
+    /// <returns></returns>
+    SG_NODISCARD virtual bool SupportsCustomWaveform(EHapticLocation atLocation) const;
+
+    /// <summary> Sends a custom waveform to the location specified, provided that the glove has a motor there, and can
+    /// support custom waveforms. </summary>
+    /// <param name="out_waveform"></param>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    virtual bool SendCustomWaveform(CustomWaveform& out_waveform, EHapticLocation location);
+
     /// <summary> Queue a list of force-feedback levels, between 0.0 and 1.0. Your list should be sorted from thumb to
     /// pinky. </summary>
     /// <param name="levels01"> Array containing the Force-Feedback levels, from 0.0 (no FFB) to 1.0. A value < 0.0f
@@ -251,17 +264,21 @@ public:
     /// <returns></returns>
     virtual bool QueueForceFeedbackLevel(int32_t finger, float level01);
 
-    /// <summary> Returns true if the HapticGlove supports vibration feedback on the specified location. </summary>
-    /// <param name="atLocation"></param>
+    /// <summary> Queue a list of vibration levels, between 0.0 and 1.0. Your list should be sorted from thumb to
+    /// pinky. </summary>
+    /// <param name="levels01"> Array containing the vibration levels, from 0.0 (no vibration) to 1.0. A value < 0.0f
+    /// will be ignored. </param>
+    /// <remarks> Devices that 'only' have on/off FFB will treat any value > 0.0 as 1.0. </remarks>
     /// <returns></returns>
-    SG_NODISCARD virtual bool SupportsCustomWaveform(EHapticLocation atLocation) const;
+    virtual bool QueueVibroLevels(const std::vector<float>& levels01);
 
-    /// <summary> Sends a custom waveform to the location specified, provided that the glove has a motor there, and can
-    /// support custom waveforms. </summary>
-    /// <param name="out_waveform"></param>
+    /// <summary> Queue a command to set the (continuous) vibration level at a specific location to a set amplitude.
+    /// </summary>
     /// <param name="location"></param>
+    /// <param name="level01">Value will be clamped between [0...1], where 0.0f means no vibration, and 1.0 means
+    /// full vibration.</param>
     /// <returns></returns>
-    virtual bool SendCustomWaveform(CustomWaveform& out_waveform, EHapticLocation location);
+    virtual bool QueueVibroLevel(EHapticLocation location, float level01);
 
 public:
     //--------------------------------------------------------------------------------------

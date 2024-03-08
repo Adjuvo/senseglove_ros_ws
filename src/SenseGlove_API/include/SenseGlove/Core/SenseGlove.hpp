@@ -324,6 +324,21 @@ public:
     /// <returns></returns>
     virtual bool QueueForceFeedbackLevel(int32_t finger, float level01) override;
 
+    // Vibration
+
+    /// <summary> Queue a vibrotactile level for each finger. </summary>
+    /// <param name="amplitudes"></param>
+    /// <returns></returns>
+    virtual bool QueueVibroLevels(const std::vector<float>& levels01) override;
+
+    /// <summary> Queue a command to set the (continuous) vibration level at a specific location to a set amplitude.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="level01">Value will be clamped between [0...1], where 0.0f means no vibration, and 1.0 means
+    /// full vibration.</param>
+    /// <returns></returns>
+    virtual bool QueueVibroLevel(EHapticLocation location, float level01) override;
+
     // 6DoF Position Tracking
 
     /// <summary> Retrieve the location of the glove origin, based on a reference location. </summary>
@@ -409,11 +424,6 @@ public:
     // SenseGlove DK1 Haptic Functions
 
 public:
-    /// <summary> Queue a vibrotactile level for each finger. </summary>
-    /// <param name="amplitudes"></param>
-    /// <returns></returns>
-    virtual bool QueueVibroLevels(const std::vector<float>& amplitudes);
-
     /// <summary> Queue a vibrotactle level for a specific finger. </summary>
     /// <param name="finger"></param>
     /// <param name="amplitude"></param>
