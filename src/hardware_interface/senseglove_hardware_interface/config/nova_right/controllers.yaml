@@ -1,0 +1,17 @@
+controller:
+  joint_state:
+    type: joint_state_controller/JointStateController
+    publish_rate: 30
+  hand_state:
+    type: joint_state_controller/JointStateController
+    publish_rate: 30
+  trajectory:
+    type: position_controllers/JointTrajectoryController
+    allow_partial_joints_goal: true
+    joints:
+      - r_thumb_brake # FFB
+      - r_index_brake # FFB
+      - r_middle_brake # FFB
+      - r_ring_brake # FFB
+      - r_thumb_mcp # Buzzer
+      - r_index_mcp # Buzzer

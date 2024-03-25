@@ -15,7 +15,7 @@ controller:
       - r_middle_brake # FFB
       - r_ring_brake # FFB
       - r_pinky_brake # FFB
-      - r_thumb_cmc # Buzzer
+      - r_thumb_mcp # Buzzer
       - r_index_mcp # Buzzer
       - r_middle_mcp # Buzzer
       - r_ring_mcp # Buzzer

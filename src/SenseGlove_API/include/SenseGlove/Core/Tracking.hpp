@@ -140,11 +140,15 @@ public:
     //---------------------------------------------------------------------------
     // Nova 1.0 Related
 
+    // Hub -> Wrist
+
     /// <summary> Positional offset between Nova Glove Origin and Wrist. </summary>
     static const Kinematics::Vect3D& GetNovaToWristPositionOffset();
 
     /// <summary> Rotational offset between Nova Glove Origin and Wrist. </summary>
     static const Kinematics::Quat& GetNovaToWristRotationOffset();
+
+    // Vive Trackers (Vive Pro, Valve Index)
 
     static const Kinematics::Vect3D& GetRightNovaViveToAttachPosition();
     static const Kinematics::Quat& GetRightNovaViveToAttachRotation();
@@ -152,15 +156,21 @@ public:
     static const Kinematics::Vect3D& GetLeftNovaViveToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaViveToAttachRotation();
 
+    // Quest 2 Controllers a.k.a. Oculus Touch v3
+
     static const Kinematics::Vect3D& GetRightNovaQuest2ToAttachPosition();
     static const Kinematics::Quat& GetRightNovaQuest2ToAttachRotation();
 
     static const Kinematics::Vect3D& GetLeftNovaQuest2ToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaQuest2ToAttachRotation();
 
+    // Pico Neo 2 - Obsolete / Deprecated.
+
     static const Kinematics::Vect3D& GetRightNovaPico2ToAttachPosition();// left is a mirror, so we only need R pos.
     static const Kinematics::Quat& GetRightNovaPico2ToAttachRotation();
     static const Kinematics::Quat& GetLeftNovaPico2ToAttachRotation();
+
+    // Quest Pro Controllers a.k.a. Oculus Touch v4??
 
     static const Kinematics::Vect3D& GetRightNovaQuestProToAttachPosition();
     static const Kinematics::Quat& GetRightNovaQuestProToAttachRotation();
@@ -168,7 +178,7 @@ public:
     static const Kinematics::Vect3D& GetLeftNovaQuestProToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaQuestProToAttachRotation();
 
-    // Vive Focus 3 Tracker
+    // Vive Focus 3 Tracker (also works with XR Elite)
 
     static const Kinematics::Vect3D& GetRightNovaViveFocus3ToAttachPosition();
     static const Kinematics::Quat& GetRightNovaViveFocus3ToAttachRotation();
@@ -176,13 +186,15 @@ public:
     static const Kinematics::Vect3D& GetLeftNovaViveFocus3ToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaViveFocus3ToAttachRotation();
 
-    // Quest 3 Controller
+    // Quest 3 Controller (a.k.a. Quest Touch Plus)
 
     static const Kinematics::Vect3D& GetRightNovaQuest3ToAttachPosition();
     static const Kinematics::Quat& GetRightNovaQuest3ToAttachRotation();
 
     static const Kinematics::Vect3D& GetLeftNovaQuest3ToAttachPosition();
     static const Kinematics::Quat& GetLeftNovaQuest3ToAttachRotation();
+
+
 
     /// <summary> Returns the Offsets that will bring us from the Nova origin to the wrist position. </summary>
     /// <param name="bRightHanded"></param>
@@ -219,7 +231,7 @@ public:
     static const Kinematics::Vect3D& GetLeftNova2Quest2ToAttachPosition();
     static const Kinematics::Quat& GetLeftNova2Quest2ToAttachRotation();
 
-    // Quest Pro Tracker Offsets
+    // Quest Pro Tracker Offsets - We don't have the actual physical hardware for this, and might never make one.
 
     static const Kinematics::Vect3D& GetRightNova2QuestProToAttachPosition();
     static const Kinematics::Quat& GetRightNova2QuestProToAttachRotation();
@@ -227,7 +239,7 @@ public:
     static const Kinematics::Vect3D& GetLeftNova2QuestProToAttachPosition();
     static const Kinematics::Quat& GetLeftNova2QuestProToAttachRotation();
 
-    // Vive Tracker Offsets
+     // Vive Trackers (Vive Pro, Valve Index)
 
     static const Kinematics::Vect3D& GetRightNova2ViveTrackerToAttachPosition();
     static const Kinematics::Quat& GetRightNova2ViveTrackerToAttachRotation();
@@ -235,7 +247,7 @@ public:
     static const Kinematics::Vect3D& GetLeftNova2ViveTrackerToAttachPosition();
     static const Kinematics::Quat& GetLeftNova2ViveTrackerToAttachRotation();
 
-    // Vive Focus 3 Tracker
+    // Vive Focus 3 Tracker (also works with XR Elite)
 
     static const Kinematics::Vect3D& GetRightNova2ViveWristTrackerToAttachPosition();
     static const Kinematics::Quat& GetRightNova2ViveWristTrackerToAttachRotation();
@@ -243,7 +255,7 @@ public:
     static const Kinematics::Vect3D& GetLeftNova2ViveWristTrackerToAttachPosition();
     static const Kinematics::Quat& GetLeftNova2ViveWristTrackerToAttachRotation();
 
-    // Quest 3 Controller
+     // Quest 3 Controller (a.k.a. Quest Touch Plus)
 
     static const Kinematics::Vect3D& GetRightNova2Quest3ToAttachPosition();
     static const Kinematics::Quat& GetRightNova2Quest3ToAttachRotation();

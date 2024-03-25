@@ -18,7 +18,7 @@
 #include <string>
 #include <ros/console.h>
 
-namespace senseglove
+namespace SGHardware
 {
   class ActuationMode
   {
@@ -71,7 +71,7 @@ namespace senseglove
       }
     }
 
-    // <summary> Method for conversion to string representation </summary>
+    // Method for conversion to string representation
     std::string toString() const
     {
       switch (this->value_)
@@ -86,13 +86,13 @@ namespace senseglove
       }
     }
 
-    // <summary> Returns the current enum value </summary>
+    // Returns the current enum value
     int getValue() const
     {
       return this->value_;
     }
 
-    // <summary> Comparison operators </summary>
+    // Comparison operators
     bool operator==(ActuationMode::Value a) const
     {
       return this->value_ == a;
@@ -104,9 +104,9 @@ namespace senseglove
     }
 
   private:
-    // <summary> Current enum value </summary>
+    // Current enum value
     Value value_ = unknown;
   };
-}  // namespace senseglove
+}  // namespace SGHardware
 
 #endif  // SENSEGLOVE_HARDWARE_ACTUATION_MODE_H

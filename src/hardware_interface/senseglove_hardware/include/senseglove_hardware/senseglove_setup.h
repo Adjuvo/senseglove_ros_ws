@@ -4,83 +4,75 @@
 
 #include "senseglove_hardware/joint.h"
 
-#include <cstdint>
-#include <memory>
-#include <string>
-#include <vector>
-
-#include <urdf/model.h>
-
-namespace senseglove
+namespace SGHardware
 {
-class SenseGloveSetup
-{
-private:
-  ::std::vector<senseglove::SenseGloveRobot> sensegloves_;
-
-public:
-  using iterator = std::vector<senseglove::SenseGloveRobot>::iterator;
-
-  SenseGloveSetup(senseglove::SenseGloveRobot sensegloves);
-
-  SenseGloveSetup(std::vector<senseglove::SenseGloveRobot> sensegloves);
-
-  ~SenseGloveSetup();
-
-  /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
-  SenseGloveSetup(SenseGloveSetup&) = delete;
-  SenseGloveSetup& operator=(SenseGloveSetup&) = delete;
-
-  /* Delete move assignment since string cannot be move assigned */
-  SenseGloveSetup(SenseGloveSetup&&) = delete;
-  SenseGloveSetup& operator=(SenseGloveSetup&&) = delete;
-
-  void startCommunication(bool /*reset*/);
-
-  void stopCommunication();
-
-  bool isCommunicationOperational();
-
-  SenseGloveRobot& getSenseGloveRobot(::std::string gloveName);
-
-  SenseGloveRobot& getSenseGloveRobot(int index);
-
-  size_t size() const;
-
-  iterator begin();
-  iterator end();
-
-  const urdf::Model& getRobotUrdf(std::string glove_robot_name);
-
-  /** @brief Override comparison operator */
-  friend bool operator==(const SenseGloveSetup& lhs, const SenseGloveSetup& rhs)
+  class SenseGloveSetup
   {
-    if (lhs.sensegloves_.size() != rhs.sensegloves_.size())
+  private:
+    ::std::vector<SGHardware::SenseGloveRobot> SGRobots;
+
+  public:
+    using iterator = std::vector<SGHardware::SenseGloveRobot>::iterator;
+
+    SenseGloveSetup(SGHardware::SenseGloveRobot SGRobots);
+    SenseGloveSetup(std::vector<SGHardware::SenseGloveRobot> SGRobots);
+
+    ~SenseGloveSetup();
+
+    /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
+    SenseGloveSetup(SenseGloveSetup&) = delete;
+    SenseGloveSetup& operator=(SenseGloveSetup&) = delete;
+
+    /* Delete move assignment since string cannot be move assigned */
+    SenseGloveSetup(SenseGloveSetup&&) = delete;
+    SenseGloveSetup& operator=(SenseGloveSetup&&) = delete;
+
+    void startCommunication(bool /*reset*/);
+
+    void stopCommunication();
+
+    bool isCommunicationOperational();
+
+    SenseGloveRobot& getSenseGloveRobot(::std::string gloveName);
+
+    SenseGloveRobot& getSenseGloveRobot(int index);
+
+    size_t size() const;
+
+    iterator begin();
+    iterator end();
+
+    const urdf::Model& getRobotUrdf(std::string glove_robot_name);
+
+    /** @brief Override comparison operator */
+    friend bool operator==(const SenseGloveSetup& lhs, const SenseGloveSetup& rhs)
     {
-      return false;
-    }
-    for (unsigned int i = 0; i < lhs.sensegloves_.size(); i++)
-    {
-      const senseglove::SenseGloveRobot& lhsGlove = lhs.sensegloves_.at(i);
-      const senseglove::SenseGloveRobot& rhsGlove = rhs.sensegloves_.at(i);
-      if (lhsGlove != rhsGlove)
+      if (lhs.SGRobots.size() != rhs.SGRobots.size())
       {
         return false;
       }
+      for (unsigned int i = 0; i < lhs.SGRobots.size(); i++)
+      {
+        const SGHardware::SenseGloveRobot& lhsGlove = lhs.SGRobots.at(i);
+        const SGHardware::SenseGloveRobot& rhsGlove = rhs.SGRobots.at(i);
+        if (lhsGlove != rhsGlove)
+        {
+          return false;
+        }
+      }
+      return true;
     }
-    return true;
-  }
 
-  /** @brief Override stream operator for clean printing */
-  friend ::std::ostream& operator<<(std::ostream& os, const SenseGloveSetup& senseGloveSetup)
-  {
-    for (unsigned int i = 0; i < senseGloveSetup.sensegloves_.size(); i++)
+    /** @brief Override stream operator for clean printing */
+    friend ::std::ostream& operator<<(std::ostream& os, const SenseGloveSetup& senseGloveSetup)
     {
-      os << senseGloveSetup.sensegloves_.at(i) << "\n";
+      for (unsigned int i = 0; i < senseGloveSetup.SGRobots.size(); i++)
+      {
+        os << senseGloveSetup.SGRobots.at(i) << "\n";
+      }
+      return os;
     }
-    return os;
-  }
-};
-}  // namespace senseglove
+  };
+}  // namespace SGHardware
 
 #endif  // ROS_WORKSPACE_SENSEGLOVE_SETUP_H

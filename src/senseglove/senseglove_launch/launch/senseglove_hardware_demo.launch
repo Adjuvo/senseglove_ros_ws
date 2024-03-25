@@ -1,23 +1,46 @@
 <launch>
-    <arg name="left" default="false"/>
-    <arg name="right" default="false"/>
-    <arg name="both" value="$(eval arg('left') and arg('right'))"/>
 
-    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval left)">
-        <arg name="robot" value="dk1_left"/>
-        <arg name="nr_of_glove" value="0"/>
-        <arg name="is_right" value="false"/>
-    </include>
+    <arg name="both" value="$(eval left and right)"/>
 
-    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both)">
-        <arg name="robot" value="dk1_right"/>
-        <arg name="nr_of_glove" value="1"/>
-        <arg name="is_right" value="true"/>
-    </include>
+    <!-- Check if robot is Dk1 -->
+    <group if="$(arg use_dk)">
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval left)">
+                <arg name="robot" value="dk1_left"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="false"/>
+            </include>
 
-    <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both==false and right==true)">
-        <arg name="robot" value="dk1_right"/>
-        <arg name="nr_of_glove" value="0"/>
-        <arg name="is_right" value="true"/>
-    </include>
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both)">
+                <arg name="robot" value="dk1_right"/>
+                <arg name="gloveIndex" value="1"/>
+                <arg name="isRight" value="true"/>
+            </include>
+
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both==false and right==true)">
+                <arg name="robot" value="dk1_right"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="true"/>
+            </include>
+    </group>
+
+    <!-- Check if robot is Nova -->
+    <group if="$(arg use_nova)">
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval left)">
+                <arg name="robot" value="nova_left"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="false"/>
+            </include>
+
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both)">
+                <arg name="robot" value="nova_right"/>
+                <arg name="gloveIndex" value="1"/>
+                <arg name="isRight" value="true"/>
+            </include>
+
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both==false and right==true)">
+                <arg name="robot" value="nova_right"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="true"/>
+            </include>
+    </group>
 </launch>

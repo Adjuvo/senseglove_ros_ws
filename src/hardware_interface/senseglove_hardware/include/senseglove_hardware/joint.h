@@ -19,126 +19,130 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <cstdint>
+
 #include <ros/ros.h>
 #include <urdf/model.h>
 #include <senseglove_hardware/actuation_mode.h>
 
-#include "Fingers.hpp"
 #include "SenseGlove.hpp"
+#include "Fingers.hpp"
 
 
-namespace senseglove
+using namespace SGCore;
+
+namespace SGHardware
 {
   class Joint
   {
     friend class SenseGloveRobot;
 
   public:
-    // <summary> Initializes a Joint without a finger. Actuation is disabled by default. </summary>
-    Joint(std::string name, int joint_index);
+    // Initializes a Joint without a finger. Actuation is disabled by default.
+    Joint(std::string jointName, int jointIndex);
 
-    // <summary> Initializes a Joint without a finger, with actuation options </summary>
-    Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode);
+    // Initializes a Joint without a finger, with actuation options
+    Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation);
 
-    // <summary> Initializes a Joint with a specific SG finger, with actuation options </summary>
-    Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode, std::unique_ptr<SGCore::EFinger> finger);
+    // Initializes a Joint with a specific SG finger, with actuation options
+    Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger);
 
-    /// <summary> Destructor defined default, ensuring proper destruction of derived classes </summary>
+    /// Destructor defined default, ensuring proper destruction of derived classes
     virtual ~Joint() noexcept = default;
 
-    // <summary>  Delete copy constructor & assignment operator since the unique_ptr cannot be copied </summary>
+    //  Delete copy constructor & assignment operator since the unique_ptr cannot be copied
     Joint(const Joint&) = delete;
     Joint& operator=(const Joint&) = delete;
 
-    // <summary> Delete move assignment since string cannot be move assigned </summary>
+    // Delete move assignment since string cannot be move assigned
     Joint(Joint&&) = default;
     Joint& operator=(Joint&&) = delete;
 
     // --------------------------------------------------------------------------------------
     // Joint Methods
 
-    // <summary> Initializes the joint </summary>
+    // Initializes the joint
     bool initialize();
 
-    // <summary> Gets the name of the joint </summary>
+    // Gets the name of the joint
     std::string getName() const;
 
-    // <summary> Gets the index of the joint </summary>
+    // Gets the index of the joint
     int getIndex() const;
     
-    // <summary> Reads the angle of the joint </summary>
+    // Reads the angle of the joint
     double readAngle();
 
-    // <summary> Gets the position of the joint </summary>
+    // Gets the position of the joint
     double getPosition() const;
 
-    // <summary> Gets the velocity of the joint </summary>
+    // Gets the velocity of the joint
     double getVelocity() const;
 
-    // <summary> Gets the torque of the joint </summary>
+    // Gets the torque of the joint
     double getTorque();
 
-    // <summary> Gets the actuation mode of the joint </summary>
+    // Gets the actuation mode of the joint
     ActuationMode getActuationMode() const;
 
-    // <summary> Prepares the joint for actuation </summary>
+    // Prepares the joint for actuation
     void prepareActuation();
 
-    // <summary> Checks if the joint can be actuated </summary>
+    // Checks if the joint can be actuated
     bool canActuate() const;
 
-    // <summary> Setter to allow actuation </summary>
+    // Setter to allow actuation
     void setAllowActuation(bool allow_actuation);
 
     // --------------------------------------------------------------------------------------
     // Friend Functions
     
-    /// <summary> Checks if the names, finger objects, actuation permission flags, and actuation modes of two joints are equal </summary>
+    /// Checks if the names, finger objects, actuation permission flags, and actuation modes of two joints are equal
     friend bool operator==(const Joint& lhs, const Joint& rhs)
     {
-      return lhs.name_ == rhs.name_ && lhs.finger_ == rhs.finger_ &&  // Provided Finger has a comparison operator
-            lhs.allow_actuation_ == rhs.allow_actuation_ &&
+      return lhs.jointName == rhs.jointName && lhs.finger == rhs.finger &&  // Provided Finger has a comparison operator
+            lhs.allowActuation == rhs.allowActuation &&
             lhs.getActuationMode().getValue() == rhs.getActuationMode().getValue();
     }
 
-    // <summary> Comparison operator </summary>
+    // Comparison operator
     friend bool operator!=(const Joint& lhs, const Joint& rhs)
     {
       return !(lhs == rhs);
     }
 
-    // <summary> Override stream operator for clean printing </summary>
+    // Override stream operator for clean printing
     friend ::std::ostream& operator<<(std::ostream& os, const Joint& joint)
     {
-      os << "name: " << joint.name_ << ", "
+      os << "name: " << joint.jointName << ", "
         << "ActuationMode: " << joint.getActuationMode().toString() << ", "
-        << "allowActuation: " << joint.allow_actuation_;
+        << "allowActuation: " << joint.allowActuation;
       return os;
     }
 
   private:
-    // <summary> Name of the joint </summary>
-    const std::string name_;
+    // Name of the joint
+    const std::string jointName;
 
-    // <summary> Index of the joint </summary>
-    const int joint_index_;
+    // Index of the joint
+    const int jointIndex;
 
-    // <summary> Flag indicating if actuation is allowed for the joint </summary>
-    bool allow_actuation_ = false;
+    // Mode of actuation of the joint
+    ActuationMode actuationMode;
 
-    // <summary> Mode of actuation of the joint </summary>
-    ActuationMode actuation_mode_;
+    // Flag indicating if actuation is allowed for the joint
+    bool allowActuation = false;
 
-    // <summary> Position of the joint </summary>
-    double position_ = 0.0;
+    // Position of the joint
+    double position = 0.0;
 
-    // <summary> Velocity of the joint </summary>
-    double velocity_ = 0.0;
+    // Velocity of the joint
+    double velocity = 0.0;
 
-    // <summary> Unique pointer to a SG finger object associated with the joint </summary>
-    std::unique_ptr<SGCore::EFinger> finger_ = nullptr;
+    // Unique pointer to a SG finger object associated with the joint
+    std::unique_ptr<SGCore::EFinger> finger = nullptr;
   };
 
-}  // namespace senseglove
+}  // namespace SGHardware
 
 #endif  // ROS_WORKSPACE_JOINT_H

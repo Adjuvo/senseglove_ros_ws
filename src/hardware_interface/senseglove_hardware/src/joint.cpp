@@ -9,87 +9,90 @@
 #include <string>
 #include <utility>
 
-namespace senseglove
+namespace SGHardware
 {
-Joint::Joint(std::string name, int joint_index) : name_(std::move(name)), joint_index_(joint_index)
-{
-}
-
-Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode)
-  : name_(std::move(name)), joint_index_(joint_index), allow_actuation_(allow_actuation), actuation_mode_(mode)
-{
-}
-
-Joint::Joint(std::string name, int joint_index, bool allow_actuation, ActuationMode mode,
-             std::unique_ptr<SGCore::EFinger> finger)
-  : name_(std::move(name))
-  , joint_index_(joint_index)
-  , allow_actuation_(allow_actuation)
-  , actuation_mode_(mode)
-  , finger_(std::move(finger))
-{
-}
-
-bool Joint::initialize()
-{
-  return false;
-}
-
-void Joint::prepareActuation()
-{
-  if (!this->canActuate())
+  Joint::Joint(std::string jointName, int jointIndex) : jointName(std::move(jointName)), jointIndex(jointIndex)
   {
-    ROS_ERROR("Failed to prepare joint %s for actuation", this->name_.c_str());
   }
-  ROS_INFO("[%s] Preparing for actuation", this->name_.c_str());
-  this->position_ = this->readAngle();
-  this->velocity_ = 0;
-  ROS_INFO("[%s] Successfully prepared for actuation", this->name_.c_str());
-}
 
-double Joint::readAngle(/*const ros::Duration& elapsed_time*/)
-{
-  // get angle from finger array at correct index
-  return 0.0;
-}
+  Joint::Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation)
+    : jointName(std::move(jointName)) 
+    , jointIndex(jointIndex)
+    , actuationMode(actuationMode)
+    , allowActuation(allowActuation)
+  {
+  }
 
-double Joint::getPosition() const
-{
-  return this->position_;
-}
+  Joint::Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger)
+    : jointName(std::move(jointName)) 
+    , jointIndex(jointIndex)
+    , actuationMode(actuationMode)
+    , allowActuation(allowActuation)
+    , finger(std::move(finger))
+  {
+  }
 
-double Joint::getVelocity() const
-{
-  return this->velocity_;
-}
+  bool Joint::initialize()
+  {
+    return false;
+  }
 
-double Joint::getTorque()
-{
-  return 0.0;
-}
+  void Joint::prepareActuation()
+  {
+    if (!this->canActuate())
+    {
+      ROS_ERROR_STREAM("Failed to prepare joint " << this->jointName << " for actuation");
+    }
 
-void Joint::setAllowActuation(bool allow_actuation)
-{
-  this->allow_actuation_ = allow_actuation;
-}
+    ROS_INFO_STREAM("Preparing " << this->jointName  << " for actuation");
+    this->position = this->readAngle();
+    this->velocity = 0;
+    ROS_INFO_STREAM("Successfully prepared " << this->jointName  << " for actuation");
+  }
 
-int Joint::getIndex() const
-{
-  return this->joint_index_;
-}
+  double Joint::readAngle(/*const ros::Duration& elapsed_time*/)
+  {
+    // get angle from finger array at correct index
+    return 0.0;
+  }
 
-std::string Joint::getName() const
-{
-  return this->name_;
-}
+  double Joint::getPosition() const
+  {
+    return this->position;
+  }
 
-bool Joint::canActuate() const
-{
-  return this->allow_actuation_;
-}
+  double Joint::getVelocity() const
+  {
+    return this->velocity;
+  }
 
-ActuationMode Joint::getActuationMode() const
-{
-  return actuation_mode_;
-}
-}  // namespace senseglove
+  double Joint::getTorque()
+  {
+    return 0.0;
+  }
+
+  void Joint::setAllowActuation(bool allowActuation)
+  {
+    this->allowActuation = allowActuation;
+  }
+
+  int Joint::getIndex() const
+  {
+    return this->jointIndex;
+  }
+
+  std::string Joint::getName() const
+  {
+    return this->jointName;
+  }
+
+  bool Joint::canActuate() const
+  {
+    return this->allowActuation;
+  }
+
+  ActuationMode Joint::getActuationMode() const
+  {
+    return actuationMode;
+  }
+}  // namespace SGHardware

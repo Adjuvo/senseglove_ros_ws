@@ -15,7 +15,6 @@
     <xacro:property name="second_bar_length" value="0.0876"/>
     <xacro:property name="third_bar_length" value="0.0664"/>
 
-
     <!-- Origins on hub for fingers -->
     <xacro:property name="thumb_hub_X" value="-0.052034"/>
     <xacro:property name="thumb_hub_Y" value="-0.0221293"/>
@@ -36,8 +35,6 @@
     <xacro:property name="pinky_hub_X" value="0.03307"/>
     <xacro:property name="pinky_hub_Y" value="0.00695"/>
     <xacro:property name="pinky_hub_Z" value="-0.04125"/>
-
-
 
     <xacro:property name="bar_length" value="${0.39}"/>
     <xacro:property name="bar_mass" value="1.080"/>
@@ -396,7 +393,7 @@
 
     </joint>
 
-    <joint name="r_thumb_cmc" type="revolute">
+    <joint name="r_thumb_mcp" type="revolute">
         <parent link="r_thumb_flexion_one"/>
         <child link="r_thumb_flexion_two"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -408,7 +405,7 @@
                upper="${100}"/>
     </joint>
 
-    <joint name="r_thumb_mcp" type="revolute">
+    <joint name="r_thumb_pip" type="revolute">
         <parent link="r_thumb_flexion_two"/>
         <child link="r_thumb_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
@@ -420,7 +417,7 @@
                upper="${100}"/>
     </joint>
 
-    <joint name="r_thumb_pip" type="revolute">
+    <joint name="r_thumb_dip" type="revolute">
         <parent link="r_thumb_flexion_three"/>
         <child link="r_thumb_thimble"/>
         <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
