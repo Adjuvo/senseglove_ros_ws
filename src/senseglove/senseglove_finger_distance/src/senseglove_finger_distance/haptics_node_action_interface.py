@@ -67,7 +67,7 @@ def main():
     rospy.init_node('senseglove_haptics_node')
     rospy.loginfo("initialize haptics node")
     joint_list = ['empty']
-    ns = '/senseglove/0/lh/controller/'
+    ns = '/senseglove/0/rh/controller/'
     action_ns = ns + 'trajectory/'
     if rospy.has_param(action_ns + 'joints'):
         joint_list = rospy.get_param(action_ns + 'joints')
@@ -80,9 +80,9 @@ def main():
 
     i = 0
     f = 10  # Hz
-    amp = 50  # percentage
+    amp = 80  # percentage
     wave = np.linspace(0, np.pi * f, 201)
-    rand_traj_points = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # what you will!
+    rand_traj_points = [0, 100, 100, 100, 100, 100, 100, 100, 100, 100]  # what you will!
     while not rospy.is_shutdown():
         if i >= 201:
             i = 0

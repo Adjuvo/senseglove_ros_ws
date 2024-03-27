@@ -13,6 +13,7 @@ controller:
       - l_index_brake # FFB
       - l_middle_brake # FFB
       - l_ring_brake # FFB
-      - l_thumb_mcp # Buzzer
-      - l_index_mcp # Buzzer
+      - l_thumb_tip # Buzzer
+      - l_index_tip # Buzzer
+      - l_middle_tip # Buzzer
       

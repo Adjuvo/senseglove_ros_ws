@@ -60,9 +60,8 @@ private:
 
   /* Shared memory */
   size_t num_gloves_ = 0;
-  size_t num_glove_joints_ = 0;
-  size_t num_hand_joints_ = 0;
-  int num_effort_joints_ = 0;
+  size_t num_joints_ = 0;
+  int num_effort_index_ = 2;
 
   std::vector<std::vector<double>> jointPosition;
   std::vector<std::vector<double>> jointPositionCommand;

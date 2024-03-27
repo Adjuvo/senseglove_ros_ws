@@ -26,8 +26,6 @@
 #include "HandPose.hpp"
 #include "DeviceList.hpp"
 #include "Vect3D.hpp"
-#include "HandInterpolator.hpp"
-#include "SensorNormalization.hpp"
 
 #include "SenseGlove.hpp"
 #include "SenseGloveSensorData.hpp"
@@ -65,10 +63,9 @@ namespace SGHardware
     std::shared_ptr<HapticGlove> hapticglove;
     HandPose handPose;
     Kinematics::BasicHandModel handModel;
-    std::vector<Kinematics::Vect3D> tipPositions;  
     Kinematics::Vect3D jointPosition;
-    std::vector<float> handAngles; 
-    Kinematics::HandInterpolator interpolator;
+    Kinematics::Vect3D tipPositions;  
+    std::vector<std::vector<Kinematics::Vect3D>> handPoseAngles;
 
     std::shared_ptr<SenseGlove> senseglovePtr = std::dynamic_pointer_cast<SenseGlove>(hapticglove);
     std::shared_ptr<NovaGlove> novaglovePtr = std::dynamic_pointer_cast<NovaGlove>(hapticglove);
@@ -105,8 +102,6 @@ namespace SGHardware
     Joint& getJoint(size_t index);
 
     size_t getJointSize();
-    size_t getHandPoseSize();
-    int getEffortJointSize();
 
     Kinematics::Vect3D getHandPosition(int i);
     Kinematics::Vect3D getFingerTip(int i);

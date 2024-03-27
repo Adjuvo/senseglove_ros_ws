@@ -19,7 +19,7 @@ namespace SGHardware
     , handModel(Kinematics::BasicHandModel::Default(isRight))
     , jointList(std::move(jointList))
     , urdfModel(std::move(urdfModel))
-    , SenseGloveRobotName(hapticglove->GetDeviceId() + "/" + std::to_string(int((robotIndex) / 2)))
+    , SenseGloveRobotName("/senseglove/" + std::to_string(int((robotIndex) / 2)))
     , deviceType(this->hapticglove->GetDeviceType())
     , robotIndex(robotIndex)
     , isUpdated(false)
@@ -28,11 +28,7 @@ namespace SGHardware
 
   std::string SenseGloveRobot::getRobotName() const  
   {
-    std::string modifiedRobotName = this->SenseGloveRobotName;
-    std::replace_if(modifiedRobotName.begin(), modifiedRobotName.end(), 
-                    [](unsigned char c) { return !std::isalnum(c) && c != '/'; }, '_');
-
-    return modifiedRobotName;
+    return this->SenseGloveRobotName;
   }
 
   EDeviceType SenseGloveRobot::getRobotType() const
@@ -72,37 +68,6 @@ namespace SGHardware
     return this->jointList.size();
   }
 
-  size_t SenseGloveRobot::getHandPoseSize()
-  {
-    switch (this->deviceType)
-      {
-        case EDeviceType::SenseGlove:
-          return 20;
-        case EDeviceType::Nova:
-          return 15;
-        case EDeviceType::Nova2:
-          return 15;
-        default:
-          return 20;
-      }
-  }
-
-  int SenseGloveRobot::getEffortJointSize()
-  {
-    switch (this->deviceType)
-      {
-        case EDeviceType::SenseGlove:
-          return 9;
-        case EDeviceType::Nova:
-          return 5;
-        case EDeviceType::Nova2:
-          return 5;
-        default:
-          return 9;
-      }
-  }
-
-
   // Function to flatten vector of vectors of Vector3D
   Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i)
   {
@@ -115,15 +80,17 @@ namespace SGHardware
     }
     else if (novaglovePtr != nullptr) 
     {
-      jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4];     
+      if (i % 3 == 2) {jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][3];} 
+      if (i % 3 == 1) {jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][1];}  
+      else {jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][0];}
     }
     else if (nova2glovePtr != nullptr)
     {
-      jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4];    
+      if (i % 2 == 0) {jointPosition = handPose.GetJointPositions()[std::floor(i / 2)][3];}   
+      else {jointPosition = handPose.GetJointPositions()[std::floor(i / 2)][1];}  
     }    
 
     return jointPosition;
-
   }
 
   Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i)
@@ -132,13 +99,18 @@ namespace SGHardware
     // SG uses vector of vectors and ROS uses one long array
     if (senseglovePtr != nullptr) 
     {
-      return senseglovePose.CalculateFingertips(senseglovePtr->GetFingerThimbleOffsets())[i];
+      tipPositions = senseglovePose.CalculateFingertips(senseglovePtr->GetFingerThimbleOffsets())[i];
     }
-    else
+    else if (novaglovePtr != nullptr) 
     {
-      return {0.0, 0.0, 0.0};
+      tipPositions = handPose.GetJointPositions()[i][3]; 
     }
+    else if (nova2glovePtr != nullptr)
+    {
+      tipPositions = handPose.GetJointPositions()[i][3];    
+    }   
 
+    return tipPositions;
   }
 
   void SenseGloveRobot::actuateEffort(std::vector<double> effortCommand)
@@ -234,29 +206,18 @@ namespace SGHardware
       if (!senseglovePtr->GetHandPose(this->handModel, this->handPose)) {ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data");}
       else {handUpdate = true;}
     }
-
-    else if(novaglovePtr != nullptr)
+    else if (novaglovePtr != nullptr)
     {
-      if (novaglovePtr->GetSensorData(novaSensorData))  // If GetSensorData is true, we have sucesfully received data
+      handPoseAngles = handPose.GetHandAngles();
+      if (!handPoseAngles.empty())
       {
-        std::vector<float> normalizedValues{novaglovePtr->ToNormalizedValues(novaSensorData)};
-
-        for (size_t i = 0; i < 5; ++i)
-        {
-          handAngles.push_back(novaglovePtr->CalculateHandAngles(normalizedValues, interpolator)[i][0].GetZ());
-          handAngles.push_back(novaglovePtr->CalculateHandAngles(normalizedValues, interpolator)[i][0].GetY());
-        }
-
         for (auto& joint : jointList)
-        { 
-          joint.position = handAngles[joint.jointIndex];    
-          double intermediateVelocity = joint.position - joint.velocity;
-
-          if (intermediateVelocity != 0.0 and period.toSec() != 0.0) {joint.velocity = intermediateVelocity / 1.0;}
-          else { joint.velocity = 0.0; }
+        {
+          if (joint.jointIndex % 3 == 0) {joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][0].GetZ();}
+          else {joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][joint.jointIndex % 3].GetY();}
         }
       }
-
+   
       if (!novaglovePtr->GetSensorData(novaSensorData)) {ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data");}
       else {gloveUpdate = true;}
 
@@ -264,28 +225,18 @@ namespace SGHardware
       else {handUpdate = true;}
     }
 
-    else if(nova2glovePtr != nullptr)
+    else if (nova2glovePtr != nullptr)
     {
-      if (nova2glovePtr->GetSensorData(nova2SensorData))  // If GetSensorData is true, we have sucesfully received data
+      handPoseAngles = handPose.GetHandAngles();
+      if (!handPoseAngles.empty())
       {
-        std::vector<float> normalizedValues{nova2glovePtr->ToNormalizedValues(nova2SensorData)};
-
-        for (size_t i = 0; i < 5; ++i)
-        {
-          handAngles.push_back(nova2glovePtr->CalculateHandAngles(normalizedValues, interpolator, false)[i][0].GetZ());
-          handAngles.push_back(nova2glovePtr->CalculateHandAngles(normalizedValues, interpolator, false)[i][0].GetY());
-        }
-
         for (auto& joint : jointList)
-        { 
-          joint.position = handAngles[joint.jointIndex];    
-          double intermediateVelocity = joint.position - joint.velocity;
-
-          if (intermediateVelocity != 0.0 and period.toSec() != 0.0) {joint.velocity = intermediateVelocity / 1.0;}
-          else { joint.velocity = 0.0; }
+        {
+          if (joint.jointIndex % 3 == 0) {joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][0].GetZ();}
+          else {joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][joint.jointIndex % 3].GetY();}
         }
       }
-
+   
       if (!novaglovePtr->GetSensorData(novaSensorData)) {ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data");}
       else {gloveUpdate = true;}
 
