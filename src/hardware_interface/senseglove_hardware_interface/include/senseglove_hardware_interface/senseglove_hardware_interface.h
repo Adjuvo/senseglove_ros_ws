@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <vector>
+#include "std_msgs/Float64MultiArray.h"
 
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
@@ -36,8 +37,9 @@ public:
   void read(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
   // Writes (in realtime) the commands from the controllers to the sensegloves.
-
   void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
+
+  void hapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg);
 
 private:
 
@@ -51,6 +53,9 @@ private:
 
   /* SenseGlove hardware */
   std::unique_ptr<SGHardware::SenseGloveSetup> sensegloveSetup;
+
+  std::vector<std::vector<double>> senseglove_force_command_;
+  std::vector<std::vector<double>> senseglove_vibration_command_;
 
   /* Interfaces */
   hardware_interface::JointStateInterface joint_state_interface_;
@@ -80,6 +85,7 @@ private:
   bool hasActuated = false;
 
   RtPublisherPtr<senseglove_shared_resources::SenseGloveState> senseglove_state_pub_;
+  ros::Subscriber senseglove_haptics_sub_;
 };
 
 #endif  // ROS_WORKSPACE_SG_HARDWARE_INTERFACE_H
