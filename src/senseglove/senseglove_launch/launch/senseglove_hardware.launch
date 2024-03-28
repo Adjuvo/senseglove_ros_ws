@@ -43,4 +43,26 @@
                 <arg name="isRight" value="true"/>
             </include>
     </group>
+
+        <!-- Check if robot is Nova2 -->
+    <group if="$(arg use_nova2)">
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval left)">
+                <arg name="robot" value="nova2_left"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="false"/>
+            </include>
+
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both)">
+                <arg name="robot" value="nova2_right"/>
+                <arg name="gloveIndex" value="1"/>
+                <arg name="isRight" value="true"/>
+            </include>
+
+            <include file="$(find senseglove_hardware_interface)/launch/hardware.launch" if="$(eval both==false and right==true)">
+                <arg name="robot" value="nova2_right"/>
+                <arg name="gloveIndex" value="0"/>
+                <arg name="isRight" value="true"/>
+            </include>
+    </group>
+    
 </launch>

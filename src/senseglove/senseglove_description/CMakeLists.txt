@@ -20,6 +20,8 @@ set(XACRO_FILES
         urdf/dk1_right.xacro
         urdf/nova_left.xacro
         urdf/nova_right.xacro
+        urdf/nova2_left.xacro
+        urdf/nova2_right.xacro
         )
 build_and_install_xacro_files(${XACRO_FILES})
 

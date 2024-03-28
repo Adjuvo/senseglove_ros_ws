@@ -60,7 +60,7 @@ class AllowedRobot
       }
       else if (robotName == "nova2_right")
       {
-        this->value = nova_right;
+        this->value = nova2_right;
       }
       else
       {
@@ -88,9 +88,17 @@ class AllowedRobot
       {
         return basePath.append("/robots/nova_right.yaml");
       }
+      else if (this->value == AllowedRobot::nova2_left)
+      {
+        return basePath.append("/robots/nova2_left.yaml");
+      }
+      else if (this->value == AllowedRobot::nova2_right)
+      {
+        return basePath.append("/robots/nova2_right.yaml");
+      }
       else
       {
-      ROS_ERROR_STREAM("Robotname not implemented. Using controllers.yaml.");
+      ROS_ERROR_STREAM("Allowed Robot: Robotname not implemented. Using controllers.yaml.");
       return basePath.append("/robots/dk1_left.yaml");
       }
     }
@@ -123,6 +131,12 @@ class AllowedRobot
           break;
         case nova_right:
           out << "nova_right";
+          break;
+        case nova2_left:
+          out << "nova2_left";
+          break;
+        case nova2_right:
+          out << "nova2_right";
           break;
         default:
           out << "(Unknown)";

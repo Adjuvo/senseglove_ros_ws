@@ -15,12 +15,12 @@ def publisher():
         rospy.loginfo("Started Simple Haptics Node")
         
         hapticLevels = Float64MultiArray()
-        hapticLevels.data = [0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0]
+        hapticLevels.data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0]
 
         pub = rospy.Publisher(HAPTIC_TOPIC, Float64MultiArray, queue_size=1)
 
 
-        r = rospy.Rate(50)
+        r = rospy.Rate(100)
         while not rospy.is_shutdown():
             pub.publish(hapticLevels)
             r.sleep()
