@@ -1,4 +1,4 @@
-// Copyright 2020 SenseGlove
+// Copyright (c) 2020 - 2024 SenseGlove
 #include "senseglove_hardware/joint.h"
 #include "senseglove_hardware/senseglove_robot.h"
 #include "senseglove_hardware/senseglove_setup.h"

@@ -1,4 +1,4 @@
-// Copyright 2020 senseglove
+// Copyright (c) 2020 - 2024 SenseGlove
 #include "senseglove_hardware_interface/senseglove_hardware_interface.h"
 
 #include <cstdlib>

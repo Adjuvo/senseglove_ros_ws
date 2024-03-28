@@ -1,4 +1,17 @@
-// Copyright 2020 Senseglove.
+/**
+ * @file
+ *
+ * @author Rogier
+ * @author Akshay Radhamohan Menon <akshay@senseglove.com>
+ * 
+ * @section LICENSE
+ * Copyright (c) 2020 - 2024 SenseGlove *
+ * 
+ * @section DESCRIPTION
+ * 
+ * A class to represent different acceptable SenseGlove EDevices
+ */
+
 #ifndef ROS_WORKSPACE_ALLOWED_ROBOT_H
 #define ROS_WORKSPACE_ALLOWED_ROBOT_H
 

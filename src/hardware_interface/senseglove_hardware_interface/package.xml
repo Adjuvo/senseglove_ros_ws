@@ -7,7 +7,7 @@
     The bridge between ros_control and the senseglove hardware.
   </description>
 
-  <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>
+  <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
 
   <license>TODO</license>
 

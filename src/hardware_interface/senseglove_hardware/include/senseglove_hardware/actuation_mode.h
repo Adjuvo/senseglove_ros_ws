@@ -1,15 +1,16 @@
 /**
- * @file actuation_mode.h
+ * @file
  *
- * @brief A class to represent different actuation modes, with methods for 
- * conversion, comparison, and numerical & string representation of actuation modes.
- *
+ * @author Rogier
+ * @author Akshay Radhamohan Menon <akshay@senseglove.com>
+ * 
  * @section LICENSE
- * Copyright (c) 2020 - 2024 SenseGlove
- *
- * @section AUTHOR
- * - Rogier
- * - Akshay Radhamohan Menon <akshay@senseglove.com>
+ * Copyright (c) 2020 - 2024 SenseGlove *
+ * 
+ * @section DESCRIPTION
+ * 
+ * A class to represent different actuation modes, with methods for 
+ * conversion, comparison, and numerical & string representation of actuation modes.
  */
 
 #ifndef SENSEGLOVE_HARDWARE_ACTUATION_MODE_H

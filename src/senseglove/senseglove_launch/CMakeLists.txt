@@ -1,4 +1,4 @@
-# Copyright (c) 2020 - 2023 SenseGlove
+# Copyright (c) 2020 - 2024 SenseGlove
 
 cmake_minimum_required(VERSION 3.21...3.25)
 

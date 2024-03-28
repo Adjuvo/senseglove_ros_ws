@@ -1,4 +1,4 @@
-// Copyright 2020 Senseglove
+// Copyright (c) 2020 - 2024 SenseGlove
 #include "senseglove_hardware_builder/hardware_builder.h"
 
 #include <algorithm>

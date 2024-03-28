@@ -1,4 +1,4 @@
-// Copyright 2019 Project March.
+// Copyright (c) 2020 - 2024 SenseGlove
 #include "senseglove_hardware/joint.h"
 
 #include <ros/ros.h>

@@ -1,4 +1,4 @@
-// Copyright 2020 SenseGlove
+// Copyright (c) 2020 - 2024 SenseGlove
 #include <senseglove_hardware/joint.h>
 #include <senseglove_hardware/senseglove_robot.h>
 
@@ -151,6 +151,20 @@ namespace SGHardware
       this->hapticglove->SendHaptics();
     }
   }
+
+  void SenseGloveRobot::actuateActiveStrap(std::vector<double> activeStrapCommand)
+  {
+    std::vector<float> amplitudes(activeStrapCommand.begin(), activeStrapCommand.end());
+
+    if (nova2glovePtr != nullptr)
+    {
+      nova2glovePtr->QueueSqueezeLevel(amplitudes[0]);
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, amplitudes[1]);
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, amplitudes[2]);
+    }
+
+  }
+
   void SenseGloveRobot::actuateVibrations(double b_0, double b_1, double b_2, double b_3, double b_4)
   {
     std::vector<double> vibrationCommand = { b_0, b_1, b_2, b_3, b_4 };

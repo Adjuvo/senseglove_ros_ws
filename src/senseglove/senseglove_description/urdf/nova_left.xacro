@@ -423,7 +423,7 @@
                upper="${100}"/>
     </joint>
 
-    <joint name="l_middle_pip" type="revolute">
+    <joint name="l_middle_tip" type="revolute">
         <parent link="l_middle_flexion_two"/>
         <child link="l_middle_flexion_three"/>
         <origin xyz="0 0 ${-second_bar_length}" rpy="0 0 0"/>
@@ -435,16 +435,10 @@
                upper="${100}"/>
     </joint>
 
-    <joint name="l_middle_tip" type="revolute">
-        <parent link="l_middle_flexion_three"/>
-        <child link="l_middle_thimble"/>
-        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
-        <axis xyz="-1 0 0"/>
-
-        <limit velocity="${1000}"
-               effort="${100}"
-               lower="${-4.2}"
-               upper="${100}"/>
+    <joint name="l_hub_to_ring_brake" type="fixed">
+        <parent link="l_glove_hub"/>
+        <child link="l_ring_brake"/>
+        <origin xyz="${ring_hub_X} ${ring_hub_Y} ${ring_hub_Z}" rpy="0 0 0"/>
     </joint>
 
     <joint name="l_ring_brake" type="revolute">

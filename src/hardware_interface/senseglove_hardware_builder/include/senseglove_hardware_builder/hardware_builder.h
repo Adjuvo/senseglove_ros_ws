@@ -1,4 +1,17 @@
-// Copyright 2020 Senseglove
+/**
+ * @file
+ *
+ * @author Rogier
+ * @author Akshay Radhamohan Menon <akshay@senseglove.com>
+ * 
+ * @section LICENSE
+ * Copyright (c) 2020 - 2024 SenseGlove *
+ * 
+ * @section DESCRIPTION
+ * 
+ * A class to build a ROS-Robot
+ */
+
 #ifndef ROS_WORKSPACE_HARDWARE_BUILDER_H
 #define ROS_WORKSPACE_HARDWARE_BUILDER_H
 #include "senseglove_hardware_builder/allowed_robot.h"

@@ -1,4 +1,17 @@
-// Copyright 2020 senseglove
+/**
+ * @file
+ *
+ * @author Rogier
+ * @author Akshay Radhamohan Menon <akshay@senseglove.com>
+ * 
+ * @section LICENSE
+ * Copyright (c) 2020 - 2024 SenseGlove *
+ * 
+ * @section DESCRIPTION
+ * 
+ * ROS-SenseGlove Hardware Interface
+ */
+
 #ifndef ROS_WORKSPACE_SENSEGLOVE_HARDWARE_INTERFACE_H
 #define ROS_WORKSPACE_SENSEGLOVE_HARDWARE_INTERFACE_H
 
