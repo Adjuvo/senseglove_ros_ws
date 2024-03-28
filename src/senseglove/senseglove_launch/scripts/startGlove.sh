@@ -1,13 +1,23 @@
 #!/bin/bash
 
 # Start SenseCom
+echo "Starting SenseCom..."
 chmod +x $1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64
 $1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64 &
 
 # Allow SenseComm to start
-sleep 10
+sleep 2
+
+# Function to wait for user input
+wait_for_user_input() {
+    echo "Press enter when devices are connected in SenseCom..."
+    read
+}
+
+wait_for_user_input
 
 # Start SenseGlove node
+echo "Launching Senseglove"
 source ~/.bashrc
 roslaunch senseglove_launch senseglove_hardware.launch left:=$2 right:=$3 use_dk:=$4 use_nova:=$5
 
