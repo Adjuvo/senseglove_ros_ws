@@ -46,11 +46,20 @@ For a detailed procedure on connecting a Nova or Nova 2 glove in linux, kindly r
 
 **NOTE:** There are two launch files; one for dk, one for nova. The current implementation allows you to use either of these standalone gloves through these two launch files. Future updates can include simultaneous use of gloves.
 
-### Example: Using Two sensegloves in ROS: ###
+### Example: Using two sensegloves [Left and Right] in ROS: ###
 1. Source your workspace
 2. Make sure your sensegloves are connected through usb or bluetooth
     - If you checked your connection with sensecom, be sure to exit the application before proceeding
-3. Run: `roslaunch senseglove_launch senseglove_demo_dk.launch` or `roslaunch senseglove_launch senseglove_demo_nova.launch` based on your connected device.
+3. In the `senseglove_demo.launch` script, make sure you specify the devices being used:
+    - `use_dk`
+    - `use_nova`
+    - `use_nova2`
+
+4. Finally, make sure you specify the handedness arguments:
+    - `use_left` = true
+    - `use_right` = true
+
+5. Run: `roslaunch senseglove_launch senseglove.launch` after saving.
 
 - A bash script is called invoking sensecom and running the hardware interface node twice for a left- and a right-handed glove.
 - If all is well, your invocation of the roslaunch command should have started a roscore session and all necessary nodes providing intefaces to the senseglove.
@@ -62,9 +71,17 @@ Moreover, due to our integration into ros-control we require the user to know wh
 As such, the user has to define which glove is connected to the system.
 
 1. Find out if you are dealing with a left or right-handed senseglove.
-2. In the ` senseglove_finger_distance_dk.launch` or ` senseglove_finger_distance_nova.launch` script, change default values of ` use_left/use_right` with respect to to the dealt senseglove.
-3. Build and source your workspace
-54. Proceed as if you were dealing with 2 sensegloves.
+2. In the `senseglove_demo.launch` script, make sure you specify the devices being used:
+    - `use_dk`
+    - `use_nova`
+    - `use_nova2`
+
+3. Finally and most importantly, give proper bool value to glove you are using:
+    - `use_left` 
+    - `use_right`
+
+4. Run: `roslaunch senseglove_launch senseglove.launch` after saving.
+
 
 ## General Usage Description: ##
 This repository is meant to present a solid foundation for using the senseglove in ROS Noetic. As such it provides no
