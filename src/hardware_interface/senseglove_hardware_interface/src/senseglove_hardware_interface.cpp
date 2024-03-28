@@ -259,9 +259,11 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
       senseglove_state_pub_->msg_.joint_names[k] = joint.getName();
       senseglove_state_pub_->msg_.position[k] = joint.getPosition();
       senseglove_state_pub_->msg_.absolute_velocity[k] = joint.getVelocity();
+      
       senseglove_state_pub_->msg_.hand_position[k].x = robot.getHandPosition(k).GetX();
       senseglove_state_pub_->msg_.hand_position[k].y = robot.getHandPosition(k).GetY();
       senseglove_state_pub_->msg_.hand_position[k].z = robot.getHandPosition(k).GetZ();
+
     }
     for (int j = 0; j < 5; ++j)
     {

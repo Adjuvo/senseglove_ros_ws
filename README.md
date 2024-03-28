@@ -1,4 +1,5 @@
 # Senseglove ROS Workspace
+
 A workspace for the integration of the SenseGlove into _ROS Noetic_.
 This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove. If you face issues when dealing with sending haptic commands, make use of the *senseglove_haptics topic*
 
