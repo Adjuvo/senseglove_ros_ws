@@ -242,9 +242,9 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
     {
       senseglove::Joint& joint = robot.getJoint(k);
       senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
-      senseglove_state_pub_->msg_.joint_names[i] = joint.getName();
-      senseglove_state_pub_->msg_.position[i] = joint.getPosition();
-      senseglove_state_pub_->msg_.absolute_velocity[i] = joint.getVelocity();
+      senseglove_state_pub_->msg_.joint_names[k] = joint.getName();
+      senseglove_state_pub_->msg_.position[k] = joint.getPosition();
+      senseglove_state_pub_->msg_.absolute_velocity[k] = joint.getVelocity();
       senseglove_state_pub_->msg_.hand_position[k].x = robot.getHandPos(k).x;
       senseglove_state_pub_->msg_.hand_position[k].y = robot.getHandPos(k).y;
       senseglove_state_pub_->msg_.hand_position[k].z = robot.getHandPos(k).z;
