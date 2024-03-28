@@ -2,12 +2,12 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>senseglove_hardware_builder</name>
-  <version>0.0.0</version>
+  <version>2.0.0</version>
   <description>
-    Communicates with the senseglove hardware.
+    Builds the device in ROS
   </description>
 
-  <maintainer email="rogierkrijnen@live.nl">SenseGlove</maintainer>
+  <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
 
   <license>TODO</license>
 

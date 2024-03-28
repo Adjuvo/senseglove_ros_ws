@@ -1,118 +1,164 @@
-// Copyright 2020 SenseGlove.
+/**
+ * @file
+ *
+ * @author Rogier
+ * @author Akshay Radhamohan Menon <akshay@senseglove.com>
+ * 
+ * @section LICENSE
+ * Copyright (c) 2020 - 2024 SenseGlove *
+ * 
+ * @section DESCRIPTION
+ * 
+ * A class to represent a ROS intepretation of a SenseGlove.
+ */
+
 #ifndef ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
 #define ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
-
-#include "senseglove_hardware/joint.h"
-#include "SenseGlove.h"
-#include "BasicHandModel.h"
-#include "HandPose.h"
-#include "DeviceList.h"
 
 #include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include <urdf/model.h>
+#include "joint.h"
+#include "BasicHandModel.hpp"
+#include "HandPose.hpp"
+#include "DeviceList.hpp"
+#include "Vect3D.hpp"
 
-namespace senseglove
+#include "SenseGlove.hpp"
+#include "SenseGloveSensorData.hpp"
+#include "SenseGlovePose.hpp"
+
+#include "NovaGlove.hpp"
+#include "NovaGloveSensorData.hpp"
+
+#include "Nova2Glove.hpp"
+#include "Nova2GloveSensorData.hpp"
+
+using namespace SGCore;
+using namespace SGCore::SG;
+using namespace SGCore::Nova;
+
+namespace SGHardware
 {
-class SenseGloveRobot
-{
-private:
-  SGCore::SG::SenseGlove senseglove_;
-  SGCore::SG::SG_GloveInfo model_;
-  SGCore::SG::SG_SensorData sensor_data_;
-  SGCore::SG::SG_GlovePose glove_pose_;
-  SGCore::SG::SG_HandProfile hand_profile_;
-  SGCore::Kinematics::BasicHandModel hand_model_;
-  std::vector<SGCore::Kinematics::Vect3D> tip_positions_;
-  SGCore::HandPose hand_pose_;
-  ::std::vector<Joint> joint_list_;
-  urdf::Model urdf_;
-  const std::string name_;
-  const SGCore::DeviceType device_type_;
-  const int robot_index_;
-  bool is_right_;
-  bool updated_;
-
-public:
-  using iterator = std::vector<Joint>::iterator;
-
-  SenseGloveRobot(SGCore::SG::SenseGlove glove, ::std::vector<Joint> jointList, urdf::Model urdf, int robotIndex,
-                  bool is_right);
-
-  ~SenseGloveRobot();
-
-  /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
-  SenseGloveRobot(SenseGloveRobot&) = delete;
-  SenseGloveRobot& operator=(SenseGloveRobot&) = delete;
-
-  /* Delete move assignment since string cannot be move assigned */
-  SenseGloveRobot(SenseGloveRobot&&) = default;
-  SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
-
-  std::string getName() const;
-  int getIndex() const;
-  bool getRight();
-
-  Joint& getJoint(::std::string jointName);
-
-  Joint& getJoint(size_t index);
-
-  SGCore::Kinematics::Vect3D getHandPos(int i);
-  SGCore::Kinematics::Vect3D getFingerTip(int i);
-
-  // ros control works exclusively with doubles, but the sendHaptics function works with integers
-  void actuateEffort(std::vector<double> effort_command);
-  void actuateEffort(double e_0, double e_1, double e_2, double e_3, double e_4);
-  void actuateBuzz(std::vector<double> buzz_command);
-  void actuateBuzz(double b_0, double b_1, double b_2, double b_3, double b_4);
-  void stopActuating();
-
-  size_t size() const;
-
-  iterator begin();
-  iterator end();
-
-  const urdf::Model& getUrdf() const;
-
-  bool updateGloveData(const ros::Duration period);
-
-  /** @brief Override comparison operator */
-  friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
+  class SenseGloveRobot
   {
-    if (lhs.joint_list_.size() != rhs.joint_list_.size())
+  private:
+    // DK1 Specific
+    // SenseGlove senseglove;    
+    SenseGloveSensorData sensegloveSensorData;
+    SenseGlovePose senseglovePose;
+
+    //Nova Specific
+    NovaGlove novaglove;    
+    NovaGloveSensorData novaSensorData;  
+
+    // Nova2 Specific
+    Nova2Glove nova2glove;    
+    Nova2GloveSensorData nova2SensorData;
+
+    // Shared
+    std::shared_ptr<HapticGlove> hapticglove;
+    HandPose handPose;
+    Kinematics::BasicHandModel handModel;
+    Kinematics::Vect3D jointPosition;
+    Kinematics::Vect3D tipPositions;  
+    std::vector<std::vector<Kinematics::Vect3D>> handPoseAngles;
+
+    std::shared_ptr<SenseGlove> senseglovePtr = std::dynamic_pointer_cast<SenseGlove>(hapticglove);
+    std::shared_ptr<NovaGlove> novaglovePtr = std::dynamic_pointer_cast<NovaGlove>(hapticglove);
+    std::shared_ptr<Nova2Glove> nova2glovePtr = std::dynamic_pointer_cast<Nova2Glove>(hapticglove);
+
+    ::std::vector<Joint> jointList;
+    urdf::Model urdfModel;
+    const std::string SenseGloveRobotName;
+    const EDeviceType deviceType;
+    const int robotIndex;
+    bool isUpdated;
+
+  public:
+  
+    using iterator = std::vector<Joint>::iterator;
+
+    SenseGloveRobot(std::shared_ptr<HapticGlove> hapticglove, ::std::vector<Joint> jointList, urdf::Model urdfModel, int robotIndex, bool isRight);
+    ~SenseGloveRobot();
+
+    /* Delete copy constructor/assignment since the unique_ptr cannot be copied */
+    SenseGloveRobot(SenseGloveRobot&) = delete;
+    SenseGloveRobot& operator=(SenseGloveRobot&) = delete;
+
+    /* Delete move assignment since string cannot be move assigned */
+    SenseGloveRobot(SenseGloveRobot&&) = default;
+    SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
+
+    std::string getRobotName() const;
+    EDeviceType getRobotType() const;
+    int getRobotIndex() const;
+    bool getRight();
+
+    Joint& getJoint(::std::string jointName);
+    Joint& getJoint(size_t index);
+
+    size_t getJointSize();
+
+    Kinematics::Vect3D getHandPosition(int i);
+    Kinematics::Vect3D getFingerTip(int i);
+
+    // ros control works exclusively with doubles, but the sendHaptics function works with integers
+    void actuateEffort(std::vector<double> effortCommand);
+    void actuateEffort(double e_0, double e_1, double e_2, double e_3, double e_4);
+    
+    void actuateVibrations(std::vector<double> vibrationCommand);
+    void actuateVibrations(double v_0, double v_1, double v_2, double v_3, double v_4);
+
+    void actuateActiveStrap(std::vector<double> activeStrapCommand);
+
+    void stopActuating();
+
+    size_t size() const;
+    
+    iterator begin();
+    iterator end();
+
+    const urdf::Model& getUrdf() const;
+
+    bool updateGloveData(const ros::Duration period);
+
+    /** @brief Override comparison operator */
+    friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
     {
-      return false;
-    }
-    for (unsigned int i = 0; i < lhs.joint_list_.size(); i++)
-    {
-      const senseglove::Joint& lhsJoint = lhs.joint_list_.at(i);
-      const senseglove::Joint& rhsJoint = rhs.joint_list_.at(i);
-      if (lhsJoint != rhsJoint)
+      if (lhs.jointList.size() != rhs.jointList.size())
       {
         return false;
       }
+      for (unsigned int i = 0; i < lhs.jointList.size(); i++)
+      {
+        const SGHardware::Joint& lhsJoint = lhs.jointList.at(i);
+        const SGHardware::Joint& rhsJoint = rhs.jointList.at(i);
+        if (lhsJoint != rhsJoint)
+        {
+          return false;
+        }
+      }
+      return true;
     }
-    return true;
-  }
 
-  friend bool operator!=(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
-  {
-    return !(lhs == rhs);
-  }
-
-  /** @brief Override stream operator for clean printing */
-  friend ::std::ostream& operator<<(std::ostream& os, const SenseGloveRobot& senseGloveRobot)
-  {
-    for (unsigned int i = 0; i < senseGloveRobot.joint_list_.size(); i++)
+friend bool operator!=(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
     {
-      os << senseGloveRobot.joint_list_.at(i) << "\n";
+      return !(lhs == rhs);
     }
-    return os;
-  }
-};
-}  // namespace senseglove
+
+    /** @brief Override stream operator for clean printing */
+    friend ::std::ostream& operator<<(std::ostream& os, const SenseGloveRobot& senseGloveRobot)
+    {
+      for (unsigned int i = 0; i < senseGloveRobot.jointList.size(); i++)
+      {
+        os << senseGloveRobot.jointList.at(i) << "\n";
+      }
+      return os;
+    }
+  };
+}  // namespace SGHardware
 
 #endif  // ROS_WORKSPACE_SENSEGLOVE_ROBOT_H

@@ -1,9 +1,15 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(senseglove_finger_distance)
+# Copyright (c) 2020 - 2024 SenseGlove
+
+cmake_minimum_required(VERSION 3.21...3.25)
+
+project(senseglove_finger_distance
+        VERSION 0.0.0
+        DESCRIPTION "The senseglove_finger_distance"
+        HOMEPAGE_URL "https://senseglove.com"
+        LANGUAGES CXX
+        )
 
 find_package(catkin REQUIRED COMPONENTS
-    actionlib
-    actionlib_msgs
     genmsg
     rospy
     senseglove_shared_resources
@@ -18,6 +24,6 @@ catkin_package(
     std_msgs
 )
 
-catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node scripts/senseglove_haptics_node
+catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )

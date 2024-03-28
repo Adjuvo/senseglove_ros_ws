@@ -2,19 +2,19 @@ dk1_left:
   deviceType: 0
   # Ordered Alphabetically in joint state publisher
   joints:
-    - l_thumb_cmc:
+    - l_thumb_mcp:
         jointIndex: 1
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - l_thumb_mcp:
+    - l_thumb_pip:
         jointIndex: 2
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - l_thumb_pip:
+    - l_thumb_dip:
         jointIndex: 3
         actuationMode: position
         allowActuation: false
