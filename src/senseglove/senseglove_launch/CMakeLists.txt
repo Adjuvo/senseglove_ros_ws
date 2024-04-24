@@ -17,4 +17,9 @@ install(DIRECTORY launch scripts
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         )
 
-install(PROGRAMS scripts/startGlove.sh DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(PROGRAMS 
+        bluetooth_scripts/glove_connect.sh 
+        bluetooth_scripts/glove_disconnect.sh
+        scripts/startGlove.sh 
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )

@@ -7,7 +7,7 @@ ROS Node to send simple Force/Vibration feedback on SenseGlove
 import rospy
 from std_msgs.msg import Float64MultiArray
 
-HAPTIC_TOPIC = "/senseglove/0/rh/senseglove_haptics"
+HAPTIC_TOPIC = "/senseglove/0/rh/active_strap_haptics"
 
 def publisher():
 
@@ -15,7 +15,8 @@ def publisher():
         rospy.loginfo("Started Simple Haptics Node")
         
         hapticLevels = Float64MultiArray()
-        hapticLevels.data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0]
+        # hapticLevels.data = [100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0]
+        hapticLevels.data = [100.0, 0.0, 0.0]
 
         pub = rospy.Publisher(HAPTIC_TOPIC, Float64MultiArray, queue_size=1)
 

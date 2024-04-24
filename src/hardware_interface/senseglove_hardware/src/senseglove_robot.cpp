@@ -126,12 +126,6 @@ namespace SGHardware
       else
       {
         this->hapticglove->QueueForceFeedbackLevels(effortLevels);
-
-        if (nova2glovePtr != nullptr)
-        {
-          nova2glovePtr->QueueSqueezeLevel(effortLevels[4]);
-        }
-
         this->hapticglove->SendHaptics();
       }
     }
@@ -149,17 +143,21 @@ namespace SGHardware
     else
     {
       this->hapticglove->QueueVibroLevels(amplitudes);
-
-      if (nova2glovePtr != nullptr)
-      {
-        nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, amplitudes[2]);
-        nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, amplitudes[3]);
-        nova2glovePtr->QueueVibroLevel(EHapticLocation::WholeHand, amplitudes[4]);
-      }
-
       this->hapticglove->SendHaptics();
     }
+  }
 
+  void SenseGloveRobot::actuateActiveStrap(std::vector<double> activeStrapCommand)
+  {
+    std::vector<float> amplitudes(activeStrapCommand.begin(), activeStrapCommand.end());
+
+    // if (nova2glovePtr != nullptr)
+    // {
+      nova2glovePtr->QueueSqueezeLevel(amplitudes[0]);
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, amplitudes[1]);
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, amplitudes[2]);
+      nova2glovePtr->SendHaptics();
+    // }
   }
 
   void SenseGloveRobot::stopActuating()

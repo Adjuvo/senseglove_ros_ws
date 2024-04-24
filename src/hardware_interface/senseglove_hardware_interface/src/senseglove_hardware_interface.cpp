@@ -36,9 +36,17 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
   ROS_INFO_STREAM("Senseglove HW Interface: Constructed topic: " << topicName);  
 
   senseglove_haptics_sub_ = nh.subscribe("/" + this->sensegloveSetup->getSenseGloveRobot(0).getRobotName() +
-                                         handedness[this->sensegloveSetup->getSenseGloveRobot(0).getRight()] + "/senseglove_haptics/",
-                                         1, &SenseGloveHardwareInterface::hapticSubscriber, this); 
+                                        handedness[this->sensegloveSetup->getSenseGloveRobot(0).getRight()] + "/senseglove_haptics/",
+                                        1, &SenseGloveHardwareInterface::hapticSubscriber, this); 
     
+
+  if (this->sensegloveSetup->getSenseGloveRobot(0).getRobotType() == EDeviceType::Nova2)
+  {
+    senseglove_active_strap_sub_ = nh.subscribe("/" + this->sensegloveSetup->getSenseGloveRobot(0).getRobotName() +
+                                         handedness[this->sensegloveSetup->getSenseGloveRobot(0).getRight()] + "/active_strap_haptics/",
+                                         1, &SenseGloveHardwareInterface::activeStrapHapticSubscriber, this); 
+  }
+
   this->uploadJointNames(nh);
 
   num_joints_ = this->sensegloveSetup->getSenseGloveRobot(0).getJointSize();
@@ -216,6 +224,7 @@ void SenseGloveHardwareInterface::reserveMemory()
   jointLastVibrationCommand.resize(num_gloves_);
   senseglove_force_command_.resize(num_gloves_);
   senseglove_vibration_command_.resize(num_gloves_);
+  senseglove_active_strap_command_.resize(num_gloves_);
   
   for (unsigned int i = 0; i < num_gloves_; ++i)
   {
@@ -231,6 +240,8 @@ void SenseGloveHardwareInterface::reserveMemory()
     jointLastEffortCommand[i].resize(5, 0.0);
     senseglove_force_command_[i].resize(5, 0.0);
     senseglove_vibration_command_[i].resize(5, 0.0);
+    senseglove_active_strap_command_[i].resize(5, 0.0);
+    
 
   }
 
@@ -302,5 +313,24 @@ void SenseGloveHardwareInterface::hapticSubscriber(const std_msgs::Float64MultiA
       }
     }
   }
-
 }
+
+void SenseGloveHardwareInterface::activeStrapHapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg)
+{ 
+  for (size_t i = 0; i < num_gloves_; ++i) 
+  {
+    SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);
+
+    for (size_t j = 0; j < 5; j++)
+    {
+      senseglove_active_strap_command_[i].push_back(msg->data[j]);
+
+      if (j == 4)  // actuators 0 - 9
+      {
+        robot.actuateActiveStrap(senseglove_active_strap_command_[i]);
+        senseglove_active_strap_command_[i].clear();
+      }
+    }
+  }
+}
+

@@ -53,6 +53,7 @@ public:
   void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
 
   void hapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg);
+  void activeStrapHapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg);
 
 private:
 
@@ -69,6 +70,7 @@ private:
 
   std::vector<std::vector<double>> senseglove_force_command_;
   std::vector<std::vector<double>> senseglove_vibration_command_;
+  std::vector<std::vector<double>> senseglove_active_strap_command_;
 
   /* Interfaces */
   hardware_interface::JointStateInterface joint_state_interface_;
@@ -99,6 +101,7 @@ private:
 
   RtPublisherPtr<senseglove_shared_resources::SenseGloveState> senseglove_state_pub_;
   ros::Subscriber senseglove_haptics_sub_;
+  ros::Subscriber senseglove_active_strap_sub_;
 };
 
 #endif  // ROS_WORKSPACE_SG_HARDWARE_INTERFACE_H
