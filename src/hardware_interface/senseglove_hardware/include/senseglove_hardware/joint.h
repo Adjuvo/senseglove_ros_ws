@@ -24,10 +24,10 @@
 #include <ros/ros.h>
 #include <urdf/model.h>
 #include <senseglove_hardware/actuation_mode.h>
+#include <senseglove_hardware/actuation_type.h>
 
 #include "SenseGlove.hpp"
 #include "Fingers.hpp"
-
 
 using namespace SGCore;
 
@@ -42,10 +42,10 @@ namespace SGHardware
     Joint(std::string jointName, int jointIndex);
 
     // Initializes a Joint without a finger, with actuation options
-    Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation);
+    Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation);
 
     // Initializes a Joint with a specific SG finger, with actuation options
-    Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger);
+    Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger);
 
     /// Destructor defined default, ensuring proper destruction of derived classes
     virtual ~Joint() noexcept = default;
@@ -81,6 +81,9 @@ namespace SGHardware
 
     // Gets the torque of the joint
     double getTorque();
+
+    // Gets the actuation type of the joint
+    ActuationType getActuationType() const;
 
     // Gets the actuation mode of the joint
     ActuationMode getActuationMode() const;
@@ -126,6 +129,9 @@ namespace SGHardware
 
     // Index of the joint
     const int jointIndex;
+
+    // Type of actuation of the joint
+    ActuationType actuationType;
 
     // Mode of actuation of the joint
     ActuationMode actuationMode;

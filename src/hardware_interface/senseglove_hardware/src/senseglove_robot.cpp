@@ -7,6 +7,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <numeric>
 
 #include <limits>
 
@@ -73,24 +74,15 @@ namespace SGHardware
   {
     // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
     // SG uses vector of vectors and ROS uses one long array 
-
     if (senseglovePtr != nullptr)
     {
       jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4];
     }
-    else if (novaglovePtr != nullptr)
+    else if (novaglovePtr != nullptr || nova2glovePtr != nullptr)
     {
-      if (i % 3 == 2) { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][3]; }
-      if (i % 3 == 1) { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][1]; }
-      else { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][0]; }
+      if (i > 19) { jointPosition = {0.0, 0.0, 0.0}; }
+      else { jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4]; } 
     }
-    else if (nova2glovePtr != nullptr)
-    {
-      if (i % 3 == 2) { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][3]; }
-      if (i % 3 == 1) { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][1]; }
-      else { jointPosition = handPose.GetJointPositions()[std::floor(i / 3)][0]; }
-    }
-
     return jointPosition;
   }
 
@@ -102,15 +94,11 @@ namespace SGHardware
     {
       tipPositions = senseglovePose.CalculateFingertips(senseglovePtr->GetFingerThimbleOffsets())[i];
     }
-    else if (novaglovePtr != nullptr)
+    else if (novaglovePtr != nullptr || nova2glovePtr != nullptr)
     {
-      tipPositions = handPose.GetJointPositions()[i][3];
+      if (i > 19) { tipPositions = {0.0, 0.0, 0.0}; }
+      else { tipPositions = handPose.GetJointPositions()[i][3]; }
     }
-    else if (nova2glovePtr != nullptr)
-    {
-      tipPositions = handPose.GetJointPositions()[i][3];
-    }
-
     return tipPositions;
   }
 
@@ -119,7 +107,7 @@ namespace SGHardware
     if (DeviceList::SenseComRunning())  // check if the Sense Comm is running. If not, warn the end user.
     {
       std::vector<float> effortLevels(effortCommand.begin(), effortCommand.end());
-      if (effortCommand[0] + effortCommand[1] + effortCommand[2] + effortCommand[3] + effortCommand[4] < 10.0)  // less than noticable ffb
+      if ((std::accumulate(effortLevels.begin(), effortLevels.end(), decltype(effortLevels)::value_type(0.0f))) < 10.0)  // less than noticable ffb
       {
         this->hapticglove->StopHaptics();
       }
@@ -128,36 +116,41 @@ namespace SGHardware
         this->hapticglove->QueueForceFeedbackLevels(effortLevels);
         this->hapticglove->SendHaptics();
       }
+
+      if (nova2glovePtr != nullptr)
+      {
+        nova2glovePtr->QueueSqueezeLevel(effortLevels[effortLevels.size() - 1]);
+        nova2glovePtr->SendHaptics();
+      }
     }
   }
 
   void SenseGloveRobot::actuateVibrations(std::vector<double> vibrationCommand)
   {
-    std::vector<float> amplitudes(vibrationCommand.begin(), vibrationCommand.end());
+    std::vector<float> vibrationLevels(vibrationCommand.begin(), vibrationCommand.end());
 
-    if (vibrationCommand[0] + vibrationCommand[1] + vibrationCommand[2] + vibrationCommand[3] + vibrationCommand[4] < 10.0)  // less than noticable buzz
+    if ((std::accumulate(vibrationLevels.begin(), vibrationLevels.end(), decltype(vibrationLevels)::value_type(0.0f))) < 10.0)  // less than noticable buzz
     {
-
       this->hapticglove->StopVibrations();
     }
     else
     {
-      this->hapticglove->QueueVibroLevels(amplitudes);
+      this->hapticglove->QueueVibroLevels(vibrationLevels);
       this->hapticglove->SendHaptics();
     }
-  }
 
-  void SenseGloveRobot::actuateActiveStrap(std::vector<double> activeStrapCommand)
-  {
-    std::vector<float> amplitudes(activeStrapCommand.begin(), activeStrapCommand.end());
+    if (novaglovePtr != nullptr)
+    {
+      novaglovePtr->QueueWristLevel(vibrationLevels[vibrationLevels.size() - 1]);
+      novaglovePtr->SendHaptics();
+    }
 
-    // if (nova2glovePtr != nullptr)
-    // {
-      nova2glovePtr->QueueSqueezeLevel(amplitudes[0]);
-      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, amplitudes[1]);
-      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, amplitudes[2]);
+    if (nova2glovePtr != nullptr)
+    {
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, vibrationLevels[vibrationLevels.size() - 2]);
+      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, vibrationLevels[vibrationLevels.size() - 1]);
       nova2glovePtr->SendHaptics();
-    // }
+    }
   }
 
   void SenseGloveRobot::stopActuating()
@@ -216,8 +209,15 @@ namespace SGHardware
       {
         for (auto& joint : jointList)
         {
-          if (joint.jointIndex % 3 == 0) { joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][0].GetZ(); }
-          else { joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][joint.jointIndex % 3].GetY(); }
+          if (joint.jointIndex > 19) 
+          { 
+            joint.position = 0.0; 
+          }
+          else
+          {
+            if (joint.jointIndex % 4 == 0) { joint.position = handPoseAngles[std::floor(joint.jointIndex / 4)][0].GetZ(); }
+            else { joint.position = handPoseAngles[std::floor(joint.jointIndex / 4)][joint.jointIndex % 4 - 1].GetY(); }
+          }
         }
       }
 
@@ -235,8 +235,15 @@ namespace SGHardware
       {
         for (auto& joint : jointList)
         {
-          if (joint.jointIndex % 3 == 0) { joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][0].GetZ(); }
-          else { joint.position = handPoseAngles[std::floor(joint.jointIndex / 3)][joint.jointIndex % 3].GetY(); }
+          if (joint.jointIndex > 19) 
+          { 
+            joint.position = 0.0; 
+          }
+          else
+          {
+            if (joint.jointIndex % 4 == 0) { joint.position = handPoseAngles[std::floor(joint.jointIndex / 4)][0].GetZ(); }
+            else { joint.position = handPoseAngles[std::floor(joint.jointIndex / 4)][joint.jointIndex % 4 - 1].GetY(); }
+          }
         }
       }
 

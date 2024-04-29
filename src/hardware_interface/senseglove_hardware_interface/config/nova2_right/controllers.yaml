@@ -9,12 +9,12 @@ controller:
     type: position_controllers/JointTrajectoryController
     allow_partial_joints_goal: true
     joints:
-      - r_thumb_brake # FFB
-      - r_index_brake # FFB
-      - r_middle_brake # FFB
-      - r_ring_brake # FFB
-      - r_thumb_tip # Buzzer
-      - r_index_tip # Buzzer
-      - r_middle_mcp # Buzzer - Palm-Index Side
-      - r_ring_mcp # Buzzer - Palm-Pinky Side
-      - r_pinky_mcp # Buzzer - Whole Hand
+      - r_thumb_brake   # FFB
+      - r_index_brake   # FFB
+      - r_middle_brake  # FFB
+      - r_ring_brake    # FFB
+      - r_thumb_dip   # Buzzer
+      - r_index_dip   # Buzzer
+      - r_palm_index  # Buzzer - Palm-Index Side
+      - r_palm_pinky  # Buzzer - Palm-Pinky Side
+      - r_palm_strap  # Palm Strap

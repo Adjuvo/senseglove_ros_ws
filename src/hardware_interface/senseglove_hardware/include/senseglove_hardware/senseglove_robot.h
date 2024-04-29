@@ -108,7 +108,6 @@ namespace SGHardware
     // ros control works exclusively with doubles, but the sendHaptics function works with integers
     void actuateEffort(std::vector<double> effortCommand);    
     void actuateVibrations(std::vector<double> vibrationCommand);
-    void actuateActiveStrap(std::vector<double> activeStrapCommand);
 
     void stopActuating();
 

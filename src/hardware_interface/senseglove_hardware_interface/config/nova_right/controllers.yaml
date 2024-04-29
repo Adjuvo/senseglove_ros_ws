@@ -9,10 +9,10 @@ controller:
     type: position_controllers/JointTrajectoryController
     allow_partial_joints_goal: true
     joints:
-      - r_thumb_brake # FFB
-      - r_index_brake # FFB
-      - r_middle_brake # FFB
-      - r_ring_brake # FFB
-      - r_thumb_tip # Buzzer
-      - r_index_tip # Buzzer
-      - r_middle_mcp # Buzzer - Thumper
+      - r_thumb_brake   # FFB
+      - r_index_brake   # FFB
+      - r_middle_brake  # FFB
+      - r_ring_brake    # FFB
+      - r_thumb_dip   # Buzzer
+      - r_index_dip   # Buzzer
+      - r_thumper     # Buzzer - Thumper

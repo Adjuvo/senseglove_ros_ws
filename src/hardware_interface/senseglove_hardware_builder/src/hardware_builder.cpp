@@ -9,7 +9,6 @@
 #include <fstream>
 
 #include <ros/ros.h>
-#include "HandLayer.hpp"
 #include "HapticGlove.hpp"
 
 const std::vector<std::string> HardwareBuilder::JOINT_REQUIRED_KEYS = { "allowActuation", "jointIndex", "minPosition", "maxPosition" };
@@ -103,12 +102,19 @@ SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, co
   }
 
   SGHardware::ActuationMode actuationMode = SGHardware::ActuationMode::position;
+  SGHardware::ActuationType actuationType = SGHardware::ActuationType::brake;
+
   if (jointConfig["actuationMode"])
   {
     actuationMode = SGHardware::ActuationMode(jointConfig["actuationMode"].as<std::string>());
   }
 
-  return {jointName, jointIndex, actuationMode, allowActuation};
+  if (jointConfig["actuationType"])
+  {
+    actuationType = SGHardware::ActuationType(jointConfig["actuationType"].as<std::string>());
+  }
+
+  return {jointName, jointIndex, actuationType, actuationMode, allowActuation};
 }
 
 // Constructs a SenseGloveRobot object by combining information about the glove, joint configurations, and the URDF model. Ensures that the glove's handedness matches the expected configuration.
