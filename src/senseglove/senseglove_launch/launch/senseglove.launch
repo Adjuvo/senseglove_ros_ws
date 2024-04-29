@@ -4,6 +4,15 @@
     <arg name="calibration_file_right"  default="None"  doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
 
     <!-- Specify the glove to be used -->
+
+    <!-- <arg name="use_dk" default="true"/>
+    <arg name="use_nova" default="false"/>
+    <arg name="use_nova2" default="false"/> -->
+
+    <!-- <arg name="use_dk" default="false"/>
+    <arg name="use_nova" default="true"/>
+    <arg name="use_nova2" default="false"/> -->
+
     <arg name="use_dk" default="false"/>
     <arg name="use_nova" default="false"/>
     <arg name="use_nova2" default="true"/>

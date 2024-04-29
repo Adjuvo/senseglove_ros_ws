@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rospy
 from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
 import time
@@ -10,15 +12,13 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 def main():
     rospy.init_node('senseglove_haptics_node')
     rospy.loginfo("initialize haptics node")
-    hap_pub = rospy.Publisher('/senseglove/0/rh/controller/trajectory/command', JointTrajectory, queue_size=1)
+    hap_pub = rospy.Publisher('/senseglove/0/lh/controller/trajectory/command', JointTrajectory, queue_size=5)
     joint_list = ['empty']
-    if rospy.has_param('/senseglove/0/rh/controller/trajectory/joints'):
-        joint_list = rospy.get_param('/senseglove/0/rh/controller/trajectory/joints')
-    
-    if rospy.has_param('/senseglove/0/rh/controller/hand_state/publish_rate'):
-        publish_rate = rospy.get_param('/senseglove/0/rh/controller/hand_state/publish_rate')
-
-    # publish_rate = 100
+    if rospy.has_param('/senseglove/0/lh/controller/trajectory/joints'):
+        joint_list = rospy.get_param('/senseglove/0/lh/controller/trajectory/joints')
+    publish_rate = 1
+    if rospy.has_param('/senseglove/0/lh/controller/hand_state/publish_rate'):
+        publish_rate = rospy.get_param('/senseglove/0/lh/controller/hand_state/publish_rate')
 
     rate = rospy.Rate(publish_rate)
     while not rospy.is_shutdown():
@@ -26,10 +26,10 @@ def main():
         hap_cmd.header = Header()
         hap_cmd.header.stamp = rospy.Time.now()
         hap_cmd.joint_names = joint_list
-        # print("joint list: ", hap_cmd.header.stamp)
+        print("joint list: ", hap_cmd.header.stamp)
         point = JointTrajectoryPoint()
-        point.positions = [100, 0, 0, 0, 0, 0, 0, 0, 0]  # what you will!
-        point.time_from_start = rospy.Duration.from_sec(0.05)
+        point.positions = [100, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # what you will!
+        point.time_from_start = rospy.Duration.from_sec(0.001)
         hap_cmd.points.append(point)
         hap_pub.publish(hap_cmd)
         rate.sleep()

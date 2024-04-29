@@ -10,6 +10,7 @@ project(senseglove_haptics
         )
 
 find_package(catkin REQUIRED COMPONENTS
+    dynamic_reconfigure
     actionlib
     actionlib_msgs
     genmsg
@@ -19,6 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
     )
 
 catkin_python_setup()
+
+generate_dynamic_reconfigure_options(
+	config/HapticLevels.cfg
+)
 
 catkin_package(
     CATKIN_DEPENDS
