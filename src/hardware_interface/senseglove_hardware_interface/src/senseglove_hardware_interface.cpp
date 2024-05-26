@@ -104,7 +104,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
   this->registerInterface(&this->joint_state_interface_);
   this->registerInterface(&this->position_joint_interface_);
   this->registerInterface(&this->effort_joint_interface_);
-
+  
   return true;
 }
 
@@ -141,30 +141,37 @@ void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::
   for (size_t i = 0; i < num_gloves_; ++i)
   {
     // Splice joint_effort_command vector into vectors for FFB and vibration commands
-    int h = 0;
+    size_t h = 0;
     SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);
-    for (size_t k = 0; k < num_joints_; k++)
+    for (size_t k = 0; k < num_joints_; ++k)
     {
       SGHardware::Joint& joint = robot.getJoint(k);
       if (joint.canActuate())
       {
         if (joint.getActuationMode() == SGHardware::ActuationMode::position)
         {
-          if (joint.getActuationType() == SGHardware::ActuationType::brake)
+          switch(joint.getActuationType().getValue())
           {
-            jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
-            h++;
-          }
-          else if (joint.getActuationType() == SGHardware::ActuationType::vibration)
-          {
-            jointLastVibrationCommand[i][h] = jointPositionCommand[i][k];
-          }
-          else if (joint.getActuationType() == SGHardware::ActuationType::squeeze)
-          {
-            jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
-            h++;
-          }
-        }          
+            case SGHardware::ActuationType::brake:
+            {
+              jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
+              ++h;
+            }
+            break;
+
+            case SGHardware::ActuationType::vibration:
+            {
+              jointLastVibrationCommand[i][h] = jointPositionCommand[i][k];
+            }
+            break; 
+            
+            case SGHardware::ActuationType::squeeze:
+            {
+              jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
+              ++h;
+            }
+          }   
+        }       
         // else if (joint.getActuationMode() == SGHardware::ActuationMode::torque)
         // {
         //   if (joint.getActuationType() == SGHardware::ActuationType::brake)
@@ -183,7 +190,6 @@ void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::
     }
     robot.actuateEffort(jointLastPositionCommand[i]);
     robot.actuateVibrations(jointLastVibrationCommand[i]);
-    h = 0;
   }
 }
 

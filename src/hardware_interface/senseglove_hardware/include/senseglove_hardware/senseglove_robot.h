@@ -106,8 +106,9 @@ namespace SGHardware
     Kinematics::Vect3D getFingerTip(int i);
 
     // ros control works exclusively with doubles, but the sendHaptics function works with integers
-    void actuateEffort(std::vector<double> effortCommand);    
-    void actuateVibrations(std::vector<double> vibrationCommand);
+    void actuateEffort(const std::vector<double>& effortCommand);    
+    void actuateVibrations(const std::vector<double>& vibrationCommand);
+    void actuateHaptics(const std::vector<double>& effortCommand, const std::vector<double>& vibrationCommand);
 
     void stopActuating();
 

@@ -72,15 +72,17 @@ namespace SGHardware
   // Function to flatten vector of vectors of Vector3D
   Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i)
   {
+    static const int MAX_INDEX = 19;
     // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
     // SG uses vector of vectors and ROS uses one long array 
+
     if (senseglovePtr != nullptr)
     {
       jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4];
     }
     else if (novaglovePtr != nullptr || nova2glovePtr != nullptr)
     {
-      if (i > 19) { jointPosition = {0.0, 0.0, 0.0}; }
+      if (i > MAX_INDEX) { jointPosition = {0.0, 0.0, 0.0}; }
       else { jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4]; } 
     }
     return jointPosition;
@@ -90,67 +92,64 @@ namespace SGHardware
   {
     // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
     // SG uses vector of vectors and ROS uses one long array
+    static const int MAX_INDEX = 19;
     if (senseglovePtr != nullptr)
     {
       tipPositions = senseglovePose.CalculateFingertips(senseglovePtr->GetFingerThimbleOffsets())[i];
     }
     else if (novaglovePtr != nullptr || nova2glovePtr != nullptr)
     {
-      if (i > 19) { tipPositions = {0.0, 0.0, 0.0}; }
+      if (i > MAX_INDEX) { tipPositions = {0.0, 0.0, 0.0}; }
       else { tipPositions = handPose.GetJointPositions()[i][3]; }
     }
     return tipPositions;
   }
 
-  void SenseGloveRobot::actuateEffort(std::vector<double> effortCommand)
+  void SenseGloveRobot::actuateEffort(const std::vector<double>& effortCommand)
   {
-    if (DeviceList::SenseComRunning())  // check if the Sense Comm is running. If not, warn the end user.
-    {
-      std::vector<float> effortLevels(effortCommand.begin(), effortCommand.end());
-      if ((std::accumulate(effortLevels.begin(), effortLevels.end(), decltype(effortLevels)::value_type(0.0f))) < 10.0)  // less than noticable ffb
-      {
-        this->hapticglove->StopHaptics();
-      }
-      else
-      {
-        this->hapticglove->QueueForceFeedbackLevels(effortLevels);
-        this->hapticglove->SendHaptics();
-      }
+    static const float STRAP_SAFETY_THRESHOLD= 20.0;
 
-      if (nova2glovePtr != nullptr)
+    std::vector<float> effortLevels(effortCommand.begin(), effortCommand.end());
+
+    if (!effortLevels.empty())
+    {
+      if(senseglovePtr || novaglovePtr) 
       {
-        nova2glovePtr->QueueSqueezeLevel(effortLevels[effortLevels.size() - 1]);
-        nova2glovePtr->SendHaptics();
+        this->hapticglove->QueueForceFeedbackLevels(effortLevels); 
       }
-    }
+      else if (nova2glovePtr)
+      {
+        nova2glovePtr->QueueForceFeedbackLevels(effortLevels);
+        if (effortLevels.back() > STRAP_SAFETY_THRESHOLD)
+        {
+          nova2glovePtr->QueueSqueezeLevel(STRAP_SAFETY_THRESHOLD);
+        }
+        else
+        {
+          nova2glovePtr->QueueSqueezeLevel(0);
+        }
+      }
+      this->hapticglove->SendHaptics();
+    }    
   }
 
-  void SenseGloveRobot::actuateVibrations(std::vector<double> vibrationCommand)
+  void SenseGloveRobot::actuateVibrations(const std::vector<double>& vibrationCommand)
   {
     std::vector<float> vibrationLevels(vibrationCommand.begin(), vibrationCommand.end());
-
-    if ((std::accumulate(vibrationLevels.begin(), vibrationLevels.end(), decltype(vibrationLevels)::value_type(0.0f))) < 10.0)  // less than noticable buzz
+    
+    if (!vibrationLevels.empty())
     {
-      this->hapticglove->StopVibrations();
+      if (senseglovePtr || novaglovePtr) 
+      {
+        this->hapticglove->QueueVibroLevels(vibrationLevels);
+      }    
+      else if (nova2glovePtr)
+      { 
+        nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, vibrationLevels.back()-1);
+        nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, vibrationLevels.back());
+      }
     }
-    else
-    {
-      this->hapticglove->QueueVibroLevels(vibrationLevels);
-      this->hapticglove->SendHaptics();
-    }
-
-    if (novaglovePtr != nullptr)
-    {
-      novaglovePtr->QueueWristLevel(vibrationLevels[vibrationLevels.size() - 1]);
-      novaglovePtr->SendHaptics();
-    }
-
-    if (nova2glovePtr != nullptr)
-    {
-      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, vibrationLevels[vibrationLevels.size() - 2]);
-      nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, vibrationLevels[vibrationLevels.size() - 1]);
-      nova2glovePtr->SendHaptics();
-    }
+    this->hapticglove->SendHaptics();
   }
 
   void SenseGloveRobot::stopActuating()
