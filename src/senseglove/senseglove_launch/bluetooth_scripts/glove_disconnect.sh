@@ -18,3 +18,4 @@ SG_RFCOMM1="/dev/rfcomm1"
 # Call the function for each device
 disconnect_and_release $SG_RFCOMM0
 disconnect_and_release $SG_RFCOMM1
+
