@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_description
-        VERSION 0.0.0
+        VERSION 2.1.0
         DESCRIPTION "The senseglove_description to provide descriptive features of the senseglove"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
@@ -20,6 +20,8 @@ set(XACRO_FILES
         urdf/dk1_right.xacro
         urdf/nova_left.xacro
         urdf/nova_right.xacro
+        urdf/nova2_left.xacro
+        urdf/nova2_right.xacro
         )
 build_and_install_xacro_files(${XACRO_FILES})
 

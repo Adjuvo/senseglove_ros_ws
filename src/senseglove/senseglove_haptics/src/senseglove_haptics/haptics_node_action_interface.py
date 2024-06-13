@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rospy
 import sys
 from std_msgs.msg import Header
@@ -82,12 +84,12 @@ def main():
     f = 10  # Hz
     amp = 80  # percentage
     wave = np.linspace(0, np.pi * f, 201)
-    rand_traj_points = [0, 100, 100, 100, 100, 100, 100, 100, 100, 100]  # what you will!
+    rand_traj_points = [100, 0, 0, 0, 0, 0, 0] # what you will!
     while not rospy.is_shutdown():
         if i >= 201:
             i = 0
-        traj = Trajectory(ns=action_ns, joint_names=joint_list, goal_time_tol=1.0, timeout=0.001)
-        rand_traj_points[0] = amp * np.sin(wave[i]) + amp
+        traj = Trajectory(ns=action_ns, joint_names=joint_list, goal_time_tol= 0.01, timeout=0.001)
+        # rand_traj_points[0] = amp * np.sin(wave[i]) + amp
         traj.add_point(rand_traj_points, n_sec)
         traj.start()
         traj.wait()

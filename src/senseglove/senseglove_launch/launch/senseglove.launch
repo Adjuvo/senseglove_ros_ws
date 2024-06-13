@@ -5,13 +5,14 @@
 
     <!-- Specify the glove to be used -->
     <arg name="use_dk" default="false"/>
-    <arg name="use_nova" default="true"/>
-    <arg name="use_nova2" default="false"/>
+    <arg name="use_nova" default="false"/>
+    <arg name="use_nova2" default="true"/>
 
-    <arg name="use_rviz" default="false"/>
     <arg name="use_left" default="true"/>
     <arg name="use_right" default="true"/>
     <arg name="use_both" value="$(eval arg('use_left') and arg('use_right'))"/> 
+
+    <arg name="use_rviz" default="false"/>
 
     <!--Passing through here ensures the use of the correct urdf_x.rviz file by overwriting if necessary-->
     <arg name="rvizconfig" value="$(find senseglove_description)/urdf_left.rviz"  if="$(eval use_both==false and use_left==true)"/>
@@ -22,7 +23,7 @@
         name="startGlove"
         pkg="senseglove_launch"
         type="startGlove.sh"
-        args="$(find senseglove_hardware) $(arg use_left) $(arg use_right) $(arg use_dk) $(arg use_nova)"
+        args="$(find senseglove_hardware) $(arg use_left) $(arg use_right) $(arg use_dk) $(arg use_nova) $(arg use_nova2)"
         output="screen"
         respawn="false">
     </node>

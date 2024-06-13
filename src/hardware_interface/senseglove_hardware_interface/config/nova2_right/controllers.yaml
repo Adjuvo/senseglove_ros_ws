@@ -15,4 +15,6 @@ controller:
       - r_ring_brake    # FFB
       - r_thumb_dip   # Buzzer
       - r_index_dip   # Buzzer
-      - r_thumper     # Buzzer - Thumper
+      - r_palm_index  # Buzzer - Palm-Index Side
+      - r_palm_pinky  # Buzzer - Palm-Pinky Side
+      - r_palm_strap  # Palm Strap

@@ -30,4 +30,4 @@ connect_device $SG_DEVICE0 $SG_RFCOMM0
 # Call the function for SG_DEVICE1 only if it's not empty
 if [ -n "$SG_DEVICE1" ]; then
     connect_device "$SG_DEVICE1" "$SG_RFCOMM1"
-fi
+

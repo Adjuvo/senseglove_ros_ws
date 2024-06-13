@@ -1,7 +1,7 @@
 # Senseglove ROS Workspace
 
 A workspace for the integration of the SenseGlove into _ROS Noetic_.
-This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove. If you face issues when dealing with sending haptic commands, make use of the *senseglove_haptics topic*
+This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
 
 ## SenseGlove Support Matrix
 
@@ -9,13 +9,34 @@ This workspace makes use of ros_control for automatically initiating publisher a
 |-------------|:--------------:|:--------------:|
 | **DK1**     |   ✅ v1.0.0    |       ❌       |   
 | **Nova 1**  |   ✅ v2.0.0    |       🔜       | 
-| **Nova 2**  | ❗v2.0.0       |       🔜       | 
+| **Nova 2**  |   ✅ v2.1.0    |       🔜       | 
   
 
 * <code>✅</code> Supported
 * <code>❗</code> Not supported by the latest release and might be lacking features
 * <code>❌</code> Not supported at all
 * <code>❓</code> Unknown/untested
+
+## Directory Structure
+    src
+    ├── hardware_interface      
+    |    ├── senseglove_hardware            # Communicates w/ SenseGlove Hardware
+    |    ├── senseglove_hardware_builder    # Builds the device in ROS
+    |    ├── senseglove_hardware_interface  # The bridge b/w ros_control & SenseGlove hardware
+    |
+    ├── senseglove      
+    |   ├── senseglove_description          # Provides the URDFs & .rviz files
+    |   ├── senseglove_finger_distance      # Provides distance between finger-tips
+    |   ├── senseglove_haptics              # Haptic Implementation (Python API)
+    |   ├── senseglove_launch               # Launch files & Bluetooth scripts
+    |   |   ├── bluetooth_scripts
+    |   ├── senseglove_shared_resources     # Custome messages
+    |
+    ├── SenseGlove_API                      # SG-Backend
+
+ 
+
+
 
 ## Setting up the workspace ##
 1. System Requirement: Ubuntu 20.04
@@ -44,13 +65,14 @@ The workspace also consists of the bash scripts for you to connect & disconnect 
 
 For a detailed procedure on connecting a Nova or Nova 2 glove in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
 
-**NOTE:** There are two launch files; one for dk, one for nova. The current implementation allows you to use either of these standalone gloves through these two launch files. Future updates can include simultaneous use of gloves.
+**NOTE:** The main launch file: `senseglove.launch` has args to specify which standalone glove you are about to use. The current implementation allows you to use either of these standalone gloves. Future updates can include simultaneous use of gloves.
 
 ### Example: Using two sensegloves [Left and Right] in ROS: ###
 1. Source your workspace
 2. Make sure your sensegloves are connected through usb or bluetooth
-    - If you checked your connection with sensecom, be sure to exit the application before proceeding
-3. In the `senseglove_demo.launch` script, make sure you specify the devices being used:
+    - If you are checking your connection by running a sensecom instance, be sure to exit the application before proceeding, because the launch file will start another instance of sensecom.
+    - We do not want two instances of SenseCom running for ROS.
+3. In the `senseglove.launch` script, make sure you specify the devices being used:
     - `use_dk`
     - `use_nova`
     - `use_nova2`
@@ -62,6 +84,7 @@ For a detailed procedure on connecting a Nova or Nova 2 glove in linux, kindly r
 5. Run: `roslaunch senseglove_launch senseglove.launch` after saving.
 
 - A bash script is called invoking sensecom and running the hardware interface node twice for a left- and a right-handed glove.
+- `NOTE:` The bash waits for the user input to confirm whether the gloves are connected in SenseCom. 
 - If all is well, your invocation of the roslaunch command should have started a roscore session and all necessary nodes providing intefaces to the senseglove.
 
 
@@ -71,7 +94,7 @@ Moreover, due to our integration into ros-control we require the user to know wh
 As such, the user has to define which glove is connected to the system.
 
 1. Find out if you are dealing with a left or right-handed senseglove.
-2. In the `senseglove_demo.launch` script, make sure you specify the devices being used:
+2. In the `senseglove.launch` script, make sure you specify the devices being used:
     - `use_dk`
     - `use_nova`
     - `use_nova2`
@@ -84,13 +107,7 @@ As such, the user has to define which glove is connected to the system.
 
 
 ## General Usage Description: ##
-This repository is meant to present a solid foundation for using the senseglove in ROS Noetic. As such it provides no
-concrete example projects. It does however provide the user with a few launch files, hardware.launch and senseglove_demo.launch
-which initiate the sensegloves.
-The senseglove_hardware_interface nodes which are called by these launch files do nothing more than using the senseglove API
-in a ROS /ros_control "sanctioned" manner.
-
-__Important:__ Run the sensecom application, present in the SenseGlove_API folder, when using hardware.launch! The launching of sensecom has been taken care of in *senseglove_demo.launch* in the bash script.
+This repository is meant to present a solid foundation for using the senseglove in ROS Noetic. The senseglove_hardware_interface nodes which are called by these launch files do nothing more than using the senseglove API in a ROS /ros_control "sanctioned" manner.
 
 Users are advised to develop their own applications outside this package and make use of the provided topics. If users do find the need to 
 write additions to this package, beware that this repository is still subject to changes and pulling this repo again might override your own code.
@@ -98,5 +115,10 @@ write additions to this package, beware that this repository is still subject to
 **If you, as a user, find a bug or have an issue with getting the workspace up and running, we suggest you leave this as an issue on this repository.**
 This practice will allow others to troubleshoot their own problems quicker.
 
+## ROS-Control for haptics: ###
+- In `hardware_interface/senseglove_hardware_interface/config`, refer to the joints & controllers assigned for each senseglove product.
+- In `senseglove/senseglove_haptics`, there are python scripts for haptic implementation. I suggest trying `haptics_node_dynamic.py` in-conjuction with the dynamic_reconfigure in rqt to test the haptics of the device. 
+- `NOTE:` For NOVA 2, the vibration feedback on the Index & Thumb tip are disabled.
+
 ### Using the finger distance node: ###
-The finger distance package is meant to publish the distance between the fingertips through a rosnode as a means to control robotic grippers. This package also provides a calibration class that provides a service server. The service is easily called from the rqt_service_caller plugin. Instructions for the calibration are printed on your terminal. This is currently implemented for only the DK1 gloves.
+The finger distance package is meant to publish the distance between the fingertips through a rosnode as a means to control robotic grippers. This package also provides a calibration class that provides a service server. The service is easily called from the rqt_service_caller plugin. Instructions for the calibration are printed on your terminal. This is currently implemented/validated for only the DK1 gloves.

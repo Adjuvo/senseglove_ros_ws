@@ -35,14 +35,9 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
 
   ROS_INFO_STREAM("Senseglove HW Interface: Constructed topic: " << topicName);  
 
-  senseglove_haptics_sub_ = nh.subscribe("/" + this->sensegloveSetup->getSenseGloveRobot(0).getRobotName() +
-                                         handedness[this->sensegloveSetup->getSenseGloveRobot(0).getRight()] + "/senseglove_haptics/",
-                                         1, &SenseGloveHardwareInterface::hapticSubscriber, this); 
-    
   this->uploadJointNames(nh);
 
   num_joints_ = this->sensegloveSetup->getSenseGloveRobot(0).getJointSize();
-
   this->reserveMemory();
 
   // Start ethercat cycle in the hardware
@@ -109,7 +104,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
   this->registerInterface(&this->joint_state_interface_);
   this->registerInterface(&this->position_joint_interface_);
   this->registerInterface(&this->effort_joint_interface_);
-
+  
   return true;
 }
 
@@ -146,49 +141,55 @@ void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::
   for (size_t i = 0; i < num_gloves_; ++i)
   {
     // Splice joint_effort_command vector into vectors for FFB and vibration commands
-    int j = 0;
-    int h = 0;
+    size_t h = 0;
     SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);
-    for (size_t k = 0; k < num_joints_; k++)
+    for (size_t k = 0; k < num_joints_; ++k)
     {
       SGHardware::Joint& joint = robot.getJoint(k);
       if (joint.canActuate())
       {
         if (joint.getActuationMode() == SGHardware::ActuationMode::position)
         {
-          if (j % 2 == 1)
+          switch(joint.getActuationType().getValue())
           {
-            jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
-            h++;
-          }
-          else { jointLastVibrationCommand[i][h] = jointPositionCommand[i][k];}
+            case SGHardware::ActuationType::brake:
+            {
+              jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
+              ++h;
+            }
+            break;
 
-          if (j == 9)  // Actuator List [10]
-          {
-            robot.actuateEffort(jointLastPositionCommand[i]);
-            robot.actuateVibrations(jointLastVibrationCommand[i]);
-          }
-        }          
-        else if (joint.getActuationMode() == SGHardware::ActuationMode::torque)
-        {
-          if (j % 2 == 1)
-          {
-            jointLastEffortCommand[i][j] = jointEffortCommand[i][k];
-            h++;
-          }
-          else { jointLastVibrationCommand[i][j] = jointEffortCommand[i][k];}
-          
-          if (j == 9)  // Actuators 0 - 9
-          {
-            robot.actuateEffort(jointLastEffortCommand[i]);
-            robot.actuateVibrations(jointLastVibrationCommand[i]);
-          }
-        } 
-        j++;
+            case SGHardware::ActuationType::vibration:
+            {
+              jointLastVibrationCommand[i][h] = jointPositionCommand[i][k];
+            }
+            break; 
+            
+            case SGHardware::ActuationType::squeeze:
+            {
+              jointLastPositionCommand[i][h] = jointPositionCommand[i][k];
+              ++h;
+            }
+          }   
+        }       
+        // else if (joint.getActuationMode() == SGHardware::ActuationMode::torque)
+        // {
+        //   if (joint.getActuationType() == SGHardware::ActuationType::brake)
+        //   {
+        //     jointLastEffortCommand[i][j] = jointEffortCommand[i][k];
+        //     h++;
+        //   }
+        //   else { jointLastVibrationCommand[i][j] = jointEffortCommand[i][k];}          
+        //   if (j == 9)  // Actuators 0 - 9
+        //   {
+        //     robot.actuateEffort(jointLastEffortCommand[i]);
+        //     robot.actuateVibrations(jointLastVibrationCommand[i]);
+        //   }
+        // } 
       }
     }
-    j = 0;
-    h = 0;
+    robot.actuateEffort(jointLastPositionCommand[i]);
+    robot.actuateVibrations(jointLastVibrationCommand[i]);
   }
 }
 
@@ -214,8 +215,7 @@ void SenseGloveHardwareInterface::reserveMemory()
   jointEffortCommand.resize(num_gloves_);
   jointLastEffortCommand.resize(num_gloves_);
   jointLastVibrationCommand.resize(num_gloves_);
-  senseglove_force_command_.resize(num_gloves_);
-  senseglove_vibration_command_.resize(num_gloves_);
+
   
   for (unsigned int i = 0; i < num_gloves_; ++i)
   {
@@ -229,9 +229,6 @@ void SenseGloveHardwareInterface::reserveMemory()
     jointLastPositionCommand[i].resize(5, 0.0);
     jointLastVibrationCommand[i].resize(5, 0.0);
     jointLastEffortCommand[i].resize(5, 0.0);
-    senseglove_force_command_[i].resize(5, 0.0);
-    senseglove_vibration_command_[i].resize(5, 0.0);
-
   }
 
   senseglove_state_pub_->msg_.joint_names.resize(num_gloves_ * num_joints_);
@@ -274,33 +271,4 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
   }
 
   senseglove_state_pub_->unlockAndPublish();
-}
-
-void SenseGloveHardwareInterface::hapticSubscriber(const std_msgs::Float64MultiArray::ConstPtr &msg)
-{ 
-  for (size_t i = 0; i < num_gloves_; ++i) 
-  {
-    SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);
-
-    for (size_t j = 0; j < 10; j++)
-    {
-      if (j < 5)
-      {
-        senseglove_force_command_[i].push_back(msg->data[j]);
-      }
-      else
-      {
-        senseglove_vibration_command_[i].push_back(msg->data[j]);
-      }
-
-      if (j == 9)  // actuators 0 - 9
-      {
-        robot.actuateEffort(senseglove_force_command_[i]);
-        robot.actuateVibrations(senseglove_vibration_command_[i]);
-        senseglove_force_command_[i].clear();
-        senseglove_vibration_command_[i].clear();
-      }
-    }
-  }
-
 }

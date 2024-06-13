@@ -15,17 +15,19 @@ namespace SGHardware
   {
   }
 
-  Joint::Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation)
+  Joint::Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation)
     : jointName(std::move(jointName)) 
     , jointIndex(jointIndex)
+    , actuationType(actuationType)
     , actuationMode(actuationMode)
     , allowActuation(allowActuation)
   {
   }
 
-  Joint::Joint(std::string jointName, int jointIndex, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger)
+  Joint::Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger)
     : jointName(std::move(jointName)) 
     , jointIndex(jointIndex)
+    , actuationType(actuationType)
     , actuationMode(actuationMode)
     , allowActuation(allowActuation)
     , finger(std::move(finger))
@@ -89,6 +91,11 @@ namespace SGHardware
   bool Joint::canActuate() const
   {
     return this->allowActuation;
+  }
+
+  ActuationType Joint::getActuationType() const
+  {
+    return actuationType;
   }
 
   ActuationMode Joint::getActuationMode() const

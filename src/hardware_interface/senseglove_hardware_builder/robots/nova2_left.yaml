@@ -1,29 +1,30 @@
-dk1_right:
-  deviceType: 0
+nova2_left:
+  deviceType: 3
+  # communicationCycleTime: 10
   # Ordered Alphabetically in joint state publisher
   joints:
-    - r_thumb_mcp:
+    - l_thumb_mcp:
         jointIndex: 1
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_thumb_pip:
+    - l_thumb_pip:
         jointIndex: 2
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_thumb_dip:
+    - l_thumb_dip:
         jointIndex: 3
         actuationType: vibration
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - r_thumb_brake:
+    - l_thumb_brake:
         jointIndex: 0
         actuationType: brake
         actuationMode: position
@@ -31,28 +32,28 @@ dk1_right:
         minPosition: 0
         maxPosition: 100
 
-    - r_index_mcp:
+    - l_index_mcp:
         jointIndex: 5
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_index_pip:
+    - l_index_pip:
         jointIndex: 6
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_index_dip:
+    - l_index_dip:
         jointIndex: 7
         actuationType: vibration
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - r_index_brake:
+    - l_index_brake:
         jointIndex: 4
         actuationType: brake
         actuationMode: position
@@ -60,28 +61,28 @@ dk1_right:
         minPosition: 0
         maxPosition: 100
 
-    - r_middle_mcp:
+    - l_middle_mcp:
         jointIndex: 9
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_middle_pip:
+    - l_middle_pip:
         jointIndex: 10
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_middle_dip:
+    - l_middle_dip:
         jointIndex: 11
         actuationType: vibration
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_middle_brake:
+    - l_middle_brake:
         jointIndex: 8
         actuationType: brake
         actuationMode: position
@@ -89,28 +90,28 @@ dk1_right:
         minPosition: 0
         maxPosition: 100
 
-    - r_ring_mcp:
+    - l_ring_mcp:
         jointIndex: 13
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_ring_pip:
+    - l_ring_pip:
         jointIndex: 14
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_ring_dip:
+    - l_ring_dip:
         jointIndex: 15
         actuationType: vibration
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_ring_brake:
+    - l_ring_brake:
         jointIndex: 12
         actuationType: brake
         actuationMode: position
@@ -118,31 +119,54 @@ dk1_right:
         minPosition: 0
         maxPosition: 100
 
-    - r_pinky_mcp:
+    - l_pinky_mcp:
         jointIndex: 17
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_pinky_pip:
+    - l_pinky_pip:
         jointIndex: 18
         actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
-    - r_pinky_dip:
+    - l_pinky_dip:
         jointIndex: 19
+        actuationType: vibration
+        actuationMode: position
+        allowActuation: false
+        minPosition: 0
+        maxPosition: 100
+    - l_pinky_brake:
+        jointIndex: 16
+        actuationType: brake
+        actuationMode: position
+        allowActuation: false
+        minPosition: 0
+        maxPosition: 100
+
+    - l_palm_index:
+        jointIndex: 21
         actuationType: vibration
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
-    - r_pinky_brake:
-        jointIndex: 16
-        actuationType: brake
+    - l_palm_pinky:
+        jointIndex: 22
+        actuationType: vibration
         actuationMode: position
         allowActuation: true
         minPosition: 0
         maxPosition: 100
+    - l_palm_strap:
+        jointIndex: 20
+        actuationType: squeeze
+        actuationMode: position
+        allowActuation: true
+        minPosition: 0
+        maxPosition: 100
+

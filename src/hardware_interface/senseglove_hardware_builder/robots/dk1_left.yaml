@@ -4,24 +4,28 @@ dk1_left:
   joints:
     - l_thumb_mcp:
         jointIndex: 1
+        actuationType: absent
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_thumb_pip:
         jointIndex: 2
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_thumb_dip:
         jointIndex: 3
+        actuationType: vibration
         actuationMode: position
-        allowActuation: false
+        allowActuation: true
         minPosition: 0
         maxPosition: 100
     - l_thumb_brake:
         jointIndex: 0
+        actuationType: brake
         actuationMode: position
         allowActuation: true
         minPosition: 0
@@ -29,24 +33,28 @@ dk1_left:
 
     - l_index_mcp:
         jointIndex: 5
+        actuationType: absent
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_index_pip:
         jointIndex: 6
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_index_dip:
         jointIndex: 7
+        actuationType: vibration
         actuationMode: position
-        allowActuation: false
+        allowActuation: true
         minPosition: 0
         maxPosition: 100
     - l_index_brake:
         jointIndex: 4
+        actuationType: brake
         actuationMode: position
         allowActuation: true
         minPosition: 0
@@ -54,24 +62,28 @@ dk1_left:
 
     - l_middle_mcp:
         jointIndex: 9
+        actuationType: absent
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_middle_pip:
         jointIndex: 10
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_middle_dip:
         jointIndex: 11
+        actuationType: vibration
         actuationMode: position
-        allowActuation: false
+        allowActuation: true
         minPosition: 0
         maxPosition: 100
     - l_middle_brake:
         jointIndex: 8
+        actuationType: brake
         actuationMode: position
         allowActuation: true
         minPosition: 0
@@ -79,24 +91,28 @@ dk1_left:
 
     - l_ring_mcp:
         jointIndex: 13
+        actuationType: absent
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_ring_pip:
         jointIndex: 14
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_ring_dip:
         jointIndex: 15
+        actuationType: vibration
         actuationMode: position
-        allowActuation: false
+        allowActuation: true
         minPosition: 0
         maxPosition: 100
     - l_ring_brake:
         jointIndex: 12
+        actuationType: brake
         actuationMode: position
         allowActuation: true
         minPosition: 0
@@ -104,24 +120,28 @@ dk1_left:
 
     - l_pinky_mcp:
         jointIndex: 17
+        actuationType: absent
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_pinky_pip:
         jointIndex: 18
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_pinky_dip:
         jointIndex: 19
+        actuationType: vibration
         actuationMode: position
-        allowActuation: false
+        allowActuation: true
         minPosition: 0
         maxPosition: 100
     - l_pinky_brake:
         jointIndex: 16
+        actuationType: brake
         actuationMode: position
         allowActuation: true
         minPosition: 0

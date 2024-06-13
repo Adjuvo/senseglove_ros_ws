@@ -3,13 +3,14 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_haptics
-        VERSION 0.0.0
+        VERSION 2.1.0
         DESCRIPTION "The senseglove_haptics"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
         )
 
 find_package(catkin REQUIRED COMPONENTS
+    dynamic_reconfigure
     actionlib
     actionlib_msgs
     genmsg
@@ -19,6 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
     )
 
 catkin_python_setup()
+
+generate_dynamic_reconfigure_options(
+	config/HapticLevels.cfg
+)
 
 catkin_package(
     CATKIN_DEPENDS

@@ -6,7 +6,8 @@ setup_args = generate_distutils_setup(
     packages=['senseglove_haptics'],
     package_dir={'': 'src'},
     scripts=['scripts/senseglove_haptics_node',
-             'src/senseglove_haptics/simple_haptics_node.py'],
+             'src/senseglove_haptics/haptics_node_simple.py',
+             'src/senseglove_haptics/haptics_node_dynamic.py']
 )
 
 setup(**setup_args)

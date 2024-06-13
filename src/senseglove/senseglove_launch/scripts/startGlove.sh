@@ -19,7 +19,7 @@ wait_for_user_input
 # Start SenseGlove node
 echo "Launching Senseglove"
 source ~/.bashrc
-roslaunch senseglove_launch senseglove_hardware.launch left:=$2 right:=$3 use_dk:=$4 use_nova:=$5
+roslaunch senseglove_launch senseglove_hardware.launch left:=$2 right:=$3 use_dk:=$4 use_nova:=$5 use_nova2:=$6
 
 # Kill SenseComm when node is killed
 killall -9 SenseCom.x86_64

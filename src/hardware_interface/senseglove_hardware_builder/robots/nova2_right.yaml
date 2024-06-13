@@ -1,5 +1,6 @@
-dk1_right:
-  deviceType: 0
+nova2_right:
+  deviceType: 3
+  # communicationCycleTime: 10
   # Ordered Alphabetically in joint state publisher
   joints:
     - r_thumb_mcp:
@@ -78,7 +79,7 @@ dk1_right:
         jointIndex: 11
         actuationType: vibration
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - r_middle_brake:
@@ -107,7 +108,7 @@ dk1_right:
         jointIndex: 15
         actuationType: vibration
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - r_ring_brake:
@@ -136,12 +137,34 @@ dk1_right:
         jointIndex: 19
         actuationType: vibration
         actuationMode: position
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - r_pinky_brake:
         jointIndex: 16
         actuationType: brake
+        actuationMode: position
+        allowActuation: false
+        minPosition: 0
+        maxPosition: 100
+
+    - r_palm_index:
+        jointIndex: 21
+        actuationType: vibration
+        actuationMode: position
+        allowActuation: true
+        minPosition: 0
+        maxPosition: 100
+    - r_palm_pinky:
+        jointIndex: 22
+        actuationType: vibration
+        actuationMode: position
+        allowActuation: true
+        minPosition: 0
+        maxPosition: 100
+    - r_palm_strap:
+        jointIndex: 20
+        actuationType: squeeze
         actuationMode: position
         allowActuation: true
         minPosition: 0
