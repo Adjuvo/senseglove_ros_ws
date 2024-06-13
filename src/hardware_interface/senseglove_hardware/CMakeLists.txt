@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_hardware
-        VERSION 0.0.0
+        VERSION 2.1.0
         DESCRIPTION "The SenseGlove Hardware for communication with the Device"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX

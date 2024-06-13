@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_finger_distance
-        VERSION 0.0.0
+        VERSION 2.1.0
         DESCRIPTION "The senseglove_finger_distance"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX

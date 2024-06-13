@@ -56,14 +56,16 @@ class SGHapticFeedback:
         if self.reset:
             self.reset_parameters()   
 
+        # FOR DK
         # self.point.positions = [self.thumb_ffb, self.index_ffb, self.middle_ffb, self.ring_ffb, self.pinky_ffb,
         #                     self.thumb_buzz, self.index_buzz, self.middle_buzz, self.ring_buzz, self.pinky_buzz, self.thumper_buzz]
         
-                
+        # FOR NOVA         
         # self.point.positions = [self.thumb_ffb, self.index_ffb, self.middle_ffb, self.ring_ffb,
         #                         self.thumb_buzz, self.index_buzz, 
         #                         self.thumper_buzz]
 
+        # FOR NOVA 2
         self.point.positions = [self.thumb_ffb, self.index_ffb, self.middle_ffb, self.ring_ffb,
                                 self.thumb_buzz, self.index_buzz, 
                                 self.palm_index_buzz, self.palm_pinky_buzz, self.palm_strap]
