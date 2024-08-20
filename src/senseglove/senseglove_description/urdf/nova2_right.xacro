@@ -669,31 +669,6 @@
                upper="${100}"/>
     </joint>
 
-    <joint name="r_palm_index" type="revolute">
-        <parent link="r_glove_hub"/>
-        <child link="r_index_brake"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="-1 0 0"/>
-
-        <limit velocity="${1000}"
-               effort="${100}"
-               lower="${-2}"
-               upper="${100}"/>
-    </joint>
-
-
-    <joint name="r_palm_pinky" type="revolute">
-        <parent link="r_glove_hub"/>
-        <child link="r_pinky_brake"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="-1 0 0"/>
-
-        <limit velocity="${1000}"
-               effort="${100}"
-               lower="${-2}"
-               upper="${100}"/>
-    </joint>
-
     <joint name="r_palm_strap" type="revolute">
         <parent link="r_glove_hub"/>
         <child link="r_middle_brake"/>
@@ -705,6 +680,27 @@
                lower="${-2}"
                upper="${100}"/>
     </joint>
+        <joint name="r_palm_index" type="revolute">
+        <parent link="r_glove_hub"/>
+        <child link="r_index_brake"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
 
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
+        <joint name="r_palm_pinky" type="revolute">
+        <parent link="r_glove_hub"/>
+        <child link="r_pinky_brake"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-2}"
+               upper="${100}"/>
+    </joint>
 
 </robot>

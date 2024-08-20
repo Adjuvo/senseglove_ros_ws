@@ -149,7 +149,7 @@ nova_left:
         maxPosition: 100
 
     - l_thumper:
-        jointIndex: 15
+        jointIndex: 20
         actuationType: vibration
         actuationMode: position
         allowActuation: true

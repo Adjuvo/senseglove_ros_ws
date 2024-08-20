@@ -12,13 +12,21 @@ function connect_device() {
 
 # Step 1: List Bluetooth devices and prompt for the correct one
 echo "Step 1: Listing Bluetooth devices..."
-bluetoothctl devices | grep -i "nova"
+devices=($(bluetoothctl devices | grep -i "nova" | awk '{print $2}'))
+names=($(bluetoothctl devices | grep -i "nova" | awk '{print $3 $4}'))
 
-# Prompt the user to copy the correct MAC address
-read -p "Step 2: Enter the MAC address of a NOVA glove (copy from the list): " SG_DEVICE0
+# Display devices with numbers
+for i in "${!devices[@]}"; do
+    echo "[$((i+1))] ${names[i]}"
+done
 
-# Prompt the user to copy the correct MAC address
-read -p "Step 3: Enter the MAC address of another NOVA glove. If not necessary, press enter: " SG_DEVICE1
+# Prompt the user to choose a device
+read -p "Step 2: Enter the number corresponding to a NOVA glove: " choice
+SG_DEVICE0="${devices[choice-1]}"
+
+# Prompt the user to choose a device
+read -p "Step 3: Enter the number corresponding to another NOVA glove: " choice
+SG_DEVICE1="${devices[choice-1]}"
 
 # Set your device and rfcomm variables
 SG_RFCOMM0="/dev/rfcomm0"

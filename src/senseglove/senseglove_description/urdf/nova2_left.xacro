@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!-- Revolute-Revolute Manipulator -->
 <robot name="nova2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
 <!-- Constants for robot dimensions -->
     <xacro:property name="PI" value="3.1415926535897931"/>
     <xacro:property name="joint_base_mass" value="1"/> <!-- arbitrary value for joint_base_mass -->
@@ -510,7 +511,6 @@
         <parent link="l_middle_abduction"/>
         <child link="l_middle_flexion_one"/>
         <origin xyz="0 0 ${-0.00911-0.01414}" rpy="0 0 0"/>
--
     </joint>
 
     <joint name="l_middle_mcp" type="revolute">
@@ -657,7 +657,19 @@
                lower="${0}"
                upper="${100}"/>
     </joint>
-    
+
+    <joint name="l_pinky_dip" type="revolute">
+        <parent link="l_pinky_flexion_three"/>
+        <child link="l_pinky_thimble"/>
+        <origin xyz="0 -0.012342 ${third_bar_length-0.0025}" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+
+        <limit velocity="${1000}"
+               effort="${100}"
+               lower="${-4.2}"
+               upper="${100}"/>
+    </joint>
+
     <joint name="l_palm_strap" type="revolute">
         <parent link="l_glove_hub"/>
         <child link="l_middle_brake"/>
