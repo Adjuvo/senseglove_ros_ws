@@ -178,6 +178,9 @@ namespace SGHardware
 
   bool SenseGloveRobot::updateGloveData(const ros::Duration period)
   {
+
+    static const int MAX_JOINT_INDEX = 19;
+
     bool gloveUpdate = false;
     bool handUpdate = false;
 
@@ -208,7 +211,7 @@ namespace SGHardware
       {
         for (auto& joint : jointList)
         {
-          if (joint.jointIndex > 19) 
+          if (joint.jointIndex > MAX_JOINT_INDEX) 
           { 
             joint.position = 0.0; 
           }
@@ -234,7 +237,7 @@ namespace SGHardware
       {
         for (auto& joint : jointList)
         {
-          if (joint.jointIndex > 19) 
+          if (joint.jointIndex > MAX_JOINT_INDEX) 
           { 
             joint.position = 0.0; 
           }
