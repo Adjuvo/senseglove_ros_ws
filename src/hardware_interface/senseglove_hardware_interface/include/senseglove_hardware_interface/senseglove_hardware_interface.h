@@ -34,7 +34,7 @@
 
 #include <memory>
 #include <vector>
-#include "std_msgs/Float64MultiArray.h"
+#include <std_msgs/Float64MultiArray.h>
 
 template <typename T>
 using RtPublisherPtr = std::unique_ptr<realtime_tools::RealtimePublisher<T>>;
@@ -57,14 +57,15 @@ public:
 
   // Writes (in realtime) the commands from the controllers to the sensegloves.
   void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
+  
 private:
+  void resetHaptics();
+  void initializeInterfaces();
+  void initializeJointCommands(size_t glove_index, size_t joint_index, SGHardware::Joint& joint);
+  void processJointCommands(size_t glove_index, size_t joint_index, size_t& command_index, SGHardware::Joint& joint);
 
-  std::string handedness[2] = { "/lh", "/rh" };
-  
-  void uploadJointNames(ros::NodeHandle& nh) const;
-  
+  void uploadJointNames(ros::NodeHandle& nh) const;  
   void reserveMemory();  
-
   void updateSenseGloveState();
 
   // SenseGlove hardware
@@ -79,7 +80,9 @@ private:
   // Configuration
   size_t num_gloves_ = 0;
   size_t num_joints_ = 0;
-  int num_effort_index_ = 2;
+  size_t effort_joints_ = 0;
+  size_t vibration_joints_ = 0;
+  std::string handedness[2] = { "/lh", "/rh" };
 
   // States
   std::vector<std::vector<double>> jointPosition;

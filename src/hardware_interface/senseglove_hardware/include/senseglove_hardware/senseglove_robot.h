@@ -101,16 +101,31 @@ namespace SGHardware
     Joint& getJoint(size_t index);
 
     size_t getJointSize();
+    size_t getEffortJointSize();
+    size_t getVibrationJointSize();
 
     Kinematics::Vect3D getHandPosition(int i);
     Kinematics::Vect3D getFingerTip(int i);
 
-    // ros control works exclusively with doubles, but the sendHaptics function works with integers
-    void actuateEffort(const std::vector<double>& effortCommand);    
-    void actuateVibrations(const std::vector<double>& vibrationCommand);
-    void actuateHaptics(const std::vector<double>& effortCommand, const std::vector<double>& vibrationCommand);
+    std::vector<float> effortLevels;
+    std::vector<float> vibrationLevels;
 
-    void stopActuating();
+    // ros control works exclusively with doubles, but the sendHaptics function works with integers
+    void queueEffort(const std::vector<double>& effortCommand);    
+    void queueVibrations(const std::vector<double>& vibrationCommand);
+
+    void sendHaptics();
+    void stopHaptics();
+
+    bool effortActive = false;
+    bool vibrationActive = false;
+
+    bool effortQueued = false;
+    bool vibrationQueued = false;
+    bool ffbQueued = false;
+    bool squeezeQueued = false;
+    bool vibroQueued = false;
+    bool thumperQueued = false;
 
     size_t size() const;
     

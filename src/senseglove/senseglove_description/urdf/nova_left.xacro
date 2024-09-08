@@ -361,6 +361,16 @@
         </visual>
     </link>
 
+    <!-- Thumper -->
+    <link name="thumper">
+        <visual>
+            <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://senseglove_description/urdf/STL/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
     <!-- Joints -->
     <joint name="l_joint_base_fixed_parent_joint" type="fixed">
         <parent link="world"/>
@@ -673,7 +683,7 @@
 
     <joint name="l_thumper" type="revolute">
         <parent link="l_glove_hub"/>
-        <child link="l_middle_brake"/>
+        <child link="thumper"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="-1 0 0"/>
 
