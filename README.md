@@ -118,7 +118,7 @@ This practice will allow others to troubleshoot their own problems quicker.
 ## ROS-Control for haptics: ###
 - In `hardware_interface/senseglove_hardware_interface/config`, refer to the joints & controllers assigned for each senseglove product.
 - In `senseglove/senseglove_haptics`, there are python scripts for haptic implementation. I suggest trying `haptics_node_dynamic.py` in-conjuction with the dynamic_reconfigure in rqt to test the haptics of the device. 
-- `NOTE:` For NOVA 2, the vibration feedback on the Index & Thumb tip are disabled.
+- `NOTE:` For NOVA 2, the vibration feedback on the Index & Thumb tip are Enabled. The vibration on the palm is disabled.
 
 ### Using the finger distance node: ###
 The finger distance package is meant to publish the distance between the fingertips through a rosnode as a means to control robotic grippers. This package also provides a calibration class that provides a service server. The service is easily called from the rqt_service_caller plugin. Instructions for the calibration are printed on your terminal. This is currently implemented/validated for only the DK1 gloves.
