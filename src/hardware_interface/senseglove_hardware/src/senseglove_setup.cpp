@@ -30,7 +30,7 @@ namespace SGHardware
 
   void SenseGloveSetup::stopCommunication()
   {
-    this->getSenseGloveRobot(0).stopActuating();
+    this->getSenseGloveRobot(0).stopHaptics();
   }
 
   bool SenseGloveSetup::isCommunicationOperational()
