@@ -27,7 +27,7 @@ add_message_files(
 
 add_service_files(
   FILES
-  Calibrate.srv
+  calibrate.srv
 )
 
 #add_action_files(

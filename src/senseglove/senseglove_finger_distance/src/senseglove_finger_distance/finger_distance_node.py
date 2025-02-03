@@ -1,9 +1,8 @@
 import rospy
 from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
-from senseglove_shared_resources.srv import Calibrate
+from senseglove_shared_resources.srv import calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
-
 
 class FingerTipHandler:
     handedness_list = ["/lh", "/rh"]
@@ -41,7 +40,7 @@ class FingerTipHandler:
             rospy.logwarn_once("No calibration data found, using defaults")
 
         # Declare calibration service
-        self.calib_srv = rospy.Service("~Calibrate", Calibrate, self.calibrate_service)
+        self.calib_srv = rospy.Service("~calibrate", calibrate, self.calibrate_service)
         self.calibrating = False
         rospy.loginfo("Done setting up calibration for %s", self.calib_srv.resolved_name)
 
@@ -79,6 +78,7 @@ class FingerTipHandler:
 
     def distance_publish(self):
         finger_distance_message = FingerDistanceFloats()
+
         finger_distance_message.th_ff.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[1]).magnitude(),
                                                               0, self.calib_mode)
         finger_distance_message.th_mf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[2]).magnitude(),
@@ -86,6 +86,7 @@ class FingerTipHandler:
         finger_distance_message.th_rf.data = self.apply_calib((self.finger_tips[0] - self.finger_tips[3]).magnitude(),
                                                               2, self.calib_mode)
         finger_distance_message.th_lf.data = (self.finger_tips[0] - self.finger_tips[4]).magnitude()
+
         self.pub.publish(finger_distance_message)
 
     def callback(self, data):
@@ -100,9 +101,10 @@ class FingerTipHandler:
                 rospy.logwarn_once("No calibration data found when publishing fingerdistances, using defaults")
 
         for i in range(len(self.finger_nrs)):
-            self.finger_tips[i].x = data.finger_tip_positions[i].x
-            self.finger_tips[i].y = data.finger_tip_positions[i].y
-            self.finger_tips[i].z = data.finger_tip_positions[i].z
+            self.finger_tips[i].x = float(data.finger_tip_positions[i].x)
+            self.finger_tips[i].y = float(data.finger_tip_positions[i].y)
+            self.finger_tips[i].z = float(data.finger_tip_positions[i].z)            
+
         self.distance_publish()
 
 

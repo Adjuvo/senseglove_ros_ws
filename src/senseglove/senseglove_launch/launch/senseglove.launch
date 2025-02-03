@@ -1,7 +1,7 @@
 <launch>
-    <arg name="calibration_mode"        default="None"  doc="Choose the calibration mode of the senseglove; nothing, minimum, normalized"/>
-    <arg name="calibration_file_left"   default="None"  doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
-    <arg name="calibration_file_right"  default="None"  doc="Name of the calibration file without.yaml, if it is equal to None no file will be loaded."/>
+    <arg name="calibration_mode"        default="nothing"  doc="Choose the calibration mode of the senseglove; nothing, minimum, normalized"/>
+    <arg name="calibration_file_left"   default="left"  doc="Name of the calibration file without.yaml; if it is equal to None no file will be loaded."/>
+    <arg name="calibration_file_right"  default="right" doc="Name of the calibration file without.yaml; if it is equal to None no file will be loaded."/>
 
     <!-- Specify the glove to be used -->
     <arg name="use_dk" default="false"/>
@@ -33,32 +33,28 @@
         pkg="rviz"
         type="rviz"
         args="-d $(arg rvizconfig)" required="true" if="$(eval use_rviz)">
-    </node>
-
-    <!-- Check if robot is Dk1 -->
-    <group if="$(arg use_dk)">
-        <group if="$(arg use_left)">
-            <node
-                name="senseglove_finger_distance_left"
-                pkg="senseglove_finger_distance"
-                type="senseglove_finger_distance_node"
-                args="0 $(arg calibration_mode)"
-                output="screen">
-                <remap from="/senseglove/0/lh/finger_distances" to="/lh/senseglove/finger_distances"/>
-                <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_left).yaml" unless="$(eval calibration_file_left=='None')"/>
-            </node>
-        </group>
-
-        <group if="$(arg use_right)">
-            <node
-                name="senseglove_finger_distance_right"
-                pkg="senseglove_finger_distance"
-                type="senseglove_finger_distance_node"
-                args="1 $(arg calibration_mode)"
-                output="screen">
-                <remap from="/senseglove/0/rh/finger_distances" to="/rh/senseglove/finger_distances"/>
-                <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
-            </node>
-        </group>
+    </node>    
+    
+    <group if="$(arg use_left)">
+        <node
+            name="senseglove_finger_distance_left"
+            pkg="senseglove_finger_distance"
+            type="senseglove_finger_distance_node"
+            args="0 $(arg calibration_mode)"
+            output="screen">
+            <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_left).yaml" unless="$(eval calibration_file_left=='None')"/>
+        </node>
     </group>
+
+    <group if="$(arg use_right)">
+        <node
+            name="senseglove_finger_distance_right"
+            pkg="senseglove_finger_distance"
+            type="senseglove_finger_distance_node"
+            args="1 $(arg calibration_mode)"
+            output="screen">
+            <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
+        </node>
+    </group>
+
 </launch>
