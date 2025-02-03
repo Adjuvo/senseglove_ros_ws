@@ -105,13 +105,17 @@ class Calibration:
         """
         Run an interactive (CLI) session for calibration.
         """
-        topic_name = str(self.handedness_list[int(self.glove_nr) % 2]) + '/senseglove/finger_distances'
+
+        topic_name = topic_name = '/senseglove/' + str(int(int(self.glove_nr) / 2)) + str(self.handedness_list[int(self.glove_nr) % 2]) + '/finger_distances'
+
         rospy.Subscriber(topic_name, FingerDistanceFloats, callback=self.senseglove_callback, queue_size=1)
 
         rospy.loginfo("Calibration of senseglove started, please flatten your hand.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
 
-        self.key_press_interface()
+        if not self.key_press_interface():
+            rospy.loginfo("Exiting calibration service.")
+            return False
         self.log_finger_distances()
 
         # Set average values for flat hand
@@ -122,7 +126,9 @@ class Calibration:
         rospy.loginfo("Calibration step 2, please pinch with your index finger and thumb.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
 
-        self.key_press_interface()
+        if not self.key_press_interface():
+            rospy.loginfo("Exiting calibration service.")
+            return False        
         self.log_finger_distances()
 
         # Set average values for pinch between thumb and index finger
@@ -136,7 +142,9 @@ class Calibration:
         rospy.loginfo("Calibration step 3, please pinch with your middle finger and thumb.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
 
-        self.key_press_interface()
+        if not self.key_press_interface():
+            rospy.loginfo("Exiting calibration service.")
+            return False  
         self.log_finger_distances()
 
         # Set average values for pinch between thumb and middle finger
@@ -150,7 +158,9 @@ class Calibration:
         rospy.loginfo("Calibration step 4, please pinch with your ring finger and thumb.")
         rospy.loginfo("Type [y] + [Enter] when ready, or [q] + [Enter] to quit.")
 
-        self.key_press_interface()
+        if not self.key_press_interface():
+            rospy.loginfo("Exiting calibration service.")
+            return False  
         self.log_finger_distances()
 
         # Set average values for pinch between thumb and ring finger
@@ -184,7 +194,9 @@ class Calibration:
         rospy.loginfo("Pinch calibration max: %s\n" % self.pinch_calibration_max)
         rospy.loginfo("Type [y] + [Enter] when OK, or [q] + [Enter] to discard and quit.")
 
-        self.key_press_interface()
+        if not self.key_press_interface():
+            rospy.loginfo("Exiting calibration service.")
+            return False  
 
         rospy.loginfo("Calibration successful!")
         rospy.loginfo("Setting on param server and saving to file...")
@@ -233,15 +245,18 @@ class Calibration:
         return avg_positions_msg
 
     def key_press_interface(self):
-        k = input()  # In python3, input() is used instead of raw_input (python2.7)
+        k = input("Press [y] to continue, or [q] to quit: ")
 
-        while not (k == 'q' or k == 'y'):
-            rospy.loginfo("Not valid: %s. Type [y] + [Enter] when ready, or [q] + [Enter] to quit." % k)
-            k = input()  # In python3, input() is used instead of raw_input (python2.7)
-
+        result = True
+        while k not in ('y', 'q'):
+            rospy.loginfo("Not valid: {}. Please type [y] + [Enter] when ready, or [q] + [Enter] to quit.".format(k))
+            k = input("Press [y] to continue, or [q] to quit: ")
+            
         if k == "q":
             rospy.loginfo("Calibration aborted!")
-            return False
+            result = False
+        
+        return result
 
     def log_finger_distances(self):
         self.databuffer.clear()  # Start with a fresh buffer
