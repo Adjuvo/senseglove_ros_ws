@@ -126,12 +126,21 @@ roslaunch senseglove_launch senseglove.launch
 
 ## Finger-Tip Distances: ##
 The finger distance package is designed to publish the distances between fingertips via a ROS node, which can be used to control robotic humanoid hands and grippers.
-- **Calibration Service**: A calibration class is provided as a service server. This service can be easily called using the rqt_service_caller plugin.
-- Instructions for the calibration are printed on your terminal.
-- You can find the defaults in the [calibration](src/senseglove/senseglove_shared_resources/calibration/).
+- **Calibration Service**: A calibration class is provided as a service server. This service can be easily called using the rqt_service_caller plugin, or through the terminal.
+```
+rosservice call /senseglove_finger_distance_left/calibrate left
+rosservice call /senseglove_finger_distance_right/calibrate right
+```
+ 
+- A Calibration Gui will appear. Install PyQt5 if it is not already available.
+```
+sudo apt-get install python3-pyqt5
+```
+
+- You can find the defaults/calibrated parameters in the [calibration folder](src/senseglove/senseglove_shared_resources/calibration/).
 
 ## ROS-Control for Haptics: ###
-- Refer to the joints & controllers assigned for each senseglove product in [config](/src/hardware_interface/senseglove_hardware_interface/config/).
-- Refer to the python scripts for haptic implementation in [senseglove_haptics](/src/senseglove/senseglove_haptics/src/senseglove_haptics/).
+- Refer to the joints & controllers assigned for each senseglove product in the [config folder](/src/hardware_interface/senseglove_hardware_interface/config/).
+- Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/src/senseglove/senseglove_haptics/src/senseglove_haptics/).
 - `NOTE for NOVA 2`: The vibration feedback is enabled on the Index and Thumb tips, while the vibration on the palm is disabled.
 
