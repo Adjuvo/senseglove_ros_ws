@@ -234,7 +234,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-      Marker Scale: 0.5
+      Marker Scale: 0.2
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -283,7 +283,7 @@ Visualization Manager:
         Z: 0.4000000059604645
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
-      Invert Z Axis: true
+      Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
       Pitch: 0.34539687633514404

@@ -16,15 +16,15 @@ catkin_package(CFG_EXTRAS ${PROJECT_NAME}-extras.cmake)
 include(cmake/${PROJECT_NAME}-extras.cmake)
 
 set(XACRO_FILES
-        urdf/dk1_left.xacro
-        urdf/dk1_right.xacro
-        urdf/nova_left.xacro
-        urdf/nova_right.xacro
-        urdf/nova2_left.xacro
-        urdf/nova2_right.xacro
+        urdf/dk1/dk1_left.xacro
+        urdf/dk1/dk1_right.xacro
+        urdf/nova1/nova_left.xacro
+        urdf/nova1/nova_right.xacro
+        urdf/nova2/nova2_left.xacro
+        urdf/nova2/nova2_right.xacro
         )
 build_and_install_xacro_files(${XACRO_FILES})
 
-install(DIRECTORY urdf
+install(DIRECTORY meshes urdf
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         )
