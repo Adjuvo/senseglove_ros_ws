@@ -151,30 +151,84 @@ class CalibrationGUI(QtWidgets.QWidget):
         super(CalibrationGUI, self).__init__()
         self.calibration = calibration
         self.setWindowTitle("SenseGlove Calibration")
-        self.resize(500, 400)
+        self.resize(600, 500)
         self.init_ui()
         self.subscribe_to_sensor()
 
     def init_ui(self):
-        layout = QtWidgets.QVBoxLayout()
-        self.log_text = QtWidgets.QTextEdit()
-        self.log_text.setReadOnly(True)
-        layout.addWidget(self.log_text)
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #f7f7f7;
+                font-family: "Segoe UI", sans-serif;
+                font-size: 12pt;
+            }
+            QPushButton {
+                background-color: #007ACC;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: #005A9E;
+            }
+            QTextEdit {
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 5px;
+            }
+            QGroupBox {
+                font-weight: bold;
+                border: 1px solid #007ACC;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 3px 0 3px;
+            }
+        """)
 
-        # Buttons for calibration steps
-        self.btn_open_flat = QtWidgets.QPushButton("Step 1: Calibrate Open Flat")
-        self.btn_thumb_index = QtWidgets.QPushButton("Step 2: Calibrate Thumb-Index Pinch")
-        self.btn_thumb_middle = QtWidgets.QPushButton("Step 3: Calibrate Thumb-Middle Pinch")
-        self.btn_thumb_ring = QtWidgets.QPushButton("Step 4: Calibrate Thumb-Ring Pinch")
+        main_layout = QtWidgets.QVBoxLayout()
+
+        header = QtWidgets.QLabel("SenseGlove Calibration")
+        header.setAlignment(QtCore.Qt.AlignCenter)
+        header.setStyleSheet("font-size: 16pt; font-weight: bold; margin: 10px;")
+        main_layout.addWidget(header)
+
+        # Group box
+        steps_group = QtWidgets.QGroupBox("Calibration Steps")
+        steps_layout = QtWidgets.QGridLayout()
+
+        self.btn_open_flat = QtWidgets.QPushButton("Step 1: Open Flat")
+        self.btn_thumb_index = QtWidgets.QPushButton("Step 2: Thumb-Index")
+        self.btn_thumb_middle = QtWidgets.QPushButton("Step 3: Thumb-Middle")
+        self.btn_thumb_ring = QtWidgets.QPushButton("Step 4: Thumb-Ring")
+        steps_layout.addWidget(self.btn_open_flat, 0, 0)
+        steps_layout.addWidget(self.btn_thumb_index, 0, 1)
+        steps_layout.addWidget(self.btn_thumb_middle, 1, 0)
+        steps_layout.addWidget(self.btn_thumb_ring, 1, 1)
+        steps_group.setLayout(steps_layout)
+        main_layout.addWidget(steps_group)
+
+        # Save and Cancel buttons.
+        button_layout = QtWidgets.QHBoxLayout()
         self.btn_save = QtWidgets.QPushButton("Save Calibration")
         self.btn_cancel = QtWidgets.QPushButton("Cancel Calibration")
+        button_layout.addWidget(self.btn_save)
+        button_layout.addWidget(self.btn_cancel)
+        main_layout.addLayout(button_layout)
 
-        layout.addWidget(self.btn_open_flat)
-        layout.addWidget(self.btn_thumb_index)
-        layout.addWidget(self.btn_thumb_middle)
-        layout.addWidget(self.btn_thumb_ring)
-        layout.addWidget(self.btn_save)
-        layout.addWidget(self.btn_cancel)
+        # log text
+        log_group = QtWidgets.QGroupBox("Log")
+        log_layout = QtWidgets.QVBoxLayout()
+        self.log_text = QtWidgets.QTextEdit()
+        self.log_text.setReadOnly(True)
+        log_layout.addWidget(self.log_text)
+        log_group.setLayout(log_layout)
+        main_layout.addWidget(log_group)
+
+        self.setLayout(main_layout)
 
         self.btn_open_flat.clicked.connect(self.on_calibrate_open_flat)
         self.btn_thumb_index.clicked.connect(self.on_calibrate_thumb_index)
@@ -182,8 +236,6 @@ class CalibrationGUI(QtWidgets.QWidget):
         self.btn_thumb_ring.clicked.connect(self.on_calibrate_thumb_ring)
         self.btn_save.clicked.connect(self.on_save_calibration)
         self.btn_cancel.clicked.connect(self.on_cancel_calibration)
-
-        self.setLayout(layout)
 
     def subscribe_to_sensor(self):
         """
