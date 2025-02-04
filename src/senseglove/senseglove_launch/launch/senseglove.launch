@@ -15,9 +15,9 @@
     <arg name="use_rviz" default="false"/>
 
     <!--Passing through here ensures the use of the correct urdf_x.rviz file by overwriting if necessary-->
-    <arg name="rvizconfig" value="$(find senseglove_description)/urdf_left.rviz"  if="$(eval use_both==false and use_left==true)"/>
-    <arg name="rvizconfig" value="$(find senseglove_description)/urdf_right.rviz" if="$(eval use_both==false and use_right==true)"/>
-    <arg name="rvizconfig" value="$(find senseglove_description)/urdf_both.rviz"  if="$(eval use_both)"/>
+    <arg name="rvizconfig" value="$(find senseglove_description)/config/urdf_left.rviz"  if="$(eval use_both==false and use_left==true)"/>
+    <arg name="rvizconfig" value="$(find senseglove_description)/config/urdf_right.rviz" if="$(eval use_both==false and use_right==true)"/>
+    <arg name="rvizconfig" value="$(find senseglove_description)/config/urdf_both.rviz"  if="$(eval use_both)"/>
 
     <node
         name="startGlove"
