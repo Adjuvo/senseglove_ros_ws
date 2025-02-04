@@ -3,6 +3,7 @@ from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloat
 from senseglove_shared_resources.srv import calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
+import subprocess
 
 class FingerTipHandler:
     handedness_list = ["/lh", "/rh"]
@@ -45,25 +46,21 @@ class FingerTipHandler:
         rospy.loginfo("Done setting up calibration for %s", self.calib_srv.resolved_name)
 
     def calibrate_service(self, call):
-        # Stop publishing commands & feedback
-        print("Executing calibration service")
-        self.calibrating = True
+        rospy.loginfo("Executing calibration service via GUI")
 
-        old_calib = self.calibration
-        if call.name is None:
-            call.name = "Unnamed_" + str(rospy.get_time())
-        rospy.loginfo("calibration from call.name: %s", call.name)
-        self.calibration = Calibration(name=call.name, glove_nr=self.glove_nr)
-        result = self.calibration.run_interactive_calibration()
+        process = subprocess.Popen(["rosrun", "senseglove_finger_distance", "finger_distance_calibration.py", self.glove_nr, call.name])
+        process.wait()       
 
-        if not result:
-            # Failed; Restore previous calibration
-            rospy.logwarn("Calibration was unsuccesful: using old calibration")
-            self.calibration = old_calib
+        # After the process finishes, check if the calibration parameters were set on the ROS parameter server.
+        if rospy.has_param('~pinch_calibration_min') and rospy.has_param('~pinch_calibration_max'):
+            rospy.loginfo("Calibration completed successfully")
+            result = True
+        else:
+            rospy.logwarn("Calibration parameters not found; calibration failed")
+            result = False
 
-        # Resume publishing
-        self.calibrating = False
         return result
+
 
     def apply_calib(self, pinch_value=0.0, pinch_combination=0, mode='nothing'):
         if mode == 'nothing':
