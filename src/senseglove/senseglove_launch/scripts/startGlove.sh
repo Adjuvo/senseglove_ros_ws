@@ -7,8 +7,8 @@ BOLD='\e[1m'
 
 # Start SenseCom
 echo -e "${BLUE}Starting SenseCom...${RESET}"
-chmod +x $1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64
-$1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64 &
+chmod +x $1/SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64
+$1/SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64 &
 
 # Allow SenseComm to start
 sleep 2
