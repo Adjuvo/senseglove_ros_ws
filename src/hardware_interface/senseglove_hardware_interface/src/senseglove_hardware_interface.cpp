@@ -107,7 +107,8 @@ void SenseGloveHardwareInterface::initializeInterfaces()
 // Initialize Joint Commands
 void SenseGloveHardwareInterface::initializeJointCommands(size_t glove_index, size_t joint_index, SGHardware::Joint& joint)
 {
-  if (sensegloveSetup->getSenseGloveRobot(glove_index).updateGloveData(ros::Duration(0.0)))
+
+  if (sensegloveSetup->getSenseGloveRobot(glove_index).updateGloveData(std::chrono::seconds(0)))
   {
     jointPosition[glove_index][joint_index] = joint.getPosition();
     jointVelocity[glove_index][joint_index] = joint.getVelocity();
@@ -125,13 +126,14 @@ void SenseGloveHardwareInterface::initializeJointCommands(size_t glove_index, si
 }
 
 // Read Data
-void SenseGloveHardwareInterface::read(const ros::Time& /* time */, const ros::Duration& elapsed_time)
+void SenseGloveHardwareInterface::read(const std::chrono::steady_clock::time_point& /* time */, const std::chrono::duration<double>& elapsed_time)
 {
   for (size_t i = 0; i < num_gloves_; ++i)
   {
     if (sensegloveSetup->getSenseGloveRobot(i).updateGloveData(elapsed_time))
     {
       auto& robot = sensegloveSetup->getSenseGloveRobot(i);
+      
       for (size_t j = 0; j < num_joints_; ++j)
       {
       {
@@ -147,7 +149,7 @@ void SenseGloveHardwareInterface::read(const ros::Time& /* time */, const ros::D
 }
 
 // Write Data
-void SenseGloveHardwareInterface::write(const ros::Time& /* time */, const ros::Duration& /* elapsed_time */)
+void SenseGloveHardwareInterface::write(const std::chrono::steady_clock::time_point& /* time */, const std::chrono::duration<double>& /* elapsed_time */ )
 {
   // Accumulate data and do not send yet
   for (size_t i = 0; i < num_gloves_; ++i)
@@ -236,7 +238,7 @@ void SenseGloveHardwareInterface::reserveMemory()
   jointLastVibrationCommand.resize(num_gloves_);
 
   
-  for (unsigned int i = 0; i < num_gloves_; ++i)
+  for (size_t i = 0; i < num_gloves_; ++i)
   {
     jointPosition[i].resize(num_joints_, 0.0);
     jointPositionCommand[i].resize(num_joints_, 0.0);
@@ -264,7 +266,12 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
     return;
   }
 
-  senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
+  auto now = std::chrono::steady_clock::now();
+  double time_in_seconds = std::chrono::duration<double>(now.time_since_epoch()).count();
+
+  senseglove_state_pub_->msg_.header.stamp.sec = static_cast<uint32_t>(time_in_seconds);
+  senseglove_state_pub_->msg_.header.stamp.nsec = static_cast<uint32_t>((time_in_seconds - senseglove_state_pub_->msg_.header.stamp.sec) * 1e9);
+
   for (size_t i = 0; i < num_gloves_; ++i)
   {
     SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);

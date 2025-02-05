@@ -34,6 +34,7 @@
 
 #include <memory>
 #include <vector>
+#include <chrono>
 #include <std_msgs/Float64MultiArray.h>
 
 template <typename T>
@@ -53,10 +54,10 @@ public:
   void validate();
 
   // Reads (in realtime) the state from the sensegloves.
-  void read(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
-
+  void read(const std::chrono::steady_clock::time_point& /* time */, const std::chrono::duration<double>& /*elapsed_time*/);
+  
   // Writes (in realtime) the commands from the controllers to the sensegloves.
-  void write(const ros::Time& /*time*/, const ros::Duration& /*elapsed_time*/) override;
+  void write(const std::chrono::steady_clock::time_point& /* time */, const std::chrono::duration<double>& /*elapsed_time*/);
   
 private:
   void resetHaptics();

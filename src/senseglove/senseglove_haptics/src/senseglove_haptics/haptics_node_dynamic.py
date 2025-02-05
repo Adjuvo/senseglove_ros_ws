@@ -48,10 +48,10 @@ class SGHapticFeedback:
         self.trajectory = JointTrajectory()
         self.trajectory.header = Header()
         self.trajectory.joint_names = self.joint_list
-        self.trajectory.header.stamp = rospy.Time.now()
-
+        self.trajectory.header.stamp = rospy.Time.now() + rospy.Duration(0.1) #Some Buffer
+ 
         self.point = JointTrajectoryPoint()        
-        self.point.time_from_start = rospy.Duration.from_sec(0.1)
+        self.point.time_from_start = rospy.Duration.from_sec(0.05)
 
         if self.reset:
             self.reset_parameters()   
@@ -69,9 +69,13 @@ class SGHapticFeedback:
         self.point.positions = [self.thumb_ffb, self.index_ffb, self.middle_ffb, self.ring_ffb,
                                 self.thumb_buzz, self.index_buzz, 
                                 self.palm_index_buzz, self.palm_pinky_buzz, self.palm_strap]
+        
+        # Ensure at least one valid point
+        if len(self.point.positions) > 0:
+            self.trajectory.points.append(self.point)
+        else:
+            rospy.logwarn("Skipping trajectory publication: No valid haptic feedback values found.")
 
-
-        self.trajectory.points.append(self.point)
         self.hap_pub.publish(self.trajectory)
 
 
@@ -103,7 +107,7 @@ class SGHapticFeedback:
     def run(self):
         # Init dynamic config before starting the callback/subscriber
         srv = Server(HapticSliderConfig, self._dyn_config_callback) 
-        r = rospy.Rate(self.publish_rate)
+        r = rospy.Rate(self.publish_rate/2)
 
         while not rospy.is_shutdown():
             self.callback() 

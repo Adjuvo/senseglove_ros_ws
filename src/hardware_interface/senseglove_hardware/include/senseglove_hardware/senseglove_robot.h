@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <chrono>
 
 #include "joint.h"
 #include "BasicHandModel.hpp"
@@ -134,7 +135,7 @@ namespace SGHardware
 
     const urdf::Model& getUrdf() const;
 
-    bool updateGloveData(const ros::Duration period);
+    bool updateGloveData(const std::chrono::duration<double>& period);
 
     /** @brief Override comparison operator */
     friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)

@@ -260,7 +260,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
   {
   }
 
-  bool SenseGloveRobot::updateGloveData(const ros::Duration period)
+  bool SenseGloveRobot::updateGloveData(const std::chrono::duration<double>& period)
   {
 
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
@@ -298,7 +298,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
 
           joint.position = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex];
           double intermediateVelocity = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex] - joint.velocity;
-          joint.velocity = (intermediateVelocity != 0.0 && period.toSec() != 0.0) ? (intermediateVelocity / period.toSec()) : 0.0;
+          joint.velocity = (intermediateVelocity != 0.0 && period.count() != 0.0) ? (intermediateVelocity / period.count()) : 0.0;
         }
       }
 
