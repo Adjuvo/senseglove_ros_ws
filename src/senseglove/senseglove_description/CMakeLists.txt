@@ -18,8 +18,8 @@ include(cmake/${PROJECT_NAME}-extras.cmake)
 set(XACRO_FILES
         urdf/dk1/dk1_left.xacro
         urdf/dk1/dk1_right.xacro
-        urdf/nova/nova_left.xacro
-        urdf/nova/nova_right.xacro
+        urdf/nova1/nova_left.xacro
+        urdf/nova1/nova_right.xacro
         urdf/nova2/nova2_left.xacro
         urdf/nova2/nova2_right.xacro
         )

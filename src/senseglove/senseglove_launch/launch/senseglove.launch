@@ -35,7 +35,7 @@
         args="-d $(arg rvizconfig)" required="true" if="$(eval use_rviz)">
     </node>    
     
-    <!-- <group if="$(arg use_left)">
+    <group if="$(arg use_left)">
         <node
             name="senseglove_finger_distance_left"
             pkg="senseglove_finger_distance"
@@ -55,6 +55,6 @@
             output="screen">
             <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
         </node>
-    </group> -->
+    </group>
 
 </launch>

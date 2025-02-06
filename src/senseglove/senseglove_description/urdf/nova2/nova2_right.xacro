@@ -11,7 +11,7 @@
 
     <link name="r_glove_hub">
         <visual name="glove_hub_visual">
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <origin xyz="-0.05 0.0 0.0" rpy="0.0 0.0 0.0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/glove_hub.stl" scale="0.001 0.001 0.001" />
             </geometry>
