@@ -11,7 +11,7 @@
 
     <link name="l_glove_hub">
         <visual name="glove_hub_visual">
-            <origin xyz="0.05 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/glove_hub.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -236,7 +236,7 @@
         <origin xyz="-0.02506442 -0.00770466 0.02486694" rpy="1.4820265299367277 0.1840629653196965 -2.0234171385135755" />
         <parent link="l_glove_hub" />
         <child link="l_thumb_brake" />
-        <axis xyz="1.0992492686934252e-08 -2.664383911971102e-07 0.9999999811584642" />
+        <axis xyz="1.0992492686934252e-08 2.664383911971102e-07 -0.9999999811584642" />
         <limit lower="-0.436332" upper="0.349066" effort="100" velocity="1000" />
     </joint>
 
