@@ -15,6 +15,7 @@ src/cmake-build-debug/*
 src/CMakeLists.txt
 
 src/senseglove/senseglove_finger_distance/src/senseglove_finger_distance/__pycache__
+src/senseglove/senseglove_haptics/src/senseglove_haptics/__pycache__
 src/senseglove/senseglove_launch/scripts/sessionLog.txt
 src/senseglove/senseglove_shared_resources/calibration/*
 
