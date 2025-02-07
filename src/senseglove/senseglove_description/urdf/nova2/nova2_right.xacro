@@ -10,8 +10,8 @@
     <link name="world"/>
 
     <link name="r_glove_hub">
-        <visual name="glove_hub_visual">
-            <origin xyz="-0.05 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <visual name="r_glove_hub_visual">
+            <origin xyz="0.05 0.0375 0.018000000000000002" rpy="1.5707963267948966 1.694818351060253e-32 0.0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/glove_hub.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -19,8 +19,8 @@
     </link>
 
     <link name="r_thumb_brake">
-        <visual name="thumb_brake_visual">
-            <origin xyz="-0.04923316467077802 0.032774345558332335 0.013999995809348036" rpy="-1.5707963267948961 -4.926614671774123e-16 0.5235987755982975" />
+        <visual name="r_thumb_brake_visual">
+            <origin xyz="-0.04923316467077803 0.032774345558332356 0.013999995809348048" rpy="-1.5707963267948961 -5.481726184086701e-16 0.5235987755982975" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/thumb_brake.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -28,8 +28,8 @@
     </link>
 
     <link name="r_thumb_flexion_one">
-        <visual name="thumb_flexion_one_visual">
-            <origin xyz="0.04877817791593698 -0.03744837174057768 0.02667623952066879" rpy="1.0752517240881496 0.38152488287521386 1.205992336138855" />
+        <visual name="r_thumb_flexion_one_visual">
+            <origin xyz="0.04877817791593699 -0.03744837174057768 0.026676239520668787" rpy="1.0752517240881496 0.3815248828752136 1.205992336138855" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/thumb_flexion_one.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -37,8 +37,8 @@
     </link>
 
     <link name="r_thumb_flexion_two">
-        <visual name="thumb_flexion_two_visual">
-            <origin xyz="0.048778177737687 -0.03744836930837412 0.026676232931179017" rpy="1.075251724088142 0.38152488287521186 1.2059923361388505" />
+        <visual name="r_thumb_flexion_two_visual">
+            <origin xyz="0.048778177737686994 -0.037448369308374134 0.026676232931179024" rpy="1.075251724088142 0.3815248828752118 1.2059923361388505" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/thumb_flexion_two.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -46,8 +46,8 @@
     </link>
 
     <link name="r_thumb_flexion_three">
-        <visual name="thumb_flexion_three_visual">
-            <origin xyz="0.048778172648561754 -0.03744837309227227 0.026676234636433895" rpy="1.0752517240881398 0.38152488287521497 1.2059923361388505" />
+        <visual name="r_thumb_flexion_three_visual">
+            <origin xyz="0.04877817264856175 -0.0374483730922723 0.026676234636433913" rpy="1.0752517240881398 0.3815248828752148 1.2059923361388503" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/thumb_flexion_three.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -55,8 +55,8 @@
     </link>
 
     <link name="r_index_brake">
-        <visual name="index_brake_visual">
-            <origin xyz="-0.026250000074505824 -0.052999999999999686 -0.007000001599474379" rpy="1.570796326794898 1.4822864937535062e-16 -5.204170427930357e-16" />
+        <visual name="r_index_brake_visual">
+            <origin xyz="-0.026250000074505824 -0.05299999999999971 -0.0070000015994743725" rpy="1.570796326794898 1.4822864937535062e-16 -5.204170427930359e-16" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/index_brake.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -64,8 +64,8 @@
     </link>
 
     <link name="r_index_flexion_one">
-        <visual name="index_flexion_one_visual">
-            <origin xyz="0.06049999999999981 0.011999998400525616 -0.02624999992549412" rpy="3.1415926535897922 -1.5707963267948961 0" />
+        <visual name="r_index_flexion_one_visual">
+            <origin xyz="0.060499999999999825 0.011999998400525626 -0.026249999925494143" rpy="3.1415926535897922 -1.5707963267948961 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/index_flexion_one.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -73,8 +73,8 @@
     </link>
 
     <link name="r_index_flexion_two">
-        <visual name="index_flexion_two_visual">
-            <origin xyz="0.06049999999999993 0.012000001599474357 -0.026250000074505786" rpy="-3.141592653589792 -1.570796326794896 0" />
+        <visual name="r_index_flexion_two_visual">
+            <origin xyz="0.06049999999999989 0.012000001599474354 -0.026250000074505803" rpy="-3.141592653589792 -1.570796326794896 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/index_flexion_two.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -82,8 +82,8 @@
     </link>
 
     <link name="r_index_flexion_three">
-        <visual name="index_flexion_three_visual">
-            <origin xyz="0.06050000000000005 -0.012000001599474444 0.026250000074505696" rpy="1.1657341758564106e-15 1.5707963267948954 0" />
+        <visual name="r_index_flexion_three_visual">
+            <origin xyz="0.06050000000000006 -0.012000001599474442 0.026250000074505713" rpy="1.16573417585641e-15 1.5707963267948954 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/index_flexion_three.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -91,8 +91,8 @@
     </link>
 
     <link name="r_middle_brake">
-        <visual name="middle_brake_visual">
-            <origin xyz="-0.02625000007450578 -0.052999999999999964 -0.006999999999999983" rpy="1.5707963267948966 -6.871075661622384e-17 5.689893001203929e-16" />
+        <visual name="r_middle_brake_visual">
+            <origin xyz="-0.026250000074505776 -0.05299999999999997 -0.006999999999999979" rpy="1.5707963267948966 -6.871075661622362e-17 5.689893001203939e-16" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/middle_brake.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -100,8 +100,8 @@
     </link>
 
     <link name="r_middle_flexion_one">
-        <visual name="middle_flexion_one_visual">
-            <origin xyz="0.06050000000000095 -0.012000000000000084 0.026250000074505786" rpy="-5.401893904408596e-16 1.570796326794895 0" />
+        <visual name="r_middle_flexion_one_visual">
+            <origin xyz="0.06050000000000097 -0.01200000000000009 0.026250000074505772" rpy="-5.401893904408599e-16 1.570796326794895 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/middle_flexion_one.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -109,8 +109,8 @@
     </link>
 
     <link name="r_middle_flexion_two">
-        <visual name="middle_flexion_two_visual">
-            <origin xyz="0.060500000000001296 -0.012000000000000255 0.02625000007450608" rpy="-5.124338148252278e-16 1.5707963267948961 0" />
+        <visual name="r_middle_flexion_two_visual">
+            <origin xyz="0.06050000000000127 -0.012000000000000248 0.026250000074506057" rpy="-5.124338148252279e-16 1.5707963267948961 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/middle_flexion_two.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -118,8 +118,8 @@
     </link>
 
     <link name="r_middle_flexion_three">
-        <visual name="middle_flexion_three_visual">
-            <origin xyz="0.06050000000000097 -0.012000000000000344 0.02625000007450612" rpy="-5.748838599603916e-16 1.5707963267948952 0" />
+        <visual name="r_middle_flexion_three_visual">
+            <origin xyz="0.06050000000000089 -0.012000000000000342 0.026250000074506123" rpy="-5.748838599603918e-16 1.5707963267948952 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/middle_flexion_three.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -127,8 +127,8 @@
     </link>
 
     <link name="r_ring_brake">
-        <visual name="ring_brake_visual">
-            <origin xyz="-0.02625000007450579 -0.052999999999999874 -0.006999999999999994" rpy="1.5707963267948966 -4.1087712323886696e-17 -8.326672684688689e-17" />
+        <visual name="r_ring_brake_visual">
+            <origin xyz="-0.026250000074505807 -0.052999999999999894 -0.006999999999999999" rpy="1.5707963267948966 -4.108771232388662e-17 -8.326672684688674e-17" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/ring_brake.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -136,8 +136,8 @@
     </link>
 
     <link name="r_ring_flexion_one">
-        <visual name="ring_flexion_one_visual">
-            <origin xyz="0.060500000000000505 -0.011999999999999945 0.026250000074505665" rpy="-1.78355727544561e-15 1.5707963267948952 0" />
+        <visual name="r_ring_flexion_one_visual">
+            <origin xyz="0.06050000000000053 -0.011999999999999941 0.026250000074505682" rpy="-1.78355727544561e-15 1.5707963267948952 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/ring_flexion_one.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -145,8 +145,8 @@
     </link>
 
     <link name="r_ring_flexion_two">
-        <visual name="ring_flexion_two_visual">
-            <origin xyz="0.06050000000000065 -0.012000000000000155 0.026250000074506098" rpy="-1.0341567338236313e-15 1.5707963267948941 0" />
+        <visual name="r_ring_flexion_two_visual">
+            <origin xyz="0.06050000000000063 -0.012000000000000153 0.02625000007450611" rpy="-1.034156733823631e-15 1.5707963267948941 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/ring_flexion_two.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -154,8 +154,8 @@
     </link>
 
     <link name="r_ring_flexion_three">
-        <visual name="ring_flexion_three_visual">
-            <origin xyz="0.060500000000000664 -0.012000000000000247 0.026250000074506067" rpy="-2.445625332073842e-15 1.5707963267948923 0" />
+        <visual name="r_ring_flexion_three_visual">
+            <origin xyz="0.06050000000000065 -0.012000000000000241 0.02625000007450608" rpy="-2.4456253320738407e-15 1.5707963267948923 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/ring_flexion_three.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -163,8 +163,8 @@
     </link>
 
     <link name="r_pinky_brake">
-        <visual name="pinky_brake_visual">
-            <origin xyz="0.026249999999999857 -0.052999999210238215 0.015000000000000012" rpy="-1.5707963267948966 9.980427403008834e-17 3.141592653589793" />
+        <visual name="r_pinky_brake_visual">
+            <origin xyz="0.026249999999999895 -0.05299999921023822 0.01500000000000001" rpy="-1.5707963267948966 9.980427403008827e-17 3.141592653589793" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/pinky_brake.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -172,8 +172,8 @@
     </link>
 
     <link name="r_pinky_flexion_one">
-        <visual name="pinky_flexion_one_visual">
-            <origin xyz="0.060499999210237965 -0.012000000000000174 0.026249999999999864" rpy="3.2890357104520326e-15 1.570796326794896 0" />
+        <visual name="r_pinky_flexion_one_visual">
+            <origin xyz="0.06049999921023799 -0.012000000000000184 0.026249999999999912" rpy="3.289035710452033e-15 1.570796326794896 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/pinky_flexion_one.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -181,8 +181,8 @@
     </link>
 
     <link name="r_pinky_flexion_two">
-        <visual name="pinky_flexion_two_visual">
-            <origin xyz="0.060499999210238305 -0.0119999999999999 0.026249999999999968" rpy="1.457167719820526e-15 1.5707963267948957 0" />
+        <visual name="r_pinky_flexion_two_visual">
+            <origin xyz="0.06049999921023832 -0.011999999999999914 0.026249999999999964" rpy="1.4571677198205268e-15 1.5707963267948957 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/pinky_flexion_two.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -190,8 +190,8 @@
     </link>
 
     <link name="r_pinky_flexion_three">
-        <visual name="pinky_flexion_three_visual">
-            <origin xyz="0.060499999210238346 -0.011999999999999972 0.02624999999999983" rpy="1.8179902028236962e-15 1.570796326794894 0" />
+        <visual name="r_pinky_flexion_three_visual">
+            <origin xyz="0.06049999921023838 -0.011999999999999988 0.02624999999999984" rpy="1.8179902028236954e-15 1.570796326794894 0" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/pinky_flexion_three.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -199,8 +199,8 @@
     </link>
 
     <link name="r_palm_strap">
-        <visual name="palm_strap_visual">
-            <origin xyz="-2.6645352591003756e-17 9.436895709314241e-19 1.4432899320127036e-17" rpy="1.570796326794896 -7.827072323607346e-15 -5.204170427930339e-16" />
+        <visual name="r_palm_strap_visual">
+            <origin xyz="-1.7763568394002505e-17 -4.440892098500626e-18 1.7763568394002505e-17" rpy="1.570796326794896 -7.827072323607347e-15 -5.204170427930341e-16" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/palm_strap.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -208,8 +208,8 @@
     </link>
 
     <link name="r_palm_index">
-        <visual name="palm_index_visual">
-            <origin xyz="-7.105427357601002e-17 1.1907141939104747e-17 1.3322676295501878e-17" rpy="1.5707963267948963 -2.1416868401546397e-16 -4.926614671774065e-16" />
+        <visual name="r_palm_index_visual">
+            <origin xyz="-7.105427357601002e-17 1.7763568394002505e-17 1.7763568394002505e-17" rpy="1.5707963267948963 -2.1416868401546388e-16 -4.926614671774061e-16" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/palm_index.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -217,8 +217,8 @@
     </link>
 
     <link name="r_palm_pinky">
-        <visual name="palm_pinky_visual">
-            <origin xyz="-4.440892098500626e-18 -8.854028621385476e-18 3.3306690738754695e-18" rpy="1.5707963267948963 -2.775557561562868e-16 -5.204170427930351e-16" />
+        <visual name="r_palm_pinky_visual">
+            <origin xyz="-8.881784197001253e-18 -1.3322676295501878e-17 1.7763568394002505e-17" rpy="1.5707963267948963 -2.775557561562868e-16 -5.204170427930353e-16" />
             <geometry>
                 <mesh filename="package://senseglove_description/meshes/nova2/palm_pinky.stl" scale="0.001 0.001 0.001" />
             </geometry>
@@ -229,11 +229,11 @@
     <joint name="joint_base_fixed_parent_joint" type="fixed">
         <parent link="world"/>
         <child link="r_glove_hub"/>
-        <origin xyz="0.5 0 ${hover_height}" rpy="${180*pi/180} 0 ${180*pi/180}"/>
+        <origin xyz="0.5 0 ${hover_height}" rpy="${90*pi/180} 0 ${180*pi/180}"/>
     </joint>
 
     <joint name="r_thumb_brake" type="revolute">
-        <origin xyz="-0.02506442 -0.00770466 0.02486694" rpy="1.4820265299367277 0.1840629653196965 -2.0234171385135755" />
+        <origin xyz="0.024935580000000002 0.012633060000000002 0.01029534" rpy="-0.4487407787795519 1.0845927038997847 2.7391266194087946" />
         <parent link="r_glove_hub" />
         <child link="r_thumb_brake" />
         <axis xyz="1.0992492686934252e-08 2.664383911971102e-07 0.9999999811584642" />
@@ -241,63 +241,63 @@
     </joint>
 
     <joint name="r_thumb_mcp" type="revolute">
-        <origin xyz="0.0037500048980027745 -0.006495193150393992 0.001999996764929928" rpy="-2.7052603405912103 -0.08726646259971634 1.7555704790214286" />
+        <origin xyz="0.0037500048980027723 -0.006495193150393994 0.001999996764929928" rpy="-2.705260340591211 -0.08726646259971645 1.7555704790214284" />
         <parent link="r_thumb_brake" />
         <child link="r_thumb_flexion_one" />
-        <axis xyz="0.3311139999999997 0.8670230000000001 -0.37233600000000067" />
+        <axis xyz="0.33111399999999946 0.8670229999999998 -0.3723360000000006" />
         <limit lower="-0.349066" upper="1.396263" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_thumb_pip" type="revolute">
-        <origin xyz="-0.053099090000000064 0.008907109999999958 -0.026479230000000045" rpy="-1.3877787807814496e-16 -2.1185229388259816e-32 -2.0816681711721848e-16" />
+        <origin xyz="-0.0530990900000001 0.008907109999999961 -0.02647923000000006" rpy="-4.510281037539698e-17 -1.1102230246251578e-16 -2.7755575615628716e-17" />
         <parent link="r_thumb_flexion_one" />
         <child link="r_thumb_flexion_two" />
-        <axis xyz="0.33111399999999414 0.8670229999999884 -0.372335999999995" />
+        <axis xyz="0.33111399999999436 0.8670229999999884 -0.37233599999999506" />
         <limit lower="-0.523599" upper="1.22173" effort="100" velocity="1000" />
     </joint>
-    
+
     <joint name="r_thumb_dip" type="revolute">
-        <origin xyz="-0.0265495400000004 0.004453560000000043 -0.013239620000000176" rpy="1.3877787807814624e-16 -5.5511151231257574e-17 -5.551115123125859e-17" />
+        <origin xyz="-0.026549540000000392 0.004453560000000043 -0.013239620000000167" rpy="-9.922391073483093e-31 -5.5511151231257587e-17 -5.551115123125852e-17" />
         <parent link="r_thumb_flexion_two" />
         <child link="r_thumb_flexion_three" />
-        <axis xyz="0.3311139999999939 0.8670229999999902 -0.3723359999999913" />
+        <axis xyz="0.331113999999994 0.8670229999999902 -0.37233599999999134" />
         <limit lower="-0.174533" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_index_brake" type="revolute">
-        <origin xyz="-0.025 0.0070011000000000006 -0.063" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.025 0.1005 0.0250011" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_index_brake" />
-        <axis xyz="0.0 0.01 1.0" />
+        <axis xyz="0.0 0.0 1.0" />
         <limit lower="-0.523599" upper="0.523599" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_index_mcp" type="revolute">
-        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948968 -9.860761315262634e-31 -1.5707963267948968" />
+        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948968 -5.530242548235437e-48 -1.5707963267948968" />
         <parent link="r_index_brake" />
         <child link="r_index_flexion_one" />
-        <axis xyz="2.220446049250317e-16 3.858738018423661e-31 1.0000000000000024" />
+        <axis xyz="2.220446049250316e-16 3.8587380184236642e-31 1.0000000000000024" />
         <limit lower="-0.523599" upper="1.745329" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_index_pip" type="revolute">
-        <origin xyz="-0.03999999999999992 0.0 8.881784197001253e-18" rpy="-3.141592653589793 2.2204460492503116e-16 -2.4322959507733025e-31" />
+        <origin xyz="-0.03999999999999993 -4.440892098500626e-18 8.881784197001253e-18" rpy="-3.141592653589793 2.2204460492503106e-16 7.428465364489343e-31" />
         <parent link="r_index_flexion_one" />
         <child link="r_index_flexion_two" />
-        <axis xyz="1.499000211264924e-62 -1.9862431333711815e-32 -1.0000000000000007" />
+        <axis xyz="1.4990002112649161e-62 -1.9862431333712078e-32 -1.0000000000000007" />
         <limit lower="-0.174533" upper="1.919862" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_index_dip" type="revolute">
-        <origin xyz="-0.030000000000000037 0.0 4.440892098500626e-18" rpy="-3.141592653589793 6.786934491528656e-64 7.888609052210125e-31" />
+        <origin xyz="-0.030000000000000072 0.0 -4.440892098500626e-18" rpy="-3.141592653589793 6.786934491531506e-64 7.888609052210125e-31" />
         <parent link="r_index_flexion_two" />
         <child link="r_index_flexion_three" />
-        <axis xyz="0.0 2.2006117831450065e-32 1.0000000000000007" />
+        <axis xyz="0.0 2.2006117831450196e-32 1.0000000000000007" />
         <limit lower="0.0" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_middle_brake" type="revolute">
-        <origin xyz="-0.005 0.006999999999999999 -0.063" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.045 0.1005 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_middle_brake" />
         <axis xyz="0.0 0.0 1.0" />
@@ -305,31 +305,31 @@
     </joint>
 
     <joint name="r_middle_mcp" type="revolute">
-        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948966 -2.875265346240754e-48 -1.5707963267948968" />
+        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948966 7.39557098644698e-32 -1.5707963267948968" />
         <parent link="r_middle_brake" />
         <child link="r_middle_flexion_one" />
-        <axis xyz="2.2204460492503155e-16 -5.535640245932418e-32 1.0000000000000004" />
+        <axis xyz="2.2204460492503155e-16 -6.768235410340251e-32 1.0000000000000004" />
         <limit lower="-0.523599" upper="1.745329" effort="100" velocity="1000" />
     </joint>
-    
+
     <joint name="r_middle_pip" type="revolute">
-        <origin xyz="-0.04499999999999996 0.0 9.992007221626408e-18" rpy="-6.770119734412596e-31 2.2204460492503185e-16 2.0781964364297476e-34" />
+        <origin xyz="-0.04499999999999995 0.0 0.0" rpy="-6.646860217971878e-31 2.2204460492503185e-16 7.416352950811275e-32" />
         <parent link="r_middle_flexion_one" />
         <child link="r_middle_flexion_two" />
-        <axis xyz="-3.9443045261049995e-31 5.993812499663838e-32 0.9999999999999927" />
+        <axis xyz="-3.9443045261049995e-31 5.993812499663242e-32 0.9999999999999927" />
         <limit lower="-0.174533" upper="1.919862" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_middle_dip" type="revolute">
-        <origin xyz="-0.030000000000000464 0.0 0.0" rpy="-3.37978070269275e-32 -1.1832913578315084e-30 -3.944304526105082e-31" />
+        <origin xyz="-0.03000000000000048 4.440892098500626e-18 0.0" rpy="-3.379780702693451e-32 -1.1832913578315084e-30 -3.944304526105082e-31" />
         <parent link="r_middle_flexion_two" />
         <child link="r_middle_flexion_three" />
-        <axis xyz="7.888609052209997e-31 2.6140317969710883e-32 0.9999999999999927" />
+        <axis xyz="7.888609052209997e-31 2.614031796969792e-32 0.9999999999999927" />
         <limit lower="0.0" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_ring_brake" type="revolute">
-        <origin xyz="0.0175 0.006999999999999999 -0.063" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.0675 0.1005 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_ring_brake" />
         <axis xyz="0.0 0.0 1.0" />
@@ -337,31 +337,31 @@
     </joint>
 
     <joint name="r_ring_mcp" type="revolute">
-        <origin xyz="0.0 0.0075 0.005" rpy="1.5707963267948966 1.2325951644078277e-32 -1.570796326794897" />
+        <origin xyz="0.0 0.0075 0.005" rpy="1.5707963267948966 6.162975822039146e-32 -1.570796326794897" />
         <parent link="r_ring_brake" />
         <child link="r_ring_flexion_one" />
-        <axis xyz="4.440892098500637e-16 -4.3103507099311273e-32 1.0000000000000018" />
+        <axis xyz="4.440892098500636e-16 -3.0777555455232904e-32 1.0000000000000018" />
         <limit lower="-0.523599" upper="1.745329" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_ring_pip" type="revolute">
-        <origin xyz="-0.03999999999999991 0.0 1.7763568394002505e-17" rpy="-1.3512378695514232e-30 4.440892098500629e-16 1.073982108667966e-32" />
+        <origin xyz="-0.03999999999999993 4.440892098500626e-18 2.6645352591003756e-17" rpy="-1.3635638211955256e-30 4.440892098500628e-16 6.004362766299294e-32" />
         <parent link="r_ring_flexion_one" />
         <child link="r_ring_flexion_two" />
-        <axis xyz="0.0 -2.825186458992793e-32 0.9999999999999913" />
+        <axis xyz="0.0 -2.825186458995035e-32 0.9999999999999913" />
         <limit lower="-0.349066" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_ring_dip" type="revolute">
-        <origin xyz="-0.030000000000000283 0.0 0.0" rpy="-2.3071311525518593e-31 -0.0 0.0" />
+        <origin xyz="-0.030000000000000283 0.0 0.0" rpy="-2.3071311525520415e-31 -0.0 0.0" />
         <parent link="r_ring_flexion_two" />
         <child link="r_ring_flexion_three" />
-        <axis xyz="0.0 -2.589649798451125e-31 0.9999999999999944" />
+        <axis xyz="0.0 -2.5896497984515316e-31 0.9999999999999944" />
         <limit lower="0.0" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_pinky_brake" type="revolute">
-        <origin xyz="0.035 0.006999999999999999 -0.053" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.085 0.09050000000000001 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_pinky_brake" />
         <axis xyz="0.0 0.0 1.0" />
@@ -369,31 +369,31 @@
     </joint>
 
     <joint name="r_pinky_mcp" type="revolute">
-        <origin xyz="0.0 0.0075 0.0030000000000000005" rpy="-1.5707963267948966 6.162975822039134e-33 -1.5707963267948966" />
+        <origin xyz="0.0 0.0075 0.0029999999999999983" rpy="-1.5707963267948966 6.162975822039134e-33 -1.5707963267948966" />
         <parent link="r_pinky_brake" />
         <child link="r_pinky_flexion_one" />
-        <axis xyz="-1.972152263052534e-31 1.0663599785378063e-32 -1.0000000000000044" />
+        <axis xyz="8.161822184451051e-65 2.2989551429456394e-32 -1.0000000000000044" />
         <limit lower="-0.872665" upper="1.396263" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_pinky_pip" type="revolute">
-        <origin xyz="-0.03499999999999985 0.0 0.0" rpy="1.5909003356605422e-31 2.95822839457879e-31 -1.1894543336535574e-30" />
+        <origin xyz="-0.034999999999999844 0.0 0.0" rpy="1.7141598521013272e-31 9.860761315262648e-32 -6.162975822039155e-33" />
         <parent link="r_pinky_flexion_one" />
         <child link="r_pinky_flexion_two" />
-        <axis xyz="9.860761315262696e-32 -1.4842643378067619e-31 -1.0000000000000013" />
+        <axis xyz="9.860761315262691e-32 -1.4842643378067654e-31 -1.0000000000000013" />
         <limit lower="-0.349066" upper="1.745329" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_pinky_dip" type="revolute">
-        <origin xyz="-0.01499999999999993 0.0 4.440892098500626e-18" rpy="4.164024725525542e-32 9.86076131526263e-32 1.1832913578315174e-30" />
+        <origin xyz="-0.01499999999999993 0.0 0.0" rpy="-3.5279020535524885e-31 -9.860761315262678e-32 -7.888609052210127e-31" />
         <parent link="r_pinky_flexion_two" />
         <child link="r_pinky_flexion_three" />
-        <axis xyz="1.9721522630525295e-31 -1.9006668103593252e-31 -1.0000000000000053" />
+        <axis xyz="-7.496808702718187e-62 2.043637715745735e-31 -1.0000000000000053" />
         <limit lower="0.0" upper="1.570796" effort="100" velocity="1000" />
     </joint>
 
     <joint name="r_palm_strap" type="revolute">
-        <origin xyz="0.0 0.006999999999999999 0.0" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.05 0.0375 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_palm_strap" />
         <axis xyz="0.0 0.0 1.0" />
@@ -401,7 +401,7 @@
     </joint>
 
     <joint name="r_palm_index" type="revolute">
-        <origin xyz="-0.02 0.006999999999999999 0.0" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.03 0.0375 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_palm_index" />
         <axis xyz="0.0 0.0 1.0" />
@@ -409,7 +409,7 @@
     </joint>
     
     <joint name="r_palm_pinky" type="revolute">
-        <origin xyz="0.02 0.006999999999999999 0.0" rpy="-1.5707963267948966 -0.0 0.0" />
+        <origin xyz="0.07 0.0375 0.025" rpy="0.0 -0.0 0.0" />
         <parent link="r_glove_hub" />
         <child link="r_palm_pinky" />
         <axis xyz="0.0 0.0 1.0" />
