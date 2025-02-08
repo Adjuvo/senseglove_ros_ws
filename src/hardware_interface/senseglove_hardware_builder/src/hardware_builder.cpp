@@ -44,20 +44,15 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   }
 
   const auto robotName = this->robotConfig.begin()->first.as<std::string>();
-  ROS_INFO_STREAM("Hardware Builder: Starting creation of robot " << robotName);
-
-  // Remove top level robot name key
   YAML::Node config = this->robotConfig[robotName];
-  ROS_INFO_STREAM("Hardware Builder: Size of robot config " << this->robotConfig.size());
 
   std::vector<std::shared_ptr<HapticGlove>> allGloves = SenseGlove::GetHapticGloves(true);
   auto currentGlove = allGloves[gloveIndex];
 
-  ROS_INFO_STREAM("Hardware_Builder: Creating senseglove robots");
   ROS_INFO_STREAM("Hardware Builder: Obtained the following gloves: ");
   for (auto& glove : allGloves)
   {
-    ROS_INFO_STREAM(glove->GetDeviceId());
+    ROS_INFO_STREAM("Hardware Builder: " << glove->GetDeviceId());
   }
   
   if (DeviceList::SenseComRunning())
@@ -71,7 +66,7 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   }
 
   std::vector<SGHardware::Joint> joints = this->createJoints(config["joints"]);
-  ROS_INFO_STREAM("Hardware Builder: Created joints: " << joints.size());
+  ROS_INFO_STREAM("Hardware Builder: Created Joints: " << joints.size());
 
   SGHardware::SenseGloveRobot SGRobot =  HardwareBuilder::createRobot(config, this->urdfModel, std::move(joints), currentGlove, gloveIndex, isRight);
 
@@ -187,7 +182,6 @@ void HardwareBuilder::initUrdf(SGCore::EDeviceType deviceType, bool isRight)
 // Parses the joint configurations from the YAML file. Creates a list of SGHardware::Joint objects that match the specifications in the URDF model.
 std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& jointsConfig) const
 {
-  ROS_INFO_STREAM("Hardware Builder: Creating Joints");
   std::vector<SGHardware::Joint> joints;
   for (const YAML::Node& jointConfig : jointsConfig)
   {
