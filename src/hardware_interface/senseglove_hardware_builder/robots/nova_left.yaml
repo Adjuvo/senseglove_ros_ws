@@ -77,7 +77,7 @@ nova_left:
         maxPosition: 100
     - l_middle_dip:
         jointIndex: 11
-        actuationType: vibration
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
@@ -106,7 +106,7 @@ nova_left:
         maxPosition: 100
     - l_ring_dip:
         jointIndex: 15
-        actuationType: vibration
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
@@ -135,14 +135,14 @@ nova_left:
         maxPosition: 100
     - l_pinky_dip:
         jointIndex: 19
-        actuationType: vibration
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_pinky_brake:
         jointIndex: 16
-        actuationType: brake
+        actuationType: absent
         actuationMode: position
         allowActuation: false
         minPosition: 0

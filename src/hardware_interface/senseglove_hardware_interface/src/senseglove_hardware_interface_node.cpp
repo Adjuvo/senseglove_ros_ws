@@ -23,7 +23,7 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
   ros::AsyncSpinner spinner(2);
 
-  int publishRate;
+  double publishRate;
   bool publishRateParameterFail = false;
 
   if (argc < 3)
@@ -31,6 +31,7 @@ int main(int argc, char** argv)
     ROS_FATAL_STREAM("Senseglove HW Interface Node: Missing robot arguments. Usage: senseglove_hardware_interface_node Robot gloveIndex isRight");
     return 1;
   }
+  
   AllowedRobot selectedRobot = AllowedRobot(argv[1]);
   int gloveIndex = std::stoi(argv[2]);
   bool isRight = toBool(argv[3]);
@@ -40,6 +41,7 @@ int main(int argc, char** argv)
 
   SenseGloveHardwareInterface SenseGlove(build(selectedRobot, gloveIndex, isRight));
   ROS_INFO_STREAM("Senseglove HW Interface Node: Successfully built the robot");
+  
   try
   {
     bool success = SenseGlove.init(nh, nh);
@@ -54,8 +56,8 @@ int main(int argc, char** argv)
     ROS_FATAL_STREAM(e.what());
     std::exit(1);
   }
+
   controller_manager::ControllerManager controllerManager(&SenseGlove, nh);
-  ros::Time lastUpdateTime = ros::Time::now(); 
 
   try
   {
@@ -82,26 +84,28 @@ int main(int argc, char** argv)
     std::exit(1);
   }
 
-  ros::Rate rate(publishRate); // ROS Rate at 5Hz
+  ros::Rate rate(publishRate);
+  const ros::Duration desiredUpdatePeriod = ros::Duration(1 / publishRate);
+
+  ros::Time lastUpdateTime = ros::Time::now();
 
   while (ros::ok())
   {
-    try
-    {
-      const ros::Time now = ros::Time::now();
-      ros::Duration elapsedTime = now - lastUpdateTime;
-      lastUpdateTime = now;
+    const ros::Time now = ros::Time::now();
+    const ros::Duration elapsedTime = now - lastUpdateTime;
+    lastUpdateTime = now;
 
-      SenseGlove.read(now, elapsedTime);
-      controllerManager.update(now, elapsedTime);
-      SenseGlove.write(now, elapsedTime);
-    }
-    catch (const std::exception& e)
+    // Error check cycle time
+    const double cycle_time_error = (elapsedTime - desiredUpdatePeriod).toSec();
+    if (cycle_time_error > 0.001)
     {
-      ROS_FATAL_STREAM("Senseglove HW Interface Node: Hardware interface caught an exception during UPDATE");
-      ROS_FATAL_STREAM(e.what());
-      return 1;
+      ROS_WARN_STREAM("Cycle time exceeded error threshold by: "<< cycle_time_error << ", cycle time: " << elapsedTime);
     }
+
+    SenseGlove.read(now, elapsedTime);
+    controllerManager.update(now, elapsedTime);
+    SenseGlove.write(now, elapsedTime);   
+
     rate.sleep();
   }
   ros::waitForShutdown();
