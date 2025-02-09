@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Define color codes
+BLUE='\e[34m'
+GREEN='\e[32m'
+BOLD='\e[1m'
+
 # Set up the Bluetooth agent to handle PIN confirmation
 echo -e "agent DisplayYesNo\ndefault-agent" | sudo bluetoothctl
 
@@ -8,13 +13,13 @@ connect_device() {
     local device="$1"
     local rfcomm="$2"
 
-    echo "==> Pairing device $device ..."
+    echo -e "${BLUE}==> Pairing device $device ...${RESET}"
     sudo bluetoothctl pair "$device"
-    echo "==> Trusting device $device ..."
+    echo -e "${BLUE}==> Trusting device $device ...${RESET}"
     sudo bluetoothctl trust "$device"
-    echo "==> Connecting to device $device ..."
+    echo -e "${BLUE}==> Connecting to device $device ...${RESET}"
     sudo bluetoothctl connect "$device"
-    echo "==> Establishing RFCOMM connection on $rfcomm for device $device ..."
+    echo -e "${BLUE}==> Establishing RFCOMM connection on $rfcomm for device $device ...${RESET}"
     sudo rfcomm connect "$rfcomm" "$device" 1 &
 }
 
@@ -52,13 +57,13 @@ SG_RFCOMM0="/dev/rfcomm0"
 SG_RFCOMM1="/dev/rfcomm1"
 
 # Connect the first device
-echo "Connecting first device ($SG_DEVICE0) on $SG_RFCOMM0..."
+echo -e "${GREEN}Connecting first device ($SG_DEVICE0) on $SG_RFCOMM0...${RESET}"
 connect_device "$SG_DEVICE0" "$SG_RFCOMM0"
 
 # Connect the second device if provided
 if [[ -n "$SG_DEVICE1" ]]; then
-    echo "Connecting second device ($SG_DEVICE1) on $SG_RFCOMM1..."
+    echo -e "${GREEN}Connecting second device ($SG_DEVICE1) on $SG_RFCOMM1...${RESET}"
     connect_device "$SG_DEVICE1" "$SG_RFCOMM1"
 fi
 
-echo "All connection processes have completed."
+echo -e "${GREEN}${BOLD}All connection processes have completed.${RESET}"

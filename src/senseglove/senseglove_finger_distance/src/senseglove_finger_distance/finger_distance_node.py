@@ -26,7 +26,7 @@ class FingerTipHandler:
                          callback=self.callback, queue_size=1)  # queue size is necessary otherwise it is infinite
 
     def _setup_calibration(self):
-        rospy.loginfo("SG Finger Distance Node[" + str(self.handedness_list[int(self.glove_nr) % 2]) + "]: Setting up Calibration")
+        rospy.loginfo("SG Finger Distance Node" + str(self.handedness_list[int(self.glove_nr) % 2]) + "/: Setting up Calibration")
         # Calibration: setup default
         self.calibration = Calibration(name="default")
 
@@ -41,7 +41,7 @@ class FingerTipHandler:
         # Declare calibration service
         self.calib_srv = rospy.Service("~calibrate", calibrate, self.calibrate_service)
         self.calibrating = False
-        rospy.loginfo("SG Finger Distance Node[" + str(self.handedness_list[int(self.glove_nr) % 2]) + "]: Calibration setup finished for %s", self.calib_srv.resolved_name)
+        rospy.loginfo("SG Finger Distance Node" + str(self.handedness_list[int(self.glove_nr) % 2]) + "/: Calibration setup finished for %s", self.calib_srv.resolved_name)
 
     def calibrate_service(self, call):
         # Stop publishing commands & feedback
@@ -128,9 +128,9 @@ class FingerTipVector:
 
 def main(glove_nr, calib_mode):
     rospy.init_node('senseglove_finger_distance_node')
-    list = ["lh", "rh"]
+    list = ["/left", "/right"]
     
-    rospy.loginfo("SG Finger Distance Node[" + str(list[int(glove_nr) % 2]) + "]: Initialization")
+    rospy.loginfo("SG Finger Distance Node" + str(list[int(glove_nr) % 2]) + "/: Initialization")
     FingerTipHandler(glove_nr=glove_nr, calib_mode=calib_mode)
 
     while not rospy.is_shutdown():
