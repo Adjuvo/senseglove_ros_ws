@@ -23,3 +23,7 @@ install(PROGRAMS
         scripts/startGlove.sh 
         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
         )
+
+execute_process(COMMAND bash -c 
+        "grep -qxF 'export PATH=\$PATH:\$(rospack find senseglove_launch)/bluetooth_scripts' $ENV{CATKIN_DEVEL_PREFIX}/setup.bash || echo 'export PATH=\$PATH:\$(rospack find senseglove_launch)/bluetooth_scripts' >> $ENV{CATKIN_DEVEL_PREFIX}/setup.bash"
+    )

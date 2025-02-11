@@ -24,6 +24,8 @@ catkin_package(
     std_msgs
 )
 
-catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node
+catkin_install_python(PROGRAMS 
+    scripts/${PROJECT_NAME}_node
+    src/senseglove_finger_distance/finger_distance_calibration.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )

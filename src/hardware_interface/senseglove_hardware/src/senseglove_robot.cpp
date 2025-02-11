@@ -20,11 +20,15 @@ namespace SGHardware
     , handModel(Kinematics::BasicHandModel::Default(isRight))
     , jointList(std::move(jointList))
     , urdfModel(std::move(urdfModel))
-    , SenseGloveRobotName("/senseglove/" + std::to_string(int((robotIndex) / 2)))
+    , SenseGloveRobotName("senseglove/" + std::to_string(int((robotIndex) / 2)))
     , deviceType(this->hapticglove->GetDeviceType())
     , robotIndex(robotIndex)
     , isUpdated(false)
   {
+    for (size_t i = 0; i < this->jointList.size(); ++i)
+    {
+        jointMap[this->jointList[i].getName()] = i;
+    }
   }
 
   std::string SenseGloveRobot::getRobotName() const
@@ -47,14 +51,12 @@ namespace SGHardware
     return this->hapticglove->IsRight();
   }
 
-  Joint& SenseGloveRobot::getJoint(::std::string jointName)
+  Joint& SenseGloveRobot::getJoint(const ::std::string jointName)
   {
-    for (auto& joint : jointList)
+    auto it = jointMap.find(jointName);
+    if (it != jointMap.end()) 
     {
-      if (joint.getName() == jointName)
-      {
-        return joint;
-      }
+      return jointList[it->second]; // O(1) lookup
     }
     throw std::out_of_range("Could not find joint with name " + jointName);
   }
@@ -141,9 +143,8 @@ size_t SenseGloveRobot::getVibrationJointSize()
   void SenseGloveRobot::queueEffort(const std::vector<double>& effortCommand)
   {
     static const float MIN_TOTAL_FFB_THRESHOLD = 10.0;
-    static const float STRAP_SAFETY_THRESHOLD = 20.0;
+    static const float STRAP_SAFETY_THRESHOLD = 10.0;
 
-    effortLevels.reserve(effortCommand.size());
     effortLevels.assign(effortCommand.begin(), effortCommand.end());
     float totalEffort = std::accumulate(effortLevels.begin(), effortLevels.end(), 0.0);
     
@@ -160,11 +161,9 @@ size_t SenseGloveRobot::getVibrationJointSize()
       else if (nova2glovePtr)
       {
         ffbQueued = nova2glovePtr->QueueForceFeedbackLevels(effortLevels);
-        
-        float squeezeLevel = (effortLevels.back() > STRAP_SAFETY_THRESHOLD) ? STRAP_SAFETY_THRESHOLD : 0.0f;
-        squeezeQueued =nova2glovePtr->QueueSqueezeLevel(squeezeLevel);// Active-Strap
+        squeezeLevel = std::min((effortLevels.back() * STRAP_SAFETY_THRESHOLD) / 100.0f, STRAP_SAFETY_THRESHOLD);
+        squeezeQueued = nova2glovePtr->QueueSqueezeLevel(squeezeLevel);
       }
-      // Is Effort Queued?
       effortQueued = ffbQueued || squeezeQueued;
     }
     else
@@ -177,7 +176,6 @@ size_t SenseGloveRobot::getVibrationJointSize()
   {
     static const float MIN_TOTAL_VIBRATION_THRESHOLD = 10.0;
 
-    vibrationLevels.reserve(vibrationCommand.size());
     vibrationLevels.assign(vibrationCommand.begin(), vibrationCommand.end());
     float totalVibration = std::accumulate(vibrationLevels.begin(), vibrationLevels.end(), 0.0);
 
@@ -193,10 +191,16 @@ size_t SenseGloveRobot::getVibrationJointSize()
         thumperQueued = novaglovePtr->QueueWristLevel(vibrationLevels.back()); //Thumper
       }
       else if (nova2glovePtr)
-      {
-        vibroQueued = nova2glovePtr->QueueVibroLevels(vibrationLevels);        
+      { // Issue with packet overload
+        // TO-DO: Implement custom waveform service 
+
+        // The below functions send a infinite loop custom waveform -> packet overloading
+        // vibroQueued = nova2glovePtr->QueueVibroLevels(vibrationLevels);       
+        // vibroQueued = nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, vibrationLevels.back()-1);
+        // vibroQueued = nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, vibrationLevels.back()); 
+        vibroQueued = false;
+
       }
-      // Is Vibration Queued?
       vibrationQueued = vibroQueued || thumperQueued;
     }
     else
@@ -212,13 +216,10 @@ size_t SenseGloveRobot::getVibrationJointSize()
       this->hapticglove->SendHaptics();
       effortActive = true;
     }
-    else
+    else if(effortActive)
     {
-      if(effortActive)
-      {
-        this->hapticglove->StopHaptics();
-        effortActive =  false;
-      }
+      this->hapticglove->StopHaptics();
+      effortActive =  false;
     }
 
     if (vibrationQueued)
@@ -226,13 +227,10 @@ size_t SenseGloveRobot::getVibrationJointSize()
       this->hapticglove->SendHaptics();
       vibrationActive = true;
     }
-    else
+    else if(vibrationActive)
     {
-      if(vibrationActive)
-      {
-        this->hapticglove->StopVibrations();
-        vibrationActive = false;
-      }
+      this->hapticglove->StopVibrations();
+      vibrationActive = false;
     }
   }
 
@@ -260,7 +258,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
   {
   }
 
-  bool SenseGloveRobot::updateGloveData(const ros::Duration period)
+  bool SenseGloveRobot::updateGloveData(const std::chrono::duration<double>& period)
   {
 
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
@@ -271,8 +269,8 @@ size_t SenseGloveRobot::getVibrationJointSize()
     auto updateJointPositions = [&](const auto& poseAngles) {
       for (auto& joint : jointList)
       {
-        int jointGroup = joint.jointIndex / 4;
-        int jointSubIndex = joint.jointIndex % 4;
+        int jointGroup = joint.jointIndex / 4; // Determine which finger
+        int jointSubIndex = joint.jointIndex % 4; // Determine which joint within the finger
 
         if (joint.jointIndex > TOTAL_FINGER_JOINT_INDEX) 
         {
@@ -281,7 +279,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
         else
         {
           joint.position = (jointSubIndex == 0) 
-              ? poseAngles[jointGroup][0].GetZ() 
+              ? -poseAngles[jointGroup][0].GetZ() 
               : poseAngles[jointGroup][jointSubIndex - 1].GetY();
         }
       }
@@ -298,7 +296,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
 
           joint.position = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex];
           double intermediateVelocity = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex] - joint.velocity;
-          joint.velocity = (intermediateVelocity != 0.0 && period.toSec() != 0.0) ? (intermediateVelocity / period.toSec()) : 0.0;
+          joint.velocity = (intermediateVelocity != 0.0 && period.count() != 0.0) ? (intermediateVelocity / period.count()) : 0.0;
         }
       }
 

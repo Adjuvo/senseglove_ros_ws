@@ -1,16 +1,21 @@
 #!/bin/bash
 
+# Define color codes
+BLUE='\e[34m'
+GREEN='\e[32m'
+BOLD='\e[1m'
+
 # Start SenseCom
-echo "Starting SenseCom..."
-chmod +x $1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64
-$1/SenseCom/Linux/SenseCom_Latest/SenseCom.x86_64 &
+echo -e "${BLUE}Starting SenseCom...${RESET}"
+chmod +x $1/SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64
+$1/SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64 &
 
 # Allow SenseComm to start
 sleep 2
 
 # Function to wait for user input
 wait_for_user_input() {
-    echo "Press enter when devices are connected in SenseCom..."
+    echo -e "${BOLD}${GREEN}Press enter when devices are connected in SenseCom...${RESET}"
     read
 }
 

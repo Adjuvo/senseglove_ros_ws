@@ -21,10 +21,7 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "senseglove_hardware_interface");
   ros::NodeHandle nh;
-
-  // NOTE: We run the ROS loop in a separate thread as external calls such
-  // as service callbacks to load controllers can block the (main) control loop
-  ros::AsyncSpinner spinner(3);
+  ros::AsyncSpinner spinner(2);
 
   double publishRate;
   bool publishRateParameterFail = false;
@@ -87,29 +84,20 @@ int main(int argc, char** argv)
     std::exit(1);
   }
 
-  ros::Rate rate(publishRate);
-  const ros::Duration desiredUpdatePeriod = ros::Duration(1 / publishRate);
-
-  ros::Time lastUpdateTime = ros::Time::now();
+  auto lastUpdateTime = std::chrono::steady_clock::now();
+  const std::chrono::duration<double> desiredUpdatePeriod(1.0 / publishRate);
 
   while (ros::ok())
   {
-    const ros::Time now = ros::Time::now();
-    const ros::Duration elapsedTime = now - lastUpdateTime;
+    auto now = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsedTime = now - lastUpdateTime;
     lastUpdateTime = now;
 
-    // Error check cycle time
-    const double cycle_time_error = (elapsedTime - desiredUpdatePeriod).toSec();
-    if (cycle_time_error > 0.001)
-    {
-      ROS_WARN_STREAM("Cycle time exceeded error threshold by: "<< cycle_time_error << ", cycle time: " << elapsedTime);
-    }
-
     SenseGlove.read(now, elapsedTime);
-    controllerManager.update(now, elapsedTime);
-    SenseGlove.write(now, elapsedTime);   
+    controllerManager.update(ros::Time::now(), ros::Duration(elapsedTime.count()));
+    SenseGlove.write(now, elapsedTime); 
 
-    rate.sleep();
+    std::this_thread::sleep_for(desiredUpdatePeriod);
   }
   ros::waitForShutdown();
   return 0;

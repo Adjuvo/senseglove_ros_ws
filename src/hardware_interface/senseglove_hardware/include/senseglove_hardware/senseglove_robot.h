@@ -19,6 +19,8 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <chrono>
 
 #include "joint.h"
 #include "BasicHandModel.hpp"
@@ -71,11 +73,13 @@ namespace SGHardware
     std::shared_ptr<Nova2Glove> nova2glovePtr = std::dynamic_pointer_cast<Nova2Glove>(hapticglove);
 
     ::std::vector<Joint> jointList;
+    std::unordered_map<std::string, size_t> jointMap;
     urdf::Model urdfModel;
     const std::string SenseGloveRobotName;
     const EDeviceType deviceType;
     const int robotIndex;
     bool isUpdated;
+    
 
   public:
   
@@ -97,7 +101,7 @@ namespace SGHardware
     int getRobotIndex() const;
     bool getRight();
 
-    Joint& getJoint(::std::string jointName);
+    Joint& getJoint(const ::std::string jointName);
     Joint& getJoint(size_t index);
 
     size_t getJointSize();
@@ -109,6 +113,7 @@ namespace SGHardware
 
     std::vector<float> effortLevels;
     std::vector<float> vibrationLevels;
+    float squeezeLevel = 0.0f;
 
     // ros control works exclusively with doubles, but the sendHaptics function works with integers
     void queueEffort(const std::vector<double>& effortCommand);    
@@ -134,7 +139,7 @@ namespace SGHardware
 
     const urdf::Model& getUrdf() const;
 
-    bool updateGloveData(const ros::Duration period);
+    bool updateGloveData(const std::chrono::duration<double>& period);
 
     /** @brief Override comparison operator */
     friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)

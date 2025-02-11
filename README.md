@@ -58,20 +58,35 @@ sudo apt-get upgrade
 7. Build your workspace: `catkin build` or `catkin_make`
 8. Post building, source the workspace itself using `source devel/setup.bash`
 
-## Using sensegloves in ROS ##
-The sensegloves are connected either through USB or Bluetooth, depending on the product. Senseglove Nova connects only through bluetooth, while DK1 connects only through USB.
+## Using SenseGloves in ROS ##
+- The sensegloves are connected either through USB or Bluetooth, depending on the product. 
+- The `Nova (1 & 2)`  has bluetooth communication.
+- The `DK1` has USB communication.
 
-The workspace also consists of the bash scripts for you to connect & disconnect your Nova device via bluetooth. Kindly navigate to senseglove->senseglove_launch->bluetooth_scripts to find these scripts.
+#### Connecting NOVA Gloves via Bluetooth ####
 
-For a detailed procedure on connecting a Nova or Nova 2 glove in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
+- The workspace consists of the bash scripts to connect & disconnect your Nova device via bluetooth. 
+- These scripts are automatically added to the PATH so you can run the scripts from anywhere after sourcing.
 
-**NOTE:** The main launch file: `senseglove.launch` has args to specify which standalone glove you are about to use. The current implementation allows you to use either of these standalone gloves. Future updates can include simultaneous use of gloves.
+```
+glove_connect.sh
+glove_disconnect.sh
+```
 
-### Example: Using two sensegloves [Left and Right] in ROS: ###
+- For a detailed procedure on connecting a Nova glove(1 & 2)in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
+
+
+#### `NOTE` ####
+- The main launch file: `senseglove.launch` has args to specify which standalone glove you are about to use. The current implementation allows you to use either of these standalone gloves. Future updates can include simultaneous use of gloves.
+- Calibration of the Nova-2 device runs on the glove itself. The SenseCom software offers a visual guide to accompany calibration. For more information, go to [SenseGlove Docs/Nova-2](https://senseglove.gitlab.io/SenseGloveDocs/nova-2.html)
+
+---
+
+### Example: Using two SenseGloves [Left and Right]: ###
 1. Source your workspace
 2. Make sure your sensegloves are connected through usb or bluetooth
-    - If you are checking your connection by running a sensecom instance, be sure to exit the application before proceeding, because the launch file will start another instance of sensecom.
-    - We do not want two instances of SenseCom running for ROS.
+    - If you are checking your connection by running a sensecom instance, be sure to exit the application before proceeding to avoid runing multiple instances of sensecom during launch.
+
 3. In the `senseglove.launch` script, make sure you specify the devices being used:
     - `use_dk`
     - `use_nova`
@@ -81,17 +96,21 @@ For a detailed procedure on connecting a Nova or Nova 2 glove in linux, kindly r
     - `use_left` = true
     - `use_right` = true
 
-5. Run: `roslaunch senseglove_launch senseglove.launch` after saving.
+5. Run: 
+```
+roslaunch senseglove_launch senseglove.launch
+```
 
+#### `NOTE` ####
 - A bash script is called invoking sensecom and running the hardware interface node twice for a left- and a right-handed glove.
-- `NOTE:` The bash waits for the user input to confirm whether the gloves are connected in SenseCom. 
-- If all is well, your invocation of the roslaunch command should have started a roscore session and all necessary nodes providing intefaces to the senseglove.
+- The bash **`waits for the user input`** to confirm whether the gloves are connected in SenseCom. 
 
+---
 
-### Example: Using a single senseglove in ROS: ###
-Though the whole infrastructure of this codebase was built upon the use with infinitely many sensegloves, our example launch file only accepts two gloves.
-Moreover, due to our integration into ros-control we require the user to know what type of gloves are connected to the PC.
-As such, the user has to define which glove is connected to the system.
+### Example: Using a single SenseGlove [Left or Right]: ###
+- Though the whole infrastructure of this codebase was built upon the use with infinitely many sensegloves, our example launch file only accepts two gloves.
+- Moreover, due to our integration into ros-control we require the user to know what type of gloves are connected to the PC.
+- As such, the user has to define which glove is connected to the system.
 
 1. Find out if you are dealing with a left or right-handed senseglove.
 2. In the `senseglove.launch` script, make sure you specify the devices being used:
@@ -103,22 +122,32 @@ As such, the user has to define which glove is connected to the system.
     - `use_left` 
     - `use_right`
 
-4. Run: `roslaunch senseglove_launch senseglove.launch` after saving.
+4. Run: 
+```
+roslaunch senseglove_launch senseglove.launch
+```
 
+## Finger-Tip Distances: ##
+The finger distance package is designed to publish the distances between fingertips via a ROS node, which can be used to control robotic humanoid hands and grippers.
+- **Calibration Service**: A calibration class is provided as a service server. This service can be easily called using the rqt_service_caller plugin, or through the terminal.
+```
+rosservice call /senseglove_finger_distance_left/calibrate left
+rosservice call /senseglove_finger_distance_right/calibrate right
+```
+ 
+- A Calibration Gui will appear. Install PyQt5 if it is not already available.
+```
+sudo apt-get install python3-pyqt5
+```
 
-## General Usage Description: ##
-This repository is meant to present a solid foundation for using the senseglove in ROS Noetic. The senseglove_hardware_interface nodes which are called by these launch files do nothing more than using the senseglove API in a ROS /ros_control "sanctioned" manner.
+- You can find the defaults/calibrated parameters in the [calibration folder](src/senseglove/senseglove_shared_resources/calibration/).
 
-Users are advised to develop their own applications outside this package and make use of the provided topics. If users do find the need to 
-write additions to this package, beware that this repository is still subject to changes and pulling this repo again might override your own code.
+## Haptics: ##
+- ROS-Control for the force-feedback system. Refer to the joints & controllers assigned for each senseglove product in the [config folder](/src/hardware_interface/senseglove_hardware_interface/config/).
+- Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/src/senseglove/senseglove_haptics/src/senseglove_haptics/).
+- `NOTE for NOVA 2`: The vibration feedback is disabled for the Index,  Thumb and the palm locations because of a packet overloading issue. A custom_waveform service will be implemented instead of employing ros-control.
 
-**If you, as a user, find a bug or have an issue with getting the workspace up and running, we suggest you leave this as an issue on this repository.**
-This practice will allow others to troubleshoot their own problems quicker.
-
-## ROS-Control for haptics: ###
-- In `hardware_interface/senseglove_hardware_interface/config`, refer to the joints & controllers assigned for each senseglove product.
-- In `senseglove/senseglove_haptics`, there are python scripts for haptic implementation. I suggest trying `haptics_node_dynamic.py` in-conjuction with the dynamic_reconfigure in rqt to test the haptics of the device. 
-- `NOTE:` For NOVA 2, the vibration feedback on the Index & Thumb tip are Enabled. The vibration on the palm is disabled.
-
-### Using the finger distance node: ###
-The finger distance package is meant to publish the distance between the fingertips through a rosnode as a means to control robotic grippers. This package also provides a calibration class that provides a service server. The service is easily called from the rqt_service_caller plugin. Instructions for the calibration are printed on your terminal. This is currently implemented/validated for only the DK1 gloves.
+## TO-DO: ##
+- `Custom_waveform` service for Nova-2 vibrations
+- `Calibration Profiling`, either from SenseCom (or) as a service call with interactive GUI. This should allow us to access and control the calbration.
+- `IMU` access (incl. sensor value if possible)
