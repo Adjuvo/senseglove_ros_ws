@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <chrono>
 
 #include "joint.h"
 #include "BasicHandModel.hpp"
@@ -112,6 +113,7 @@ namespace SGHardware
 
     std::vector<float> effortLevels;
     std::vector<float> vibrationLevels;
+    float squeezeLevel = 0.0f;
 
     // ros control works exclusively with doubles, but the sendHaptics function works with integers
     void queueEffort(const std::vector<double>& effortCommand);    
@@ -137,7 +139,7 @@ namespace SGHardware
 
     const urdf::Model& getUrdf() const;
 
-    bool updateGloveData(const ros::Duration period);
+    bool updateGloveData(const std::chrono::duration<double>& period);
 
     /** @brief Override comparison operator */
     friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)

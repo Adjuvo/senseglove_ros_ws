@@ -1,10 +1,10 @@
 controller:
   joint_state:
     type: joint_state_controller/JointStateController
-    publish_rate: 30
+    publish_rate: 60
   hand_state:
     type: joint_state_controller/JointStateController
-    publish_rate: 30
+    publish_rate: 60
   trajectory:
     type: position_controllers/JointTrajectoryController
     allow_partial_joints_goal: true

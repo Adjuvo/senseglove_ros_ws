@@ -75,7 +75,10 @@ glove_disconnect.sh
 
 - For a detailed procedure on connecting a Nova glove(1 & 2)in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
 
-**NOTE:** The main launch file: `senseglove.launch` has args to specify which standalone glove you are about to use. The current implementation allows you to use either of these standalone gloves. Future updates can include simultaneous use of gloves.
+
+#### `NOTE` ####
+- The main launch file: `senseglove.launch` has args to specify which standalone glove you are about to use. The current implementation allows you to use either of these standalone gloves. Future updates can include simultaneous use of gloves.
+- Calibration of the Nova-2 device runs on the glove itself. The SenseCom software offers a visual guide to accompany calibration. For more information, go to [SenseGlove Docs/Nova-2](https://senseglove.gitlab.io/SenseGloveDocs/nova-2.html)
 
 ---
 
@@ -139,8 +142,12 @@ sudo apt-get install python3-pyqt5
 
 - You can find the defaults/calibrated parameters in the [calibration folder](src/senseglove/senseglove_shared_resources/calibration/).
 
-## ROS-Control for Haptics: ###
-- Refer to the joints & controllers assigned for each senseglove product in the [config folder](/src/hardware_interface/senseglove_hardware_interface/config/).
+## Haptics: ##
+- ROS-Control for the force-feedback system. Refer to the joints & controllers assigned for each senseglove product in the [config folder](/src/hardware_interface/senseglove_hardware_interface/config/).
 - Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/src/senseglove/senseglove_haptics/src/senseglove_haptics/).
-- `NOTE for NOVA 2`: The vibration feedback is enabled on the Index and Thumb tips, while the vibration on the palm is disabled.
+- `NOTE for NOVA 2`: The vibration feedback is disabled for the Index,  Thumb and the palm locations because of a packet overloading issue. A custom_waveform service will be implemented instead of employing ros-control.
 
+## TO-DO: ##
+- `Custom_waveform` service for Nova-2 vibrations
+- `Calibration Profiling`, either from SenseCom (or) as a service call with interactive GUI. This should allow us to access and control the calbration.
+- `IMU` access (incl. sensor value if possible)

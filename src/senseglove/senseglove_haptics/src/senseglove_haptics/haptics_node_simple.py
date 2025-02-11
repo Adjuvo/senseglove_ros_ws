@@ -18,17 +18,17 @@ def main():
     if rospy.has_param('/senseglove/0/rh/controller/hand_state/publish_rate'):
         publish_rate = rospy.get_param('/senseglove/0/rh/controller/hand_state/publish_rate')
 
-    rate = rospy.Rate(publish_rate)
+    rate = rospy.Rate(publish_rate/2)
     while not rospy.is_shutdown():
         hap_cmd = JointTrajectory()
         hap_cmd.header = Header()
-        hap_cmd.header.stamp = rospy.Time.now()
+        hap_cmd.header.stamp = rospy.Time.now() + rospy.Duration(0.1) #Some Buffer
         hap_cmd.joint_names = joint_list
         # print("joint list: ", hap_cmd.header.stamp)
         
         point = JointTrajectoryPoint()
         point.positions = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        point.time_from_start = rospy.Duration.from_sec(0.1)
+        point.time_from_start = rospy.Duration.from_sec(0.05)
         hap_cmd.points.append(point)
         hap_pub.publish(hap_cmd)
         rate.sleep()

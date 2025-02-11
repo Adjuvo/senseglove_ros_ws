@@ -143,7 +143,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
   void SenseGloveRobot::queueEffort(const std::vector<double>& effortCommand)
   {
     static const float MIN_TOTAL_FFB_THRESHOLD = 10.0;
-    static const float STRAP_SAFETY_THRESHOLD = 20.0;
+    static const float STRAP_SAFETY_THRESHOLD = 10.0;
 
     effortLevels.assign(effortCommand.begin(), effortCommand.end());
     float totalEffort = std::accumulate(effortLevels.begin(), effortLevels.end(), 0.0);
@@ -161,8 +161,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
       else if (nova2glovePtr)
       {
         ffbQueued = nova2glovePtr->QueueForceFeedbackLevels(effortLevels);
-        
-        float squeezeLevel = (!effortLevels.empty() && effortLevels.back() > STRAP_SAFETY_THRESHOLD) ? STRAP_SAFETY_THRESHOLD : 0.0f;
+        squeezeLevel = std::min((effortLevels.back() * STRAP_SAFETY_THRESHOLD) / 100.0f, STRAP_SAFETY_THRESHOLD);
         squeezeQueued = nova2glovePtr->QueueSqueezeLevel(squeezeLevel);
       }
       effortQueued = ffbQueued || squeezeQueued;
@@ -192,8 +191,15 @@ size_t SenseGloveRobot::getVibrationJointSize()
         thumperQueued = novaglovePtr->QueueWristLevel(vibrationLevels.back()); //Thumper
       }
       else if (nova2glovePtr)
-      {
-        vibroQueued = nova2glovePtr->QueueVibroLevels(vibrationLevels);        
+      { // Issue with packet overload
+        // TO-DO: Implement custom waveform service 
+
+        // The below functions send a infinite loop custom waveform -> packet overloading
+        // vibroQueued = nova2glovePtr->QueueVibroLevels(vibrationLevels);       
+        // vibroQueued = nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmIndexSide, vibrationLevels.back()-1);
+        // vibroQueued = nova2glovePtr->QueueVibroLevel(EHapticLocation::PalmPinkySide, vibrationLevels.back()); 
+        vibroQueued = false;
+
       }
       vibrationQueued = vibroQueued || thumperQueued;
     }
@@ -252,7 +258,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
   {
   }
 
-  bool SenseGloveRobot::updateGloveData(const ros::Duration period)
+  bool SenseGloveRobot::updateGloveData(const std::chrono::duration<double>& period)
   {
 
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
@@ -290,7 +296,7 @@ size_t SenseGloveRobot::getVibrationJointSize()
 
           joint.position = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex];
           double intermediateVelocity = sensegloveSensorData.GetSensorAngles()[jointGroup][jointSubIndex] - joint.velocity;
-          joint.velocity = (intermediateVelocity != 0.0 && period.toSec() != 0.0) ? (intermediateVelocity / period.toSec()) : 0.0;
+          joint.velocity = (intermediateVelocity != 0.0 && period.count() != 0.0) ? (intermediateVelocity / period.count()) : 0.0;
         }
       }
 

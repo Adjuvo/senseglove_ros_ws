@@ -41,11 +41,11 @@ for i in "${!devices[@]}"; do
 done
 
 # Prompt the user to choose the first device
-read -p "Step 2: Enter the number corresponding to a NOVA glove: " choice
+read -p "Step 2: Enter the number corresponding to a <LEFT> NOVA glove choice (or press Enter to skip): " choice
 SG_DEVICE0="${devices[$((choice-1))]}"
 
 # Prompt the user to choose the second device (optional)
-read -p "Step 3: Enter the number corresponding to another NOVA glove (or press Enter to skip): " choice
+read -p "Step 3: Enter the number corresponding to another <RIGHT> NOVA glove choice (or press Enter to skip): " choice
 if [[ -n "$choice" ]]; then
     SG_DEVICE1="${devices[$((choice-1))]}"
 else
