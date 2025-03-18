@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     message_generation
     std_msgs
     trajectory_msgs
+    geometry_msgs
 )
 
 add_message_files(
@@ -27,7 +28,7 @@ add_message_files(
 
 add_service_files(
   FILES
-  calibrate.srv
+  Calibrate.srv
 )
 
 #add_action_files(
@@ -42,6 +43,7 @@ generate_messages(
     control_msgs
     std_msgs
     trajectory_msgs
+    geometry_msgs
 )
 
 catkin_package(
@@ -51,4 +53,5 @@ catkin_package(
     message_runtime
     std_msgs
     trajectory_msgs
+    geometry_msgs
 )

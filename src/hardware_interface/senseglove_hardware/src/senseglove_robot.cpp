@@ -27,7 +27,7 @@ namespace SGHardware
   {
     for (size_t i = 0; i < this->jointList.size(); ++i)
     {
-        jointMap[this->jointList[i].getName()] = i;
+      jointMap[this->jointList[i].getName()] = i;
     }
   }
 
@@ -71,35 +71,41 @@ namespace SGHardware
     return this->jointList.size();
   }
 
-size_t SenseGloveRobot::getEffortJointSize()
-{
-  size_t effortJointSize = 0;
-    
-  for (auto& joint : jointList)
+  size_t SenseGloveRobot::getEffortJointSize()
   {
-    if (joint.getActuationType() == ActuationType::brake || 
-        joint.getActuationType() == ActuationType::squeeze)
+    size_t effortJointSize = 0;
+      
+    for (auto& joint : jointList)
     {
-      effortJointSize++;
+      if (joint.getActuationType() == ActuationType::brake || 
+          joint.getActuationType() == ActuationType::squeeze)
+      {
+        effortJointSize++;
+      }
     }
+    return effortJointSize;
   }
-  return effortJointSize;
-}
 
-size_t SenseGloveRobot::getVibrationJointSize()
-{
-  size_t vibrationJointSize = 0;
-    
-  for (auto& joint : jointList)
+  size_t SenseGloveRobot::getVibrationJointSize()
   {
-    if (joint.getActuationType() == ActuationType::vibration)
+    size_t vibrationJointSize = 0;
+      
+    for (auto& joint : jointList)
     {
-      vibrationJointSize++;
+      if (joint.getActuationType() == ActuationType::vibration)
+      {
+        vibrationJointSize++;
+      }
     }
+    return vibrationJointSize;
   }
-  return vibrationJointSize;
-}
 
+  // IMU
+  bool SenseGloveRobot::getImuRotation(Kinematics::Quat& outIMU)
+  {
+    return hapticglove->GetImuRotation(outIMU);
+  }
+  
   // Function to flatten vector of vectors of Vector3D
   Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i)
   {

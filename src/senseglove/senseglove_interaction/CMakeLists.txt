@@ -2,9 +2,9 @@
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
-project(senseglove_haptics
+project(senseglove_interaction
         VERSION 2.1.0
-        DESCRIPTION "The senseglove_haptics"
+        DESCRIPTION "The senseglove_interaction"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
         )
@@ -31,6 +31,12 @@ catkin_package(
     std_msgs
 )
 
-catkin_install_python(PROGRAMS scripts/${PROJECT_NAME}_node
+catkin_install_python(PROGRAMS 
+    scripts/senseglove_finger_distance_node
+    scripts/senseglove_haptics_node
+    src/senseglove_interaction/finger_distance/finger_distance_calibration.py
+    src/senseglove_interaction/haptics/haptics_node_simple.py
+    src/senseglove_interaction/haptics/haptics_node_dynamic.py
+    src/senseglove_interaction/common/imu_tf_broadcaster.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )

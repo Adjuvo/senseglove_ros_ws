@@ -8,7 +8,7 @@ import rospy
 import numpy as np
 
 from dynamic_reconfigure.server import Server
-from senseglove_haptics.cfg import HapticSliderConfig
+from senseglove_interaction.cfg import HapticSliderConfig
 
 from std_msgs.msg import Time
 from std_msgs.msg import Header

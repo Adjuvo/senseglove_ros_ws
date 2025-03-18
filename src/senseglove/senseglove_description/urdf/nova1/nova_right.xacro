@@ -215,7 +215,7 @@
     <joint name="joint_base_fixed_parent_joint" type="fixed">
         <parent link="world"/>
         <child link="r_glove_hub"/>
-        <origin xyz="0.5 0 ${hover_height}" rpy="${90*pi/180} 0 ${180*pi/180}"/>
+        <origin xyz="0.5 0 ${hover_height}" rpy="0 0 0"/>
     </joint>
 
     <joint name="r_thumb_brake" type="revolute">

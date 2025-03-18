@@ -17,14 +17,14 @@ using hardware_interface::PositionJointInterface;
 SenseGloveHardwareInterface::SenseGloveHardwareInterface(std::unique_ptr<SGHardware::SenseGloveSetup> setup)
   : sensegloveSetup(std::move(setup)), num_gloves_(this->sensegloveSetup ? this->sensegloveSetup->size() : 0)
 {
- if (!this->sensegloveSetup)
-{
-  ROS_ERROR("SenseGloveHardwareInterface: SenseGloveSetup is null");
-}
-if (this->sensegloveSetup->size() == 0)
-{
-  ROS_ERROR("SenseGloveHardwareInterface: No gloves detected");
-}
+  if (!this->sensegloveSetup)
+  {
+    ROS_ERROR("SenseGloveHardwareInterface: SenseGloveSetup is null");
+  }
+  if (this->sensegloveSetup->size() == 0)
+  {
+    ROS_ERROR("SenseGloveHardwareInterface: No gloves detected");
+  }
 }
 
 // Initialization
@@ -275,14 +275,17 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
 
   senseglove_state_pub_->msg_.header.stamp.sec = static_cast<uint32_t>(time_in_seconds);
   senseglove_state_pub_->msg_.header.stamp.nsec = static_cast<uint32_t>((time_in_seconds - senseglove_state_pub_->msg_.header.stamp.sec) * 1e9);
+  senseglove_state_pub_->msg_.header.frame_id = "world";
 
+  ros::Time current_time = current_time;
+  
   for (size_t i = 0; i < num_gloves_; ++i)
   {
     SGHardware::SenseGloveRobot& robot = sensegloveSetup->getSenseGloveRobot(i);
     for (size_t k = 0; k < num_joints_; ++k)
     {
       SGHardware::Joint& joint = robot.getJoint(k);
-      senseglove_state_pub_->msg_.header.stamp = ros::Time::now();
+      senseglove_state_pub_->msg_.header.stamp = current_time;
       senseglove_state_pub_->msg_.joint_names[k] = joint.getName();
       senseglove_state_pub_->msg_.position[k] = joint.getPosition();
       senseglove_state_pub_->msg_.absolute_velocity[k] = joint.getVelocity();
@@ -297,6 +300,15 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
       senseglove_state_pub_->msg_.finger_tip_positions[j].x = robot.getFingerTip(j).GetX();
       senseglove_state_pub_->msg_.finger_tip_positions[j].y = robot.getFingerTip(j).GetY();
       senseglove_state_pub_->msg_.finger_tip_positions[j].z = robot.getFingerTip(j).GetZ();
+    }
+    
+    // IMU DATA
+    if (robot.getImuRotation(imuRotation))  
+    {      
+      senseglove_state_pub_->msg_.imu_orientation.x = imuRotation.GetX();
+      senseglove_state_pub_->msg_.imu_orientation.y = imuRotation.GetY();
+      senseglove_state_pub_->msg_.imu_orientation.z = imuRotation.GetZ();
+      senseglove_state_pub_->msg_.imu_orientation.w = imuRotation.GetW();      
     }
   }
 
