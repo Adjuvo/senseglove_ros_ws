@@ -11,6 +11,7 @@ SenseGlove_API/.gitignore
 SenseGlove_API/README.md
 
 src/hardware_interface/senseglove_hardware/SenseCom/Linux/sessionLog.txt
+unity.lock
 src/cmake-build-debug/*
 src/CMakeLists.txt
 
@@ -19,8 +20,15 @@ src/senseglove/senseglove_haptics/src/senseglove_haptics/__pycache__
 src/senseglove/senseglove_launch/scripts/sessionLog.txt
 src/senseglove/senseglove_shared_resources/calibration/*
 
+__pycache__/
+*.pyc
+*.pyo
+
 senseglove_ros_ws.code-workspace
 
 .idea/*
 .catkin_tools/*
 .vscode/
+
+
+

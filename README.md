@@ -8,8 +8,8 @@ This workspace makes use of ros_control for automatically initiating publisher a
 |             | **ROS Noetic** | **   ROS 2  ** |
 |-------------|:--------------:|:--------------:|
 | **DK1**     |   ✅ v1.0.0    |       ❌       |   
-| **Nova 1**  |   ✅ v2.2.0    |       🔜       | 
-| **Nova 2**  |   ✅ v2.2.0    |       🔜       | 
+| **Nova 1**  |   ✅           |       🔜       | 
+| **Nova 2**  |   ✅           |       🔜       | 
   
 
 * <code>✅</code> Supported

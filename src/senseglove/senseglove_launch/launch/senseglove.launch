@@ -5,10 +5,10 @@
 
     <!-- Specify the glove to be used -->
     <arg name="use_dk" default="false"/>
-    <arg name="use_nova" default="true"/>
-    <arg name="use_nova2" default="false"/>
+    <arg name="use_nova" default="false"/>
+    <arg name="use_nova2" default="true"/>
 
-    <arg name="use_left" default="false"/>
+    <arg name="use_left" default="true"/>
     <arg name="use_right" default="true"/>
     <arg name="use_both" value="$(eval arg('use_left') and arg('use_right'))"/> 
 
