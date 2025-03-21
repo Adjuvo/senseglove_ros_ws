@@ -59,11 +59,10 @@ sudo apt-get upgrade
 #### Connecting NOVA Gloves via Bluetooth ####
 
 - The workspace consists of the bash scripts to connect & disconnect your Nova device via bluetooth. 
-- These scripts are automatically added to the PATH so you can run the scripts from anywhere after sourcing.
 
 ```
-glove_connect.sh
-glove_disconnect.sh
+rosrun senseglove_launch glove_connect.sh glove_connect.sh
+rosrun senseglove_launch glove_connect.sh glove_disconnect.sh
 ```
 
 - For a detailed procedure on connecting a Nova glove(1 & 2)in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
