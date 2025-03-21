@@ -18,25 +18,18 @@ This workspace makes use of ros_control for automatically initiating publisher a
 * <code>❓</code> Unknown/untested
 
 ## Directory Structure
-    src
-    ├── hardware_interface      
-    |    ├── senseglove_hardware            # Communicates w/ SenseGlove Hardware
-    |    ├── senseglove_hardware_builder    # Builds the device in ROS
-    |    ├── senseglove_hardware_interface  # The bridge b/w ros_control & SenseGlove hardware
-    |
-    ├── senseglove      
-    |   ├── senseglove_description          # Provides the URDFs & .rviz files
-    |   ├── senseglove_finger_distance      # Provides distance between finger-tips
-    |   ├── senseglove_haptics              # Haptic Implementation (Python API)
-    |   ├── senseglove_launch               # Launch files & Bluetooth scripts
-    |   |   ├── bluetooth_scripts
-    |   ├── senseglove_shared_resources     # Custome messages
-    |
-    ├── SenseGlove_API                      # SG-Backend
-
- 
-
-
+    senseglove_ros
+    |    ├── senseglove      
+    |    |    ├── senseglove_control
+    |    |    |    ├── senseglove_hardware            # Communicates w/ SenseGlove Hardware
+    |    |    |    ├── senseglove_hardware_builder    # Builds the device in ROS
+    |    |    |    ├── senseglove_hardware_interface  # The bridge b/w ros_control & SenseGlove hardware
+    |    |    ├── senseglove_description              # Provides the URDFs & .rviz files
+    |    |    ├── senseglove_interaction              # Provides the python scripts for finger distances, haptics, and other possible interactions
+    |    |    ├── senseglove_launch                   # Launch files & Bluetooth scripts
+    |    |    |   ├── bluetooth_scripts
+    |    |    ├── senseglove_shared_resources         # Custom messages, services
+    |    ├── SenseGlove_API                           # SG-Backend
 
 ## Setting up the workspace ##
 1. System Requirement: Ubuntu 20.04
