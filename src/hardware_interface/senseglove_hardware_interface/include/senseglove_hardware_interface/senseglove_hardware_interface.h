@@ -99,6 +99,8 @@ private:
   std::vector<std::vector<double>> jointLastEffortCommand;
   std::vector<std::vector<double>> jointLastVibrationCommand;  // inherited from effort_command
 
+  std::vector<float> normalized_values;
+  
   // IMU
   Kinematics::Quat imuRotation;
 

@@ -113,6 +113,7 @@ namespace SGHardware
     Kinematics::Vect3D getFingerTip(int i);
 
     bool getImuRotation(Kinematics::Quat& outIMU);
+    bool getNormalizedInput(std::vector<float>& out_normalizedValues);
 
     std::vector<float> effortLevels;
     std::vector<float> vibrationLevels;

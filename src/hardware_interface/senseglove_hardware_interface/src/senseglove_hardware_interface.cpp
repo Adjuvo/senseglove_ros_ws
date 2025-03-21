@@ -301,6 +301,11 @@ void SenseGloveHardwareInterface::updateSenseGloveState()
       senseglove_state_pub_->msg_.finger_tip_positions[j].y = robot.getFingerTip(j).GetY();
       senseglove_state_pub_->msg_.finger_tip_positions[j].z = robot.getFingerTip(j).GetZ();
     }
+
+    if (robot.getNormalizedInput(normalized_values))
+    {
+      senseglove_state_pub_->msg_.normalized_input = normalized_values;
+    }
     
     // IMU DATA
     if (robot.getImuRotation(imuRotation))  

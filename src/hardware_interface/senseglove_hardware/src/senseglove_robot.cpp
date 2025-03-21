@@ -105,6 +105,35 @@ namespace SGHardware
   {
     return hapticglove->GetImuRotation(outIMU);
   }
+
+  bool SenseGloveRobot::getNormalizedInput(std::vector<float>& out_normalizedValues)
+  {
+    out_normalizedValues.clear(); // Ensure it's always clean before use
+
+    if (novaglovePtr)
+    {
+      if (novaglovePtr->GetNormalizedInput(out_normalizedValues))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else if (nova2glovePtr)
+    {
+      if (nova2glovePtr->GetNormalizedInput(out_normalizedValues))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    return false;
+  }
   
   // Function to flatten vector of vectors of Vector3D
   Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i)
