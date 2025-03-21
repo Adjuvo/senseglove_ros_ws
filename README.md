@@ -5,12 +5,12 @@ This workspace makes use of ros_control for automatically initiating publisher a
 
 ## SenseGlove Support Matrix
 
+
 |             | **ROS Noetic** | **   ROS 2  ** |
 |-------------|:--------------:|:--------------:|
 | **DK1**     |   ✅ v1.0.0    |       ❌       |   
 | **Nova 1**  |   ✅           |       🔜       | 
 | **Nova 2**  |   ✅           |       🔜       | 
-  
 
 * <code>✅</code> Supported
 * <code>❗</code> Not supported by the latest release and might be lacking features
@@ -32,13 +32,12 @@ This workspace makes use of ros_control for automatically initiating publisher a
     |    ├── SenseGlove_API                           # SG-Backend
 
 ## Setting up the workspace ##
-1. System Requirement: Ubuntu 20.04
-2. Install [ros-noetic](http://wiki.ros.org/noetic/Installation/Ubuntu)
-3. Clone our workspace
+-  Install [ros-noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) for Ubuntu 20.04
+- Clone this repository: 
 ``` 
-git clone https://github.com/Adjuvo/senseglove_ros_ws.git
+git clone https://github.com/Adjuvo/senseglove_ros.git
 ``` 
-4. Install the following dependencies & update:
+- Install workspace dependencies: 
 ``` 
 sudo apt-get install ros-noetic-ros-control
 sudo apt-get install ros-noetic-joint-trajectory-controller
@@ -46,10 +45,14 @@ sudo apt-get update
 rosdep update
 sudo apt-get upgrade
 ``` 
-5. Navigate to the workspace folder in the terminal
-6. Make sure to source your workspace
-7. Build your workspace: `catkin build` or `catkin_make`
-8. Post building, source the workspace itself using `source devel/setup.bash`
+- Build your workspace: `catkin build` or `catkin_make`
+``` 
+catkin_make
+``` 
+- Source the workspace:
+``` 
+source devel/setup.bash
+``` 
 
 ## Using SenseGloves in ROS ##
 - The sensegloves are connected either through USB or Bluetooth, depending on the product. 
@@ -59,10 +62,14 @@ sudo apt-get upgrade
 #### Connecting NOVA Gloves via Bluetooth ####
 
 - The workspace consists of the bash scripts to connect & disconnect your Nova device via bluetooth. 
+- For connecting your gloves, use:
 
 ```
-rosrun senseglove_launch glove_connect.sh glove_connect.sh
-rosrun senseglove_launch glove_connect.sh glove_disconnect.sh
+rosrun senseglove_launch glove_connect.sh
+```
+- For disconnecting all the connected gloves, use:
+```
+rosrun senseglove_launch glove_disconnect.sh
 ```
 
 - For a detailed procedure on connecting a Nova glove(1 & 2)in linux, kindly refer to [SenseGlove Docs - Connecting Devices](https://senseglove.gitlab.io/SenseGloveDocs/connecting-devices.html), under Pairing SenseGlove Nova or Wireless Kit -> Linux.
@@ -122,8 +129,14 @@ roslaunch senseglove_launch senseglove.launch
 ## Finger-Tip Distances: ##
 The finger distance package is designed to publish the distances between fingertips via a ROS node, which can be used to control robotic humanoid hands and grippers.
 - **Calibration Service**: A calibration class is provided as a service server. This service can be easily called using the rqt_service_caller plugin, or through the terminal.
+
+- For the left-handed glove:
 ```
 rosservice call /senseglove_finger_distance_left/Calibrate left
+```
+
+- For the right-handed glove: 
+```
 rosservice call /senseglove_finger_distance_right/Calibrate right
 ```
  
@@ -135,11 +148,11 @@ sudo apt-get install python3-pyqt5
 - You can find the defaults/calibrated parameters in the [calibration folder](src/senseglove/senseglove_shared_resources/calibration/).
 
 ## Haptics: ##
-- ROS-Control for the force-feedback system. Refer to the joints & controllers assigned for each senseglove product in the [config folder](/src/hardware_interface/senseglove_hardware_interface/config/).
-- Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/src/senseglove/senseglove_haptics/src/senseglove_haptics/).
+- ROS-Control for the force-feedback system. Refer to the joints & controllers assigned for each senseglove product in the [config folder](/senseglove_ros/senseglove/senseglove_control/senseglove_hardware_interface/config/).
+- Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/senseglove_ros/senseglove/senseglove_interaction/src/senseglove_interaction/haptics/).
 - `NOTE for NOVA 2`: The vibration feedback is disabled for the Index,  Thumb and the palm locations because of a packet overloading issue. A custom_waveform service will be implemented instead of employing ros-control.
 
 ## TO-DO: ##
 - `Custom_waveform` service for Nova-2 vibrations
 - `Calibration Profiling`, either from SenseCom (or) as a service call with interactive GUI. This should allow us to access and control the calbration.
-- `IMU` access (incl. sensor value if possible)
+- `IMU_TF_Broadcaster`, the current implementation does not have the right tf conversion.
