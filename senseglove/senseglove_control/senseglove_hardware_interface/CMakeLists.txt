@@ -17,7 +17,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 add_compile_options(-Wall -Wextra -Werror)
 
-
 find_package(catkin REQUIRED COMPONENTS
         controller_manager
         joint_state_controller
@@ -36,22 +35,21 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_library(SGCORE
         NAMES libsgcore.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
-
 
 catkin_package(
         INCLUDE_DIRS include
@@ -73,8 +71,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}
 include_directories(include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ../../SenseGlove_API/include/SenseGlove/Core
-        ../../SenseGlove_API/include/SenseGlove/Connect
+        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Core
+        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Connect
         )
 
 add_executable(${PROJECT_NAME}_node

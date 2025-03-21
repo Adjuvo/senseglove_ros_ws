@@ -29,19 +29,19 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_library(SGCORE
         NAMES libsgcore.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so
-        PATHS ../../SenseGlove_API/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
@@ -59,8 +59,8 @@ catkin_package(
 include_directories(include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ../../SenseGlove_API/include/SenseGlove/Core
-        ../../SenseGlove_API/include/SenseGlove/Connect
+        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Core
+        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Connect
         )
 
 add_library(${PROJECT_NAME}
