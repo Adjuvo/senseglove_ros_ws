@@ -23,23 +23,22 @@ find_package(catkin REQUIRED COMPONENTS
         )
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-message(STATUS "CMAKE_SOURCE_DIR is: ${CMAKE_SOURCE_DIR}")
 
 find_library(SGCORE
         NAMES libsgcore.so
-        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so
-        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so
-        PATHS ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
@@ -59,8 +58,8 @@ include_directories(
         include
         SYSTEM
         ${catkin_INCLUDE_DIRS}
-        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Core
-        ${CMAKE_SOURCE_DIR}/senseglove_ros/senseglove_api/include/SenseGlove/Connect
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
         )
 
 set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
