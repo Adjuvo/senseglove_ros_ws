@@ -4,15 +4,22 @@
 BLUE='\e[34m'
 GREEN='\e[32m'
 BOLD='\e[1m'
+RED='\e[31m'
+RESET='\e[0m'
 
 # Set up the Bluetooth agent to handle PIN confirmation
 echo -e "agent DisplayYesNo\ndefault-agent" | sudo bluetoothctl
 
-# Function to connect a Bluetooth device (no retries)
+# Function to connect a Bluetooth device
 connect_device() {
     local device="$1"
     local rfcomm="$2"
-
+    
+    if [[ -z "$device" ]]; then
+        echo -e "${RED} No device selected! Skipping connection.${RESET}"
+        return
+    fi
+    
     echo -e "${BLUE}==> Pairing device $device ...${RESET}"
     sudo bluetoothctl pair "$device"
     echo -e "${BLUE}==> Trusting device $device ...${RESET}"
@@ -30,40 +37,88 @@ sleep 5
 sudo bluetoothctl scan off > /dev/null 2>&1
 
 # Step 1: List discovered Bluetooth devices
-echo "Step 1: Listing discovered Bluetooth devices..."
-# Get devices that have "nova" (case insensitive) in their description
+echo "Step 1: Listing discovered NOVA 2 gloves..."
 mapfile -t devices < <(bluetoothctl devices | grep -i "nova" | awk '{print $2}')
 mapfile -t names < <(bluetoothctl devices | grep -i "nova" | awk '{for(i=3;i<=NF;i++) printf $i" "; print ""}')
 
-echo "Found NOVA devices:"
+# Check if any gloves were found
+if [[ ${#devices[@]} -eq 0 ]]; then
+    echo -e "${RED} No Nova gloves detected! Check Bluetooth connections.${RESET}"
+    exit 1
+fi
+
+# Display available gloves
+echo "Found Nova gloves:"
 for i in "${!devices[@]}"; do
     echo "  [$((i+1))] ${names[i]}"
 done
 
-# Prompt the user to choose the first device
-read -p "Step 2: Enter the number corresponding to a <LEFT> NOVA glove choice (or press Enter to skip): " choice
+# Step 2: User selects the first glove
+read -p "Step 2: Enter the number of the first glove you want to connect: " choice
+if [[ -z "$choice" || "$choice" -lt 1 || "$choice" -gt "${#devices[@]}" ]]; then
+    echo -e "${RED} Invalid selection. Exiting.${RESET}"
+    exit 1
+fi
 SG_DEVICE0="${devices[$((choice-1))]}"
+SG_NAME0="${names[$((choice-1))]}"
 
-# Prompt the user to choose the second device (optional)
-read -p "Step 3: Enter the number corresponding to another <RIGHT> NOVA glove choice (or press Enter to skip): " choice
-if [[ -n "$choice" ]]; then
+# Step 3: User selects the second glove (optional)
+read -p "Step 3: Enter the number of the second glove to connect (or press Enter to skip): " choice
+if [[ -n "$choice" && "$choice" -ge 1 && "$choice" -le "${#devices[@]}" ]]; then
     SG_DEVICE1="${devices[$((choice-1))]}"
+    SG_NAME1="${names[$((choice-1))]}"
 else
     SG_DEVICE1=""
+    SG_NAME1=""
 fi
 
-# Set your RFCOMM device variables
+# Ensure that at least one device is selected
+if [[ -z "$SG_DEVICE0" ]]; then
+    echo -e "${RED} No valid selection made. Exiting.${RESET}"
+    exit 1
+fi
+
+# Set the correct RFCOMM assignments
 SG_RFCOMM0="/dev/rfcomm0"
 SG_RFCOMM1="/dev/rfcomm1"
 
-# Connect the first device
-echo -e "${GREEN}Connecting first device ($SG_DEVICE0) on $SG_RFCOMM0...${RESET}"
-connect_device "$SG_DEVICE0" "$SG_RFCOMM0"
+# Automatically detect left and right from names using shell pattern matching
+SG_LEFT=""
+SG_RIGHT=""
 
-# Connect the second device if provided
+if [[ "$SG_NAME0" == *"-L"* ]]; then
+    SG_LEFT="$SG_DEVICE0"
+elif [[ "$SG_NAME0" == *"-R"* ]]; then
+    SG_RIGHT="$SG_DEVICE0"
+fi
+
 if [[ -n "$SG_DEVICE1" ]]; then
-    echo -e "${GREEN}Connecting second device ($SG_DEVICE1) on $SG_RFCOMM1...${RESET}"
-    connect_device "$SG_DEVICE1" "$SG_RFCOMM1"
+    if [[ "$SG_NAME1" == *"-L"* ]]; then
+        SG_LEFT="$SG_DEVICE1"
+    elif [[ "$SG_NAME1" == *"-R"* ]]; then
+        SG_RIGHT="$SG_DEVICE1"
+    fi
+fi
+
+# Connect gloves with proper assignment
+if [[ -n "$SG_LEFT" && -n "$SG_RIGHT" ]]; then
+    echo -e "${GREEN}Connecting LEFT glove ($SG_LEFT) to $SG_RFCOMM0...${RESET}"
+    connect_device "$SG_LEFT" "$SG_RFCOMM0"
+
+    echo -e "${GREEN}Connecting RIGHT glove ($SG_RIGHT) to $SG_RFCOMM1...${RESET}"
+    connect_device "$SG_RIGHT" "$SG_RFCOMM1"
+
+else
+    # If only one glove is selected, it should always connect to rfcomm0
+    SINGLE_GLOVE="${SG_LEFT:-$SG_RIGHT}"
+    
+    if [[ -z "$SINGLE_GLOVE" ]]; then
+        echo -e "${RED} No valid glove detected! Exiting.${RESET}"
+        exit 1
+    fi
+    
+    echo -e "${GREEN}Only one glove selected ($SINGLE_GLOVE). Connecting it to $SG_RFCOMM0...${RESET}"
+    connect_device "$SINGLE_GLOVE" "$SG_RFCOMM0"
 fi
 
 echo -e "${GREEN}${BOLD}All connection processes have completed.${RESET}"

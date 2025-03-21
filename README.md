@@ -8,8 +8,8 @@ This workspace makes use of ros_control for automatically initiating publisher a
 |             | **ROS Noetic** | **   ROS 2  ** |
 |-------------|:--------------:|:--------------:|
 | **DK1**     |   ✅ v1.0.0    |       ❌       |   
-| **Nova 1**  |   ✅ v2.2.0    |       🔜       | 
-| **Nova 2**  |   ✅ v2.2.0    |       🔜       | 
+| **Nova 1**  |   ✅           |       🔜       | 
+| **Nova 2**  |   ✅           |       🔜       | 
   
 
 * <code>✅</code> Supported
@@ -131,8 +131,8 @@ roslaunch senseglove_launch senseglove.launch
 The finger distance package is designed to publish the distances between fingertips via a ROS node, which can be used to control robotic humanoid hands and grippers.
 - **Calibration Service**: A calibration class is provided as a service server. This service can be easily called using the rqt_service_caller plugin, or through the terminal.
 ```
-rosservice call /senseglove_finger_distance_left/calibrate left
-rosservice call /senseglove_finger_distance_right/calibrate right
+rosservice call /senseglove_finger_distance_left/Calibrate left
+rosservice call /senseglove_finger_distance_right/Calibrate right
 ```
  
 - A Calibration Gui will appear. Install PyQt5 if it is not already available.

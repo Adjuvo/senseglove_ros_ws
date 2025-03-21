@@ -27,6 +27,7 @@
 #include "HandPose.hpp"
 #include "DeviceList.hpp"
 #include "Vect3D.hpp"
+#include "Quat.hpp"
 
 #include "SenseGlove.hpp"
 #include "SenseGloveSensorData.hpp"
@@ -110,6 +111,9 @@ namespace SGHardware
 
     Kinematics::Vect3D getHandPosition(int i);
     Kinematics::Vect3D getFingerTip(int i);
+
+    bool getImuRotation(Kinematics::Quat& outIMU);
+    bool getNormalizedInput(std::vector<float>& out_normalizedValues);
 
     std::vector<float> effortLevels;
     std::vector<float> vibrationLevels;

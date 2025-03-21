@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+import senseglove_interaction.haptics.haptics_node_action_interface
+import senseglove_interaction.haptics.haptics_node_simple
+
+if __name__ == '__main__':
+    senseglove_interaction.haptics.haptics_node_simple.main()

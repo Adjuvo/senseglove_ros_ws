@@ -1,6 +1,6 @@
 import rospy
 from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
-from senseglove_shared_resources.srv import calibrate
+from senseglove_shared_resources.srv import Calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
 import subprocess
@@ -40,14 +40,14 @@ class FingerTipHandler:
             rospy.logwarn_once("No calibration data found, using defaults")
 
         # Declare calibration service
-        self.calib_srv = rospy.Service("~calibrate", calibrate, self.calibrate_service)
+        self.calib_srv = rospy.Service("~Calibrate", Calibrate, self.calibrate_service)
         self.calibrating = False
         rospy.loginfo("SG Finger Distance Node" + str(self.handedness_list[int(self.glove_nr) % 2]) + "/: Calibration setup finished for %s", self.calib_srv.resolved_name)
 
     def calibrate_service(self, call):
         rospy.loginfo("Executing calibration service via GUI")
 
-        process = subprocess.Popen(["rosrun", "senseglove_finger_distance", "finger_distance_calibration.py", self.glove_nr, call.name])
+        process = subprocess.Popen(["rosrun", "senseglove_interaction", "finger_distance_calibration.py", self.glove_nr, call.name])
         process.wait()       
 
         # After the process finishes, check if the calibration parameters were set on the ROS parameter server.

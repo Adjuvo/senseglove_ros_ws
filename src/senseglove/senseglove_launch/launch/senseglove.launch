@@ -38,7 +38,7 @@
     <group if="$(arg use_left)">
         <node
             name="senseglove_finger_distance_left"
-            pkg="senseglove_finger_distance"
+            pkg="senseglove_interaction"
             type="senseglove_finger_distance_node"
             args="0 $(arg calibration_mode)"
             output="screen">
@@ -49,7 +49,7 @@
     <group if="$(arg use_right)">
         <node
             name="senseglove_finger_distance_right"
-            pkg="senseglove_finger_distance"
+            pkg="senseglove_interaction"
             type="senseglove_finger_distance_node"
             args="1 $(arg calibration_mode)"
             output="screen">
