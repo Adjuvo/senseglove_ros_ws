@@ -16,7 +16,7 @@ from trajectory_msgs.msg import JointTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 
-HAPTIC_TOPIC = "/senseglove/0/rh/controller/trajectory/command"
+HAPTIC_TOPIC = "/senseglove/sg0/rh/controller/trajectory/command"
 
 class SGHapticFeedback:
 
@@ -28,14 +28,14 @@ class SGHapticFeedback:
         self._create_publisher()
 
         self.joint_list = ['empty']
-        if rospy.has_param('/senseglove/0/rh/controller/trajectory/joints'):
-            self.joint_list = rospy.get_param('/senseglove/0/rh/controller/trajectory/joints')
+        if rospy.has_param('/senseglove/sg0/rh/controller/trajectory/joints'):
+            self.joint_list = rospy.get_param('/senseglove/sg0/rh/controller/trajectory/joints')
         
         self.publish_rate = 1
-        if rospy.has_param('/senseglove/0/rh/controller/hand_state/publish_rate'):
-            self.publish_rate = rospy.get_param('/senseglove/0/rh/controller/hand_state/publish_rate')
+        if rospy.has_param('/senseglove/sg0/rh/controller/hand_state/publish_rate'):
+            self.publish_rate = rospy.get_param('/senseglove/sg0/rh/controller/hand_state/publish_rate')
 
-        self.hap_pub = rospy.Publisher('/senseglove/0/rh/controller/trajectory/command', JointTrajectory, queue_size=1)
+        self.hap_pub = rospy.Publisher('/senseglove/sg0/rh/controller/trajectory/command', JointTrajectory, queue_size=1)
     
 
         

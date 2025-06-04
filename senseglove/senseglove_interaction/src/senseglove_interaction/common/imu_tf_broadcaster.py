@@ -52,10 +52,10 @@ def main():
     # Get the "hand" parameter (default is "rh" for right-hand)
     hand = rospy.get_param("~hand", "rh").lower()
     if hand == "rh":
-        topic_name = "/senseglove/0/rh/senseglove_states"
+        topic_name = "/senseglove/sg0/rh/senseglove_states"
         child_frame = "r_glove_hub"
     elif hand == "lh":
-        topic_name = "/senseglove/0/lh/senseglove_states"
+        topic_name = "/senseglove/sg0/lh/senseglove_states"
         child_frame = "l_glove_hub"
     else:
         rospy.logerr("Invalid hand parameter: {}. Use 'rh' or 'lh'.".format(hand))

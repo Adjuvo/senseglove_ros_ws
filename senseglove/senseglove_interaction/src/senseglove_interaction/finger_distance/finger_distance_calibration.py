@@ -262,7 +262,7 @@ class CalibrationGUI(QtWidgets.QWidget):
         """
         Subscribe to the sensor topic so that sensor data is fed into the calibration.
         """
-        topic_name = ("/senseglove/" + str(int(self.calibration.glove_nr / 2)) + self.calibration.handedness_list[self.calibration.glove_nr % 2] + "/finger_distances")
+        topic_name = ("/senseglove/sg" + str(int(self.calibration.glove_nr / 2)) + self.calibration.handedness_list[self.calibration.glove_nr % 2] + "/finger_distances")
         rospy.Subscriber(topic_name, FingerDistanceFloats, self.calibration.senseglove_callback, queue_size=1)
         self.log("Subscribed to: " + topic_name)
 

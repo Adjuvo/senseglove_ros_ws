@@ -10,13 +10,13 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 def main():
     rospy.init_node('senseglove_haptics_node_simple')
     rospy.loginfo("initialize haptics node")
-    hap_pub = rospy.Publisher('/senseglove/0/rh/controller/trajectory/command', JointTrajectory, queue_size=1)
+    hap_pub = rospy.Publisher('/senseglove/sg0/rh/controller/trajectory/command', JointTrajectory, queue_size=1)
     joint_list = ['empty']
-    if rospy.has_param('/senseglove/0/rh/controller/trajectory/joints'):
-        joint_list = rospy.get_param('/senseglove/0/rh/controller/trajectory/joints')
+    if rospy.has_param('/senseglove/sg0/rh/controller/trajectory/joints'):
+        joint_list = rospy.get_param('/senseglove/sg0/rh/controller/trajectory/joints')
     publish_rate = 1
-    if rospy.has_param('/senseglove/0/rh/controller/hand_state/publish_rate'):
-        publish_rate = rospy.get_param('/senseglove/0/rh/controller/hand_state/publish_rate')
+    if rospy.has_param('/senseglove/sg0/rh/controller/hand_state/publish_rate'):
+        publish_rate = rospy.get_param('/senseglove/sg0/rh/controller/hand_state/publish_rate')
 
     rate = rospy.Rate(publish_rate/2)
     while not rospy.is_shutdown():

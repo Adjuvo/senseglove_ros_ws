@@ -13,7 +13,7 @@ class FingerTipHandler:
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
         self.glove_nr = glove_nr
-        self.senseglove_ns = "/senseglove/" + str(int(int(glove_nr) / 2)) + str(self.handedness_list[int(glove_nr) % 2])
+        self.senseglove_ns = "/senseglove/sg" + str(int(int(glove_nr) / 2)) + str(self.handedness_list[int(glove_nr) % 2])
 
         self._create_publishers()
         self._create_subscriber()
