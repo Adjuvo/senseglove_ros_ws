@@ -1,0 +1,36 @@
+services:
+  senseglove_ros1:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Dockerfile.ros1
+    privileged: true
+    network_mode: host
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/ttyACM1:/dev/ttyACM1
+      - /dev/rfcomm0:/dev/rfcomm0
+      - /dev/rfcomm1:/dev/rfcomm1
+    volumes:
+      - .:/root/ros1_ws/src:rw
+      - ./Dockerfiles/ros1_entrypoint.sh:/root/ros1_entrypoint.sh:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - CMAKE_POLICY_VERSION_MINIMUM=3.5
+      - ROS_MASTER_URI=http://localhost:11311
+      - ROS_HOSTNAME=localhost
+    tty: true
+    stdin_open: true
+  ros2_bridge:
+    build:
+      context: ./Dockerfiles/ros2_bridge
+      dockerfile: Dockerfile.ros2_bridge
+    network_mode: host
+    environment:
+      - ROS_MASTER_URI=http://localhost:11311
+      - ROS_HOSTNAME=localhost
+    tty: true
+    stdin_open: true
+    depends_on:
+      - senseglove_ros1
