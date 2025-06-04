@@ -5,7 +5,7 @@
   <version>2.1.0</version>
   <description>Custom messages</description>
   <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
-  <license>TODO</license>
+  <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
 
