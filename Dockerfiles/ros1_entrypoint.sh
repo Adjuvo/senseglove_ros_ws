@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 source /opt/ros/noetic/setup.bash
+roscore &
 
 if [ -f /root/ros1_ws/devel/setup.bash ]; then
   source /root/ros1_ws/devel/setup.bash

@@ -23,6 +23,7 @@ services:
     tty: true
     stdin_open: true
   ros2_bridge:
+    profiles: ["bridge"]
     build:
       context: ./Dockerfiles/ros2_bridge
       dockerfile: Dockerfile.ros2_bridge

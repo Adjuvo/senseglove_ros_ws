@@ -27,27 +27,28 @@ Once the device is bound on the host, it becomes accessible inside the container
 
 ---
 ### Launching the ROS 1 Container ###
-To start the container (which also builds the ROS 1 workspace on first launch), use:
+To start only the ROS 1 container (which will also build the ROS 1 workspace on first launch), run:
 
 ```
 docker compose up senseglove_ros1
 ```
 
-After the container is running, open an interactive shell and either start `roscore` manually or directly launch the SenseGlove system:
+Once the container is running, you can open an interactive shell and launch the SenseGlove system as follows:
 ```
 docker compose exec senseglove_ros1 bash
 roslaunch senseglove_launch senseglove.launch
 ```
+`Note:`For detailed usage instructions, refer to the [Usage Guide](../USAGE.md)
 
 ---
-### [Optional] Launching the ROS 2 Container ###
+### Launching the ROS 2 Container ###
 
-Once the ROS 1 system is active, you can start the ROS 2 bridge container to forward topics and services to your ROS 2 environment:
+The ROS 2 bridge container requires the ROS 1 system to be active, with roscore running. Only then will the bridge be able to forward topics and services correctly. To launch the ROS 2 bridge container, run:
 ```
 docker compose up ros2_bridge
 ```
 
-This enables access to the ROS 1 data either from your host machine (e.g. Ubuntu 24.04 running ROS 2 Jazzy) or from another Docker container on the same network. If you prefer to interact with the bridge container directly, you can enter it with:
+This enables access to the ROS 1  topics and services either from your host machine (e.g. Ubuntu 24.04 running ROS 2 Jazzy) or from another Docker container on the same network. To interact with the ROS 2 container manually, you can open a shell using:
 
 ```
 docker compose exec ros2_bridge bash
@@ -55,3 +56,13 @@ source /opt/ros/jazzy/setup.bash
 ```
 
 `Important:` Always make sure you source the correct ROS 2 environment inside the container before running any ROS 2 commands.
+
+
+### Launching Both ROS 1 and ROS 2 Containers Together ###
+
+To launch both the ROS 1 container and the ROS 2 bridge in a single command, use the bridge profile provided in the Docker Compose configuration:
+```
+docker compose --profile bridge up -d
+```
+
+This will start both containers in detached mode. Once running, you can open a shell in either container to run ROS tools as needed.
