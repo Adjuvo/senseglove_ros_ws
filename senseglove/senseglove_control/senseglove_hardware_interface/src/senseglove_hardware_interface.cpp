@@ -36,7 +36,7 @@ bool SenseGloveHardwareInterface::init(ros::NodeHandle& nh, ros::NodeHandle& /* 
                           handedness[this->sensegloveSetup->getSenseGloveRobot(0).getRight()] + "/senseglove_states/";
 
   this->senseglove_state_pub_ =
-      std::make_unique<realtime_tools::RealtimePublisher<senseglove_shared_resources::SenseGloveState>>(
+      std::make_unique<realtime_tools::RealtimePublisher<senseglove_shared_resources_msgs::SenseGloveState>>(
           nh, topicName, 1);
 
   ROS_INFO_STREAM("Senseglove HW Interface: Constructed topic: " << topicName);  

@@ -8,7 +8,7 @@ import rospkg
 import rosparam
 from collections import deque
 from PyQt5 import QtWidgets, QtCore
-from senseglove_shared_resources.msg import FingerDistanceFloats
+from senseglove_shared_resources_msgs.msg import FingerDistanceFloats
 
 class Calibration:
     """
@@ -338,7 +338,7 @@ class CalibrationGUI(QtWidgets.QWidget):
         self.log("Parameters set on the ROS parameter server.")
 
         # Use the calibration name for the file.
-        config_folder = os.path.join(rospkg.RosPack().get_path('senseglove_shared_resources'), "calibration")
+        config_folder = os.path.join(rospkg.RosPack().get_path('senseglove_shared_resources_msgs'), "calibration")
         if not isdir(config_folder):
             self.log("Warning: Calibration folder {} not found; not saving to file.".format(config_folder))
         else:
