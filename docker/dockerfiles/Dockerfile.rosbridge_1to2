@@ -13,41 +13,6 @@
 # ---------------------------------------------------------------------
 
 FROM ros:jazzy-ros-base-noble
-# The above base image is multi-platform (works on ARM64 and AMD64):
-# Docker will automatically select the correct platform variant based on the host's architecture.
-
-#
-# How to build this docker image:
-#  docker build . -t ros-jazzy-ros1-bridge-builder
-#
-# How to build ros-jazzy-ros1-bridge:
-#  # 0.) From a Ubuntu 24.04 (Noble) ROS 2 Jazzy system, create a "ros-jazzy-ros1-bridge/" ROS2 package:
-#    docker run --rm ros-jazzy-ros1-bridge-builder | tar xvzf -
-#
-# How to use the ros-jazzy-ros1-bridge:
-#  # 1.) First start a ROS1 Noetic docker and bring up a GUI terminal, something like:
-#    rocker --x11 --user --privileged \
-#         --volume /dev/shm /dev/shm --network=host -- ros:noetic-ros-base-focal \
-#         'bash -c "sudo apt update; sudo apt install -y ros-noetic-rospy-tutorials tilix; tilix"'
-#
-#  # 2.) Then, start "roscore" inside the ROS1 container:
-#    source /opt/ros/noetic/setup.bash
-#    roscore
-#
-#  # 3.) Now, from the Ubuntu 24.04 (Noble) ROS2 Desktop Jazzy system, start the ros1 bridge node:
-#    apt-get -y install ros-jazzy-desktop
-#    source /opt/ros/jazzy/setup.bash
-#    source ros-jazzy-ros1-bridge/install/local_setup.bash
-#    ros2 run ros1_bridge dynamic_bridge
-#
-#  # 4.) Back to the ROS1 Noetic container, run in another terminal tab:
-#    source /opt/ros/noetic/setup.bash
-#    rosrun rospy_tutorials talker
-#
-#  # 5.) Finally, from the Ubuntu 24.04 (Noble) ROS2 Jazzy system:
-#    source /opt/ros/jazzy/setup.bash
-#    ros2 run demo_nodes_cpp listener
-#
 
 # Make sure bash catches errors (no need to chain commands with &&, use ; instead)
 SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-c"]
@@ -57,11 +22,48 @@ ARG DEBIAN_FRONTEND=noninteractive
 ###########################
 # 1.) Bring system up to the latest ROS desktop configuration
 ###########################
-RUN apt update; \
-    apt -y install ros-jazzy-desktop; \
+RUN apt update && \
+    apt install -y --no-install-recommends \
+        ros-jazzy-desktop \
+        ros-jazzy-ros2-control \
+        ros-jazzy-ros2-controllers && \
     rm -rf /var/lib/apt/lists/*
 
-    
+###########################
+# 2.) Temporarily remove ROS2 apt repository
+###########################
+RUN mv /etc/apt/sources.list.d/ros2.sources /root/
+RUN apt-get update
+
+###########################
+# 3.) comment out the catkin conflict
+###########################
+RUN sed  -i -e 's|^Conflicts: catkin|#Conflicts: catkin|' /var/lib/dpkg/status
+RUN apt-get install -f
+
+###########################
+# 4.) force install these packages (after restoring ros2.sources)
+###########################
+# Temporarily bring back ROS 2 sources to access python3-rosdistro
+RUN cp /root/ros2.sources /etc/apt/sources.list.d/ros2.sources && \
+    apt-get update && \
+    apt-get download python3-catkin-pkg && \
+    apt-get download python3-rospkg && \
+    apt-get download python3-rosdistro && \
+    mv /etc/apt/sources.list.d/ros2.sources /root/
+
+# Install with force-overwrite
+RUN dpkg --force-overwrite -i python3-catkin-pkg*.deb
+RUN dpkg --force-overwrite -i python3-rospkg*.deb
+RUN dpkg --force-overwrite -i python3-rosdistro*.deb
+RUN apt-get install -f
+
+###########################
+# 6.) Restore the ROS2 apt repos and update again
+###########################
+RUN mv /root/ros2.sources /etc/apt/sources.list.d/
+RUN apt-get -y update
+
 ###########################
 # 5.) Install ROS1 Noetic desktop
 # (Currently, ppa contains AMD64 builds only)
@@ -78,6 +80,25 @@ RUN apt update; \
 RUN if [[ $(uname -m) = "arm64" || $(uname -m) = "aarch64" ]]; then                     \
       cp /usr/lib/x86_64-linux-gnu/pkgconfig/* /usr/lib/aarch64-linux-gnu/pkgconfig/;   \
     fi
+
+COPY ./shared/senseglove_shared_resources_msgs.tar.xz .
+RUN tar -xJf senseglove_shared_resources_msgs.tar.xz && \
+    rm senseglove_shared_resources_msgs.tar.xz
+
+# Compile for ROS1:
+RUN cd senseglove_shared_resources_msgs/ros1 && \
+    unset ROS_DISTRO && source /opt/ros/noetic/setup.bash && \ 
+    time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+                 
+# Compile for ROS2:
+RUN cd senseglove_shared_resources_msgs/ros2 && \                                           
+    source /opt/ros/jazzy/setup.bash && \                                                   
+    time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release     
+
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/jazzy/setup.bash"  >> ~/.bashrc
+RUN echo "source /senseglove_shared_resources_msgs/ros1/install/setup.bash" >> ~/.bashrc
+RUN echo "source /senseglove_shared_resources_msgs/ros2/install/setup.bash" >> ~/.bashrc
 
 ###########################
 # 7.) Compile ros1_bridge
@@ -104,6 +125,8 @@ RUN                                                                             
      #-------------------------------------                                             \
      source /opt/ros/noetic/setup.bash;                                                 \
      source /opt/ros/jazzy/setup.bash;                                                  \
+     source /senseglove_shared_resources_msgs/ros1/install/setup.bash;                  \
+     source /senseglove_shared_resources_msgs/ros2/install/setup.bash;                  \
                                                                                         \
      #-------------------------------------                                             \
      # Finally, build the Bridge                                                        \
@@ -143,11 +166,17 @@ RUN ROS1_LIBS="libactionlib.so";                                                
       cp -L $soFilePath ./;                                                     \
     done
 
+# ###########################
+# # 10.) Spit out ros1_bridge tarball by default when no command is given
+# ###########################
+RUN tar czf /ros-jazzy-ros1-bridge.tgz \
+     --exclude '*/build/*' --exclude '*/src/*' /ros-jazzy-ros1-bridge 
+
 ###########################
 # 6) Copy entrypoint and default to launching dynamic_bridge
 ###########################
-COPY ros2_entrypoint.sh /ros2_entrypoint.sh
-RUN chmod +x /ros2_entrypoint.sh
+COPY ./entrypoints/rosbridge_1to2_entrypoint.sh /rosbridge_1to2_entrypoint.sh
+RUN chmod +x /rosbridge_1to2_entrypoint.sh
 
-ENTRYPOINT ["/ros2_entrypoint.sh"]
-CMD ["ros2", "run", "ros1_bridge", "dynamic_bridge", "--bridge-all-1to2-topics"]
+ENTRYPOINT ["/rosbridge_1to2_entrypoint.sh"]
+CMD ["ros2", "run", "ros1_bridge", "dynamic_bridge", "--bridge-all-topics"]

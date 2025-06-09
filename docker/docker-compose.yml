@@ -1,8 +1,8 @@
 services:
-  senseglove_ros1:
+  senseglove_ros:
     build:
       context: .
-      dockerfile: Dockerfiles/Dockerfile.ros1
+      dockerfile: dockerfiles/Dockerfile.ros1
     privileged: true
     network_mode: host
     devices:
@@ -11,8 +11,8 @@ services:
       - /dev/rfcomm0:/dev/rfcomm0
       - /dev/rfcomm1:/dev/rfcomm1
     volumes:
-      - .:/root/ros1_ws/src:rw
-      - ./Dockerfiles/ros1_entrypoint.sh:/root/ros1_entrypoint.sh:ro
+      - ../:/root/ros1_ws/src/senseglove_ros:rw
+      - ./entrypoints/ros1_entrypoint.sh:/root/ros1_entrypoint.sh:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     environment:
       - DISPLAY=${DISPLAY}
@@ -22,11 +22,12 @@ services:
       - ROS_HOSTNAME=localhost
     tty: true
     stdin_open: true
-  ros2_bridge:
-    profiles: ["bridge"]
+  rosbridge_1to2:
+    profiles: ["rosbridge_1to2"]
     build:
-      context: ./Dockerfiles/ros2_bridge
-      dockerfile: Dockerfile.ros2_bridge
+      context: .
+      dockerfile: dockerfiles/Dockerfile.rosbridge_1to2
+    image: rosbridge_1to2
     network_mode: host
     environment:
       - ROS_MASTER_URI=http://localhost:11311
@@ -34,4 +35,11 @@ services:
     tty: true
     stdin_open: true
     depends_on:
-      - senseglove_ros1
+      - senseglove_ros
+
+  # Spitting out tarball output
+  host_rosbridge_tgz:
+    profiles: ["host_rosbridge_tgz"]
+    image: rosbridge_1to2
+    entrypoint: []
+    command: cat /ros-jazzy-ros1-bridge.tgz

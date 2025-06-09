@@ -36,7 +36,7 @@ WORKDIR ${ROS_WORKSPACE}
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
     echo "source ${ROS_WORKSPACE}/devel/setup.bash" >> ~/.bashrc
 
-COPY Dockerfiles/ros1_entrypoint.sh /ros1_entrypoint.sh
+COPY ./entrypoints/ros1_entrypoint.sh /ros1_entrypoint.sh
 RUN chmod +x /ros1_entrypoint.sh
 ENTRYPOINT ["/ros1_entrypoint.sh"]
 CMD ["bash"]

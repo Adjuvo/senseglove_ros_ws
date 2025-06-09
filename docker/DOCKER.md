@@ -66,3 +66,13 @@ docker compose --profile bridge up -d
 ```
 
 This will start both containers in detached mode. Once running, you can open a shell in either container to run ROS tools as needed.
+
+
+
+⚠️ Warning: ROS Processes Can Leak to Host When Using network_mode: host
+When running Docker containers with network_mode: host, any ROS processes (like roscore, rosmaster, or roslaunch) started in the background (e.g. via roscore &) can leak into the host system. This happens because the container shares the host's network and may run as root, allowing background processes to survive even after the container exits. These processes will appear in the host's ps list and can interfere with future ROS runs. To avoid this, do not start roscore in the background inside containers, and always clean up using pkill -f rosmaster from the host if leaks occur.
+
+docker compose --profile rosbridge_1to2 build
+
+
+docker compose --profile host_rosbridge_tgz run --rm host_rosbridge_tgz | tar xvzf -
