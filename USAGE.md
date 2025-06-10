@@ -1,3 +1,7 @@
+# Usage Guide
+This guide provides instructions for setting up and using SenseGlove devices within the ROS  environment.
+
+
 ## Connecting SenseGloves ##
 SenseGlove devices can be connected either through USB or Bluetooth, depending on the device. The `DK1` device uses USB, while the `Nova 1/2` devices rely on Bluetooth communication.
 
@@ -60,11 +64,11 @@ To calibrate a right-handed glove, use: _msgs
 rosservice call /senseglove_finger_distance_right/Calibrate right
 ```
 
-Upon launching either service, a GUI will appear to guide you through the calibration process. Once completed, the resulting parameters will be stored in the calibration folder located at the [calibration folder](src/senseglove/senseglove_shared_resources_msgs/calibration/).
+Upon launching either service, a GUI will appear to guide you through the calibration process. Once completed, the resulting parameters will be stored in the [calibration folder](senseglove/senseglove_shared_resources/calibration/)
 
 ## Haptics: ##
-The force-feedback system is implemented using ros_control, and each SenseGlove product has its joints and controllers defined in a separate configuration file. These configuration files can be found in the [config folder](/senseglove_ros/senseglove/senseglove_control/senseglove_hardware_interface/config/).
+The force-feedback system is implemented using ros_control, and each SenseGlove product has its joints and controllers defined in a separate configuration file. These configuration files can be found in the [config folder](/senseglove/senseglove_control/senseglove_hardware_interface/config/).
 
-Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/senseglove_ros/senseglove/senseglove_interaction/src/senseglove_interaction/haptics/).
+Refer to the python scripts for haptic implementation in the [senseglove_haptics folder](/senseglove/senseglove_interaction/src/senseglove_interaction/haptics/).
 
-`⚠️ NOVA 2`: The vibration feedback is disabled for the Index,  Thumb and the palm locations because of a packet overloading issue. A custom_waveform service will be implemented instead of employing ros-control.
+`⚠️ NOVA 2`: The vibration feedback is disabled for the Index,  Thumb and the palm locations because of a packet overloading issue. A custom_waveform service will be implemented instead of employing ros-control in future.

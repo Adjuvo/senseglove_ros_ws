@@ -37,7 +37,7 @@ services:
     depends_on:
       - senseglove_ros
 
-  # Spitting out tarball output
+  # ros1_bridge binary
   host_rosbridge_tgz:
     profiles: ["host_rosbridge_tgz"]
     image: rosbridge_1to2

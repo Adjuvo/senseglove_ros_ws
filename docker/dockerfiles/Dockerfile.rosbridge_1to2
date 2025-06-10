@@ -7,9 +7,7 @@
 # Original author: TommyChangUMD (2023)
 # License: MIT (see LICENSE-upstream.txt)
 #
-# Modifications by: Akshay Radhamohan Menon (akshay@senseglove.com)
-#   • Replaced original tarball commands with ENTRYPOINT lines at the end
-#   • Renamed file to Dockerfile.ros2_bridge
+# Modified by Akshay Radhamohan Menon (akshay@senseglove.com)
 # ---------------------------------------------------------------------
 
 FROM ros:jazzy-ros-base-noble
@@ -58,9 +56,7 @@ RUN dpkg --force-overwrite -i python3-rospkg*.deb
 RUN dpkg --force-overwrite -i python3-rosdistro*.deb
 RUN apt-get install -f
 
-###########################
-# 6.) Restore the ROS2 apt repos and update again
-###########################
+# Restore the ROS2 apt repos and update again
 RUN mv /root/ros2.sources /etc/apt/sources.list.d/
 RUN apt-get -y update
 
@@ -81,6 +77,9 @@ RUN if [[ $(uname -m) = "arm64" || $(uname -m) = "aarch64" ]]; then             
       cp /usr/lib/x86_64-linux-gnu/pkgconfig/* /usr/lib/aarch64-linux-gnu/pkgconfig/;   \
     fi
 
+###########################
+# 6.) Compile SenseGlove's Custom messages
+###########################
 COPY ./shared/senseglove_shared_resources_msgs.tar.xz .
 RUN tar -xJf senseglove_shared_resources_msgs.tar.xz && \
     rm senseglove_shared_resources_msgs.tar.xz
@@ -103,7 +102,6 @@ RUN echo "source /senseglove_shared_resources_msgs/ros2/install/setup.bash" >> ~
 ###########################
 # 7.) Compile ros1_bridge
 ###########################
-
 # g++-11 and needed
 RUN apt update; \
     apt -y install g++-11 gcc-11; \
@@ -140,7 +138,7 @@ RUN                                                                             
        --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 ###########################
-# 9.) Pack all ROS1 dependent libraries
+# 8.) Pack all ROS1 dependent libraries
 ###########################
 # fix ARM64 pkgconfig path issue -- Fix provided by ambrosekwok 
 RUN if [[ $(uname -m) = "arm64" || $(uname -m) = "aarch64" ]]; then                    \
@@ -166,14 +164,14 @@ RUN ROS1_LIBS="libactionlib.so";                                                
       cp -L $soFilePath ./;                                                     \
     done
 
-# ###########################
-# # 10.) Spit out ros1_bridge tarball by default when no command is given
-# ###########################
+###########################
+# 9.) Spit out ros1_bridge tarball
+###########################
 RUN tar czf /ros-jazzy-ros1-bridge.tgz \
      --exclude '*/build/*' --exclude '*/src/*' /ros-jazzy-ros1-bridge 
 
 ###########################
-# 6) Copy entrypoint and default to launching dynamic_bridge
+# 10) Copy entrypoint and default to launching dynamic_bridge
 ###########################
 COPY ./entrypoints/rosbridge_1to2_entrypoint.sh /rosbridge_1to2_entrypoint.sh
 RUN chmod +x /rosbridge_1to2_entrypoint.sh

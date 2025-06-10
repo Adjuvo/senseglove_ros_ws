@@ -5,7 +5,6 @@ This workspace makes use of ros_control for automatically initiating publisher a
 
 ## SenseGlove Support Matrix
 
-
 |             | **ROS Noetic** |    **ROS 2**   |
 |-------------|:--------------:|:--------------:|
 | **DK1**     |   ✅ v1.0.0    |   🔜 Planned   |   
@@ -16,6 +15,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
 <code>🔜</code> In Progress
 <code>❌</code> Not supported at all
 
+🌱 ROS 2 support is coming soon, currently in development and expected by July 2025. For now, you can bridge between ROS 1 and 2 using our preconfigured Docker environment.
 
 ## Directory Structure
     senseglove_ros
@@ -28,7 +28,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
     |    |    ├── senseglove_interaction              # Provides the python scripts for finger distances, haptics, and other possible interactions
     |    |    ├── senseglove_launch                   # Launch files & Bluetooth scripts
     |    |    |   ├── bluetooth_scripts
-    |    |    ├── senseglove_shared_resources_msgs         # Custom messages, services
+    |    |    ├── senseglove_shared_resources         # Custom messages, services
     |    ├── SenseGlove_API                           # SG-Backend
 
 ## Installation ##      
@@ -59,8 +59,8 @@ source devel/setup.bash
 ## Usage 
 See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, launching single or dual glove setups, running calibration services, and enabling haptic feedback.
 
-## Docker Setup [ROS1 -> ROS2]
-See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to optionally launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
+## Docker Setup [ROS1 ⇄ ROS2]
+See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
 
 ## TO-DO: ##
 - `Custom_waveform` service for Nova-2 vibrations
@@ -68,5 +68,4 @@ See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on runnin
 - `IMU_TF_Broadcaster`, the current implementation does not have the right tf conversion.
 
 ## Attribution
-
 This project’s Dockerfile [Dockerfile.ros2_bridge](Dockerfiles/Dockerfile.ros2_bridge) and build instructions are adapted from [ros-jazzy-ros1-bridge-builder](https://github.com/TommyChangUMD/ros-jazzy-ros1-bridge-builder) by TommyChangUMD, licensed under MIT.
