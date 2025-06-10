@@ -1,6 +1,6 @@
 import rospy
-from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
-from senseglove_shared_resources.srv import Calibrate
+from senseglove_shared_resources_msgs.msg import SenseGloveState, FingerDistanceFloats
+from senseglove_shared_resources_msgs.srv import Calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
 import subprocess
@@ -13,7 +13,7 @@ class FingerTipHandler:
         self.calib_mode = calib_mode
         self.finger_tips = [FingerTipVector() for i in self.finger_nrs]
         self.glove_nr = glove_nr
-        self.senseglove_ns = "/senseglove/" + str(int(int(glove_nr) / 2)) + str(self.handedness_list[int(glove_nr) % 2])
+        self.senseglove_ns = "/senseglove/sg" + str(int(int(glove_nr) / 2)) + str(self.handedness_list[int(glove_nr) % 2])
 
         self._create_publishers()
         self._create_subscriber()

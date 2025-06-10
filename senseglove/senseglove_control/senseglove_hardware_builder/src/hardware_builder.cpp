@@ -168,7 +168,7 @@ void HardwareBuilder::initUrdf(SGCore::EDeviceType deviceType, bool isRight)
 
     std::string handedness[2] = { "/lh", "/rh" };
               
-    std::string robotDescriptor = "/senseglove/" + std::to_string(int((gloveIndex) / 2)) + handedness[int(isRight)] + "/robot_description";
+    std::string robotDescriptor = "/senseglove/sg" + std::to_string(int((gloveIndex) / 2)) + handedness[int(isRight)] + "/robot_description";
     ROS_INFO_STREAM("Hardware Builder: Looking for robot description: " << robotDescriptor);
 
     if (!this->urdfModel.initParam(robotDescriptor))

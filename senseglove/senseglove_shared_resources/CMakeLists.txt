@@ -2,9 +2,9 @@
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
-project(senseglove_shared_resources
+project(senseglove_shared_resources_msgs
         VERSION 2.1.0
-        DESCRIPTION "The senseglove_shared_resources provides custom messages."
+        DESCRIPTION "The senseglove_shared_resources_msgs provides custom messages."
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
         )

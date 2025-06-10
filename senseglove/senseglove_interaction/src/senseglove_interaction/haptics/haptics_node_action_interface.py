@@ -69,7 +69,7 @@ def main():
     rospy.init_node('senseglove_haptics_node')
     rospy.loginfo("initialize haptics node")
     joint_list = ['empty']
-    ns = '/senseglove/0/rh/controller/'
+    ns = '/senseglove/sg0/rh/controller/'
     action_ns = ns + 'trajectory/'
     if rospy.has_param(action_ns + 'joints'):
         joint_list = rospy.get_param(action_ns + 'joints')

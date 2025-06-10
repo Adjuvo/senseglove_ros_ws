@@ -9,7 +9,7 @@
 
   <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
 
-  <license>TODO</license>
+  <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
 

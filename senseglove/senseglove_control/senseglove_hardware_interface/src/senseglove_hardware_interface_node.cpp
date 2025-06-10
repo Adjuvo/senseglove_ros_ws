@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 
   try
   {
-    ros::param::get("/senseglove/0/lh/controller/hand_state/publish_rate", publishRate);
+    ros::param::get("/senseglove/sg0/lh/controller/hand_state/publish_rate", publishRate);
   }
   catch (...)
   {
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
   }
   try
   {
-    ros::param::get("/senseglove/0/rh/controller/hand_state/publish_rate", publishRate);
+    ros::param::get("/senseglove/sg0/rh/controller/hand_state/publish_rate", publishRate);
   }
   catch (...)
   {

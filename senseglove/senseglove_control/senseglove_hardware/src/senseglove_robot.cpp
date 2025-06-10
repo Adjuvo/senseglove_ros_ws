@@ -20,7 +20,7 @@ namespace SGHardware
     , handModel(Kinematics::BasicHandModel::Default(isRight))
     , jointList(std::move(jointList))
     , urdfModel(std::move(urdfModel))
-    , SenseGloveRobotName("senseglove/" + std::to_string(int((robotIndex) / 2)))
+    , SenseGloveRobotName("senseglove/sg" + std::to_string(int((robotIndex) / 2)))
     , deviceType(this->hapticglove->GetDeviceType())
     , robotIndex(robotIndex)
     , isUpdated(false)
