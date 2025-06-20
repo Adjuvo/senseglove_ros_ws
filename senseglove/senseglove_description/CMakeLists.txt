@@ -6,7 +6,7 @@ project(senseglove_description
         VERSION 3.0.0
         DESCRIPTION "The SenseGlove description package"
         HOMEPAGE_URL "https://senseglove.com"
-        LANGUAGES CXX
+        LANGUAGES C CXX
         )
 
 # Find dependencies

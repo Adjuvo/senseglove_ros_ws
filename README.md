@@ -41,7 +41,9 @@ git clone https://github.com/Adjuvo/senseglove_ros.git
 ``` 
 sudo apt-get install ros-noetic-ros-control \
                      ros-noetic-joint-trajectory-controller \
-                     python3-pyqt5
+                     python3-pyqt5 \
+                     ros-jazzy-tf-transformations
+
 sudo apt-get update
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y

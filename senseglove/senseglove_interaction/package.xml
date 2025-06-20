@@ -2,35 +2,26 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
     <name>senseglove_interaction</name>
-    <version>2.1.0</version>
-    <description>Distance between finger-tips </description>
-
-    <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
-
+    <version>3.0.0</version>
+    <description> Python Package for finger-tip distance, haptics and other functions </description>
+    <maintainer email="akshay@senseglove.com">Akshay Radhamohan Menon</maintainer>
     <license>MIT</license>
 
-    <build_depend>dynamic_reconfigure</build_depend>
-    <build_depend>roscpp</build_depend>
-    <build_depend>rospy</build_depend>
+    <!-- Build tool -->
+    <buildtool_depend>ament_python</buildtool_depend>
 
-    <buildtool_depend>catkin</buildtool_depend>
-    <buildtool_depend>python3-setuptools</buildtool_depend>
-    <buildtool_depend condition="$ROS_PYTHON_VERSION == 3">python3-setuptools</buildtool_depend>
+    <!-- runtime dependencies -->
+    <exec_depend>rclpy</exec_depend>
+    <exec_depend>std_msgs</exec_depend>
+    <exec_depend>action_msgs</exec_depend>
+    <exec_depend>senseglove_shared_resources</exec_depend>
+    <exec_depend>tf_transformations</exec_depend>
 
-    <build_depend>actionlib</build_depend>
-    <build_depend>actionlib_msgs</build_depend>
-    <build_depend>genmsg</build_depend>
+    <!-- Testing (pytest - optional) -->
+    <test_depend>pytest</test_depend>
 
-    <depend>senseglove_shared_resources</depend>
-    <depend>std_msgs</depend>
-
-    <exec_depend>dynamic_reconfigure</exec_depend>
-    <exec_depend>rospy</exec_depend>
-    <exec_depend>actionlib</exec_depend>
-    <exec_depend>actionlib_msgs</exec_depend>
-    <exec_depend>gen_msg</exec_depend>
-    <exec_depend>message_runtime</exec_depend>
-
-    <test_depend>rosunit</test_depend>
+ <export>
+    <build_type>ament_python</build_type>
+  </export>
 </package>
 

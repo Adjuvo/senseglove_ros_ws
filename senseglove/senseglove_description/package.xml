@@ -3,11 +3,8 @@
 <package format="3">
   <name>senseglove_description</name>
   <version>3.0.0</version>
-  <description>
-    Provides descriptive features of the SenseGlove (URDF, meshes, RViz)
-  </description>
-
-  <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
+  <description>Provides descriptive features of the SenseGlove (URDF, meshes, RViz)</description>
+  <maintainer email="akshay@senseglove.com">Akshay Radhamohan Menon</maintainer>
   <license>MIT</license>
 
   <!-- ament build system -->
