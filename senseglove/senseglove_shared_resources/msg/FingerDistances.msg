@@ -1,4 +1,0 @@
-float32 thumb_index
-float32 thumb_middle
-float32 thumb_ring
-float32 thumb_pinky
