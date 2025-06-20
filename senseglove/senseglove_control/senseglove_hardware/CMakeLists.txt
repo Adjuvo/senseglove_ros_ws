@@ -1,4 +1,4 @@
-# Copyright (c) 2020 - 2024 SenseGlove
+# Copyright (c) 2020 - 2025 SenseGlove
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
@@ -9,96 +9,93 @@ project(senseglove_hardware
         LANGUAGES CXX
         )
 
-# Set C++ standard and compiler options
-set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_EXTENSIONS OFF)
+# Compiler settings
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Werror)
 
-find_package(catkin REQUIRED COMPONENTS
-        roscpp
-        urdf
-        )
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(urdf REQUIRED) 
 
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
+# Find SenseGlove API libraries
 find_library(SGCORE
-        NAMES libsgcore.so
+        NAMES libsgcore.so sgcore
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
-        NAMES libsgconnect.so
+        NAMES libsgconnect.so sgconnect
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
-        NAMES libserial.so
+        NAMES libserial.so serial
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
-catkin_package(
-        INCLUDE_DIRS include
-        CATKIN_DEPENDS
-        roscpp
-        urdf
-        LIBRARIES ${PROJECT_NAME}
-        CFG_EXTRAS
-        ${PROJECT_NAME}-extras.cmake
-        )
-
-include(cmake/${PROJECT_NAME}-extras.cmake)
-
-include_directories(
-        include
-        SYSTEM
-        ${catkin_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
-        )
-
-set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}")
-
-if(CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
-    find_package(code_coverage REQUIRED)
-    # Add compiler flags for coverage instrumentation before defining any targets
-    append_coverage_compiler_flags()
-endif()
-
-add_library(${PROJECT_NAME}
-        include/${PROJECT_NAME}/actuation_type.h
-        include/${PROJECT_NAME}/actuation_mode.h
-        include/${PROJECT_NAME}/joint.h
-        include/${PROJECT_NAME}/senseglove_robot.h
-        include/${PROJECT_NAME}/senseglove_setup.h
+# Add library target
+add_library(${PROJECT_NAME} SHARED
         src/joint.cpp
         src/senseglove_robot.cpp
         src/senseglove_setup.cpp
         )
 
-target_link_libraries(${PROJECT_NAME} 
-        ${catkin_LIBRARIES} 
-        ${SGCORE} 
-        ${SGCONNECT} 
-        ${SGSERIAL} 
+# Include directoriesg
+target_include_directories(${PROJECT_NAME} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        # SenseGlove API includes
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
+        )
+
+# Link against ROS 2 packages and SenseGlove libraries
+ament_target_dependencies(${PROJECT_NAME}
+        rclcpp
+        urdf
+        )
+        
+target_link_libraries(${PROJECT_NAME}
+        ${SGCORE}
+        ${SGCONNECT}
+        ${SGSERIAL}
         pthread
         )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+# Ensure RPATH is set so runtime linker can find shared libs if installed in non-standard location
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        INSTALL_RPATH_USE_LINK_PATH TRUE
         )
 
+# Install public headers
+install(DIRECTORY include/
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h"
+        )
+
+# Install SenseCom folder
 install(DIRECTORY SenseCom
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+        DESTINATION share/${PROJECT_NAME}
         )
 
+# Install library
 install(TARGETS ${PROJECT_NAME}
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
         )
+
+
+# Export ament package
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
+ament_export_dependencies(rclcpp urdf)
+
+ament_package()

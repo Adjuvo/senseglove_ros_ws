@@ -1,30 +1,32 @@
 // Copyright (c) 2020 - 2024 SenseGlove
-#include <senseglove_hardware/joint.h>
-#include <senseglove_hardware/senseglove_robot.h>
+#include <senseglove_hardware/senseglove_robot.hpp>
 
-#include <algorithm>
-#include <memory>
-#include <string>
-#include <utility>
-#include <vector>
-#include <numeric>
-
-#include <limits>
-
-#include <ros/ros.h>
+#include "rclcpp/rclcpp.hpp"
+#include "rcutils/logging_macros.h"
 
 namespace SGHardware
 {
-  SenseGloveRobot::SenseGloveRobot(std::shared_ptr<HapticGlove> glove, ::std::vector<Joint> jointList, urdf::Model urdfModel, int robotIndex, bool isRight)
-    : hapticglove(glove)
-    , handModel(Kinematics::BasicHandModel::Default(isRight))
+  SenseGloveRobot::SenseGloveRobot(
+    std::shared_ptr<HapticGlove> glove, 
+    std::vector<Joint> jointList, 
+    const urdf::Model urdfModel, 
+    int robotIndex, 
+    bool isRight)
+    : hapticglove(std::move(glove))
+    , handModel(SGCore::Kinematics::BasicHandModel::Default(isRight))
     , jointList(std::move(jointList))
     , urdfModel(std::move(urdfModel))
     , SenseGloveRobotName("senseglove/sg" + std::to_string(int((robotIndex) / 2)))
-    , deviceType(this->hapticglove->GetDeviceType())
+    , deviceType(this->hapticglove ? this->hapticglove->GetDeviceType() : SGCore::EDeviceType::Unknown)
     , robotIndex(robotIndex)
+    , isRight(isRight)
     , isUpdated(false)
   {
+    // Initialize specific pointers
+    senseglovePtr = std::dynamic_pointer_cast<SGCore::SG::SenseGlove>(hapticglove);
+    novaglovePtr  = std::dynamic_pointer_cast<SGCore::Nova::NovaGlove>(hapticglove);
+    nova2glovePtr = std::dynamic_pointer_cast<SGCore::Nova::Nova2Glove>(hapticglove);
+
     for (size_t i = 0; i < this->jointList.size(); ++i)
     {
       jointMap[this->jointList[i].getName()] = i;
@@ -36,7 +38,7 @@ namespace SGHardware
     return this->SenseGloveRobotName;
   }
 
-  EDeviceType SenseGloveRobot::getRobotType() const
+  SGCore::EDeviceType SenseGloveRobot::getRobotType() const
   {
     return this->deviceType;
   }
@@ -46,9 +48,9 @@ namespace SGHardware
     return this->robotIndex;
   }
 
-  bool SenseGloveRobot::getRight()
+  bool SenseGloveRobot::getRight() const
   {
-    return this->hapticglove->IsRight();
+    return hapticglove ? this->hapticglove->IsRight() : false;
   }
 
   Joint& SenseGloveRobot::getJoint(const ::std::string jointName)
@@ -56,7 +58,7 @@ namespace SGHardware
     auto it = jointMap.find(jointName);
     if (it != jointMap.end()) 
     {
-      return jointList[it->second]; // O(1) lookup
+      return jointList[it->second];
     }
     throw std::out_of_range("Could not find joint with name " + jointName);
   }
@@ -66,12 +68,12 @@ namespace SGHardware
     return this->jointList.at(index);
   }
 
-  size_t SenseGloveRobot::getJointSize()
+  size_t SenseGloveRobot::getJointSize() const
   {
     return this->jointList.size();
   }
 
-  size_t SenseGloveRobot::getEffortJointSize()
+  size_t SenseGloveRobot::getEffortJointSize() const
   {
     size_t effortJointSize = 0;
       
@@ -86,7 +88,7 @@ namespace SGHardware
     return effortJointSize;
   }
 
-  size_t SenseGloveRobot::getVibrationJointSize()
+  size_t SenseGloveRobot::getVibrationJointSize() const
   {
     size_t vibrationJointSize = 0;
       
@@ -100,88 +102,85 @@ namespace SGHardware
     return vibrationJointSize;
   }
 
-  // IMU
-  bool SenseGloveRobot::getImuRotation(Kinematics::Quat& outIMU)
+  bool SenseGloveRobot::getImuRotation(SGCore::Kinematics::Quat& outIMU) const
   {
     return hapticglove->GetImuRotation(outIMU);
   }
 
-  bool SenseGloveRobot::getNormalizedInput(std::vector<float>& out_normalizedValues)
+  bool SenseGloveRobot::getNormalizedInput(std::vector<float>& out_normalizedValues) const
   {
-    out_normalizedValues.clear(); // Ensure it's always clean before use
-
+    out_normalizedValues.clear();
     if (novaglovePtr)
     {
-      if (novaglovePtr->GetNormalizedInput(out_normalizedValues))
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return novaglovePtr->GetNormalizedInput(out_normalizedValues);
     }
     else if (nova2glovePtr)
     {
-      if (nova2glovePtr->GetNormalizedInput(out_normalizedValues))
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return nova2glovePtr->GetNormalizedInput(out_normalizedValues);
     }
     return false;
   }
   
   // Function to flatten vector of vectors of Vector3D
-  Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i)
+  SGCore::Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i) const
   {
     // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
     // SG uses vector of vectors and ROS uses one long array 
 
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
+    SGCore::Kinematics::Vect3D jointPosition{0.0, 0.0, 0.0};
 
-    if (i > TOTAL_FINGER_JOINT_INDEX)
+    if (i <= TOTAL_FINGER_JOINT_INDEX && (senseglovePtr || novaglovePtr || nova2glovePtr))
     {
-      jointPosition = {0.0, 0.0, 0.0};
-    }    
-    else if (senseglovePtr || novaglovePtr || nova2glovePtr)
-    {
-      jointPosition = handPose.GetJointPositions()[std::floor(i / 4)][i % 4];
+      const auto & poseVec = handPose.GetJointPositions();
+      size_t jointGroup = static_cast<size_t>(i) / 4;
+      size_t jointSubIndex = static_cast<size_t>(i) % 4;
+      if (jointGroup < poseVec.size() && jointSubIndex < poseVec[jointGroup].size())
+      {
+        jointPosition = poseVec[jointGroup][jointSubIndex];
+      }
     }
     return jointPosition;
   }
 
-  Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i)
+  SGCore::Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i) const
   {
-    // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
-    // SG uses vector of vectors and ROS uses one long array
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
+    SGCore::Kinematics::Vect3D tipPosition{0.0, 0.0, 0.0};
 
     if (i > TOTAL_FINGER_JOINT_INDEX)
     {
-      tipPositions = {0.0, 0.0, 0.0};
+      return tipPosition;
     }
-    else if (senseglovePtr)
+    if (senseglovePtr)
     {
-      tipPositions = senseglovePose.CalculateFingertips(senseglovePtr->GetFingerThimbleOffsets())[i];
+      auto offsets = senseglovePtr->GetFingerThimbleOffsets();
+      auto tf = senseglovePose.CalculateFingertips(offsets);
+      if (static_cast<size_t>(i) < tf.size())
+      {
+        tipPosition = tf[i];
+      }
     }
     else if (novaglovePtr || nova2glovePtr)
     {
-      tipPositions = handPose.GetJointPositions()[i][3];
+      const auto & poseVec = handPose.GetJointPositions();
+      if (static_cast<size_t>(i) < poseVec.size() && poseVec[i].size() > 3)
+      {
+        tipPosition = poseVec[i][3];
+      }
     }
-    return tipPositions;
+    return tipPosition;
   }
 
   void SenseGloveRobot::queueEffort(const std::vector<double>& effortCommand)
   {
-    static const float MIN_TOTAL_FFB_THRESHOLD = 10.0;
-    static const float STRAP_SAFETY_THRESHOLD = 10.0;
+    static const float MIN_TOTAL_FFB_THRESHOLD = 10.0f;
+    static const float STRAP_SAFETY_THRESHOLD = 10.0f;
 
     effortLevels.assign(effortCommand.begin(), effortCommand.end());
-    float totalEffort = std::accumulate(effortLevels.begin(), effortLevels.end(), 0.0);
+    float totalEffort = std::accumulate(effortLevels.begin(), effortLevels.end(), 0.0f);
+    ffbQueued = false;
+    squeezeQueued = false;
     
     if(totalEffort > MIN_TOTAL_FFB_THRESHOLD)
     {
@@ -213,6 +212,8 @@ namespace SGHardware
 
     vibrationLevels.assign(vibrationCommand.begin(), vibrationCommand.end());
     float totalVibration = std::accumulate(vibrationLevels.begin(), vibrationLevels.end(), 0.0);
+    vibroQueued = false;
+    thumperQueued = false;
 
     if(totalVibration > MIN_TOTAL_VIBRATION_THRESHOLD)
     {
@@ -227,7 +228,7 @@ namespace SGHardware
       }
       else if (nova2glovePtr)
       { // Issue with packet overload
-        // TO-DO: Implement custom waveform service 
+        // TODO: Implement custom waveform service 
 
         // The below functions send a infinite loop custom waveform -> packet overloading
         // vibroQueued = nova2glovePtr->QueueVibroLevels(vibrationLevels);       
@@ -248,30 +249,30 @@ namespace SGHardware
   {
     if (effortQueued)
     {
-      this->hapticglove->SendHaptics();
+      hapticglove->SendHaptics();
       effortActive = true;
     }
     else if(effortActive)
     {
-      this->hapticglove->StopHaptics();
+      hapticglove->StopHaptics();
       effortActive =  false;
     }
 
     if (vibrationQueued)
     {
-      this->hapticglove->SendHaptics();
+      hapticglove->SendHaptics();
       vibrationActive = true;
     }
     else if(vibrationActive)
     {
-      this->hapticglove->StopVibrations();
+      hapticglove->StopVibrations();
       vibrationActive = false;
     }
   }
 
   void SenseGloveRobot::stopHaptics()
   {
-    this->hapticglove->StopHaptics();
+    hapticglove->StopHaptics();
   }
 
   size_t SenseGloveRobot::size() const
@@ -297,7 +298,6 @@ namespace SGHardware
   {
 
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
-
     bool gloveUpdate = false;
     bool handUpdate = false;
 
@@ -334,11 +334,11 @@ namespace SGHardware
           joint.velocity = (intermediateVelocity != 0.0 && period.count() != 0.0) ? (intermediateVelocity / period.count()) : 0.0;
         }
       }
-
-      if (!senseglovePtr->GetGlovePose(senseglovePose)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data"); }
+      
+      if (!senseglovePtr->GetGlovePose(senseglovePose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!senseglovePtr->GetHandPose(this->handModel, this->handPose)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data"); }
+      if (!senseglovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
     else if (novaglovePtr != nullptr)
@@ -349,10 +349,10 @@ namespace SGHardware
         updateJointPositions(handPoseAngles);
       }
 
-      if (!novaglovePtr->GetSensorData(novaSensorData)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data"); }
+      if (!novaglovePtr->GetSensorData(novaSensorData)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!novaglovePtr->GetHandPose(this->handModel, this->handPose)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data"); }
+      if (!novaglovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
 
@@ -364,10 +364,10 @@ namespace SGHardware
         updateJointPositions(handPoseAngles);
       }
 
-      if (!nova2glovePtr->GetSensorData(nova2SensorData)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated glove pose data"); }
+      if (!nova2glovePtr->GetSensorData(nova2SensorData)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!nova2glovePtr->GetHandPose(this->handModel, this->handPose)) { ROS_DEBUG_THROTTLE(2, "Unsuccessfully updated hand pose data"); }
+      if (!nova2glovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
     isUpdated |= (gloveUpdate and handUpdate);

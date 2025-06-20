@@ -1,21 +1,20 @@
-// Copyright (c) 2020 - 2024 SenseGlove
-#include "senseglove_hardware/joint.h"
+// Copyright (c) 2020 - 2025 SenseGlove
+#include <senseglove_hardware/joint.hpp>
 
-#include <ros/ros.h>
-
-#include <bitset>
-#include <cmath>
-#include <memory>
-#include <string>
-#include <utility>
+#include "rcutils/logging_macros.h"
 
 namespace SGHardware
 {
-  Joint::Joint(std::string jointName, int jointIndex) : jointName(std::move(jointName)), jointIndex(jointIndex)
+  Joint::Joint(std::string jointName, int jointIndex)
+    : jointName(std::move(jointName)), jointIndex(jointIndex)
   {
   }
 
-  Joint::Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation)
+  Joint::Joint(std::string jointName,
+               int jointIndex, 
+               ActuationType actuationType, 
+               ActuationMode actuationMode, 
+               bool allowActuation)
     : jointName(std::move(jointName)) 
     , jointIndex(jointIndex)
     , actuationType(actuationType)
@@ -24,13 +23,18 @@ namespace SGHardware
   {
   }
 
-  Joint::Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger)
+  Joint::Joint(std::string jointName,
+               int jointIndex, 
+               ActuationType actuationType, 
+               ActuationMode actuationMode, 
+               bool allowActuation, 
+               std::unique_ptr<EFinger> finger_ptr)
     : jointName(std::move(jointName)) 
     , jointIndex(jointIndex)
     , actuationType(actuationType)
     , actuationMode(actuationMode)
     , allowActuation(allowActuation)
-    , finger(std::move(finger))
+    , finger(std::move(finger_ptr))
   {
   }
 
@@ -43,18 +47,25 @@ namespace SGHardware
   {
     if (!this->canActuate())
     {
-      ROS_ERROR_STREAM("Failed to prepare joint " << this->jointName << " for actuation");
+      RCUTILS_LOG_ERROR_NAMED(
+        "senseglove.joint",
+        "Failed to prepare joint '%s' for actuation", this->jointName.c_str());
+      return;
     }
 
-    ROS_INFO_STREAM("Preparing " << this->jointName  << " for actuation");
+    RCUTILS_LOG_INFO_NAMED(
+      "senseglove.joint",
+      "Preparing '%s' for actuation", this->jointName.c_str());
     this->position = this->readAngle();
-    this->velocity = 0;
-    ROS_INFO_STREAM("Successfully prepared " << this->jointName  << " for actuation");
+    this->velocity = 0.0;
+    RCUTILS_LOG_INFO_NAMED(
+      "senseglove.joint",
+      "Successfully prepared '%s' for actuation", this->jointName.c_str());
   }
 
-  double Joint::readAngle(/*const ros::Duration& elapsed_time*/)
+  double Joint::readAngle()
   {
-    // get angle from finger array at correct index
+    // get angle from finger array at correct index; placeholder:
     return 0.0;
   }
 
@@ -68,8 +79,9 @@ namespace SGHardware
     return this->velocity;
   }
 
-  double Joint::getTorque()
+  double Joint::getTorque() const
   {
+    // Compute torque; placeholder:
     return 0.0;
   }
 

@@ -1,21 +1,8 @@
-/**
- * @file
- *
- * @author Akshay Radhamohan Menon <akshay@senseglove.com>
- * 
- * @section LICENSE
- * Copyright (c) 2020 - 2024 SenseGlove *
- * 
- * @section DESCRIPTION
- * 
- * A class to represent different actuation types with sg representatives
- */
-
 #ifndef SENSEGLOVE_HARDWARE_ACTUATION_TYPE_H
 #define SENSEGLOVE_HARDWARE_ACTUATION_TYPE_H
 
 #include <string>
-#include <ros/console.h>
+#include <rcutils/logging_macros.h>
 
 namespace SGHardware
 {
@@ -37,34 +24,38 @@ namespace SGHardware
 
     // Constructor from string, parsing the input string to set the Type
     explicit ActuationType(const std::string& actuationType)
+      : value_(absent)
     {
       if (actuationType == "brake")
       {
-        this->value_ = brake;
+        value_ = brake;
       }
       else if (actuationType == "vibration")
       {
-        this->value_ = vibration;
+        value_ = vibration;
       }
       else if (actuationType == "squeeze")
       {
-        this->value_ = squeeze;
+        value_ = squeeze;
       }
       else if (actuationType == "absent")
       {
-        this->value_ = absent;
+        value_ = absent;
       }
       else
       {
-        ROS_WARN("Actuation type (%s) is not recognized; setting to absent Type", actuationType.c_str());
-        this->value_ = ActuationType::absent;
+        RCUTILS_LOG_WARN_NAMED(
+          "senseglove.actuation_type",
+          "Actuation type '%s' is not recognized; setting to 'absent'",
+          actuationType.c_str());
+        value_ = absent;
       }
     }
 
     // Method for conversion to numerical representation
-    uint8_t toTypeNumber()
+    uint8_t toTypeNumber() const
     {
-      switch (this->value_)
+      switch (value_)
       {
         case brake:
           return 1;
@@ -80,7 +71,7 @@ namespace SGHardware
     // Method for conversion to string representation
     std::string toString() const
     {
-      switch (this->value_)
+      switch (value_)
       {
         case brake:
           return "brake";
@@ -89,7 +80,10 @@ namespace SGHardware
         case squeeze:
           return "squeeze";
         default:
-          ROS_WARN("ActuationType (%i) is neither 'brake' or 'vibration", this->value_);
+          RCUTILS_LOG_WARN_NAMED(
+            "senseglove.actuation_type",
+            "ActuationType value '%d' is not 'brake', 'vibration', or 'squeeze'; returning 'absent'",
+            static_cast<int>(value_));
           return "absent";
       }
     }
@@ -97,23 +91,22 @@ namespace SGHardware
     // Returns the current enum value
     int getValue() const
     {
-      return this->value_;
+      return static_cast<int>(value_);
     }
 
     // Comparison operators
-    bool operator==(ActuationType::Value a) const
+    bool operator==(Value a) const
     {
-      return this->value_ == a;
+      return value_ == a;
     }
 
-    bool operator!=(ActuationType::Value a) const
+    bool operator!=(Value a) const
     {
-      return this->value_ != a;
+      return value_ != a;
     }
 
   private:
-    // Current enum value
-    Value value_ = absent;
+    Value value_;
   };
 }  // namespace SGHardware
 

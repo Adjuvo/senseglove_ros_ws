@@ -1,23 +1,8 @@
-/**
- * @file
- *
- * @author Rogier
- * @author Akshay Radhamohan Menon <akshay@senseglove.com>
- * 
- * @section LICENSE
- * Copyright (c) 2020 - 2024 SenseGlove *
- * 
- * @section DESCRIPTION
- * 
- * A class to represent different actuation modes, with methods for 
- * conversion, comparison, and numerical & string representation of actuation modes.
- */
-
 #ifndef SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
 #define SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
 
 #include <string>
-#include <ros/console.h>
+#include <rcutils/logging_macros.h>
 
 namespace SGHardware
 {
@@ -38,30 +23,34 @@ namespace SGHardware
 
     // Constructor from string, parsing the input string to set the mode
     explicit ActuationMode(const std::string& actuationMode)
+      : value_(unknown)
     {
       if (actuationMode == "position")
       {
-        this->value_ = position;
+        value_ = position;
       }
       else if (actuationMode == "torque")
       {
-        this->value_ = torque;
+        value_ = torque;
       }
       else if (actuationMode == "unknown")
       {
-        this->value_ = unknown;
+        value_ = unknown;
       }
       else
       {
-        ROS_WARN("Actuation mode (%s) is not recognized; setting to unknown mode", actuationMode.c_str());
-        this->value_ = ActuationMode::unknown;
+        RCUTILS_LOG_WARN_NAMED(
+          "senseglove.actuation_mode",
+          "Actuation mode '%s' is not recognized; setting to unknown mode",
+          actuationMode.c_str());
+        value_ = unknown;
       }
     }
 
     // Method for conversion to numerical representation
-    uint8_t toModeNumber()
+    uint8_t toModeNumber() const
     {
-      switch (this->value_)
+      switch (value_)
       {
         case position:
           return 1;
@@ -75,14 +64,17 @@ namespace SGHardware
     // Method for conversion to string representation
     std::string toString() const
     {
-      switch (this->value_)
+      switch (value_)
       {
         case position:
           return "position";
         case torque:
           return "torque";
         default:
-          ROS_WARN("Actuationmode (%i) is neither 'torque' or 'position", this->value_);
+          RCUTILS_LOG_WARN_NAMED(
+            "senseglove.actuation_mode",
+            "ActuationMode value '%d' is neither 'torque' nor 'position'; returning 'unknown'",
+            static_cast<int>(value_));
           return "unknown";
       }
     }
@@ -90,23 +82,22 @@ namespace SGHardware
     // Returns the current enum value
     int getValue() const
     {
-      return this->value_;
+      return static_cast<int>(value_);
     }
 
     // Comparison operators
-    bool operator==(ActuationMode::Value a) const
+    bool operator==(Value a) const
     {
-      return this->value_ == a;
+      return value_ == a;
     }
 
-    bool operator!=(ActuationMode::Value a) const
+    bool operator!=(Value a) const
     {
-      return this->value_ != a;
+      return value_ != a;
     }
 
   private:
-    // Current enum value
-    Value value_ = unknown;
+    Value value_;
   };
 }  // namespace SGHardware
 

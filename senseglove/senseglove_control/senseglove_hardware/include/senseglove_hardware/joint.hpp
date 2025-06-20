@@ -1,33 +1,17 @@
-/**
- * @file
- *
- * @author Rogier
- * @author Akshay Radhamohan Menon <akshay@senseglove.com>
- * 
- * @section LICENSE
- * Copyright (c) 2020 - 2024 SenseGlove *
- * 
- * @section DESCRIPTION
- * 
- * A class to represent a joint in the Senseglove.
- */
-
 #ifndef ROS_WORKSPACE_JOINT_H
 #define ROS_WORKSPACE_JOINT_H
 
 #include <memory>
 #include <string>
 #include <utility>
-#include <vector>
-#include <cstdint>
 
-#include <ros/ros.h>
 #include <urdf/model.h>
-#include <senseglove_hardware/actuation_mode.h>
-#include <senseglove_hardware/actuation_type.h>
+#include <senseglove_hardware/actuation_mode.hpp>
+#include <senseglove_hardware/actuation_type.hpp>
 
-#include "SenseGlove.hpp"
-#include "Fingers.hpp"
+// SenseGlove API headers
+#include <SenseGlove.hpp>
+#include <Fingers.hpp>
 
 using namespace SGCore;
 
@@ -39,15 +23,24 @@ namespace SGHardware
 
   public:
     // Initializes a Joint without a finger. Actuation is disabled by default.
-    Joint(std::string jointName, int jointIndex);
+    Joint(std::string jointName, 
+          int jointIndex);
 
     // Initializes a Joint without a finger, with actuation options
-    Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation);
+    Joint(std::string jointName, 
+          int jointIndex, 
+          ActuationType actuationType, 
+          ActuationMode actuationMode, 
+          bool allowActuation);
 
     // Initializes a Joint with a specific SG finger, with actuation options
-    Joint(std::string jointName, int jointIndex, ActuationType actuationType, ActuationMode actuationMode, bool allowActuation, std::unique_ptr<EFinger> finger);
+    Joint(std::string jointName, 
+          int jointIndex, 
+          ActuationType actuationType, 
+          ActuationMode actuationMode, 
+          bool allowActuation, 
+          std::unique_ptr<EFinger> finger);
 
-    /// Destructor defined default, ensuring proper destruction of derived classes
     virtual ~Joint() noexcept = default;
 
     //  Delete copy constructor & assignment operator since the unique_ptr cannot be copied
@@ -80,7 +73,7 @@ namespace SGHardware
     double getVelocity() const;
 
     // Gets the torque of the joint
-    double getTorque();
+    double getTorque() const;
 
     // Gets the actuation type of the joint
     ActuationType getActuationType() const;
@@ -103,9 +96,10 @@ namespace SGHardware
     /// Checks if the names, finger objects, actuation permission flags, and actuation modes of two joints are equal
     friend bool operator==(const Joint& lhs, const Joint& rhs)
     {
-      return lhs.jointName == rhs.jointName && lhs.finger == rhs.finger &&  // Provided Finger has a comparison operator
-            lhs.allowActuation == rhs.allowActuation &&
-            lhs.getActuationMode().getValue() == rhs.getActuationMode().getValue();
+      return lhs.jointName == rhs.jointName
+          && lhs.finger == rhs.finger 
+          && lhs.allowActuation == rhs.allowActuation 
+          && lhs.getActuationMode().getValue() == rhs.getActuationMode().getValue();
     }
 
     // Comparison operator
@@ -119,7 +113,7 @@ namespace SGHardware
     {
       os << "name: " << joint.jointName << ", "
         << "ActuationMode: " << joint.getActuationMode().toString() << ", "
-        << "allowActuation: " << joint.allowActuation;
+        << "allowActuation: " << (joint.allowActuation ? "true" : "false");
       return os;
     }
 
