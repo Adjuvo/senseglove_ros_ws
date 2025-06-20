@@ -1,6 +1,6 @@
 import rospy
-from senseglove_shared_resources_msgs.msg import SenseGloveState, FingerDistanceFloats
-from senseglove_shared_resources_msgs.srv import Calibrate
+from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
+from senseglove_shared_resources.srv import Calibrate
 from . finger_distance_calibration import Calibration
 from math import sqrt, pow
 import subprocess
