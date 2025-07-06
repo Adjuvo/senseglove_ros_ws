@@ -1,5 +1,5 @@
 // Copyright (c) 2020 - 2025 SenseGlove
-#include "senseglove_hardware_builder/hardware_builder.h"
+#include "senseglove_hardware_builder/hardware_builder.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 

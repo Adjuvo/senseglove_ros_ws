@@ -84,7 +84,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # Install headers
 install(DIRECTORY include/
         DESTINATION include
-        FILES_MATCHING PATTERN "*.h"
+        FILES_MATCHING PATTERN "*.hpp"
         )
 
 # Install robot yaml files

@@ -15,7 +15,7 @@
 #include <senseglove_hardware/senseglove_robot.hpp>
 #include <senseglove_hardware/senseglove_setup.hpp>
 
-#include <senseglove_hardware_builder/allowed_robot.h>
+#include <senseglove_hardware_builder/allowed_robot.hpp>
 
 // SenseGlove API headers
 #include <SenseGlove.hpp>
