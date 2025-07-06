@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>senseglove_shared_resources</name>
-  <version>3.0.0</version>
-  <description>ROS 2 interface definitions for SenseGlove custom messages</description>
+  <name>senseglove_msgs</name>
+  <version>2.0.0</version>
+  <description>Custom msg types for SenseGlove</description>
   <maintainer email="akshay@senseglove.com">Akshay Radhamohan Menon</maintainer>
   <license>MIT</license>
 

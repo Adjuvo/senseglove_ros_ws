@@ -26,7 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
         senseglove_description
         senseglove_hardware
         senseglove_hardware_builder
-        senseglove_shared_resources
+        senseglove_msgs
         std_msgs
         urdf
         )
@@ -60,7 +60,7 @@ catkin_package(
         senseglove_description
         senseglove_hardware
         senseglove_hardware_builder
-        senseglove_shared_resources
+        senseglove_msgs
         std_msgs
         urdf
 )

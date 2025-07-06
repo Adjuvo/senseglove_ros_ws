@@ -21,7 +21,7 @@
   <depend>senseglove_description</depend>
   <depend>senseglove_hardware</depend>
   <depend>senseglove_hardware_builder</depend>
-  <depend>senseglove_shared_resources</depend>
+  <depend>senseglove_msgs</depend>
   <depend>std_msgs</depend>
   <depend>urdf</depend>
 

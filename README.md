@@ -28,7 +28,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
     |    |    ├── senseglove_interaction              # Provides the python scripts for finger distances, haptics, and other possible interactions
     |    |    ├── senseglove_launch                   # Launch files & Bluetooth scripts
     |    |    |   ├── bluetooth_scripts
-    |    |    ├── senseglove_shared_resources         # Custom messages, services
+    |    |    ├── senseglove_msgs        # Custom messages, services
     |    ├── SenseGlove_API                           # SG-Backend
 
 ## Installation ##      

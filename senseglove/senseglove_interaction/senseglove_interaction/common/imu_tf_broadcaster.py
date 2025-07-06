@@ -8,7 +8,7 @@ from tf2_ros import TransformBroadcaster
 from tf_transformations import quaternion_from_euler, quaternion_multiply
 
 from geometry_msgs.msg import TransformStamped
-from senseglove_shared_resources.msg import SenseGloveState
+from senseglove_msgs.msg import SenseGloveState
 
 
 class ImuTfBroadcaster(Node):

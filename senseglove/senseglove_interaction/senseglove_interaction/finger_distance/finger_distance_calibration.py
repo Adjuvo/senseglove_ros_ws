@@ -10,7 +10,7 @@ from rclpy.node import Node
 from ament_index_python.packages import get_package_share_directory
 from PyQt5 import QtWidgets, QtCore
 
-from senseglove_shared_resources.msg import FingerDistanceFloats
+from senseglove_msgs.msg import FingerDistanceFloats
 
 # -----------------------------------------------------------------------------
 # Calibration data

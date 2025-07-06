@@ -22,7 +22,7 @@ setup(
         'rclpy',
         'std_msgs',
         'action_msgs',
-        'senseglove_shared_resources',
+        'senseglove_msgs',
         'tf_transformations',
     ],
     zip_safe=True,

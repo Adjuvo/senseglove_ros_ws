@@ -81,7 +81,9 @@ install(DIRECTORY include/
         )
 
 # Install SenseCom folder
-install(DIRECTORY SenseCom
+set(SENSECOM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../senseglove_com/SenseCom)
+
+install(DIRECTORY ${SENSECOM_DIR}
         DESTINATION share/${PROJECT_NAME}
         )
 
@@ -91,7 +93,6 @@ install(TARGETS ${PROJECT_NAME}
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin
         )
-
 
 # Export ament package
 ament_export_include_directories(include)

@@ -42,7 +42,7 @@
             type="senseglove_finger_distance_node"
             args="0 $(arg calibration_mode)"
             output="screen">
-            <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_left).yaml" unless="$(eval calibration_file_left=='None')"/>
+            <rosparam command="load" file="$(find senseglove_launch)/calibration/$(arg calibration_file_left).yaml" unless="$(eval calibration_file_left=='None')"/>
         </node>
     </group>
 
@@ -53,7 +53,7 @@
             type="senseglove_finger_distance_node"
             args="1 $(arg calibration_mode)"
             output="screen">
-            <rosparam command="load" file="$(find senseglove_shared_resources)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
+            <rosparam command="load" file="$(find senseglove_launch)/calibration/$(arg calibration_file_right).yaml" unless="$(eval calibration_file_right=='None')"/>
         </node>
     </group>
 

@@ -8,8 +8,8 @@ import rclpy
 from rclpy.node import Node
 from rcl_interfaces.msg import SetParametersResult
 
-from senseglove_shared_resources.msg import SenseGloveState, FingerDistanceFloats
-from senseglove_shared_resources.srv import Calibrate
+from senseglove_msgs.msg import SenseGloveState, FingerDistanceFloats
+from senseglove_msgs.srv import Calibrate
 from senseglove_interaction.finger_distance.finger_distance_calibration import Calibration
 
 class FingerTipVector:

@@ -14,7 +14,7 @@
     <exec_depend>rclpy</exec_depend>
     <exec_depend>std_msgs</exec_depend>
     <exec_depend>action_msgs</exec_depend>
-    <exec_depend>senseglove_shared_resources</exec_depend>
+    <exec_depend>senseglove_msgs</exec_depend>
     <exec_depend>tf_transformations</exec_depend>
 
     <!-- Testing (pytest - optional) -->
