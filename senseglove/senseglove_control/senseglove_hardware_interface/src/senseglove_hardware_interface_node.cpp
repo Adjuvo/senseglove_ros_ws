@@ -1,127 +1,88 @@
-// Copyright (c) 2020 - 2024 SenseGlove
-#include "senseglove_hardware_interface/senseglove_hardware_interface.h"
+// Copyright (c) 2020 - 2025 SenseGlove
 
-#include <cstdlib>
-#include <sstream>
-#include <string>
-#include <iomanip>
-#include <algorithm>
-#include <cctype>
+#include <rclcpp/rclcpp.hpp>
+#include <controller_manager/controller_manager.hpp>
 
-#include <controller_manager/controller_manager.h>
-#include <ros/ros.h>
+#include <senseglove_hardware/senseglove_robot.hpp>
+#include <senseglove_hardware_builder/hardware_builder.hpp>
+#include <senseglove_hardware_interface/senseglove_hardware_interface.hpp>
 
-#include <senseglove_hardware/senseglove_robot.h>
-#include <senseglove_hardware_builder/hardware_builder.h>
-
-std::unique_ptr<SGHardware::SenseGloveSetup> build(AllowedRobot selectedRobot, int gloveIndex, bool isRight);
-bool toBool(std::string str);
+std::unique_ptr<SGHardware::SenseGloveSetup> build(AllowedRobot selectedRobot, int gloveIndex, bool isRight, const rclcpp::Logger & logger);
+bool toBool(const std::string &str);
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "senseglove_hardware_interface");
-  ros::NodeHandle nh;
-  ros::AsyncSpinner spinner(2);
+  rclcpp::init(argc, argv);
+  auto node = std::make_shared<rclcpp::Node>("senseglove_hardware_interface");
 
-  double publishRate;
-  bool publishRateParameterFail = false;
-
-  if (argc < 3)
+  if (argc < 4)
   {
-    ROS_FATAL_STREAM("Senseglove HW Interface Node: Missing robot arguments. Usage: senseglove_hardware_interface_node Robot gloveIndex isRight");
-    return 1;
+    RCLCPP_FATAL_STREAM(node->get_logger(), 
+      "Usage: senseglove_hardware_interface_node Robot gloveIndex isRight");
+    return EXIT_FAILURE;
   }
-  
+
   AllowedRobot selectedRobot = AllowedRobot(argv[1]);
   int gloveIndex = std::stoi(argv[2]);
   bool isRight = toBool(argv[3]);
 
-  ROS_INFO_STREAM("Senseglove HW Interface Node: Selected robot: " << selectedRobot);
-  spinner.start();
+  RCLCPP_INFO_STREAM(node->get_logger(), 
+    "Selected robot: " << selectedRobot << ", index: " << gloveIndex << ", isRight: " << isRight);
 
-  SenseGloveHardwareInterface SenseGlove(build(selectedRobot, gloveIndex, isRight));
-  ROS_INFO_STREAM("Senseglove HW Interface Node: Successfully built the robot");
-  
-  try
-  {
-    bool success = SenseGlove.init(nh, nh);
-    if (!success)
-    {
-      std::exit(1);
-    }
-  }
-  catch (const std::exception& e)
-  {
-    ROS_FATAL_STREAM("Senseglove HW Interface Node: Hardware interface caught an exception during INITIALIZATION");
-    ROS_FATAL_STREAM(e.what());
-    std::exit(1);
-  }
+  auto setup = build(selectedRobot, gloveIndex, isRight, node->get_logger());
+  auto senseglove_hw = std::make_shared<SenseGloveHardwareInterface>(std::move(setup));
 
-  controller_manager::ControllerManager controllerManager(&SenseGlove, nh);
+  auto executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
+  executor->add_node(node);
 
-  try
-  {
-    ros::param::get("/senseglove/sg0/lh/controller/hand_state/publish_rate", publishRate);
-  }
-  catch (...)
-  {
-    publishRateParameterFail = true;
-    ROS_ERROR_STREAM("Senseglove HW Interface Node: Failed to obtain the left handed publish rate");
-  }
-  try
-  {
-    ros::param::get("/senseglove/sg0/rh/controller/hand_state/publish_rate", publishRate);
-  }
-  catch (...)
-  {
-    publishRateParameterFail = true;
-    ROS_ERROR_STREAM("Senseglove HW Interface Node: Failed to obtain the right handed publish rate");
-  }
+  // Load publish rate parameter
+  double publish_rate = node->declare_parameter("publish_rate", 60.0); // default 50 Hz
+  RCLCPP_INFO_STREAM(node->get_logger(), "Using publish rate: " << publish_rate << " Hz");
 
-  if (publishRateParameterFail)
-  {
-    ROS_FATAL_STREAM("Senseglove HW Interface Node: Publish rate for left and right hands is not published");
-    std::exit(1);
-  }
+  controller_manager::ControllerManager cm(senseglove_hw, node, "senseglove_controller_manager");
 
-  auto lastUpdateTime = std::chrono::steady_clock::now();
-  const std::chrono::duration<double> desiredUpdatePeriod(1.0 / publishRate);
+  auto last_time = std::chrono::steady_clock::now();
+  const auto desired_period = std::chrono::duration<double>(1.0 / publish_rate);
+  rclcpp::Rate rate(publish_rate);
 
-  while (ros::ok())
+  while (rclcpp::ok())
   {
     auto now = std::chrono::steady_clock::now();
-    std::chrono::duration<double> elapsedTime = now - lastUpdateTime;
-    lastUpdateTime = now;
+    std::chrono::duration<double> elapsed_time = now - last_time;
+    last_time = now;
 
-    SenseGlove.read(now, elapsedTime);
-    controllerManager.update(ros::Time::now(), ros::Duration(elapsedTime.count()));
-    SenseGlove.write(now, elapsedTime); 
+    senseglove_hw->read(now, elapsed_time);
+    cm.update(node->now(), rclcpp::Duration::from_seconds(elapsed_time.count()));
+    senseglove_hw->write(now, elapsed_time);
 
-    std::this_thread::sleep_for(desiredUpdatePeriod);
+    executor->spin_some();
+    rate.sleep();
   }
-  ros::waitForShutdown();
-  return 0;
+
+  rclcpp::shutdown();
+  return EXIT_SUCCESS;
 }
 
-std::unique_ptr<SGHardware::SenseGloveSetup> build(AllowedRobot selectedRobot, int gloveIndex, bool isRight)
+std::unique_ptr<SGHardware::SenseGloveSetup> build(AllowedRobot selectedRobot, int gloveIndex, bool isRight, const rclcpp::Logger & logger)
 {
-  HardwareBuilder builder(selectedRobot, gloveIndex, isRight);
   try
   {
+    HardwareBuilder builder(selectedRobot, gloveIndex, isRight);
     return builder.createSenseGloveSetup();
   }
   catch (const std::exception& e)
   {
-    ROS_FATAL_STREAM("Senseglove HW Interface Node: Hardware interface caught an exception during BUILDING HARDWARE");
-    ROS_FATAL_STREAM(e.what());
-    std::exit(1);
+    RCLCPP_FATAL_STREAM(logger, 
+      "Exception while building hardware: " << e.what());
+    std::exit(EXIT_FAILURE);
   }
 }
 
-bool toBool(std::string str)
+bool toBool(const std::string &str)
 {
-  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  std::istringstream is(str);
+  std::string lower_str = str;
+  std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(), ::tolower);
+  std::istringstream is(lower_str);
   bool b;
   is >> std::boolalpha >> b;
   return b;

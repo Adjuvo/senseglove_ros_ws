@@ -5,7 +5,6 @@
 
 #include <senseglove_hardware/senseglove_robot.hpp>
 
-
 namespace SGHardware
 {
   SenseGloveRobot::SenseGloveRobot(

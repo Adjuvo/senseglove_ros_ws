@@ -1,17 +1,3 @@
-/**
- * @file
- *
- * @author Rogier
- * @author Akshay Radhamohan Menon <akshay@senseglove.com>
- * 
- * @section LICENSE
- * Copyright (c) 2020 - 2024 SenseGlove *
- * 
- * @section DESCRIPTION
- * 
- * ROS-SenseGlove Hardware Interface
- */
-
 #ifndef ROS_WORKSPACE_SENSEGLOVE_HARDWARE_INTERFACE_H
 #define ROS_WORKSPACE_SENSEGLOVE_HARDWARE_INTERFACE_H
 
@@ -35,6 +21,12 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <cstdlib>
+#include <sstream>
+#include <string>
+#include <iomanip>
+#include <algorithm>
+#include <cctype>
 #include <std_msgs/Float64MultiArray.h>
 
 template <typename T>
