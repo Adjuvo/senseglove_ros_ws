@@ -1,9 +1,8 @@
 // Copyright (c) 2020 - 2025 SenseGlove
 
+#include <rclcpp/rclcpp.hpp> 
+
 #include <senseglove_hardware/senseglove_setup.hpp>
-
-#include "rclcpp/rclcpp.hpp" 
-
 
 namespace SGHardware
 {

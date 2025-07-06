@@ -1,7 +1,8 @@
 // Copyright (c) 2020 - 2025 SenseGlove
-#include <senseglove_hardware/joint.hpp>
 
-#include "rcutils/logging_macros.h"
+#include <rcutils/logging_macros.h>
+
+#include <senseglove_hardware/joint.hpp>
 
 namespace SGHardware
 {

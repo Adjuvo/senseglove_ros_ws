@@ -1,8 +1,10 @@
-// Copyright (c) 2020 - 2024 SenseGlove
+// Copyright (c) 2020 - 2025 SenseGlove
+
+#include <rclcpp/rclcpp.hpp>
+#include <rcutils/logging_macros.h>
+
 #include <senseglove_hardware/senseglove_robot.hpp>
 
-#include "rclcpp/rclcpp.hpp"
-#include "rcutils/logging_macros.h"
 
 namespace SGHardware
 {
@@ -16,7 +18,7 @@ namespace SGHardware
     , handModel(SGCore::Kinematics::BasicHandModel::Default(isRight))
     , jointList(std::move(jointList))
     , urdfModel(std::move(urdfModel))
-    , SenseGloveRobotName("senseglove/sg" + std::to_string(int((robotIndex) / 2)))
+    , SenseGloveRobotName("senseglove/glove" + std::to_string(int((robotIndex) / 2)))
     , deviceType(this->hapticglove ? this->hapticglove->GetDeviceType() : SGCore::EDeviceType::Unknown)
     , robotIndex(robotIndex)
     , isRight(isRight)

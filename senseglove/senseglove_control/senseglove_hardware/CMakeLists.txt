@@ -3,8 +3,8 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_hardware
-        VERSION 2.1.0
-        DESCRIPTION "The SenseGlove Hardware for communication with the Device"
+        VERSION 2.0.0
+        DESCRIPTION "Communicates with the senseglove hardware"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
         )
@@ -47,7 +47,7 @@ add_library(${PROJECT_NAME} SHARED
         src/senseglove_setup.cpp
         )
 
-# Include directoriesg
+# Include directories
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
@@ -56,7 +56,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
         )
 
-# Link against ROS 2 packages and SenseGlove libraries
+# Link libraries
 ament_target_dependencies(${PROJECT_NAME}
         rclcpp
         urdf
@@ -74,17 +74,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         INSTALL_RPATH_USE_LINK_PATH TRUE
         )
 
-# Install public headers
+# Install headers
 install(DIRECTORY include/
         DESTINATION include
-        FILES_MATCHING PATTERN "*.h"
-        )
-
-# Install SenseCom folder
-set(SENSECOM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../senseglove_com/SenseCom)
-
-install(DIRECTORY ${SENSECOM_DIR}
-        DESTINATION share/${PROJECT_NAME}
+        FILES_MATCHING PATTERN "*.hpp"
         )
 
 # Install library
