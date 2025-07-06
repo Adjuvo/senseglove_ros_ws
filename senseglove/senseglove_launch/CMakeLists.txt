@@ -1,25 +1,28 @@
-# Copyright (c) 2020 - 2024 SenseGlove
+# Copyright (c) 2020 - 2025 SenseGlove
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_launch
-        VERSION 2.1.0
-        DESCRIPTION "The senseglove_launch provides a clear directory from which one can launch the senseglove."
+        VERSION 2.0.0
+        DESCRIPTION "Launch files for SenseGlove"
         HOMEPAGE_URL "https://senseglove.com"
-        LANGUAGES CXX
+        LANGUAGES NONE
         )
 
-find_package(catkin REQUIRED)
+# Find dependencies
+find_package(ament_cmake REQUIRED)
 
-catkin_package()
+install(
+  DIRECTORY launch config
+  DESTINATION share/${PROJECT_NAME}
+)
 
-install(DIRECTORY launch scripts
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-        )
+install(
+  PROGRAMS
+    scripts/glove_connect.sh
+    scripts/glove_disconnect.sh
+  DESTINATION lib/${PROJECT_NAME}
+)
 
-install(PROGRAMS 
-        bluetooth_scripts/glove_connect.sh 
-        bluetooth_scripts/glove_disconnect.sh
-        scripts/startGlove.sh 
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-        )
+
+ament_package()

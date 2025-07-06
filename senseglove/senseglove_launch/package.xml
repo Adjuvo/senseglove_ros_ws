@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>senseglove_launch</name>
-  <version>2.1.0</version>
-  <description>
-    Provides a clear directory from which one can launch the senseglove.
-  </description>
+    <name>senseglove_launch</name>
+    <version>2.0.0</version>
+    <description>Launch files for SenseGlove</description>
+    <maintainer email="akshay@senseglove.com">Akshay Radhamohan Menon</maintainer>
+    <license>MIT</license>
 
-  <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
+    <!-- runtime dependencies -->
+    <exec_depend>launch</exec_depend>
+    <exec_depend>launch_ros</exec_depend>
+    <exec_depend>robot_state_publisher</exec_depend>
+    <exec_depend>controller_manager</exec_depend>
+    <exec_depend>rviz2</exec_depend>
 
-  <license>MIT</license>
+    <exec_depend>senseglove_description</exec_depend>
+    <exec_depend>senseglove_interaction</exec_depend>
+    <exec_depend>senseglove_hardware_interface</exec_depend>
 
-  <buildtool_depend>catkin</buildtool_depend>
-
-  <exec_depend>senseglove_description</exec_depend>
-  <exec_depend>senseglove_finger_distance</exec_depend>
-  <exec_depend>senseglove_hardware</exec_depend>
-  <exec_depend>senseglove_hardware_interface</exec_depend>
-  <exec_depend>rviz</exec_depend>
-  <exec_depend>xacro</exec_depend>
 </package>
