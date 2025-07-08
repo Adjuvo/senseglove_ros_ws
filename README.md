@@ -28,7 +28,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
     |    |    ├── senseglove_interaction              # Provides the python scripts for finger distances, haptics, and other possible interactions
     |    |    ├── senseglove_launch                   # Launch files & Bluetooth scripts
     |    |    |   ├── bluetooth_scripts
-    |    |    ├── senseglove_shared_resources         # Custom messages, services
+    |    |    ├── senseglove_msgs         # Custom messages, services
     |    ├── SenseGlove_API                           # SG-Backend
 
 ## Installation ##      
@@ -60,7 +60,7 @@ source devel/setup.bash
 See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, launching single or dual glove setups, running calibration services, and enabling haptic feedback.
 
 ## Docker Setup [ROS1 ⇄ ROS2]
-See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
+See [DOCKER.md](docker/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
 
 ## TO-DO: ##
 - `Custom_waveform` service for Nova-2 vibrations
