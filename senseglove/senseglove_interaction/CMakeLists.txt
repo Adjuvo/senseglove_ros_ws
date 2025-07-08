@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     actionlib_msgs
     genmsg
     rospy
-    senseglove_shared_resources_msgs
+    senseglove_msgs
     std_msgs
     )
 
@@ -27,7 +27,7 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
     CATKIN_DEPENDS
-    senseglove_shared_resources_msgs
+    senseglove_msgs
     std_msgs
 )
 

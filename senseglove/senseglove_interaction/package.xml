@@ -21,7 +21,7 @@
     <build_depend>actionlib_msgs</build_depend>
     <build_depend>genmsg</build_depend>
 
-    <depend>senseglove_shared_resources_msgs</depend>
+    <depend>senseglove_msgs</depend>
     <depend>std_msgs</depend>
 
     <exec_depend>dynamic_reconfigure</exec_depend>
