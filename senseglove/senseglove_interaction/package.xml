@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
     <name>senseglove_interaction</name>
-    <version>2.1.0</version>
+    <version>2.0.0</version>
     <description>Distance between finger-tips </description>
 
     <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
