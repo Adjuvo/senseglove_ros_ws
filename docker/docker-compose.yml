@@ -6,10 +6,7 @@ services:
     privileged: true
     network_mode: host
     devices:
-      - /dev/ttyACM0:/dev/ttyACM0
-      - /dev/ttyACM1:/dev/ttyACM1
-      - /dev/rfcomm0:/dev/rfcomm0
-      - /dev/rfcomm1:/dev/rfcomm1
+      - /dev:/dev
     volumes:
       - ../:/root/ros1_ws/src/senseglove_ros:rw
       - ./entrypoints/ros1_entrypoint.sh:/root/ros1_entrypoint.sh:ro

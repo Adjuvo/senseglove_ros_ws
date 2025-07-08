@@ -64,7 +64,7 @@ To calibrate a right-handed glove, use: _msgs
 rosservice call /senseglove_finger_distance_right/Calibrate right
 ```
 
-Upon launching either service, a GUI will appear to guide you through the calibration process. Once completed, the resulting parameters will be stored in the [calibration folder](senseglove/senseglove_shared_resources/calibration/)
+Upon launching either service, a GUI will appear to guide you through the calibration process. Once completed, the resulting parameters will be stored in the [calibration folder](senseglove/senseglove_msgs/calibration/)
 
 ## Haptics: ##
 The force-feedback system is implemented using ros_control, and each SenseGlove product has its joints and controllers defined in a separate configuration file. These configuration files can be found in the [config folder](/senseglove/senseglove_control/senseglove_hardware_interface/config/).

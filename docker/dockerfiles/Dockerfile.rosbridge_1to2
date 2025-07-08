@@ -80,24 +80,24 @@ RUN if [[ $(uname -m) = "arm64" || $(uname -m) = "aarch64" ]]; then             
 ###########################
 # 6.) Compile SenseGlove's Custom messages
 ###########################
-COPY ./shared/senseglove_shared_resources_msgs.tar.xz .
-RUN tar -xJf senseglove_shared_resources_msgs.tar.xz && \
-    rm senseglove_shared_resources_msgs.tar.xz
+COPY ./shared/senseglove_msgs.tar.xz .
+RUN tar -xJf senseglove_msgs.tar.xz && \
+    rm senseglove_msgs.tar.xz
 
 # Compile for ROS1:
-RUN cd senseglove_shared_resources_msgs/ros1 && \
+RUN cd senseglove_msgs/ros1 && \
     unset ROS_DISTRO && source /opt/ros/noetic/setup.bash && \ 
     time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
                  
 # Compile for ROS2:
-RUN cd senseglove_shared_resources_msgs/ros2 && \                                           
+RUN cd senseglove_msgs/ros2 && \                                           
     source /opt/ros/jazzy/setup.bash && \                                                   
     time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release     
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN echo "source /opt/ros/jazzy/setup.bash"  >> ~/.bashrc
-RUN echo "source /senseglove_shared_resources_msgs/ros1/install/setup.bash" >> ~/.bashrc
-RUN echo "source /senseglove_shared_resources_msgs/ros2/install/setup.bash" >> ~/.bashrc
+RUN echo "source /senseglove_msgs/ros1/install/setup.bash" >> ~/.bashrc
+RUN echo "source /senseglove_msgs/ros2/install/setup.bash" >> ~/.bashrc
 
 ###########################
 # 7.) Compile ros1_bridge
@@ -123,8 +123,8 @@ RUN                                                                             
      #-------------------------------------                                             \
      source /opt/ros/noetic/setup.bash;                                                 \
      source /opt/ros/jazzy/setup.bash;                                                  \
-     source /senseglove_shared_resources_msgs/ros1/install/setup.bash;                  \
-     source /senseglove_shared_resources_msgs/ros2/install/setup.bash;                  \
+     source /senseglove_msgs/ros1/install/setup.bash;                  \
+     source /senseglove_msgs/ros2/install/setup.bash;                  \
                                                                                         \
      #-------------------------------------                                             \
      # Finally, build the Bridge                                                        \

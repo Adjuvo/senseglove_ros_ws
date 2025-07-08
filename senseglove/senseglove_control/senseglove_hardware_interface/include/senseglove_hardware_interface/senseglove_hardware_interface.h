@@ -30,7 +30,7 @@
 #include <senseglove_hardware/senseglove_robot.h>
 #include <senseglove_hardware/senseglove_setup.h>
 #include <senseglove_hardware_builder/hardware_builder.h>
-#include <senseglove_shared_resources_msgs/SenseGloveState.h>
+#include <senseglove_msgs/SenseGloveState.h>
 
 #include <memory>
 #include <vector>
@@ -108,6 +108,6 @@ private:
   bool master_shutdown_allowed_command_ = false;
   bool hasActuated = false;
 
-  RtPublisherPtr<senseglove_shared_resources_msgs::SenseGloveState> senseglove_state_pub_;
+  RtPublisherPtr<senseglove_msgs::SenseGloveState> senseglove_state_pub_;
 };
 #endif  // ROS_WORKSPACE_SG_HARDWARE_INTERFACE_H

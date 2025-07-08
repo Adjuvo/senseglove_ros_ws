@@ -3,7 +3,7 @@ import rospy
 import tf
 import math
 import numpy as np
-from senseglove_shared_resources_msgs.msg import SenseGloveState  # Adjust import as necessary
+from senseglove_msgs.msg import SenseGloveState  # Adjust import as necessary
 
 br = tf.TransformBroadcaster()
 

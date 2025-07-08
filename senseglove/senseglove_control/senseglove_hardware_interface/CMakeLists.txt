@@ -1,9 +1,9 @@
-# Copyright (c) 2020 - 2024 SenseGlove
+# Copyright (c) 2020 - 2025 SenseGlove
 
-cmake_minimum_required(VERSION 3.21...3.25)
+cmake_minimum_required(VERSION 3.16...3.25)
 
 project(senseglove_hardware_interface
-        VERSION 2.1.0
+        VERSION 2.0.0
         DESCRIPTION "The senseglove_hardware_interface for the bridge between ros_control and the senseglove hardware."
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
@@ -14,7 +14,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 add_compile_options(-Wall -Wextra -Werror)
 
 find_package(catkin REQUIRED COMPONENTS
@@ -26,7 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
         senseglove_description
         senseglove_hardware
         senseglove_hardware_builder
-        senseglove_shared_resources_msgs
+        senseglove_msgs
         std_msgs
         urdf
         )
@@ -60,7 +60,7 @@ catkin_package(
         senseglove_description
         senseglove_hardware
         senseglove_hardware_builder
-        senseglove_shared_resources_msgs
+        senseglove_msgs
         std_msgs
         urdf
 )

@@ -104,7 +104,7 @@ This step is intended for users who prefer to run ROS 2 natively on the host mac
 - Ubuntu 24.04 with ROS 2 Jazzy installed
 - ros2_control and trajectory controller packages installed
 - Prebuilt ros1_bridge binary (extracted from the host_rosbridge_tgz container)
-- [SenseGlove custom message package](/docker/shared/senseglove_shared_resources_msgs.tar.xz), built and sourced in your ROS 2 workspace 
+- [SenseGlove custom message package](/docker/shared/senseglove_msgs.tar.xz), built and sourced in your ROS 2 workspace 
 
 #### Setting up the ros1_bridge binary ####
 If and only if the `rosbridge_1to2` container has already been built, you can extract the precompiled ros1_bridge binary by running:
@@ -118,7 +118,7 @@ source ~/ros-jazzy-ros1-bridge/install/local_setup.bash
 ```
 
 #### Setting up the SenseGlove custom message package ####
-In [docker/shared/](/docker/shared/), you’ll find the compressed tarball [senseglove_shared_resources_msgs.tar.xz](/docker/shared/senseglove_shared_resources_msgs.tar.xz), which contains the custom message definitions required for bridging between ROS 1 and ROS 2.
+In [docker/shared/](/docker/shared/), you’ll find the compressed tarball [senseglove_msgs.tar.xz](/docker/shared/senseglove_msgs.tar.xz), which contains the custom message definitions required for bridging between ROS 1 and ROS 2.
 
 Inside the archive, you’ll find two folders:
 - `ros1/` – for ROS Noetic
@@ -129,7 +129,7 @@ In the Docker build process, both ROS 1 and ROS 2 versions are already compiled 
 To use the message package on a native ROS 2 system, simply extract the tarball to your home directory (or any workspace location), build only the ROS 2 portion, and source it:
 
 ```
-cd ~/senseglove_shared_resources_msgs/ros2
+cd ~/senseglove_msgs/ros2
 colcon build
 source install/setup.bash
 ```
