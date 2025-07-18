@@ -91,7 +91,7 @@ def generate_launch_description():
         executable='rviz2',
         arguments=['-d', os.path.join(
             os.getenv('AMENT_PREFIX_PATH').split(':')[0],
-            'share', 'senseglove_description', 'config', 'urdf_both.rviz'
+            'share', 'senseglove_description', 'rviz', 'urdf_both.rviz'
         )],
         output='screen'
     )

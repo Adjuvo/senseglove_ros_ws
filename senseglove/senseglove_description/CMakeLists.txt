@@ -42,8 +42,8 @@ install(DIRECTORY meshes/
 )
 
 # Install RViz configs
-install(DIRECTORY config/
-  DESTINATION share/${PROJECT_NAME}/config
+install(DIRECTORY rviz/
+  DESTINATION share/${PROJECT_NAME}/rviz
 )
 
 # Export ament package
