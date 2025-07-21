@@ -1,5 +1,0 @@
-# SenseCom
-SenseCom (“Short for SenseGlove Communications”) is a program that runs in the background of your operating system. Its main purpose is to find and connect to the SenseGlove devices on your system and exchange data with them, like a “SteamVR for Haptic Gloves”. Most SenseGlove API’s are configured to automatically start the software if it is not (yet) running. It serves as the main source of information of the state of your connections.
-
-SenseCom has its own dedicated [documentation page on SGDocs](https://senseglove.gitlab.io/SenseGloveDocs/sensecom/overview.html).
-If you are experiencing any specific SenseCom issues, or issues related to your glove connections, you can post them here.
