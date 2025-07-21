@@ -27,7 +27,6 @@ __pycache__/
 senseglove_ros_ws.code-workspace
 
 .idea/*
-.catkin_tools/*
 .vscode/
 
 
