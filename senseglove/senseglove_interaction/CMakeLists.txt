@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_interaction
-        VERSION 3.0.0
+        VERSION 2.0.0
         DESCRIPTION "SenseGlove interaction nodes"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES NONE

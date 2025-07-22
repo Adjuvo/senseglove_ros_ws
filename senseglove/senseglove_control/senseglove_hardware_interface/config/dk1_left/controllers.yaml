@@ -1,22 +1,21 @@
-controller:
-  joint_state:
-    type: joint_state_controller/JointStateController
-    publish_rate: 100
-  hand_state:
-    type: joint_state_controller/JointStateController
-    publish_rate: 100
-  trajectory:
-    type: position_controllers/JointTrajectoryController # Position interface because we are directly passing on commands
-    allow_partial_joints_goal: true
-    publish_rate: 100
-    joints:
-      - l_thumb_brake   # FFB
-      - l_index_brake   # FFB
-      - l_middle_brake  # FFB
-      - l_ring_brake    # FFB
-      - l_pinky_brake   # FFB
-      - l_thumb_dip   # Buzzer
-      - l_index_dip   # Buzzer
-      - l_middle_dip  # Buzzer
-      - l_ring_dip    # Buzzer
-      - l_pinky_dip   # Buzzer
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+      name: joint_state_broadcaster
+
+    trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+      name: trajectory_controller
+      joints:
+        - l_thumb_brake   # FFB
+        - l_index_brake   # FFB
+        - l_middle_brake  # FFB
+        - l_ring_brake    # FFB
+        - l_pinky_brake   # FFB
+        - l_thumb_dip   # Buzzer
+        - l_index_dip   # Buzzer
+        - l_middle_dip  # Buzzer
+        - l_ring_dip    # Buzzer
+        - l_pinky_dip   # Buzzer

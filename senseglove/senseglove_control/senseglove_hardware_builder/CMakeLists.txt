@@ -12,8 +12,6 @@ project(senseglove_hardware_builder
 # Compiler settings
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Werror)
 
 # Find dependencies
@@ -41,7 +39,6 @@ find_library(SGSERIAL
         REQUIRED
         )
 
-
 # Find yaml-cpp (as system lib)
 find_package(yaml-cpp REQUIRED)
 
@@ -57,16 +54,16 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         # SenseGlove API includes
         ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
         ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/BLE
         )
-
 
 # Link libraries
 ament_target_dependencies(${PROJECT_NAME}
         rclcpp
+        ament_index_cpp
         urdf
         senseglove_hardware
         yaml-cpp
-        ament_index_cpp
         )
 
 target_link_libraries(${PROJECT_NAME}

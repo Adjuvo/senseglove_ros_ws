@@ -1,121 +1,109 @@
-# Copyright (c) 2020 - 2024 SenseGlove
+# Copyright (c) 2020 - 2025 SenseGlove
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_hardware_interface
-        VERSION 2.1.0
+        VERSION 2.0.0
         DESCRIPTION "The senseglove_hardware_interface for the bridge between ros_control and the senseglove hardware."
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES CXX
         )
 
-# Set C++ standard and compiler options
-set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_EXTENSIONS OFF)
+# Compiler settings
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 add_compile_options(-Wall -Wextra -Werror)
 
-find_package(catkin REQUIRED COMPONENTS
-        controller_manager
-        joint_state_controller
-        joint_trajectory_controller
-        realtime_tools
-        roscpp
-        senseglove_description
-        senseglove_hardware
-        senseglove_hardware_builder
-        senseglove_msgs
-        std_msgs
-        urdf
-        )
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(controller_interface REQUIRED)
+find_package(senseglove_hardware REQUIRED)
+find_package(senseglove_hardware_builder REQUIRED)
+find_package(senseglove_msgs REQUIRED)
 
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
+# Find SenseGlove API libraries
 find_library(SGCORE
-        NAMES libsgcore.so
+        NAMES libsgcore.so sgcore
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
-        NAMES libsgconnect.so
+        NAMES libsgconnect.so sgconnect
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
-        NAMES libserial.so
+        NAMES libserial.so serial
         PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
         REQUIRED
         )
 
-catkin_package(
-        INCLUDE_DIRS include
-        CATKIN_DEPENDS
-        controller_manager
-        realtime_tools
-        roscpp
-        senseglove_description
+# Add library target
+add_library(${PROJECT_NAME}
+        src/senseglove_hardware_interface.cpp
+        )
+
+# Include directories
+target_include_directories(${PROJECT_NAME} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        # SenseGlove API includes
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
+        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/BLE
+        )
+
+# Link libraries
+ament_target_dependencies(${PROJECT_NAME}
+        rclcpp
+        rclcpp_lifecycle
+        hardware_interface
+        pluginlib
         senseglove_hardware
         senseglove_hardware_builder
         senseglove_msgs
-        std_msgs
-        urdf
-)
-
-set(GCC_NEWDTAGS_LINK_FLAGS "-Wl,--disable-new-dtags")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_NEWDTAGS_LINK_FLAGS}")
-
-include_directories(include
-        SYSTEM
-        ${catkin_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
         )
 
-add_executable(${PROJECT_NAME}_node
-        src/${PROJECT_NAME}.cpp
-        src/${PROJECT_NAME}_node.cpp
+target_link_libraries(${PROJECT_NAME}
+        ${SGCORE}
+        ${SGCONNECT}
+        ${SGSERIAL}
+        )     
+
+# Plugin registration
+pluginlib_export_plugin_description_file(hardware_interface plugin.xml)
+
+# Install headers
+install(DIRECTORY include/
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.hpp"
         )
 
-add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(${PROJECT_NAME}_node
-    ${catkin_LIBRARIES}
-    ${SGCORE}
-    ${SGCONNECT}
-    ${SGSERIAL}
-    )
-
-# From senseglove_hardware/cmake
-ros_enable_rpath(${PROJECT_NAME}_node)
-
-install(DIRECTORY include/${PROJECT_NAME}/
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-        )
-
-install(TARGETS ${PROJECT_NAME}_node
-        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-        )
-
+# Install controllers yaml files
 install(DIRECTORY config launch
-        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+        DESTINATION share/${PROJECT_NAME}/
         )
 
-## Add gtest based cpp test target and link libraries
-#if(CATKIN_ENABLE_TESTING)
-#    catkin_add_gtest(${PROJECT_NAME}_test
-#            test/test_runner.cpp
-#            )
-#    target_link_libraries(${PROJECT_NAME}_test ${catkin_LIBRARIES})
-#
-#    if(ENABLE_COVERAGE_TESTING)
-#        set(COVERAGE_EXCLUDES "*/${PROJECT_NAME}/test/*")
-#        add_code_coverage(
-#                NAME coverage_report
-#                DEPENDENCIES ${PROJECT_NAME}_test
-#        )
-#    endif()
-#endif()
+install(FILES plugin.xml
+        DESTINATION share/${PROJECT_NAME}
+        )
+
+# Install library
+install(TARGETS ${PROJECT_NAME}
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+        )
+
+# Export ament package
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
+ament_export_dependencies(hardware_interface pluginlib senseglove_hardware_builder senseglove_msgs)
+
+ament_package()

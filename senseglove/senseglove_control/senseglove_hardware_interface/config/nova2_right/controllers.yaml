@@ -1,20 +1,20 @@
-controller:
-  joint_state:
-    type: joint_state_controller/JointStateController
-    publish_rate: 60
-  hand_state:
-    type: joint_state_controller/JointStateController
-    publish_rate: 60
-  trajectory:
-    type: position_controllers/JointTrajectoryController
-    allow_partial_joints_goal: true
-    joints:
-      - r_thumb_brake   # FFB
-      - r_index_brake   # FFB
-      - r_middle_brake  # FFB
-      - r_ring_brake    # FFB
-      - r_thumb_dip   # Buzzer
-      - r_index_dip   # Buzzer
-      - r_palm_index  # Buzzer - Palm-Index Side
-      - r_palm_pinky  # Buzzer - Palm-Pinky Side
-      - r_palm_strap  # Palm Strap
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+      name: joint_state_broadcaster
+
+    trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+      name: trajectory_controller
+      joints:
+        - r_thumb_brake   # FFB
+        - r_index_brake   # FFB
+        - r_middle_brake  # FFB
+        - r_ring_brake    # FFB
+        - r_thumb_dip     # Buzzer
+        - r_index_dip     # Buzzer
+        - r_palm_index  # Buzzer - Palm-Index Side
+        - r_palm_pinky  # Buzzer - Palm-Pinky Side
+        - r_palm_strap  # Palm Strap

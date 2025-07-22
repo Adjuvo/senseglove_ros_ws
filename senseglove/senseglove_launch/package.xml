@@ -7,6 +7,9 @@
     <maintainer email="akshay@senseglove.com">Akshay Radhamohan Menon</maintainer>
     <license>MIT</license>
 
+    <!-- Build tool -->
+    <buildtool_depend>ament_cmake</buildtool_depend>
+
     <!-- runtime dependencies -->
     <exec_depend>launch</exec_depend>
     <exec_depend>launch_ros</exec_depend>
@@ -18,4 +21,7 @@
     <exec_depend>senseglove_interaction</exec_depend>
     <exec_depend>senseglove_hardware_interface</exec_depend>
 
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
 </package>

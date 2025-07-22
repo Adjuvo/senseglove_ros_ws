@@ -34,7 +34,35 @@ def generate_launch_description():
         handedness
     ])
 
-    # Nodes
+    controller_yaml_file = PathJoinSubstitution([
+        FindPackageShare('senseglove_hardware_interface'),
+        'config',
+        robot,
+        'controllers.yaml'
+    ])
+
+    ros2_control_node = Node(
+        package='controller_manager',
+        executable='ros2_control_node',
+        namespace=namespace,
+        parameters=[robot_description, controller_yaml_file],
+        output='screen'
+    )
+
+    controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        namespace=namespace,
+        arguments=['joint_state_broadcaster', '--controller-manager-timeout', '60']
+    )
+
+    trajectory_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        namespace=namespace,
+        arguments=['trajectory_controller', '--controller-manager-timeout', '60']
+    )
+
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -42,25 +70,12 @@ def generate_launch_description():
         parameters=[robot_description, {'publish_frequency': 60}]
     )
 
-    controller_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        namespace=namespace,
-        arguments=['joint_state_broadcaster', 'trajectory_controller']
-    )
-
-    hardware_interface = Node(
-        package='senseglove_hardware_interface',
-        executable='senseglove_hardware_interface_node',
-        namespace=namespace,
-        arguments=[robot, glove_index, is_right]
-    )
-
     return LaunchDescription([
         DeclareLaunchArgument('robot', description='The robot model to use'),
         DeclareLaunchArgument('gloveIndex', description='Index of the glove'),
         DeclareLaunchArgument('isRight', description='Is right hand glove? (true/false)'),
-        robot_state_publisher,
+        ros2_control_node,
         controller_spawner,
-        hardware_interface
+        trajectory_controller_spawner,
+        robot_state_publisher
     ])
