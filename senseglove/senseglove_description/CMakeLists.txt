@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21...3.25)
 
 project(senseglove_description
-        VERSION 3.0.0
+        VERSION 2.0.0
         DESCRIPTION "The SenseGlove description package"
         HOMEPAGE_URL "https://senseglove.com"
         LANGUAGES C CXX
@@ -24,7 +24,7 @@ set(XACRO_FILES
   urdf/nova1/nova_left.xacro
   urdf/nova1/nova_right.xacro
   urdf/nova2/nova2_left.xacro
-  urdf/nova2/nova2_right.xacro
+  urdf/urdf_macros/transmissions.xacro
 )
 
 # Generate and Install the URDFs

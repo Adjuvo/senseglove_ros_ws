@@ -1,11 +1,15 @@
 <?xml version='1.0'?>
-<!-- Revolute-Revolute Manipulator -->
-<robot name="nova2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<!-- Constants -->
-<xacro:property name="PI" value="3.1415926535897931"/>
-<xacro:property name="hover_height" value="0.5"/>
-<xacro:property name="color_blue" value="0.0 0.0 1.0 1.0"/> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nova2">
+    <xacro:arg name="prefix" default="" />
+
+    <!-- Include transmission macro -->
+    <xacro:include filename="$(find senseglove_description)/urdf/urdf_macros/transmission.xacro"/>
+
+    <!-- Constants -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="hover_height" value="0.5"/>
+    <xacro:property name="color_blue" value="0.0 0.0 1.0 1.0"/> 
 
     <!-- Used for fixing robot to Gazebo 'world' -->
     <link name="world"/>
@@ -229,194 +233,216 @@
         </visual>
     </link>
 
-    <!-- Joints -->
-    <joint name="joint_base_fixed_parent_joint" type="fixed">
-        <parent link="world"/>
-        <child link="l_glove_hub"/>
-        <origin xyz="-0.5 0 ${hover_height}" rpy="${90*pi/180} 0 ${180*pi/180}"/>
-    </joint>
+    <!-- ros2_control Interface -->
+    <ros2_control name="SGGloveHardware" type="system">
+        <hardware>
+            <plugin>senseglove_hardware_interface/SGHardwareInterface</plugin>
+            <param name="glove_name">nova2_left</param>
+            <param name="config_path">$(find senseglove_hardware_interface)/config/hardwarebuilder/nova2_left.yaml</param>
+        </hardware>
 
-    <joint name="l_thumb_brake" type="revolute">
-        <origin xyz="-0.028671040000000005 0.01377578 0.0002947999999999995" rpy="1.6927426298510666 0.7759529082385159 ${PI-1.7440212278644769}" />
-        <parent link="l_glove_hub" />
-        <child link="l_thumb_brake" />
-        <axis xyz="1.034557180062956e-07 -2.4449215783872713e-07 -1.0000001372639553" />
-        <limit lower="-0.174533" upper="1.047198" effort="100" velocity="1000" />
-    </joint>
+        <!-- Joints -->
+        <joint name="joint_base_fixed_parent_joint" type="fixed">
+            <parent link="world"/>
+            <child link="l_glove_hub"/>
+            <origin xyz="-0.5 0 ${hover_height}" rpy="${90*pi/180} 0 ${180*pi/180}"/>
+        </joint>
 
-    <joint name="l_thumb_mcp" type="revolute">
-        <origin xyz="0.00530330777216646 0.005303298545576421 0.006999996433025211" rpy="3.0543261909900767 -0.08726646259971639 -2.3542882145657518" />
-        <parent link="l_thumb_brake" />
-        <child link="l_thumb_flexion_one" />
-        <axis xyz="-0.0018989999999999545 0.9962070000000028 0.08699000000000176" />
-        <limit lower="-0.174533" upper="0.610865" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_thumb_brake" type="revolute">
+            <origin xyz="-0.028671040000000005 0.01377578 0.0002947999999999995" rpy="1.6927426298510666 0.7759529082385159 ${PI-1.7440212278644769}" />
+            <parent link="l_glove_hub" />
+            <child link="l_thumb_brake" />
+            <axis xyz="1.034557180062956e-07 -2.4449215783872713e-07 -1.0000001372639553" />
+            <limit lower="-0.174533" upper="1.047198" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_thumb_pip" type="revolute">
-        <origin xyz="-0.03984770999999979 0.00022789000000000782 -0.003479610000000002" rpy="-3.7025504190272574e-17 -6.733051085556857e-31 -4.163336342348644e-17" />
-        <parent link="l_thumb_flexion_one" />
-        <child link="l_thumb_flexion_two" />
-        <axis xyz="-0.0018990000000058964 0.9962069999997494 0.08698999999936513" />
-        <limit lower="0.0" upper="0.872665" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_thumb_mcp" type="revolute">
+            <origin xyz="0.00530330777216646 0.005303298545576421 0.006999996433025211" rpy="3.0543261909900767 -0.08726646259971639 -2.3542882145657518" />
+            <parent link="l_thumb_brake" />
+            <child link="l_thumb_flexion_one" />
+            <axis xyz="-0.0018989999999999545 0.9962070000000028 0.08699000000000176" />
+            <limit lower="-0.174533" upper="0.610865" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_thumb_dip" type="revolute">
-        <origin xyz="-0.039847719999877115 0.00022787999999702825 -0.003479599999990739" rpy="2.0111950299604782e-17 -1.3010426069826712e-18 4.597425888860514e-29" />
-        <parent link="l_thumb_flexion_two" />
-        <child link="l_thumb_flexion_three" />
-        <axis xyz="-0.00189899999999976 0.996206999999922 0.0869899999999425" />
-        <limit lower="-0.174533" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_thumb_pip" type="revolute">
+            <origin xyz="-0.03984770999999979 0.00022789000000000782 -0.003479610000000002" rpy="-3.7025504190272574e-17 -6.733051085556857e-31 -4.163336342348644e-17" />
+            <parent link="l_thumb_flexion_one" />
+            <child link="l_thumb_flexion_two" />
+            <axis xyz="-0.0018990000000058964 0.9962069999997494 0.08698999999936513" />
+            <limit lower="0.0" upper="0.872665" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_index_brake" type="revolute">
-        <origin xyz="-0.025 0.1015 0.025001100000000002" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_index_brake" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_thumb_dip" type="revolute">
+            <origin xyz="-0.039847719999877115 0.00022787999999702825 -0.003479599999990739" rpy="2.0111950299604782e-17 -1.3010426069826712e-18 4.597425888860514e-29" />
+            <parent link="l_thumb_flexion_two" />
+            <child link="l_thumb_flexion_three" />
+            <axis xyz="-0.00189899999999976 0.996206999999922 0.0869899999999425" />
+            <limit lower="-0.174533" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_index_mcp" type="revolute">
-        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948994 6.902532920683812e-31 -1.5707963267948968" />
-        <parent link="l_index_brake" />
-        <child link="l_index_flexion_one" />
-        <axis xyz="2.2204460492503284e-16 3.9671451829137585e-31 1.000000000000003" />
-        <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_index_brake" type="revolute">
+            <origin xyz="-0.025 0.1015 0.025001100000000002" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_index_brake" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_index_pip" type="revolute">
-        <origin xyz="-0.03999999999999977 0.0 1.3322676295501878e-17" rpy="-3.141592653589793 2.2204460492503294e-16 4.410505659055223e-31" />
-        <parent link="l_index_flexion_one" />
-        <child link="l_index_flexion_two" />
-        <axis xyz="-7.888609052210136e-31 5.00181505440204e-32 -1.0000000000000016" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_index_mcp" type="revolute">
+            <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948994 6.902532920683812e-31 -1.5707963267948968" />
+            <parent link="l_index_brake" />
+            <child link="l_index_flexion_one" />
+            <axis xyz="2.2204460492503284e-16 3.9671451829137585e-31 1.000000000000003" />
+            <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_index_dip" type="revolute">
-        <origin xyz="-0.02999999999999986 0.0 0.0" rpy="-3.141592653589793 1.1832913578315179e-30 3.9443045261050244e-31" />
-        <parent link="l_index_flexion_two" />
-        <child link="l_index_flexion_three" />
-        <axis xyz="3.944304526105059e-31 -3.7336409773599426e-32 1.000000000000001" />
-        <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_index_pip" type="revolute">
+            <origin xyz="-0.03999999999999977 0.0 1.3322676295501878e-17" rpy="-3.141592653589793 2.2204460492503294e-16 4.410505659055223e-31" />
+            <parent link="l_index_flexion_one" />
+            <child link="l_index_flexion_two" />
+            <axis xyz="-7.888609052210136e-31 5.00181505440204e-32 -1.0000000000000016" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_middle_brake" type="revolute">
-        <origin xyz="-0.045 0.1015 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_middle_brake" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_index_dip" type="revolute">
+            <origin xyz="-0.02999999999999986 0.0 0.0" rpy="-3.141592653589793 1.1832913578315179e-30 3.9443045261050244e-31" />
+            <parent link="l_index_flexion_two" />
+            <child link="l_index_flexion_three" />
+            <axis xyz="3.944304526105059e-31 -3.7336409773599426e-32 1.000000000000001" />
+            <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_middle_mcp" type="revolute">
-        <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948994 3.944304526105037e-31 -1.5707963267948968" />
-        <parent link="l_middle_brake" />
-        <child link="l_middle_flexion_one" />
-        <axis xyz="2.220446049250329e-16 -2.743656440857823e-31 1.0000000000000013" />
-        <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_middle_brake" type="revolute">
+            <origin xyz="-0.045 0.1015 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_middle_brake" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_middle_pip" type="revolute">
-        <origin xyz="-0.044999999999999755 0.0 8.881784197001253e-18" rpy="-3.4093030523414468e-31 2.2204460492503264e-16 -1.7903995299227937e-30" />
-        <parent link="l_middle_flexion_one" />
-        <child link="l_middle_flexion_two" />
-        <axis xyz="-2.4651903288156498e-32 2.1054281083331788e-31 0.9999999999999951" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_middle_mcp" type="revolute">
+            <origin xyz="0.0 0.0125 0.005" rpy="1.5707963267948994 3.944304526105037e-31 -1.5707963267948968" />
+            <parent link="l_middle_brake" />
+            <child link="l_middle_flexion_one" />
+            <axis xyz="2.220446049250329e-16 -2.743656440857823e-31 1.0000000000000013" />
+            <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_middle_dip" type="revolute">
-        <origin xyz="-0.030000000000000124 0.0 0.0" rpy="-1.8733359704785427e-31 -2.218671295934096e-31 4.733165431326106e-30" />
-        <parent link="l_middle_flexion_two" />
-        <child link="l_middle_flexion_three" />
-        <axis xyz="1.9721522630525181e-31 2.3209213785464143e-32 0.9999999999999947" />
-        <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_middle_pip" type="revolute">
+            <origin xyz="-0.044999999999999755 0.0 8.881784197001253e-18" rpy="-3.4093030523414468e-31 2.2204460492503264e-16 -1.7903995299227937e-30" />
+            <parent link="l_middle_flexion_one" />
+            <child link="l_middle_flexion_two" />
+            <axis xyz="-2.4651903288156498e-32 2.1054281083331788e-31 0.9999999999999951" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_ring_brake" type="revolute">
-        <origin xyz="-0.0675 0.1015 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_ring_brake" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_middle_dip" type="revolute">
+            <origin xyz="-0.030000000000000124 0.0 0.0" rpy="-1.8733359704785427e-31 -2.218671295934096e-31 4.733165431326106e-30" />
+            <parent link="l_middle_flexion_two" />
+            <child link="l_middle_flexion_three" />
+            <axis xyz="1.9721522630525181e-31 2.3209213785464143e-32 0.9999999999999947" />
+            <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_ring_mcp" type="revolute">
-        <origin xyz="0.0 0.0075 0.005" rpy="1.5707963267948994 2.3665827156630218e-30 -1.570796326794897" />
-        <parent link="l_ring_brake" />
-        <child link="l_ring_flexion_one" />
-        <axis xyz="4.440892098500658e-16 -1.9126221254689664e-31 1.0000000000000022" />
-        <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_ring_brake" type="revolute">
+            <origin xyz="-0.0675 0.1015 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_ring_brake" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_ring_pip" type="revolute">
-        <origin xyz="-0.039999999999999696 -4.440892098500626e-18 1.7763568394002505e-17" rpy="-1.0521954611961268e-30 4.440892098500648e-16 -2.0031744114551858e-30" />
-        <parent link="l_ring_flexion_one" />
-        <child link="l_ring_flexion_two" />
-        <axis xyz="9.385156069474515e-62 -6.016631591149275e-32 0.9999999999999936" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_ring_mcp" type="revolute">
+            <origin xyz="0.0 0.0075 0.005" rpy="1.5707963267948994 2.3665827156630218e-30 -1.570796326794897" />
+            <parent link="l_ring_brake" />
+            <child link="l_ring_flexion_one" />
+            <axis xyz="4.440892098500658e-16 -1.9126221254689664e-31 1.0000000000000022" />
+            <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_ring_dip" type="revolute">
-        <origin xyz="-0.03 0.0 0.0" rpy="8.661648108030636e-31 -2.8941170293315487e-60 6.310887241768106e-30" />
-        <parent link="l_ring_flexion_two" />
-        <child link="l_ring_flexion_three" />
-        <axis xyz="2.6082657545562474e-60 8.059984948915678e-31 0.9999999999999964" />
-        <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_ring_pip" type="revolute">
+            <origin xyz="-0.039999999999999696 -4.440892098500626e-18 1.7763568394002505e-17" rpy="-1.0521954611961268e-30 4.440892098500648e-16 -2.0031744114551858e-30" />
+            <parent link="l_ring_flexion_one" />
+            <child link="l_ring_flexion_two" />
+            <axis xyz="9.385156069474515e-62 -6.016631591149275e-32 0.9999999999999936" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_pinky_brake" type="revolute">
-        <origin xyz="-0.085 0.09150000000000001 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_pinky_brake" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_ring_dip" type="revolute">
+            <origin xyz="-0.03 0.0 0.0" rpy="8.661648108030636e-31 -2.8941170293315487e-60 6.310887241768106e-30" />
+            <parent link="l_ring_flexion_two" />
+            <child link="l_ring_flexion_three" />
+            <axis xyz="2.6082657545562474e-60 8.059984948915678e-31 0.9999999999999964" />
+            <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_pinky_mcp" type="revolute">
-        <origin xyz="0.0 0.0075 0.0030000000000000027" rpy="-1.5707963267948941 3.9443045261050205e-31 -1.5707963267948966" />
-        <parent link="l_pinky_brake" />
-        <child link="l_pinky_flexion_one" />
-        <axis xyz="1.4412647038179638e-61 5.1214800739245165e-31 -1.0000000000000044" />
-        <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_pinky_brake" type="revolute">
+            <origin xyz="-0.085 0.09150000000000001 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_pinky_brake" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="-0.349066" upper="0.349066" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_pinky_pip" type="revolute">
-        <origin xyz="-0.03499999999999966 4.440892098500626e-18 1.7763568394002505e-17" rpy="5.273690307704786e-31 -3.174759783138916e-60 5.9164567891575955e-30" />
-        <parent link="l_pinky_flexion_one" />
-        <child link="l_pinky_flexion_two" />
-        <axis xyz="-5.317573665292917e-64 -1.5221023378027343e-32 -1.000000000000001" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_pinky_mcp" type="revolute">
+            <origin xyz="0.0 0.0075 0.0030000000000000027" rpy="-1.5707963267948941 3.9443045261050205e-31 -1.5707963267948966" />
+            <parent link="l_pinky_brake" />
+            <child link="l_pinky_flexion_one" />
+            <axis xyz="1.4412647038179638e-61 5.1214800739245165e-31 -1.0000000000000044" />
+            <limit lower="-0.523599" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_pinky_dip" type="revolute">
-        <origin xyz="-0.014999999999999859 0.0 1.7763568394002505e-17" rpy="1.3440221301716692e-31 -1.972152263052545e-31 -6.3108872417680916e-30" />
-        <parent link="l_pinky_flexion_two" />
-        <child link="l_pinky_flexion_three" />
-        <axis xyz="-1.972152263052542e-31 -1.4962323639519502e-31 -1.000000000000005" />
-        <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_pinky_pip" type="revolute">
+            <origin xyz="-0.03499999999999966 4.440892098500626e-18 1.7763568394002505e-17" rpy="5.273690307704786e-31 -3.174759783138916e-60 5.9164567891575955e-30" />
+            <parent link="l_pinky_flexion_one" />
+            <child link="l_pinky_flexion_two" />
+            <axis xyz="-5.317573665292917e-64 -1.5221023378027343e-32 -1.000000000000001" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_palm_strap" type="revolute">
-        <origin xyz="-0.05 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_palm_strap" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_pinky_dip" type="revolute">
+            <origin xyz="-0.014999999999999859 0.0 1.7763568394002505e-17" rpy="1.3440221301716692e-31 -1.972152263052545e-31 -6.3108872417680916e-30" />
+            <parent link="l_pinky_flexion_two" />
+            <child link="l_pinky_flexion_three" />
+            <axis xyz="-1.972152263052542e-31 -1.4962323639519502e-31 -1.000000000000005" />
+            <limit lower="-0.087266" upper="1.570796" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_palm_index" type="revolute">
-        <origin xyz="-0.03 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_palm_index" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_palm_strap" type="revolute">
+            <origin xyz="-0.05 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_palm_strap" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
 
-    <joint name="l_palm_pinky" type="revolute">
-        <origin xyz="-0.07 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
-        <parent link="l_glove_hub" />
-        <child link="l_palm_pinky" />
-        <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
-        <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
-    </joint>
+        <joint name="l_palm_index" type="revolute">
+            <origin xyz="-0.03 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_palm_index" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
+
+        <joint name="l_palm_pinky" type="revolute">
+            <origin xyz="-0.07 0.0385 0.025" rpy="-1.9721522630525295e-31 6.360609357992649e-31 3.944304526105059e-31" />
+            <parent link="l_glove_hub" />
+            <child link="l_palm_pinky" />
+            <axis xyz="-1.6006881522617508e-31 0.0 -1.0" />
+            <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
+        </joint>
+
+    </ros2_control>
+
+    <!-- Transmissions for actuated joints -->
+    <xacro:add_transmission joint_name="l_thumb_brake"/>
+    <xacro:add_transmission joint_name="l_index_brake"/>
+    <xacro:add_transmission joint_name="l_middle_brake"/>
+    <xacro:add_transmission joint_name="l_ring_brake"/>
+    <xacro:add_transmission joint_name="l_thumb_dip"/>
+    <xacro:add_transmission joint_name="l_index_dip"/>
+    <xacro:add_transmission joint_name="l_palm_index"/>
+    <xacro:add_transmission joint_name="l_palm_pinky"/>
+    <xacro:add_transmission joint_name="l_palm_strap"/>
+
 </robot>
