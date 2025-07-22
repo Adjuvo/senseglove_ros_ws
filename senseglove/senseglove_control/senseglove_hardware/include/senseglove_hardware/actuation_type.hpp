@@ -2,7 +2,7 @@
 #define SENSEGLOVE_HARDWARE_ACTUATION_TYPE_H
 
 #include <string>
-#include <rcutils/logging_macros.h>
+#include <rclcpp/rclcpp.hpp>
 
 namespace SGHardware
 {
@@ -44,8 +44,8 @@ namespace SGHardware
       }
       else
       {
-        RCUTILS_LOG_WARN_NAMED(
-          "senseglove.actuation_type",
+        RCLCPP_WARN(
+          rclcpp::get_logger("senseglove.actuation_type"),
           "Actuation type '%s' is not recognized; setting to 'absent'",
           actuationType.c_str());
         value_ = absent;
@@ -80,8 +80,8 @@ namespace SGHardware
         case squeeze:
           return "squeeze";
         default:
-          RCUTILS_LOG_WARN_NAMED(
-            "senseglove.actuation_type",
+          RCLCPP_WARN(
+          rclcpp::get_logger("senseglove.actuation_type"),
             "ActuationType value '%d' is not 'brake', 'vibration', or 'squeeze'; returning 'absent'",
             static_cast<int>(value_));
           return "absent";

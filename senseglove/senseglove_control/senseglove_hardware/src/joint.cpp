@@ -1,7 +1,6 @@
 // Copyright (c) 2020 - 2025 SenseGlove
 
-#include <rcutils/logging_macros.h>
-
+#include <rclcpp/rclcpp.hpp>
 #include <senseglove_hardware/joint.hpp>
 
 namespace SGHardware
@@ -39,29 +38,20 @@ namespace SGHardware
   {
   }
 
-  bool Joint::initialize()
-  {
-    return false;
-  }
-
   void Joint::prepareActuation()
   {
+    auto logger = rclcpp::get_logger("senseglove.joint");
+
     if (!this->canActuate())
     {
-      RCUTILS_LOG_ERROR_NAMED(
-        "senseglove.joint",
-        "Failed to prepare joint '%s' for actuation", this->jointName.c_str());
+      RCLCPP_WARN(logger, "Failed to prepare joint '%s' for actuation", this->jointName.c_str());
       return;
     }
 
-    RCUTILS_LOG_INFO_NAMED(
-      "senseglove.joint",
-      "Preparing '%s' for actuation", this->jointName.c_str());
+    RCLCPP_INFO(logger, "Preparing '%s' for actuation", this->jointName.c_str());
     this->position = this->readAngle();
     this->velocity = 0.0;
-    RCUTILS_LOG_INFO_NAMED(
-      "senseglove.joint",
-      "Successfully prepared '%s' for actuation", this->jointName.c_str());
+    RCLCPP_INFO(logger, "Successfully prepared '%s' for actuation", this->jointName.c_str());
   }
 
   double Joint::readAngle()

@@ -53,10 +53,7 @@ namespace SGHardware
 
     // --------------------------------------------------------------------------------------
     // Joint Methods
-
-    // Initializes the joint
-    bool initialize();
-
+    
     // Gets the name of the joint
     std::string getName() const;
 

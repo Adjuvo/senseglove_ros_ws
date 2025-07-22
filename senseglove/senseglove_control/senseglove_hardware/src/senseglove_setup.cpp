@@ -1,7 +1,6 @@
 // Copyright (c) 2020 - 2025 SenseGlove
 
-#include <rclcpp/rclcpp.hpp> 
-
+#include <rclcpp/rclcpp.hpp>
 #include <senseglove_hardware/senseglove_setup.hpp>
 
 namespace SGHardware
@@ -33,7 +32,7 @@ namespace SGHardware
   {
     if (SGCore::DeviceList::SenseComRunning())
     {
-      RCLCPP_WARN_STREAM(
+      RCLCPP_WARN(
         rclcpp::get_logger("senseglove_setup"),
         "Trying to start communication when SenseCom is already running.");
       return;
@@ -44,7 +43,7 @@ namespace SGHardware
   {
     if (SGRobots.empty()) 
     {
-      RCLCPP_WARN_STREAM(
+      RCLCPP_WARN(
         rclcpp::get_logger("senseglove_setup"),
         "No robots in setup to stop communication.");
       return;
@@ -53,66 +52,67 @@ namespace SGHardware
     try 
     {
       SGRobots.front()->stopHaptics();
-      RCLCPP_INFO_STREAM(
+      RCLCPP_INFO(
         rclcpp::get_logger("senseglove_setup"),
         "Stopped haptics on SenseGloveRobot.");
     } 
     catch (const std::exception & e) 
     {
-      RCLCPP_ERROR_STREAM(
+      RCLCPP_ERROR(
         rclcpp::get_logger("senseglove_setup"),
-        "Error stopping haptics: " << e.what());
+        "Error stopping haptics: %s", e.what());
     }
   }
 
-  bool SenseGloveSetup::isCommunicationOperational() const
+  bool SenseGloveSetup::isCommunicationOperational()
   {
     bool running = SGCore::DeviceList::SenseComRunning();
-    RCLCPP_DEBUG_STREAM(
-      rclcpp::get_logger("senseglove_setup"),
-      "SenseComRunning() = " << std::boolalpha << running);
     return running;
   }
 
-  const SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(const std::string & gloveName) const
+  SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(const std::string & gloveName)
   {
     if (!SGCore::DeviceList::SenseComRunning())
     {
-      RCLCPP_WARN_STREAM(
+      RCLCPP_WARN(
         rclcpp::get_logger("senseglove_setup"),
-        "Accessing robot '" << gloveName
-        << "' while SenseCom is not operational.");
+        "Accessing robot '%s' while SenseCom is not operational.",
+        gloveName.c_str());
     }
 
     auto it = nameMap.find(gloveName);
     if (it == nameMap.end()) {
-      RCLCPP_ERROR_STREAM(
+      RCLCPP_ERROR(
         rclcpp::get_logger("senseglove_setup"),
-        "Could not find glove with name '" << gloveName << "'");
+        "Could not find glove with name '%s'",
+        gloveName.c_str());
       throw std::out_of_range("Could not find glove with name " + gloveName);
     }
+
     return *SGRobots[it->second];
   }
 
-  const SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(size_t index) const
+
+  SenseGloveRobot& SenseGloveSetup::getSenseGloveRobot(size_t index)
   {
     if (!SGCore::DeviceList::SenseComRunning())
     {
-      RCLCPP_WARN_STREAM(
+      RCLCPP_WARN(
         rclcpp::get_logger("senseglove_setup"),
-        "Accessing robot at index " << index
-        << " while SenseCom is not operational.");
+        "Accessing robot at index %zu while SenseCom is not operational.",
+        index);
     }
     if (index >= SGRobots.size()) {
-      RCLCPP_ERROR_STREAM(
+      RCLCPP_ERROR(
         rclcpp::get_logger("senseglove_setup"),
-        "Index out of range: " << index);
+        "Index out of range: %zu (SGRobots size: %zu)",
+        index, SGRobots.size());
       throw std::out_of_range("Index out of range in SenseGloveSetup");
     }
     return *SGRobots[index];
   }
 
-  const urdf::Model& SenseGloveSetup::getRobotUrdf(const std::string & robotName) const
+  const urdf::Model& SenseGloveSetup::getRobotUrdf(const std::string & robotName)
   {
     return this->getSenseGloveRobot(robotName).getUrdf();
   }

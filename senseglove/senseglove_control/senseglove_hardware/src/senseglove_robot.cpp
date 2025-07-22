@@ -1,8 +1,6 @@
 // Copyright (c) 2020 - 2025 SenseGlove
 
 #include <rclcpp/rclcpp.hpp>
-#include <rcutils/logging_macros.h>
-
 #include <senseglove_hardware/senseglove_robot.hpp>
 
 namespace SGHardware
@@ -54,7 +52,7 @@ namespace SGHardware
     return hapticglove ? this->hapticglove->IsRight() : false;
   }
 
-  Joint& SenseGloveRobot::getJoint(const ::std::string jointName)
+  Joint& SenseGloveRobot::getJoint(const std::string jointName)
   {
     auto it = jointMap.find(jointName);
     if (it != jointMap.end()) 
@@ -297,7 +295,7 @@ namespace SGHardware
 
   bool SenseGloveRobot::updateGloveData(const std::chrono::duration<double>& period)
   {
-
+    auto logger = rclcpp::get_logger("senseglove.robot");
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
     bool gloveUpdate = false;
     bool handUpdate = false;
@@ -336,10 +334,10 @@ namespace SGHardware
         }
       }
       
-      if (!senseglovePtr->GetGlovePose(senseglovePose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
+      if (!senseglovePtr->GetGlovePose(senseglovePose)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!senseglovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
+      if (!senseglovePtr->GetHandPose(this->handModel, this->handPose)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
     else if (novaglovePtr != nullptr)
@@ -350,10 +348,10 @@ namespace SGHardware
         updateJointPositions(handPoseAngles);
       }
 
-      if (!novaglovePtr->GetSensorData(novaSensorData)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
+      if (!novaglovePtr->GetSensorData(novaSensorData)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!novaglovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
+      if (!novaglovePtr->GetHandPose(this->handModel, this->handPose)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
 
@@ -365,10 +363,10 @@ namespace SGHardware
         updateJointPositions(handPoseAngles);
       }
 
-      if (!nova2glovePtr->GetSensorData(nova2SensorData)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated glove pose data"); }
+      if (!nova2glovePtr->GetSensorData(nova2SensorData)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated glove pose data"); }
       else { gloveUpdate = true; }
 
-      if (!nova2glovePtr->GetHandPose(this->handModel, this->handPose)) { RCUTILS_LOG_DEBUG_NAMED("senseglove.robot", "Unsuccessfully updated hand pose data"); }
+      if (!nova2glovePtr->GetHandPose(this->handModel, this->handPose)) { RCLCPP_DEBUG(logger, "Unsuccessfully updated hand pose data"); }
       else { handUpdate = true; }
     }
     isUpdated |= (gloveUpdate and handUpdate);

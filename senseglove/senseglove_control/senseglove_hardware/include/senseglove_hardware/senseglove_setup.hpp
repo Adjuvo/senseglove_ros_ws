@@ -23,8 +23,8 @@ namespace SGHardware
     ~SenseGloveSetup() = default;
 
     // Non-copyable (SenseGloveRobot is non-copyable)
-    SenseGloveSetup(const SenseGloveSetup&) = delete;
-    SenseGloveSetup& operator=(const SenseGloveSetup&) = delete;
+    SenseGloveSetup(SenseGloveSetup&) = delete;
+    SenseGloveSetup& operator=(SenseGloveSetup&) = delete;
     // Allow move
     SenseGloveSetup(SenseGloveSetup&&) = default;
     SenseGloveSetup& operator=(SenseGloveSetup&&) = default;
@@ -32,13 +32,13 @@ namespace SGHardware
     // Start/stop communication across all robots; implementations log at node level
     void startCommunication(bool reset);
     void stopCommunication();
-    bool isCommunicationOperational() const;
+    bool isCommunicationOperational();
 
     // Access by name
-    const SenseGloveRobot& getSenseGloveRobot(const std::string & gloveName) const;
+    SenseGloveRobot& getSenseGloveRobot(const std::string & gloveName);
 
     // Access by index
-    const SenseGloveRobot& getSenseGloveRobot(size_t index) const;
+    SenseGloveRobot& getSenseGloveRobot(size_t index);
 
     size_t size() const noexcept { return SGRobots.size(); }
     iterator begin() noexcept { return SGRobots.begin(); }
@@ -47,7 +47,7 @@ namespace SGHardware
     const_iterator end() const noexcept { return SGRobots.end(); }
 
     // Retrieve URDF model of a robot by name
-    const urdf::Model& getRobotUrdf(const std::string & gloveName) const;
+    const urdf::Model& getRobotUrdf(const std::string & gloveName);
 
     // Comparison operators
     friend bool operator==(const SenseGloveSetup& lhs, const SenseGloveSetup& rhs)

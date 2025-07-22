@@ -2,7 +2,7 @@
 #define SENSEGLOVE_HARDWARE_ACTUATION_MODE_H
 
 #include <string>
-#include <rcutils/logging_macros.h>
+#include <rclcpp/rclcpp.hpp>
 
 namespace SGHardware
 {
@@ -39,8 +39,8 @@ namespace SGHardware
       }
       else
       {
-        RCUTILS_LOG_WARN_NAMED(
-          "senseglove.actuation_mode",
+        RCLCPP_WARN(
+          rclcpp::get_logger("senseglove.actuation_mode"),
           "Actuation mode '%s' is not recognized; setting to unknown mode",
           actuationMode.c_str());
         value_ = unknown;
@@ -71,8 +71,8 @@ namespace SGHardware
         case torque:
           return "torque";
         default:
-          RCUTILS_LOG_WARN_NAMED(
-            "senseglove.actuation_mode",
+          RCLCPP_WARN(
+          rclcpp::get_logger("senseglove.actuation_mode"),
             "ActuationMode value '%d' is neither 'torque' nor 'position'; returning 'unknown'",
             static_cast<int>(value_));
           return "unknown";
