@@ -20,7 +20,7 @@ joint_trajectory_controller:
         - r_ring_dip      # Buzzer
         - r_pinky_dip     # Buzzer
       command_interfaces:
-        - position
+        - effort
       state_interfaces:
         - position
         - velocity

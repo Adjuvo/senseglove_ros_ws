@@ -17,7 +17,7 @@ joint_trajectory_controller:
         - l_index_dip     # Buzzer
         - l_thumper       # Buzzer - Thumper
       command_interfaces:
-        - position
+        - effort
       state_interfaces:
         - position
         - velocity

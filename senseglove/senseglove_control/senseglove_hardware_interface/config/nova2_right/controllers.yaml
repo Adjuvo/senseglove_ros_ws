@@ -19,7 +19,7 @@ joint_trajectory_controller:
         - r_palm_pinky    # Buzzer - Palm-Pinky Side
         - r_palm_strap    # Palm Strap
       command_interfaces:
-        - position
+        - effort
       state_interfaces:
         - position
         - velocity
