@@ -1,21 +1,33 @@
 controller_manager:
   ros__parameters:
-    update_rate: 100
+    update_rate: 60
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
-      name: joint_state_broadcaster
-
-    trajectory_controller:
+    joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-      name: trajectory_controller
+
+joint_trajectory_controller:
+  ros__parameters:
       joints:
         - l_thumb_brake   # FFB
         - l_index_brake   # FFB
         - l_middle_brake  # FFB
         - l_ring_brake    # FFB
-        - l_thumb_dip   # Buzzer
-        - l_index_dip   # Buzzer
-        - l_palm_index  # Buzzer - Palm-Index Side
-        - l_palm_pinky  # Buzzer - Palm-Pinky Side
-        - l_palm_strap  # Palm Strap
+        - l_thumb_dip     # Buzzer
+        - l_index_dip     # Buzzer
+        - l_palm_index    # Buzzer - Palm-Index Side
+        - l_palm_pinky    # Buzzer - Palm-Pinky Side
+        - l_palm_strap    # Palm Strap
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+      action_monitor_rate: 20.0
+      allow_partial_joints_goal: false
+      interpolate_from_desired_state: true
+      constraints:
+        stopped_velocity_tolerance: 0.01
+        goal_time: 0.0
+
       
