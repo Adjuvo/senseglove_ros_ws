@@ -13,7 +13,6 @@ project(senseglove_description
 find_package(ament_cmake REQUIRED)
 find_package(xacro REQUIRED)
 
-
 # List of xacro inputs
 set(XACRO_FILES
   urdf/dk1/dk1_left.xacro
@@ -22,15 +21,16 @@ set(XACRO_FILES
   urdf/nova1/nova_right.xacro
   urdf/nova2/nova2_left.xacro
   urdf/nova2/nova2_right.xacro
-  urdf/urdf_helper_macros/joints_macros.xacro
+  urdf/urdf_helper_macros/joint_interfaces_macro.xacro
 )
 
-# Install raw xacro files
+# Install main and description xacro files
 install(DIRECTORY urdf/
   DESTINATION share/${PROJECT_NAME}/urdf
   FILES_MATCHING PATTERN "*.xacro"
 )
 
+# Install ros2_control xacro files
 install(DIRECTORY ros2_control/
   DESTINATION share/${PROJECT_NAME}/ros2_control
   FILES_MATCHING PATTERN "*.xacro"
@@ -41,11 +41,11 @@ install(DIRECTORY meshes/
   DESTINATION share/${PROJECT_NAME}/meshes
 )
 
+# Install launch files
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
-
 
 # Install RViz configs
 install(DIRECTORY rviz/

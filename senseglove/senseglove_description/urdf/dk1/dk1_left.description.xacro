@@ -55,7 +55,7 @@
             <visual>
                 <origin xyz="0.056692 -0.01955 -0.06803" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_HUB.STL" scale="-0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_HUB.STL" scale="-0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -65,7 +65,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -75,7 +75,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -85,7 +85,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -95,7 +95,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -105,7 +105,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -115,7 +115,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -125,7 +125,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -135,7 +135,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -145,7 +145,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -155,7 +155,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -165,7 +165,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -175,7 +175,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -185,7 +185,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -195,7 +195,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -205,7 +205,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -215,7 +215,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -225,7 +225,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -235,7 +235,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -245,7 +245,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -255,7 +255,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -265,7 +265,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -275,7 +275,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -285,7 +285,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -295,7 +295,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -305,7 +305,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2-0.0004} ${-brake_height/2 - 0.0025} ${-first_bar_length-second_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Brake_assembly_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -315,7 +315,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.006} ${-second_bar_length-first_bar_length-0.003}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Abduction_joint_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -325,7 +325,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.0055}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_1_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -335,7 +335,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.005} ${-second_bar_length-0.005355}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_2_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -345,7 +345,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} ${-brake_height+0.00533} -0.00533" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Flexion_joint_3_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
@@ -355,7 +355,7 @@
             <visual>
                 <origin xyz="${-brake_thickness/2} -0.014951 ${-third_bar_length-0.0028}" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://senseglove_description/urdf/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://senseglove_description/meshes/dk1/MK29_DK1_Thimble_v2.STL" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
         </link>
