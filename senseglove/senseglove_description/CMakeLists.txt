@@ -13,9 +13,6 @@ project(senseglove_description
 find_package(ament_cmake REQUIRED)
 find_package(xacro REQUIRED)
 
-# Include helper to build .xacro into .urdf
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-include(cmake/senseglove_description-extras.cmake)
 
 # List of xacro inputs
 set(XACRO_FILES
@@ -24,11 +21,9 @@ set(XACRO_FILES
   urdf/nova1/nova_left.xacro
   urdf/nova1/nova_right.xacro
   urdf/nova2/nova2_left.xacro
-  urdf/urdf_macros/transmissions.xacro
+  urdf/nova2/nova2_right.xacro
+  urdf/urdf_helper_macros/joints_macros.xacro
 )
-
-# Generate and Install the URDFs
-build_and_install_xacro_files(${XACRO_FILES})
 
 # Install raw xacro files
 install(DIRECTORY urdf/
@@ -36,10 +31,21 @@ install(DIRECTORY urdf/
   FILES_MATCHING PATTERN "*.xacro"
 )
 
+install(DIRECTORY ros2_control/
+  DESTINATION share/${PROJECT_NAME}/ros2_control
+  FILES_MATCHING PATTERN "*.xacro"
+)
+
 # Install meshes
 install(DIRECTORY meshes/
   DESTINATION share/${PROJECT_NAME}/meshes
 )
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 
 # Install RViz configs
 install(DIRECTORY rviz/
