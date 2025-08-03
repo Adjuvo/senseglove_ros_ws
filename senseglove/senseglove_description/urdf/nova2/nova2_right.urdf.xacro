@@ -4,7 +4,7 @@
   <xacro:arg name="prefix" default="" />
 
   <!-- Import Nova2 Description Macro -->
-  <xacro:include filename="$(find senseglove_description)/urdf/nova2/nova2_right.xacro" />
+  <xacro:include filename="$(find senseglove_description)/urdf/nova2/nova2_right.description.xacro" />
 
   <!-- Import Nova2 ros2_control Macro -->
   <xacro:include filename="$(find senseglove_description)/ros2_control/nova2/nova2_right.ros2_control.xacro" />

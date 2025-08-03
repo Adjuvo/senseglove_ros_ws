@@ -1,231 +1,218 @@
 <?xml version='1.0'?>
 
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nova">
-    <xacro:arg name="prefix" default="" />
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- Include transmission macro -->
-    <xacro:include filename="$(find senseglove_description)/urdf/urdf_macros/transmission.xacro"/>
+    <xacro:macro name="nova_right" params="parent prefix">
 
-    <!-- Constants -->
-    <xacro:property name="PI" value="3.1415926535897931"/>
-    <xacro:property name="hover_height" value="0.5"/>
-    <xacro:property name="color_blue" value="0.0 0.0 1.0 1.0"/> 
+        <!-- Constants -->
+        <xacro:property name="PI"           value="3.1415926535897931"/>
+        <xacro:property name="hover_height" value="0.5"/>
+        <xacro:property name="color_blue"   value="0.0 0.0 1.0 1.0"/> 
 
-    <!-- Used for fixing robot to Gazebo 'world' -->
-    <link name="world"/>
+        <link name="r_glove_hub">
+            <visual name="r_glove_hub_visual">
+                <origin xyz="0.04999999711722506 0.0384999985617558 0.01800000348079321" rpy="1.570796326794895 2.487149296841506e-15 -1.0232564774448725e-15" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/glove_hub.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="Blue">
+                    <color rgba="${color_blue}"/>
+                </material>
+            </visual>
+        </link>
 
-    <link name="r_glove_hub">
-        <visual name="r_glove_hub_visual">
-            <origin xyz="0.04999999711722506 0.0384999985617558 0.01800000348079321" rpy="1.570796326794895 2.487149296841506e-15 -1.0232564774448725e-15" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/glove_hub.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-            <material name="Blue">
-                <color rgba="${color_blue}"/>
-            </material>
-        </visual>
-    </link>
+        <link name="r_thumb_brake">
+            <visual name="r_thumb_brake_visual">
+                <origin xyz="-0.018915103190668782 -0.05603821597043106 0.01899999971512907" rpy="-1.5707963267948946 -7.90166543307436e-16 2.3561944901923444" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/thumb_brake.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_thumb_brake">
-        <visual name="r_thumb_brake_visual">
-            <origin xyz="-0.018915103190668782 -0.05603821597043106 0.01899999971512907" rpy="-1.5707963267948946 -7.90166543307436e-16 2.3561944901923444" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/thumb_brake.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_thumb_flexion_one">
+            <visual name="r_thumb_flexion_one_visual">
+                <origin xyz="0.06136539170263021 -0.025453226250843307 -0.00892943928989283" rpy="1.4833638815934393 -0.08710016207930293 1.5727025747130363" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_one.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_thumb_flexion_one">
-        <visual name="r_thumb_flexion_one_visual">
-            <origin xyz="0.06136539170263021 -0.025453226250843307 -0.00892943928989283" rpy="1.4833638815934393 -0.08710016207930293 1.5727025747130363" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_one.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_thumb_flexion_two">
+            <visual name="r_thumb_flexion_two_visual">
+                <origin xyz="0.06136538618020733 -0.025453232684174015 -0.00892943224376902" rpy="1.483363881593886 -0.08710016207836464 1.5727025747122354" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_two.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_thumb_flexion_two">
-        <visual name="r_thumb_flexion_two_visual">
-            <origin xyz="0.06136538618020733 -0.025453232684174015 -0.00892943224376902" rpy="1.483363881593886 -0.08710016207836464 1.5727025747122354" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_two.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_thumb_flexion_three">
+            <visual name="r_thumb_flexion_three_visual">
+                <origin xyz="0.06136539065790094 -0.025453229117376783 -0.008929435197658486" rpy="1.483363881593889 -0.08710016207859443 1.5727025747130292" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_three.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_thumb_flexion_three">
-        <visual name="r_thumb_flexion_three_visual">
-            <origin xyz="0.06136539065790094 -0.025453229117376783 -0.008929435197658486" rpy="1.483363881593889 -0.08710016207859443 1.5727025747130292" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/thumb_flexion_three.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_index_brake">
+            <visual name="r_index_brake_visual">
+                <origin xyz="-0.0262500029572806 -0.053000001438244 -0.0069999981186812344" rpy="1.570796326794896 2.6489608621219915e-15 -1.5925779067116534e-15" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/index_brake.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_index_brake">
-        <visual name="r_index_brake_visual">
-            <origin xyz="-0.0262500029572806 -0.053000001438244 -0.0069999981186812344" rpy="1.570796326794896 2.6489608621219915e-15 -1.5925779067116534e-15" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/index_brake.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_index_flexion_one">
+            <visual name="r_index_flexion_one_visual">
+                <origin xyz="0.06050000143824393 0.012000001881318724 -0.026249997042719412" rpy="-3.1415926535897927 -1.5707963267948912 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/index_flexion_one.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_index_flexion_one">
-        <visual name="r_index_flexion_one_visual">
-            <origin xyz="0.06050000143824393 0.012000001881318724 -0.026249997042719412" rpy="-3.1415926535897927 -1.5707963267948912 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/index_flexion_one.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_index_flexion_two">
+            <visual name="r_index_flexion_two_visual">
+                <origin xyz="0.060500001438244216 0.011999998118680907 -0.026250002957280274" rpy="3.141592653589791 -1.5707963267948903 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/index_flexion_two.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_index_flexion_two">
-        <visual name="r_index_flexion_two_visual">
-            <origin xyz="0.060500001438244216 0.011999998118680907 -0.026250002957280274" rpy="3.141592653589791 -1.5707963267948903 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/index_flexion_two.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_index_flexion_three">
+            <visual name="r_index_flexion_three_visual">
+                <origin xyz="0.06050000143824457 -0.011999998118681328 0.026250002957280093" rpy="-2.8085173076064534e-15 1.5707963267948908 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/index_flexion_three.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_index_flexion_three">
-        <visual name="r_index_flexion_three_visual">
-            <origin xyz="0.06050000143824457 -0.011999998118681328 0.026250002957280093" rpy="-2.8085173076064534e-15 1.5707963267948908 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/index_flexion_three.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_middle_brake">
+            <visual name="r_middle_brake_visual">
+                <origin xyz="-0.026250002957280583 -0.05300000143824441 -0.006999996519206939" rpy="1.5707963267948946 2.1250764796468657e-15 -8.522785545269755e-16" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/middle_brake.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_middle_brake">
-        <visual name="r_middle_brake_visual">
-            <origin xyz="-0.026250002957280583 -0.05300000143824441 -0.006999996519206939" rpy="1.5707963267948946 2.1250764796468657e-15 -8.522785545269755e-16" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/middle_brake.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_middle_flexion_one">
+            <visual name="r_middle_flexion_one_visual">
+                <origin xyz="0.06050000143824513 -0.011999996519206886 0.026250002957280607" rpy="-2.142383492831341e-15 1.570796326794891 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_one.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_middle_flexion_one">
-        <visual name="r_middle_flexion_one_visual">
-            <origin xyz="0.06050000143824513 -0.011999996519206886 0.026250002957280607" rpy="-2.142383492831341e-15 1.570796326794891 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_one.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_middle_flexion_two">
+            <visual name="r_middle_flexion_two_visual">
+                <origin xyz="0.06050000143824574 -0.011999996519206926 0.02625000295728071" rpy="-5.2232523861661165e-15 1.570796326794891 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_two.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_middle_flexion_two">
-        <visual name="r_middle_flexion_two_visual">
-            <origin xyz="0.06050000143824574 -0.011999996519206926 0.02625000295728071" rpy="-5.2232523861661165e-15 1.570796326794891 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_two.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_middle_flexion_three">
+            <visual name="r_middle_flexion_three_visual">
+                <origin xyz="0.06050000143824516 -0.011999996519207294 0.026250002957280704" rpy="-5.264885749589545e-15 1.5707963267948906 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_three.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_middle_flexion_three">
-        <visual name="r_middle_flexion_three_visual">
-            <origin xyz="0.06050000143824516 -0.011999996519207294 0.026250002957280704" rpy="-5.264885749589545e-15 1.5707963267948906 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/middle_flexion_three.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_ring_brake">
+            <visual name="r_ring_brake_visual">
+                <origin xyz="-0.026250002957280572 -0.05300000143824431 -0.006999996519206952" rpy="1.5707963267948946 2.4282221493532045e-15 -1.315938020877693e-15" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/ring_brake.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_ring_brake">
-        <visual name="r_ring_brake_visual">
-            <origin xyz="-0.026250002957280572 -0.05300000143824431 -0.006999996519206952" rpy="1.5707963267948946 2.4282221493532045e-15 -1.315938020877693e-15" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/ring_brake.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_ring_flexion_one">
+            <visual name="r_ring_flexion_one_visual">
+                <origin xyz="0.06050000143824468 -0.011999996519206753 0.02625000295728042" rpy="-3.807718029769072e-15 1.5707963267948912 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_one.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_ring_flexion_one">
-        <visual name="r_ring_flexion_one_visual">
-            <origin xyz="0.06050000143824468 -0.011999996519206753 0.02625000295728042" rpy="-3.807718029769072e-15 1.5707963267948912 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_one.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_ring_flexion_two">
+            <visual name="r_ring_flexion_two_visual">
+                <origin xyz="0.060500001438245035 -0.011999996519206921 0.026250002957280714" rpy="-4.543240783583241e-15 1.5707963267948915 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_two.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_ring_flexion_two">
-        <visual name="r_ring_flexion_two_visual">
-            <origin xyz="0.060500001438245035 -0.011999996519206921 0.026250002957280714" rpy="-4.543240783583241e-15 1.5707963267948915 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_two.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_ring_flexion_three">
+            <visual name="r_ring_flexion_three_visual">
+                <origin xyz="0.060500001438244945 -0.01199999651920702 0.02625000295728051" rpy="-5.806119474094289e-15 1.5707963267948877 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_three.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_ring_flexion_three">
-        <visual name="r_ring_flexion_three_visual">
-            <origin xyz="0.060500001438244945 -0.01199999651920702 0.02625000295728051" rpy="-5.806119474094289e-15 1.5707963267948877 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/ring_flexion_three.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_pinky_brake">
+            <visual name="r_pinky_brake_visual">
+                <origin xyz="0.026249997117225074 -0.05300000064848244 0.015000003480793117" rpy="-1.5707963267948948 -9.609279519332261e-16 -3.141592653589791" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/pinky_brake.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_pinky_brake">
-        <visual name="r_pinky_brake_visual">
-            <origin xyz="0.026249997117225074 -0.05300000064848244 0.015000003480793117" rpy="-1.5707963267948948 -9.609279519332261e-16 -3.141592653589791" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/pinky_brake.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_pinky_flexion_one">
+            <visual name="r_pinky_flexion_one_visual">
+                <origin xyz="0.060500000648481794 -0.012000003480793438 0.02624999711722504" rpy="9.284446810305057e-15 1.5707963267948926 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_one.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_pinky_flexion_one">
-        <visual name="r_pinky_flexion_one_visual">
-            <origin xyz="0.060500000648481794 -0.012000003480793438 0.02624999711722504" rpy="9.284446810305057e-15 1.5707963267948926 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_one.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_pinky_flexion_two">
+            <visual name="r_pinky_flexion_two_visual">
+                <origin xyz="0.06050000064848222 -0.012000003480793029 0.026249997117225022" rpy="7.896668029523656e-15 1.5707963267948934 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_two.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_pinky_flexion_two">
-        <visual name="r_pinky_flexion_two_visual">
-            <origin xyz="0.06050000064848222 -0.012000003480793029 0.026249997117225022" rpy="7.896668029523656e-15 1.5707963267948934 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_two.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
+        <link name="r_pinky_flexion_three">
+            <visual name="r_pinky_flexion_three_visual">
+                <origin xyz="0.060500000648482946 -0.01200000348079279 0.026249997117224862" rpy="8.201598196469284e-15 1.5707963267948941 0" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_three.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
-    <link name="r_pinky_flexion_three">
-        <visual name="r_pinky_flexion_three_visual">
-            <origin xyz="0.060500000648482946 -0.01200000348079279 0.026249997117224862" rpy="8.201598196469284e-15 1.5707963267948941 0" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/pinky_flexion_three.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
-
-    <link name="r_thumper">
-        <visual name="r_thumper_visual">
-            <origin xyz="-2.882775058665743e-09 -1.4382443502825026e-09 3.4807930182623183e-09" rpy="1.570796326794894 -5.43408119385757e-15 -1.4163819959694949e-15" />
-            <geometry>
-                <mesh filename="package://senseglove_description/meshes/nova/thumper.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-        </visual>
-    </link>
-
-    <!-- ros2_control Interface -->
-    <ros2_control name="SGGloveHardware" type="system">
-        <hardware>
-            <plugin>senseglove_hardware_interface/SGHardwareInterface</plugin>
-            <param name="glove_name">nova_right</param>
-            <param name="config_path">$(find senseglove_hardware_interface)/config/hardwarebuilder/nova_right.yaml</param>
-        </hardware>
+        <link name="r_thumper">
+            <visual name="r_thumper_visual">
+                <origin xyz="-2.882775058665743e-09 -1.4382443502825026e-09 3.4807930182623183e-09" rpy="1.570796326794894 -5.43408119385757e-15 -1.4163819959694949e-15" />
+                <geometry>
+                    <mesh filename="package://senseglove_description/meshes/nova/thumper.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+        </link>
 
         <!-- Joints -->
         <joint name="joint_base_fixed_parent_joint" type="fixed">
-            <parent link="world"/>
+            <parent link="${parent}"/>
             <child link="r_glove_hub"/>
             <origin xyz="0.5 0 ${hover_height}" rpy="0 0 0"/>
         </joint>
@@ -398,15 +385,5 @@
             <limit lower="0.0" upper="1.745329" effort="100" velocity="1000" />
         </joint>
 
-    </ros2_control>
-
-    <!-- Transmissions for actuated joints -->
-    <xacro:add_transmission joint_name="r_index_brake"/>
-    <xacro:add_transmission joint_name="r_thumb_brake"/>
-    <xacro:add_transmission joint_name="r_middle_brake"/>
-    <xacro:add_transmission joint_name="r_ring_brake"/>
-    <xacro:add_transmission joint_name="r_thumb_dip"/>
-    <xacro:add_transmission joint_name="r_index_dip"/>
-    <xacro:add_transmission joint_name="r_thumper"/>
-
+    </xacro:macro>
 </robot>
