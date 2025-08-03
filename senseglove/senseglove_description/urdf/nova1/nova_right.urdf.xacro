@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nova">
+  <xacro:arg name="prefix" default="" />
+
+  <!-- Import Nova Description Macro -->
+  <xacro:include filename="$(find senseglove_description)/urdf/nova/nova_right.description.xacro" />
+
+  <!-- Import Nova ros2_control Macro -->
+  <xacro:include filename="$(find senseglove_description)/ros2_control/nova/nova_right.ros2_control.xacro" />
+
+  <!-- Used for fixing robot -->
+  <link name="world"/>
+
+  <xacro:nova_right parent="world" prefix="$(arg prefix)" />
+
+  <xacro:nova_right_ros2_control name="NovaRightControl" prefix="$(arg prefix)" />
+
+</robot>

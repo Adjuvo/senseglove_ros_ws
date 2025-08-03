@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dk1">
+  <xacro:arg name="prefix" default="" />
+
+  <!-- Import Dk1 Description Macro -->
+  <xacro:include filename="$(find senseglove_description)/urdf/dk1/dk1_left.description.xacro" />
+
+  <!-- Import Dk1 ros2_control Macro -->
+  <xacro:include filename="$(find senseglove_description)/ros2_control/dk1/dk1_left.ros2_control.xacro" />
+
+  <!-- Used for fixing robot -->
+  <link name="world"/>
+
+  <xacro:dk1_left parent="world" prefix="$(arg prefix)" />
+
+  <xacro:dk1_left_ros2_control name="Dk1LeftControl" prefix="$(arg prefix)" />
+
+</robot>
