@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:macro name="nova2_right_ros2_control" params="name prefix">
+    <xacro:macro name="nova_right_ros2_control" params="name prefix">
 
         <!-- Include joint interfaces macro -->
         <xacro:include filename="$(find senseglove_description)/urdf/urdf_helper_macros/joint_interfaces_macro.xacro"/>
@@ -11,7 +11,7 @@
         <ros2_control name="${name}" type="system">
             <hardware>
                 <plugin>senseglove_hardware_interface/SGHardwareInterface</plugin>
-                <param name="glove_name">nova2_right</param>
+                <param name="glove_name">nova_right</param>
             </hardware>
 
             <!-- State Interfaces -->
@@ -34,14 +34,8 @@
             <xacro:add_state_interfaces joint_name="r_pinky_pip"/>
             <xacro:add_state_interfaces joint_name="r_pinky_dip"/>  
 
-            <xacro:add_state_interfaces joint_name="r_palm_index"/>
-            <xacro:add_state_interfaces joint_name="r_palm_pinky"/>
-            <xacro:add_state_interfaces joint_name="r_palm_strap"/>
-
             <!-- Command Interfaces -->
-            <xacro:add_command_interfaces joint_name="r_palm_index"/>
-            <xacro:add_command_interfaces joint_name="r_palm_pinky"/>
-            <xacro:add_command_interfaces joint_name="r_palm_strap"/>
+            <xacro:add_command_interfaces joint_name="r_thumper"/>
 
             <!-- State and Command Interfaces -->
             <xacro:add_state_and_command_interfaces joint_name="r_thumb_brake"/>
