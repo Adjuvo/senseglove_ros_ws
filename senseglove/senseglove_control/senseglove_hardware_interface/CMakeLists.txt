@@ -28,19 +28,19 @@ find_package(senseglove_msgs REQUIRED)
 # Find SenseGlove API libraries
 find_library(SGCORE
         NAMES libsgcore.so sgcore
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so sgconnect
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so serial
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/linux/Ubuntu/x86-64/release/
+        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
         REQUIRED
         )
 
