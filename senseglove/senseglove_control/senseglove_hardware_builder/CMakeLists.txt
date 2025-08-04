@@ -43,7 +43,7 @@ find_library(SGSERIAL
 find_package(yaml-cpp REQUIRED)
 
 # Add library target
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
         src/hardware_builder.cpp
         )
 
@@ -71,6 +71,7 @@ target_link_libraries(${PROJECT_NAME}
         ${SGCONNECT}
         ${SGSERIAL}
         pthread
+        yaml-cpp
         )
 
 # Ensure RPATH is set so runtime linker can find shared libs if installed in non-standard location

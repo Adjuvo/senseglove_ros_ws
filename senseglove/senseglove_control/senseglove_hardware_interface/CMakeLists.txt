@@ -45,7 +45,7 @@ find_library(SGSERIAL
         )
 
 # Add library target
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
         src/senseglove_hardware_interface.cpp
         )
 
