@@ -11,10 +11,15 @@ project(senseglove_com
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 
+# Install
 install(
-  DIRECTORY SenseCom/
-  DESTINATION share/${PROJECT_NAME}
-  FILES_MATCHING PATTERN "*"
+  DIRECTORY SenseCom/Linux/SenseCom_Linux_Latest/
+  DESTINATION share/${PROJECT_NAME}/Linux/SenseCom_Linux_Latest
+)
+
+install(
+  PROGRAMS SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64
+  DESTINATION share/${PROJECT_NAME}/Linux/SenseCom_Linux_Latest
 )
 
 ament_package()
