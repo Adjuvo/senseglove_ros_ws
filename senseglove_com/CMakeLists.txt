@@ -17,9 +17,9 @@ install(
   DESTINATION share/${PROJECT_NAME}/Linux/SenseCom_Linux_Latest
 )
 
-install(
-  PROGRAMS SenseCom/Linux/SenseCom_Linux_Latest/SenseCom.x86_64
-  DESTINATION share/${PROJECT_NAME}/Linux/SenseCom_Linux_Latest
+install(DIRECTORY SenseCom/Linux/SenseCom_Linux_Latest/
+  DESTINATION lib/${PROJECT_NAME}
+  USE_SOURCE_PERMISSIONS
 )
 
 ament_package()
