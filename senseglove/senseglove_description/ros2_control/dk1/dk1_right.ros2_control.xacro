@@ -10,7 +10,7 @@
         <!-- ros2_control Interface -->
         <ros2_control name="${name}" type="system">
             <hardware>
-                <plugin>senseglove_hardware_interface/SGHardwareInterface</plugin>
+                <plugin>senseglove_hardware_interface/SenseGloveHardwareInterface</plugin>
                 <param name="glove_name">dk1_right</param>
             </hardware>
 
