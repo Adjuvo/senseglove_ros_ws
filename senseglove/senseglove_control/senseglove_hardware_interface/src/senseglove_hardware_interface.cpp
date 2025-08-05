@@ -28,7 +28,8 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
     is_right_ = info_.hardware_parameters.at("is_right") == "true";
     publish_rate_ = std::stod(info_.hardware_parameters.at("publish_rate"));
 
-    HardwareBuilder builder(selected_robot_, glove_index_, is_right_);
+    AllowedRobot robot_enum(selected_robot_);
+    HardwareBuilder builder(robot_enum, glove_index_, is_right_);
     senseglove_setup_ = builder.createSenseGloveSetup();
 
     if (!senseglove_setup_ || senseglove_setup_->size() == 0) {

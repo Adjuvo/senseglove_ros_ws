@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dk1">
+
+  <xacro:arg name="selected_robot"  default="dk1_right" />
+  <xacro:arg name="glove_index"     default="0" />
+  <xacro:arg name="is_right"        default="true" />
+  <xacro:arg name="publish_rate"    default="120" />
   <xacro:arg name="prefix" default="" />
 
   <!-- Import Dk1 Description Macro -->
@@ -14,6 +19,12 @@
 
   <xacro:dk1_right parent="world" prefix="$(arg prefix)" />
 
-  <xacro:dk1_right_ros2_control name="Dk1RightControl" prefix="$(arg prefix)" />
+  <xacro:dk1_right_ros2_control
+    name="Dk1RightControl" 
+    prefix="$(arg prefix)" 
+    selected_robot="$(arg selected_robot)"
+    glove_index="$(arg glove_index)"
+    is_right="$(arg is_right)"
+    publish_rate="$(arg publish_rate)" />
 
 </robot>

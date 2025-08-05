@@ -105,7 +105,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('use_rviz', default_value='false'),
         sensecom_process,
-        launch_hardware_nodes_handler 
+        launch_hardware_nodes_handler
         # calibration_left,
         # calibration_right,
         # rviz_node

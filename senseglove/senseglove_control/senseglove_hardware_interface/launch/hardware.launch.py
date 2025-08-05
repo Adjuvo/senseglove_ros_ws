@@ -25,6 +25,14 @@ def generate_launch_description():
         PathJoinSubstitution([FindExecutable(name='xacro')]),
         " ",
         xacro_file,
+        " ",
+        "selected_robot:=", robot,
+        " ",
+        "glove_index:=", glove_index,
+        " ",
+        "is_right:=", is_right,
+        " ",
+        "publish_rate:=", "100", 
         ])
 
 
@@ -46,7 +54,7 @@ def generate_launch_description():
     control_node = Node(
         package='controller_manager',
         executable='ros2_control_node',
-        parameters=[robot_controllers],
+        parameters=[robot_description, robot_controllers],
         output='screen',
         namespace=namespace
     )
