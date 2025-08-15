@@ -46,22 +46,22 @@ install(FILES
   DESTINATION lib
 )
 
-add_executable(check_sensecom src/check_sensecom.cpp)
+add_executable(sg_tester src/sg_tester.cpp)
 
-target_include_directories(check_sensecom PRIVATE
+target_include_directories(sg_tester PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(check_sensecom
+target_link_libraries(sg_tester
   ${SGCORE}
   ${SGCONNECT}
   ${SGSERIAL}
   pthread
 )
 
-ament_target_dependencies(check_sensecom rclcpp)
+ament_target_dependencies(sg_tester rclcpp)
 
-install(TARGETS check_sensecom
+install(TARGETS sg_tester
   DESTINATION lib/${PROJECT_NAME}
 )
 
