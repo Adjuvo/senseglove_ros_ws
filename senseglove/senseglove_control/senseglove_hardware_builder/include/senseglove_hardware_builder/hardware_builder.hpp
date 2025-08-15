@@ -35,6 +35,8 @@ public:
   explicit HardwareBuilder(const std::string& yamlPath, int gloveIndex, bool isRight);
   HardwareBuilder(const std::string& yamlPath, urdf::Model urdfModel);
 
+  void setUrdfModel(urdf::Model urdfModel);
+
   // Build SenseGlove robot setup
   std::unique_ptr<SGHardware::SenseGloveSetup> createSenseGloveSetup();
 
@@ -47,8 +49,6 @@ public:
                                                  int robotIndex, bool isArgRight);
 private:
   // Internal helpers
-  void initUrdf(SGCore::EDeviceType deviceType, bool isRight,
-              rclcpp::Node::SharedPtr node, const std::string& robot_namespace);
   std::vector<SGHardware::Joint> createJoints(const YAML::Node& joints_config) const;
   std::vector<SGHardware::SenseGloveRobot> createRobots(const YAML::Node& allRobotConfig, urdf::Model urdfModel,
                                                         std::vector<SGHardware::Joint> joints,
@@ -58,7 +58,6 @@ private:
   // Member data
   YAML::Node robotConfig;
   urdf::Model urdfModel;
-  bool urdfInitialize = true;
   int gloveIndex;
   bool isRight;
 };

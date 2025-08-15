@@ -12,7 +12,7 @@ HardwareBuilder::HardwareBuilder(AllowedRobot robot, int gloveIndex, bool isRigh
 }
 
 HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdfModel)
-  : robotConfig(YAML::LoadFile(robot.getFilePath())), urdfModel(std::move(urdfModel)), urdfInitialize(false)
+  : robotConfig(YAML::LoadFile(robot.getFilePath())), urdfModel(std::move(urdfModel))
 {
 }
 
@@ -22,12 +22,17 @@ HardwareBuilder::HardwareBuilder(const std::string& yamlPath, int gloveIndex, bo
 }
 
 HardwareBuilder::HardwareBuilder(const std::string& yamlPath, urdf::Model urdfModel)
-  : robotConfig(YAML::LoadFile(yamlPath)), urdfModel(std::move(urdfModel)), urdfInitialize(false)
+  : robotConfig(YAML::LoadFile(yamlPath)), urdfModel(std::move(urdfModel))
 {
 }
 
-// Initializes connection to SenseGloves, selects appropriate glove based on configuration
-// Initializes the Robot's Joints and URDF modeURDF model based on the configuration
+
+void HardwareBuilder::setUrdfModel(urdf::Model urdfModel)
+{
+    this->urdfModel = std::move(urdfModel);
+}
+
+// Create SenseGloveSetup
 std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSetup()
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -54,7 +59,6 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   {
     auto node = std::make_shared<rclcpp::Node>("senseglove_hardware_builder");
     std::string robot_namespace = "/senseglove/glove" + std::to_string(gloveIndex) + (isRight ? "/rh" : "/lh");
-    this->initUrdf(currentGlove->GetDeviceType(), currentGlove->IsRight(), node, robot_namespace);
   }
   else
   {
@@ -77,8 +81,7 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
 }
 
 
-// Initializes and returns a senseglove::Joint object based on the provided configuration
-// Parses the YAML node for joint configuration, validating the presence of required keys, and setting up actuation modes
+// Create Joint
 SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, const std::string& jointName, const urdf::JointConstSharedPtr& urdfJoint)
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -115,8 +118,7 @@ SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, co
   return {jointName, jointIndex, actuationType, actuationMode, allowActuation};
 }
 
-// Constructs a SenseGloveRobot object by combining information about the glove, joint configurations, and the URDF model
-// Ensures that the glove's handedness matches the expected configuration
+// Construct SenseGloveRobot object
 SGHardware::SenseGloveRobot HardwareBuilder::createRobot(
   const YAML::Node& robotConfig, urdf::Model urdfModel, std::vector<SGHardware::Joint> jointList,
   std::shared_ptr<HapticGlove> glove, int robotIndex, bool isArgRight)
@@ -138,7 +140,6 @@ SGHardware::SenseGloveRobot HardwareBuilder::createRobot(
 }
 
 // Utility function to ensure that all necessary keys are present in a given YAML node
-// Throws an error if any key is missing
 void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const std::vector<std::string>& keyList, const std::string& /*object_name*/)
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -152,47 +153,7 @@ void HardwareBuilder::validateRequiredKeysExist(const YAML::Node& config, const 
   }
 }
 
-// Initializes the URDF model based on the specified device type and handedness
-// This function sets up the URDF parameters to match the SenseGlove used.
-void HardwareBuilder::initUrdf(SGCore::EDeviceType deviceType, bool isRight, rclcpp::Node::SharedPtr node, const std::string& robot_namespace)
-{
-  auto logger = rclcpp::get_logger("senseglove.hardware_builder");
-
-  if (this->urdfInitialize)
-  {
-    std::string deviceTypeString;
-    switch (deviceType)
-    {
-      case EDeviceType::Unknown:    deviceTypeString = "unknown";    break;
-      case EDeviceType::BetaDevice: deviceTypeString = "beta_device"; break;
-      case EDeviceType::SenseGlove: deviceTypeString = "dk1";        break;
-      case EDeviceType::Nova:       deviceTypeString = "nova";       break;
-      case EDeviceType::Nova2:      deviceTypeString = "nova2";      break;
-    }
-
-    std::string handedness = isRight ? "right" : "left";
-    std::string full_param = robot_namespace + "/robot_description";
-    std::string urdf_string;
-
-    if (!node->get_parameter(full_param, urdf_string)) 
-    {
-      RCLCPP_ERROR_STREAM(logger, "Could not retrieve URDF from parameter: " << full_param);
-      throw std::runtime_error("Failed to get robot_description from parameter server.");
-    }
-
-    if (!this->urdfModel.initString(urdf_string)) 
-    {
-      RCLCPP_ERROR_STREAM(logger, "Failed to parse URDF from parameter: " << full_param);
-      throw std::runtime_error("Failed to initialize URDF from parameter string.");
-    }
-
-    this->urdfInitialize = false;
-    RCLCPP_INFO_STREAM(logger, "Successfully initialized URDF from parameter: " << full_param);
-  }
-}
-
-// Parses the joint configurations from the YAML file
-// Creates a list of SGHardware::Joint objects that match the specifications in the URDF model
+// Creates a list of SGHardware::Joint objects
 std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& jointsConfig) const
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -226,7 +187,7 @@ std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& j
   return joints;
 }
 
-// This function creates a SenseGloveRobot for each glove, from the list of gloves and their configurations
+// Creates a SenseGloveRobot for each glove,
 std::vector<SGHardware::SenseGloveRobot> HardwareBuilder::createRobots(
   const YAML::Node& robotsConfig, urdf::Model urdfModel, std::vector<SGHardware::Joint> jointList,
   std::vector<std::shared_ptr<HapticGlove>> allGloves) const
@@ -244,7 +205,7 @@ std::vector<SGHardware::SenseGloveRobot> HardwareBuilder::createRobots(
   return robots;
 }
 
-// A helper function to select the correct glove from a list, based on the specified hand orientation and glove number
+// Helper function to select the correct glove from a list, based on the specified hand orientation and glove number
 std::shared_ptr<HapticGlove> HardwareBuilder::correctGlove(std::vector<std::shared_ptr<HapticGlove>> gloves) const
 {
   int mod = gloveIndex % 2;

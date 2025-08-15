@@ -24,12 +24,24 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
   try {
     // Parse required parameters
     selected_robot_ = info_.hardware_parameters.at("selected_robot");
+    AllowedRobot robot_enum(selected_robot_);
+
     glove_index_ = std::stoi(info_.hardware_parameters.at("glove_index"));
-    is_right_ = info_.hardware_parameters.at("is_right") == "true";
+
+    std::string is_right_str = info_.hardware_parameters.at("is_right");
+    std::transform(is_right_str.begin(), is_right_str.end(), is_right_str.begin(), ::tolower);
+    is_right_ = (is_right_str == "true") ? true : false;
+
     publish_rate_ = std::stod(info_.hardware_parameters.at("publish_rate"));
 
-    AllowedRobot robot_enum(selected_robot_);
+    urdf::Model urdf_model;
+    if (!urdf_model.initString(info_.original_xml)) {
+        RCLCPP_ERROR(get_logger(), "Failed to parse URDF from original_xml");
+        return CallbackReturn::ERROR;
+    }
+
     HardwareBuilder builder(robot_enum, glove_index_, is_right_);
+    builder.setUrdfModel(std::move(urdf_model)); 
     senseglove_setup_ = builder.createSenseGloveSetup();
 
     if (!senseglove_setup_ || senseglove_setup_->size() == 0) {
@@ -37,10 +49,10 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
       return CallbackReturn::ERROR;
     }
 
-    num_gloves_ = senseglove_setup_->size();
-    num_joints_ = senseglove_setup_->getSenseGloveRobot(0).getJointSize();
-    effort_joints_ = senseglove_setup_->getSenseGloveRobot(0).getEffortJointSize();
-    vibration_joints_ = senseglove_setup_->getSenseGloveRobot(0).getVibrationJointSize();
+    num_gloves_        = senseglove_setup_->size();
+    num_joints_        = senseglove_setup_->getSenseGloveRobot(0).getJointSize();
+    effort_joints_     = senseglove_setup_->getSenseGloveRobot(0).getEffortJointSize();
+    vibration_joints_  = senseglove_setup_->getSenseGloveRobot(0).getVibrationJointSize();
 
     initialize_joint_data();
     return CallbackReturn::SUCCESS;
