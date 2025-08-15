@@ -1,9 +1,14 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, RegisterEventHandler
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration, Command, FindExecutable, PathJoinSubstitution, TextSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PythonExpression
+from launch.event_handlers.on_process_start import OnProcessStart
+
+from launch.substitutions import LaunchConfiguration
+from launch.actions import OpaqueFunction, LogInfo
+
 
 def generate_launch_description():
 
@@ -44,6 +49,19 @@ def generate_launch_description():
         handedness
     ])
 
+    def log_args_fn(context, *args, **kwargs):
+        robot = LaunchConfiguration('robot').perform(context)
+        glove_index = LaunchConfiguration('gloveIndex').perform(context)
+        is_right = LaunchConfiguration('isRight').perform(context)
+
+        return [
+            LogInfo(
+                msg=f"[DEBUG] Xacro args: robot={robot} glove_index={glove_index} is_right={is_right}"
+            )
+        ]
+
+    log_args = OpaqueFunction(function=log_args_fn)
+
     robot_controllers = PathJoinSubstitution([
         FindPackageShare('senseglove_hardware_interface'),
         'config',
@@ -59,10 +77,18 @@ def generate_launch_description():
         namespace=namespace
     )
 
-    controller_spawner = Node(
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        parameters=[robot_description],
+        output='screen',
+        namespace=namespace
+    )
+
+    joint_state_broadcaster_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['joint_state_broadcaster', '--controller-manager-timeout', '60'],
+        arguments=['joint_state_broadcaster'],
         output='screen',
         namespace=namespace
     )
@@ -70,7 +96,10 @@ def generate_launch_description():
     trajectory_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['trajectory_controller', '--controller-manager-timeout', '60'],
+        arguments=['joint_trajectory_controller',
+                    "--inactive",
+                    "--param-file",
+                    robot_controllers],
         output='screen',
         namespace=namespace
     )
@@ -87,8 +116,9 @@ def generate_launch_description():
         DeclareLaunchArgument('robot', description='The robot model to use'),
         DeclareLaunchArgument('gloveIndex', description='Index of the glove'),
         DeclareLaunchArgument('isRight', description='Is right hand glove? (true/false)'),
+        log_args,
         control_node,
-        controller_spawner,
-        trajectory_controller_spawner,
-        robot_state_publisher
+        robot_state_publisher,
+        joint_state_broadcaster_spawner,
+        trajectory_controller_spawner
     ])
