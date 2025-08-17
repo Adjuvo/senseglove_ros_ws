@@ -4,6 +4,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.event_handlers import OnProcessStart
 from launch_ros.actions import Node
+from launch.conditions import IfCondition
 
 from ament_index_python.packages import get_package_share_directory
 import yaml
@@ -90,23 +91,24 @@ def generate_launch_description():
         parameters=[calib_right_file]
     )
 
+    # Locate senseglove_description package
+    description_share = get_package_share_directory('senseglove_description')    
+    rviz_right_file = os.path.join(description_share, 'rviz', 'urdf_right.rviz')
+
     # RViz
     rviz_node = Node(
-        condition=use_rviz,
+        condition=IfCondition(use_rviz),
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', os.path.join(
-            os.getenv('AMENT_PREFIX_PATH').split(':')[0],
-            'share', 'senseglove_description', 'rviz', 'urdf_both.rviz'
-        )],
+        arguments=['-d', rviz_right_file],
         output='screen'
     )
 
     return LaunchDescription([
         DeclareLaunchArgument('use_rviz', default_value='false'),
         sensecom_process,
-        launch_hardware_nodes_handler
+        launch_hardware_nodes_handler,
         # calibration_left,
         # calibration_right,
-        # rviz_node
+        rviz_node
     ])
