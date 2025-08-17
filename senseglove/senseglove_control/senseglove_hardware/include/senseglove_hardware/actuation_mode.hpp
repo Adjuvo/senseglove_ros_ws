@@ -14,7 +14,8 @@ namespace SGHardware
     {
       position,
       torque,
-      unknown,
+      effort,
+      unknown
     };
 
     // Constructors
@@ -32,6 +33,10 @@ namespace SGHardware
       else if (actuationMode == "torque")
       {
         value_ = torque;
+      }
+      else if (actuationMode == "effort")
+      {
+        value_ = effort;
       }
       else if (actuationMode == "unknown")
       {
@@ -56,6 +61,8 @@ namespace SGHardware
           return 1;
         case torque:
           return 2;
+        case effort:
+          return 3;
         default:
           return 0;
       }
@@ -70,6 +77,8 @@ namespace SGHardware
           return "position";
         case torque:
           return "torque";
+        case effort:
+          return "effort";
         default:
           RCLCPP_WARN(
           rclcpp::get_logger("senseglove.actuation_mode"),

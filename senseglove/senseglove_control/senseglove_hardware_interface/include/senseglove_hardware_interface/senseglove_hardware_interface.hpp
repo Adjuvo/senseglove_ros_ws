@@ -64,11 +64,11 @@ private:
 
   // Commands
   std::vector<std::vector<double>> joint_position_command_;
-  std::vector<std::vector<double>> joint_velocity_command_;
+  std::vector<std::vector<double>> joint_vibration_command_;
   std::vector<std::vector<double>> joint_effort_command_;
   std::vector<std::vector<double>> joint_last_position_command_;
-  std::vector<std::vector<double>> joint_last_effort_command_;
   std::vector<std::vector<double>> joint_last_vibration_command_;
+  std::vector<std::vector<double>> joint_last_effort_command_;
 
   // Message publisher
   rclcpp::Publisher<senseglove_msgs::msg::SenseGloveState>::SharedPtr state_publisher_;

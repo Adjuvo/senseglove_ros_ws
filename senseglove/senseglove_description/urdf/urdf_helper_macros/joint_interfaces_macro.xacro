@@ -12,7 +12,7 @@
   <!-- Macro: add command interfaces -->
   <xacro:macro name="add_command_interfaces" params="joint_name">
     <joint name="${joint_name}">
-      <command_interface name="position"/>
+      <command_interface name="effort"/>
     </joint>
   </xacro:macro>
 
@@ -21,7 +21,7 @@
     <joint name="${joint_name}">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
-      <command_interface name="position"/>
+      <command_interface name="effort"/>
     </joint>
   </xacro:macro>
 

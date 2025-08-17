@@ -69,9 +69,9 @@ void SenseGloveHardwareInterface::initialize_joint_data()
   joint_velocity_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
   joint_effort_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
 
-  joint_position_command_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
-  joint_velocity_command_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
-  joint_effort_command_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
+  joint_position_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
+  joint_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
+  joint_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
 
   joint_last_position_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
   joint_last_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
@@ -107,7 +107,9 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
       if (joint.getActuationMode() == SGHardware::ActuationMode::position) {
         command_interfaces.emplace_back(CommandInterface(name, hardware_interface::HW_IF_POSITION, &joint_position_command_[i][j]));
       }
-      else if (joint.getActuationMode() == SGHardware::ActuationMode::torque) {
+      else if (joint.getActuationMode() == SGHardware::ActuationMode::torque ||
+               joint.getActuationMode() == SGHardware::ActuationMode::effort)
+      {
         command_interfaces.emplace_back(CommandInterface(name, hardware_interface::HW_IF_EFFORT, &joint_effort_command_[i][j]));
       }
     }
@@ -166,14 +168,16 @@ void SenseGloveHardwareInterface::process_joint_commands(size_t glove_index, siz
         joint_last_vibration_command_[glove_index][command_index] = joint_position_command_[glove_index][joint_index];
         break;
     }
-  } else if (joint.getActuationMode() == SGHardware::ActuationMode::torque) {
+  } 
+  else if (joint.getActuationMode() == SGHardware::ActuationMode::torque || 
+           joint.getActuationMode() == SGHardware::ActuationMode::effort) {
     switch (joint.getActuationType().getValue()) {
       case SGHardware::ActuationType::brake:
       case SGHardware::ActuationType::squeeze:
         joint_last_effort_command_[glove_index][command_index++] = joint_effort_command_[glove_index][joint_index];
         break;
       case SGHardware::ActuationType::vibration:
-        joint_last_vibration_command_[glove_index][command_index] = joint_position_command_[glove_index][joint_index];
+        joint_last_vibration_command_[glove_index][command_index] = joint_vibration_command_[glove_index][joint_index];
         break;
     }
   }

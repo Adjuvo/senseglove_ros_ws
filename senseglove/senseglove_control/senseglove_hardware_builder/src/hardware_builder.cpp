@@ -72,14 +72,13 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   auto SGRobot = HardwareBuilder::createRobot(config, this->urdfModel, std::move(joints), currentGlove, gloveIndex, isRight);
 
   RCLCPP_INFO_STREAM(logger, "Created Robot is a " << SGRobot.getRobotName()
-                     << " / Right: " << SGRobot.getRight()
-                     << " / URDF-Right: " << currentGlove->IsRight());
+                          << " / Right: " << SGRobot.getRight()
+                          << " / URDF-Right: " << currentGlove->IsRight());
   RCLCPP_INFO_STREAM(logger, "Robot config:\n" << config);
 
   auto robotPtr = std::make_unique<SGHardware::SenseGloveRobot>(std::move(SGRobot));
   return std::make_unique<SGHardware::SenseGloveSetup>(std::move(robotPtr));
 }
-
 
 // Create Joint
 SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, const std::string& jointName, const urdf::JointConstSharedPtr& urdfJoint)
@@ -102,7 +101,7 @@ SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, co
     RCLCPP_WARN_STREAM(logger, "Joint: " << jointName << " does not have a netNumber");
   }
 
-  SGHardware::ActuationMode actuationMode = SGHardware::ActuationMode::position;
+  SGHardware::ActuationMode actuationMode = SGHardware::ActuationMode::effort;
   SGHardware::ActuationType actuationType = SGHardware::ActuationType::brake;
 
   if (jointConfig["actuationMode"])
