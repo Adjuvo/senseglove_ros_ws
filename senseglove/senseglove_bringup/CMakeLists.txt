@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.21...3.25)
 
-project(senseglove_launch
+project(senseglove_bringup
         VERSION 2.0.0
         DESCRIPTION "Launch files for SenseGlove"
         HOMEPAGE_URL "https://senseglove.com"

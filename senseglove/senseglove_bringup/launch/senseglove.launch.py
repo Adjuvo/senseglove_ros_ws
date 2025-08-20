@@ -25,8 +25,8 @@ def generate_launch_description():
         output='log'
     )
 
-    # Locate senseglove_launch package
-    launch_share = get_package_share_directory('senseglove_launch')    
+    # Locate senseglove_bringup package
+    launch_share = get_package_share_directory('senseglove_bringup')    
     gloves_file = os.path.join(launch_share, 'config', 'gloves.yaml')
 
     # Locate senseglove_hardware_interface package
