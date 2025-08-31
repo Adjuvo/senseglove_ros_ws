@@ -51,6 +51,7 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
 
     num_gloves_        = senseglove_setup_->size();
     num_joints_        = senseglove_setup_->getSenseGloveRobot(0).getJointSize();
+    position_joints_   = senseglove_setup_->getSenseGloveRobot(0).getPositionJointSize();
     effort_joints_     = senseglove_setup_->getSenseGloveRobot(0).getEffortJointSize();
     vibration_joints_  = senseglove_setup_->getSenseGloveRobot(0).getVibrationJointSize();
 
@@ -69,11 +70,11 @@ void SenseGloveHardwareInterface::initialize_joint_data()
   joint_velocity_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
   joint_effort_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
 
-  joint_position_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
+  joint_position_command_.resize(num_gloves_, std::vector<double>(position_joints_, 0.0));
   joint_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
   joint_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
 
-  joint_last_position_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
+  joint_last_position_command_.resize(num_gloves_, std::vector<double>(position_joints_, 0.0));
   joint_last_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
   joint_last_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
 }
@@ -104,7 +105,8 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
       auto & joint = robot.getJoint(j);
       std::string name = joint.getName();
 
-      if (joint.getActuationMode() == SGHardware::ActuationMode::position) {
+      if (joint.getActuationMode() == SGHardware::ActuationMode::position) 
+      {
         command_interfaces.emplace_back(CommandInterface(name, hardware_interface::HW_IF_POSITION, &joint_position_command_[i][j]));
       }
       else if (joint.getActuationMode() == SGHardware::ActuationMode::torque ||
@@ -139,12 +141,13 @@ return_type SenseGloveHardwareInterface::write(const rclcpp::Time &, const rclcp
 {
   for (size_t i = 0; i < num_gloves_; ++i) {
     auto & robot = senseglove_setup_->getSenseGloveRobot(i);
-    size_t k = 0;
+    size_t idx_force = 0; // brake/squeeze
+    size_t idx_vib   = 0;
 
     for (size_t j = 0; j < num_joints_; ++j) {
       auto & joint = robot.getJoint(j);
       if (joint.canActuate()) {
-        process_joint_commands(i, j, k, joint);
+        process_joint_commands(i, j, idx_force, idx_vib, joint);
       }
     }
 
@@ -156,16 +159,16 @@ return_type SenseGloveHardwareInterface::write(const rclcpp::Time &, const rclcp
 }
 
 // Process Joint Commands -> Splice joint_effort_command vector into vectors for FFB and vibration commands
-void SenseGloveHardwareInterface::process_joint_commands(size_t glove_index, size_t joint_index, size_t & command_index, SGHardware::Joint & joint)
+void SenseGloveHardwareInterface::process_joint_commands(size_t glove_index, size_t joint_index, size_t & idx_force, size_t & idx_vib, SGHardware::Joint & joint)
 {
   if (joint.getActuationMode() == SGHardware::ActuationMode::position) {
     switch (joint.getActuationType().getValue()) {
       case SGHardware::ActuationType::brake:
       case SGHardware::ActuationType::squeeze:
-        joint_last_position_command_[glove_index][command_index++] = joint_position_command_[glove_index][joint_index];
+        joint_last_position_command_[glove_index][idx_force++] = joint_position_command_[glove_index][joint_index];
         break;
       case SGHardware::ActuationType::vibration:
-        joint_last_vibration_command_[glove_index][command_index] = joint_position_command_[glove_index][joint_index];
+        joint_last_vibration_command_[glove_index][idx_vib++] = joint_vibration_command_[glove_index][joint_index];
         break;
     }
   } 
@@ -174,10 +177,10 @@ void SenseGloveHardwareInterface::process_joint_commands(size_t glove_index, siz
     switch (joint.getActuationType().getValue()) {
       case SGHardware::ActuationType::brake:
       case SGHardware::ActuationType::squeeze:
-        joint_last_effort_command_[glove_index][command_index++] = joint_effort_command_[glove_index][joint_index];
+        joint_last_effort_command_[glove_index][idx_force++] = joint_effort_command_[glove_index][joint_index];
         break;
       case SGHardware::ActuationType::vibration:
-        joint_last_vibration_command_[glove_index][command_index] = joint_vibration_command_[glove_index][joint_index];
+        joint_last_vibration_command_[glove_index][idx_vib++] = joint_vibration_command_[glove_index][joint_index];
         break;
     }
   }

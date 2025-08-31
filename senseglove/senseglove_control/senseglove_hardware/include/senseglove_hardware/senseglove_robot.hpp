@@ -63,6 +63,7 @@ namespace SGHardware
     Joint& getJoint(size_t index);
 
     size_t getJointSize() const;
+    size_t getPositionJointSize() const;
     size_t getEffortJointSize() const;
     size_t getVibrationJointSize() const;
 

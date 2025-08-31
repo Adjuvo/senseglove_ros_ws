@@ -76,7 +76,7 @@ private:
 
   void initialize_joint_data();
   void initialize_joint_commands(size_t glove_index, size_t joint_index, SGHardware::Joint& joint);
-  void process_joint_commands(size_t glove_index, size_t joint_index, size_t& command_index, SGHardware::Joint& joint);
+  void process_joint_commands(size_t glove_index, size_t joint_index, size_t & idx_force, size_t & idx_vib, SGHardware::Joint& joint);
   void update_senseglove_state();
 
   std::string get_topic_name() const;

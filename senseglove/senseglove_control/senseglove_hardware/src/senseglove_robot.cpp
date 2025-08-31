@@ -72,6 +72,21 @@ namespace SGHardware
     return this->jointList.size();
   }
 
+  size_t SenseGloveRobot::getPositionJointSize() const
+  {
+    size_t positionJointSize = 0;
+      
+    for (auto& joint : jointList)
+    {
+      if (joint.getActuationType() == ActuationType::brake || 
+          joint.getActuationType() == ActuationType::squeeze)
+      {
+        positionJointSize++;
+      }
+    }
+    return positionJointSize;
+  }
+
   size_t SenseGloveRobot::getEffortJointSize() const
   {
     size_t effortJointSize = 0;
