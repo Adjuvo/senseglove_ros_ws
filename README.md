@@ -1,62 +1,46 @@
 # Senseglove ROS Workspace
 
-A workspace for the integration of the SenseGlove into _ROS Noetic_.
-This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
+A workspace for the integration of the SenseGlove into _ROS2 Jazzy_.
 
-## SenseGlove Support Matrix
-
-|             | **ROS Noetic** |    **ROS 2**   |
-|-------------|:--------------:|:--------------:|
-| **DK1**     |   ✅ v1.0.0    |   🔜 Planned   |   
-| **Nova 1**  |   ✅           |   🔜 Planned   | 
-| **Nova 2**  |   ✅           |   🔜 Planned   | 
-
-<code>✅</code> Supported
-<code>🔜</code> In Progress
-<code>❌</code> Not supported at all
-
-🌱 ROS 2 support is coming soon, currently in development and expected by July 2025. For now, you can bridge between ROS 1 and 2 using our preconfigured Docker environment.
+🌱 The ROS 2 jazzy support is not complete. The [To-Do]() list at the bottom will update the plan for the coming weeks
 
 ## Directory Structure
     senseglove_ros
-    |    ├── senseglove      
+    |    ├── senseglove
+    |    |    ├── senseglove_bringup                  # Launch files & Bluetooth scripts    
     |    |    ├── senseglove_control
-    |    |    |    ├── senseglove_hardware            # Communicates w/ SenseGlove Hardware
-    |    |    |    ├── senseglove_hardware_builder    # Builds the device in ROS
-    |    |    |    ├── senseglove_hardware_interface  # The bridge b/w ros_control & SenseGlove hardware
-    |    |    ├── senseglove_description              # Provides the URDFs & .rviz files
-    |    |    ├── senseglove_interaction              # Provides the python scripts for finger distances, haptics, and other possible interactions
-    |    |    ├── senseglove_launch                   # Launch files & Bluetooth scripts
-    |    |    |   ├── bluetooth_scripts
-    |    |    ├── senseglove_msgs        # Custom messages, services
-    |    ├── SenseGlove_API                           # SG-Backend
+    |    |    |    ├── senseglove_hardware            # SenseGloveRobot
+    |    |    |    ├── senseglove_hardware_builder    # HardwareBuilder
+    |    |    |    ├── senseglove_hardware_interface  # Hardware Interface
+    |    |    ├── senseglove_description              # URDFs
+    |    |    ├── senseglove_msgs                     # SenseGlove messages, services
+    |    |    ├── senseglove_interaction              # Python Interaction Package
+    |    ├── senseglove_api                           # SG-Backend
+    |    ├── senseglove_com                           # SenseCom
 
 ## Installation ##      
-1. Install [ros-noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) on Ubuntu 20.04
+1. Install [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html) on Ubuntu Noble 24.04
 2. Clone the repository: 
 ``` 
-git clone https://github.com/Adjuvo/senseglove_ros.git
+git clone -b ${ROS_DISTRO} https://github.com/Adjuvo/senseglove_ros.git
 ``` 
 3. Install workspace dependencies: 
 ``` 
-sudo apt-get install ros-noetic-ros-control \
-                     ros-noetic-joint-trajectory-controller \
-                     python3-pyqt5 \
-                     ros-jazzy-tf-transformations
-
 sudo apt-get update
+sudo apt-get install ros-jazzy-ros2-control \
+                     ros-jazzy-ros2-controllers \
+                     python3-pyqt5
+
+
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 sudo apt-get upgrade
 ``` 
-4. Build the workspace: `catkin build` or `catkin_make`
+4. Build the workspace and source:
 ``` 
-catkin_make
+colcon build --symlink-install
+source install/setup.bash
 ``` 
-5. Source the workspace:
-``` 
-source devel/setup.bash
-```
 
 ## Usage 
 See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, launching single or dual glove setups, running calibration services, and enabling haptic feedback.
@@ -64,10 +48,9 @@ See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, laun
 ## Docker Setup [ROS1 ⇄ ROS2]
 See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
 
-## TO-DO: ##
-- `Custom_waveform` service for Nova-2 vibrations
-- `Calibration Profiling`, either from SenseCom (or) as a service call with interactive GUI. This should allow us to access and control the calbration.
-- `IMU_TF_Broadcaster`, the current implementation does not have the right tf conversion.
-
-## Attribution
-This project’s Dockerfile [Dockerfile.ros2_bridge](Dockerfiles/Dockerfile.ros2_bridge) and build instructions are adapted from [ros-jazzy-ros1-bridge-builder](https://github.com/TommyChangUMD/ros-jazzy-ros1-bridge-builder) by TommyChangUMD, licensed under MIT.
+## ☐☑ TO-DO:  ##
+- ☐ `Docker:` Update setup for ROS2
+- ☐ `SenseGloveStates:` A broadcaster for gloves states such as finger-tip postion, IMU data etc.
+- ☐ `Finger-Tip Distance:` Update Calibration and finger-tip distance node, add separate launch
+-  ☐ `Vibration Haptic Controller:` Separate controller to input custom vibration for Nova-2
+- `Calibration Profiling:` Allow to use the calibration profile from SenseCom
