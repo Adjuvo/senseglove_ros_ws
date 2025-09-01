@@ -20,11 +20,11 @@ src/senseglove/senseglove_haptics/src/senseglove_haptics/__pycache__
 src/senseglove/senseglove_launch/scripts/sessionLog.txt
 src/senseglove/senseglove_launch/calibration/*
 
+senseglove_ros_ws.code-workspace
+
 __pycache__/
 *.pyc
 *.pyo
-
-senseglove_ros_ws.code-workspace
 
 .idea/*
 .vscode/

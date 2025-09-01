@@ -2,7 +2,7 @@
 
 A workspace for the integration of the SenseGlove into _ROS2 Jazzy_.
 
-🌱 The ROS 2 jazzy support is not complete. The [To-Do]() list at the bottom will update the plan for the coming weeks
+🌱 The ROS 2 jazzy support is not complete. The [To-Do](#to-do) list at the bottom will update the plan for the coming weeks
 
 ## Directory Structure
     senseglove_ros
@@ -31,7 +31,6 @@ sudo apt-get install ros-jazzy-ros2-control \
                      ros-jazzy-ros2-controllers \
                      python3-pyqt5
 
-
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 sudo apt-get upgrade
@@ -43,14 +42,16 @@ source install/setup.bash
 ``` 
 
 ## Usage 
-See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, launching single or dual glove setups, running calibration services, and enabling haptic feedback.
+See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, launching glove setups, running calibration services, and enabling haptic feedback.
 
-## Docker Setup [ROS1 ⇄ ROS2]
-See [DOCKER.md](Dockerfiles/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
+## Docker Setup
+See [DOCKER.md](/senseglove_ros/docker/DOCKER.md) for complete setup instructions on running the ROS 2 container.
 
-## ☐☑ TO-DO:  ##
-- ☐ `Docker:` Update setup for ROS2
-- ☐ `SenseGloveStates:` A broadcaster for gloves states such as finger-tip postion, IMU data etc.
-- ☐ `Finger-Tip Distance:` Update Calibration and finger-tip distance node, add separate launch
--  ☐ `Vibration Haptic Controller:` Separate controller to input custom vibration for Nova-2
-- `Calibration Profiling:` Allow to use the calibration profile from SenseCom
+## TO-DO: ##
+| Status | Task |
+|--------|------|
+| ✅ | ~~**Docker:** Update setup for ROS2~~ |
+| ⬜ | **SenseGloveStates:** A broadcaster for glove states such as finger-tip position, IMU data etc. |
+| ⬜ | **Finger-Tip Distance:** Update calibration and finger-tip distance node, add separate launch |
+| ⬜ | **Vibration Haptic Controller:** Separate controller to input custom vibration for Nova-2 |
+| ⬜ | **Calibration Profiling:** Allow use of the calibration profile from SenseCom |
