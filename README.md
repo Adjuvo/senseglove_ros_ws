@@ -3,19 +3,7 @@
 A workspace for the integration of the SenseGlove into _ROS Noetic_.
 This workspace makes use of ros_control for automatically initiating publisher and subscriber nodes for the state of the senseglove.
 
-## SenseGlove Support Matrix
-
-|             | **ROS Noetic** |    **ROS 2**   |
-|-------------|:--------------:|:--------------:|
-| **DK1**     |   ✅ v1.0.0    |   🔜 Planned   |   
-| **Nova 1**  |   ✅           |   🔜 Planned   | 
-| **Nova 2**  |   ✅           |   🔜 Planned   | 
-
-<code>✅</code> Supported
-<code>🔜</code> In Progress
-<code>❌</code> Not supported at all
-
-🌱 ROS 2 support is coming soon, currently in development and expected by July 2025. For now, you can bridge between ROS 1 and 2 using our preconfigured Docker environment.
+🌱 For Jazzy Support, go to the [jazzy branch](https://github.com/Adjuvo/senseglove_ros/tree/jazzy).
 
 ## Directory Structure
     senseglove_ros
@@ -35,7 +23,7 @@ This workspace makes use of ros_control for automatically initiating publisher a
 1. Install [ros-noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) on Ubuntu 20.04
 2. Clone the repository: 
 ``` 
-git clone https://github.com/Adjuvo/senseglove_ros.git
+git clone -b ${ROS_DISTRO} https://github.com/Adjuvo/senseglove_ros.git
 ``` 
 3. Install workspace dependencies: 
 ``` 
@@ -63,6 +51,7 @@ See [USAGE.md](USAGE.md) for instructions on connecting senseglove devices, laun
 See [DOCKER.md](docker/DOCKER.md) for complete setup instructions on running the ROS 1 Noetic container with access to /dev/rfcomm*, allowing Bluetooth-based Nova 1/2 gloves to be used inside the container. The guide also covers how to launch a ROS 1 to ROS 2 bridge so that ROS topics and services from the container can be accessed within a ROS 2 Jazzy environment, either on the host machine or in a connected container.
 
 ## TO-DO: ##
+```Forwarded to ROS2 branches```
 - `Custom_waveform` service for Nova-2 vibrations
 - `Calibration Profiling`, either from SenseCom (or) as a service call with interactive GUI. This should allow us to access and control the calbration.
 - `IMU_TF_Broadcaster`, the current implementation does not have the right tf conversion.
