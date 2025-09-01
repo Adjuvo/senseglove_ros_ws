@@ -32,8 +32,7 @@ setup(
             'finger_distance = senseglove_interaction.finger_distance.finger_distance_node:main',
             'finger_distance_calibration = senseglove_interaction.finger_distance.finger_distance_calibration:main',
             # haptics nodes
-            'haptics_simple = senseglove_interaction.haptics.haptics_simple:main',
-            'haptics_dynamic = senseglove_interaction.haptics.haptics_dynamic:main',
+            'haptics_node = senseglove_interaction.haptics.haptics_node:main',
             # imu tf broadcaster
             'imu_tf_broadcaster = senseglove_interaction.common.imu_tf_broadcaster:main',
         ],

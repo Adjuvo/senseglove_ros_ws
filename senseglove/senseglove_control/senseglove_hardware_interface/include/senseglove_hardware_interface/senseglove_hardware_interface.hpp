@@ -48,6 +48,7 @@ private:
   std::unique_ptr<SGHardware::SenseGloveSetup> senseglove_setup_;
   size_t num_gloves_ = 0;
   size_t num_joints_ = 0;
+  size_t position_joints_ = 0;
   size_t effort_joints_ = 0;
   size_t vibration_joints_ = 0;
 

@@ -93,12 +93,14 @@ def generate_launch_description():
         namespace=namespace
     )
 
-    trajectory_controller_spawner = Node(
+    haptics_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['joint_trajectory_controller',
-                    "--param-file",
-                    robot_controllers],
+        arguments=[
+            'haptics_controller',
+            '--param-file',
+            robot_controllers
+        ],
         output='screen',
         namespace=namespace
     )
@@ -119,5 +121,5 @@ def generate_launch_description():
         control_node,
         robot_state_publisher,
         joint_state_broadcaster_spawner,
-        trajectory_controller_spawner
+        haptics_controller_spawner
     ])

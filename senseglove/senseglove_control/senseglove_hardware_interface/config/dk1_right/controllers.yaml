@@ -5,9 +5,9 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-/**/joint_trajectory_controller:
+/**/haptics_controller:
   ros__parameters:
-    type: joint_trajectory_controller/JointTrajectoryController
+    type: forward_command_controller/ForwardCommandController
     joints:
       - r_thumb_brake   # FFB
       - r_index_brake   # FFB
@@ -19,14 +19,4 @@
       - r_middle_dip    # Buzzer
       - r_ring_dip      # Buzzer
       - r_pinky_dip     # Buzzer
-    command_interfaces:
-      - effort
-    state_interfaces:
-      - position
-      - velocity
-    action_monitor_rate: 20.0
-    allow_partial_joints_goal: false
-    interpolate_from_desired_state: true
-    constraints:
-      stopped_velocity_tolerance: 0.01
-      goal_time: 0.0
+    interface_name: effort
