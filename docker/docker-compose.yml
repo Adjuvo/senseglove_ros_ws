@@ -2,44 +2,25 @@ services:
   senseglove_ros:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile.ros1
+      dockerfile: Dockerfile.ros2
+      args:
+        ROS_DISTRO: jazzy 
     privileged: true
     network_mode: host
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
-      - /dev/ttyACM1:/dev/ttyACM1
-      - /dev/rfcomm0:/dev/rfcomm0
-      - /dev/rfcomm1:/dev/rfcomm1
     volumes:
-      - ../:/root/ros1_ws/src/senseglove_ros:rw
-      - ./entrypoints/ros1_entrypoint.sh:/root/ros1_entrypoint.sh:ro
+      - ../:/root/workspace/src/senseglove_ros:rw
+      - ./entrypoint.sh:/entrypoint.sh:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev:/dev
+      - /var/run/dbus:/var/run/dbus:rw
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
-      - CMAKE_POLICY_VERSION_MINIMUM=3.5
-      - ROS_MASTER_URI=http://localhost:11311
-      - ROS_HOSTNAME=localhost
+      - ROS_DISTRO=jazzy
+      - ROS_DOMAIN_ID=0
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
+    group_add:
+      - dialout
+      - bluetooth 
     tty: true
     stdin_open: true
-  rosbridge_1to2:
-    profiles: ["rosbridge_1to2"]
-    build:
-      context: .
-      dockerfile: dockerfiles/Dockerfile.rosbridge_1to2
-    image: rosbridge_1to2
-    network_mode: host
-    environment:
-      - ROS_MASTER_URI=http://localhost:11311
-      - ROS_HOSTNAME=localhost
-    tty: true
-    stdin_open: true
-    depends_on:
-      - senseglove_ros
-
-  # ros1_bridge binary
-  host_rosbridge_tgz:
-    profiles: ["host_rosbridge_tgz"]
-    image: rosbridge_1to2
-    entrypoint: []
-    command: cat /ros-jazzy-ros1-bridge.tgz
