@@ -40,7 +40,7 @@ gloves:
     index: 1
   - type: dk1
     side: right
-    index: 3       
+    index: 2       
 ```
 2. Launch
 ```
@@ -49,12 +49,12 @@ ros2 launch senseglove_bringup senseglove.launch.py
 
 #### Launch Parameters ####
 - `run_rviz`
-    - true:  run in simulation mode (no real hardware required)
-    - false: connect to actual gloves
+    - true:  launches rviz with default config
+    - false: does not launch rviz
 
 - `run_sensecom`
-    - true:  run in simulation mode (no real hardware required)
-    - false: connect to actual gloves
+    - true:  launches sensecom with hardware_node launch
+    - false: does not launch sensecom
 
 <!-- - `use_finger_distance`
     - true:  launch additional nodes that compute and publish finger distance data
@@ -68,7 +68,7 @@ ros2 launch senseglove_bringup senseglove.launch.py run_rviz:=true run_sensecom:
 ## (Update soon) Finger-Tip Distances: ##
 The finger distance node package publish the distances between fingertips.
 ```
-ros2 launch rembrandt_bringup finger_distance.launch.py
+ros2 launch senseglove_bringup finger_distance.launch.py
 ```
 
 ### Calibration Manager: ###
