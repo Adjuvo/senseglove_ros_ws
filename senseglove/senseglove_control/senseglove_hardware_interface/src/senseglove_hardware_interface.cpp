@@ -15,9 +15,9 @@ namespace senseglove_hardware_interface
 
 SenseGloveHardwareInterface::SenseGloveHardwareInterface() = default;
 
-CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::HardwareInfo & info)
+CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::HardwareComponentInterfaceParams & params)
 {
-  if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS) {
+  if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS) {
     return CallbackReturn::ERROR;
   }
 

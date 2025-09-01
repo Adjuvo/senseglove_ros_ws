@@ -1,0 +1,60 @@
+/**:
+  ros__parameters:
+    pinch_calibration_min:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    pinch_calibration_max:
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+/senseglove/glove0/rh/**:
+  ros__parameters:
+    pinch_calibration_min:
+    - 49.74760644132104
+    - 48.54985998889772
+    - 46.54780723682278
+    - 59.5202987091173
+    pinch_calibration_max:
+    - 167.16528090646057
+    - 189.64159614640798
+    - 201.57577873201006
+    - 215.50548071625116
+/senseglove/glove0/lh/**:
+  ros__parameters:
+    pinch_calibration_max:
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    pinch_calibration_min:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+/senseglove/glove1/rh/**:
+  ros__parameters:
+    pinch_calibration_max:
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    pinch_calibration_min:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+/senseglove/glove1/lh/**:
+  ros__parameters:
+    pinch_calibration_max:
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    pinch_calibration_min:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0

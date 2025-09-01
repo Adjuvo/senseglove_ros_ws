@@ -4,14 +4,15 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.event_handlers import OnProcessStart
 from launch_ros.actions import Node
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition, UnlessCondition
 
 from ament_index_python.packages import get_package_share_directory
 import yaml
 import os
 
 def generate_launch_description():
-    use_rviz = LaunchConfiguration('use_rviz', default='false')
+    run_rviz = LaunchConfiguration('run_rviz', default='false')
+    run_sensecom = LaunchConfiguration('run_sensecom', default='false')
 
     # Locate senseglove_com package
     sensecom_share = get_package_share_directory('senseglove_com')
@@ -22,7 +23,8 @@ def generate_launch_description():
     # Start SenseCom
     sensecom_process = ExecuteProcess(
         cmd=[sensecom_bin],
-        output='log'
+        output='log',
+        condition=IfCondition(run_sensecom) 
     )
 
     # Locate senseglove_bringup package
@@ -39,7 +41,7 @@ def generate_launch_description():
     gloves = config.get('gloves', [])
 
     def launch_hardware_nodes(context, *args, **kwargs):
-        input(" Starting SenseCom. Please confirm all gloves are connected in SenseCom and press ENTER to continue...")
+        input(" Start SenseCom. Please confirm all gloves are connected in SenseCom and press ENTER to continue...")
         
         hardware_nodes = []
         for glove in gloves:
@@ -60,12 +62,17 @@ def generate_launch_description():
         
         return hardware_nodes
 
-    # Hardware Nodes Event handler
+    # Hardware Nodes Event handlers
     launch_hardware_nodes_handler = RegisterEventHandler(
         OnProcessStart(
             target_action=sensecom_process,
             on_start=[OpaqueFunction(function=launch_hardware_nodes)]
         )
+    )
+
+    launch_hardware_nodes_direct = OpaqueFunction(
+        function=launch_hardware_nodes,
+        condition=UnlessCondition(run_sensecom)
     )
 
     # Calibration nodes
@@ -97,7 +104,7 @@ def generate_launch_description():
 
     # RViz
     rviz_node = Node(
-        condition=IfCondition(use_rviz),
+        condition=IfCondition(run_rviz),
         package='rviz2',
         executable='rviz2',
         arguments=['-d', rviz_right_file],
@@ -105,9 +112,11 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument('use_rviz', default_value='false'),
+        DeclareLaunchArgument('run_rviz', default_value='false', choices=['true', 'false'], description='Launch RViz'),
+        DeclareLaunchArgument('run_sensecom', default_value='false', choices=['true', 'false'], description='Start SenseCom executable'),
         sensecom_process,
         launch_hardware_nodes_handler,
+        launch_hardware_nodes_direct,
         # calibration_left,
         # calibration_right,
         rviz_node
