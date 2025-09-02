@@ -5,6 +5,33 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    senseglove_state_broadcaster:
+      type: senseglove_state_broadcaster/SenseGloveStateBroadcaster
+      parameters:
+        topic_name: senseglove_states
+        frame_id: world
+        joints:
+          - l_thumb_mcp
+          - l_thumb_pip
+          - l_thumb_dip
+          - l_thumb_brake
+          - l_index_mcp
+          - l_index_pip
+          - l_index_dip
+          - l_index_brake
+          - l_middle_mcp
+          - l_middle_pip
+          - l_middle_dip
+          - l_middle_brake
+          - l_ring_mcp
+          - l_ring_pip
+          - l_ring_dip
+          - l_ring_brake
+          - l_pinky_mcp
+          - l_pinky_pip
+          - l_pinky_dip
+          - l_pinky_brake
+
 /**/haptics_controller:
   ros__parameters:
     type: forward_command_controller/ForwardCommandController
