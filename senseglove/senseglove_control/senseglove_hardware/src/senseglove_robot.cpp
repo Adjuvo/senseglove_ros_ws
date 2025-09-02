@@ -135,53 +135,49 @@ namespace SGHardware
     return false;
   }
   
-  // Function to flatten vector of vectors of Vector3D
+  // Positions of all hand joints relative to the Sense Glove origin. From thumb to pinky, proximal to distal
   SGCore::Kinematics::Vect3D SenseGloveRobot::getHandPosition(int i) const
   {
-    // Make sure to convert between the coordinate frame of the Senseglove and the one used in ROS
-    // SG uses vector of vectors and ROS uses one long array 
-
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
     SGCore::Kinematics::Vect3D jointPosition{0.0, 0.0, 0.0};
 
-    if (i <= TOTAL_FINGER_JOINT_INDEX && (senseglovePtr || novaglovePtr || nova2glovePtr))
+    if (i < 0 || i > TOTAL_FINGER_JOINT_INDEX) return jointPosition;
+    if (!(senseglovePtr || novaglovePtr || nova2glovePtr)) return jointPosition;
+
+    const auto &poseVec = handPose.GetJointPositions();
+    const size_t jointGroup = static_cast<size_t>(i) / 4;
+    const size_t jointSubIndex = static_cast<size_t>(i) % 4; 
+
+    if (jointGroup < poseVec.size() && jointSubIndex < poseVec[jointGroup].size())
     {
-      const auto & poseVec = handPose.GetJointPositions();
-      size_t jointGroup = static_cast<size_t>(i) / 4;
-      size_t jointSubIndex = static_cast<size_t>(i) % 4;
-      if (jointGroup < poseVec.size() && jointSubIndex < poseVec[jointGroup].size())
-      {
-        jointPosition = poseVec[jointGroup][jointSubIndex];
-      }
+      jointPosition = poseVec[jointGroup][jointSubIndex];
     }
+
     return jointPosition;
   }
 
+  // Finger positions in 3D (world) space.
   SGCore::Kinematics::Vect3D SenseGloveRobot::getFingerTip(int i) const
   {
     static const int TOTAL_FINGER_JOINT_INDEX = 19;
     SGCore::Kinematics::Vect3D tipPosition{0.0, 0.0, 0.0};
 
-    if (i > TOTAL_FINGER_JOINT_INDEX)
-    {
-      return tipPosition;
-    }
+    if (i < 0 || i > TOTAL_FINGER_JOINT_INDEX) return tipPosition;
+    if (!(senseglovePtr || novaglovePtr || nova2glovePtr)) return tipPosition;
+
     if (senseglovePtr)
     {
-      auto offsets = senseglovePtr->GetFingerThimbleOffsets();
-      auto tf = senseglovePose.CalculateFingertips(offsets);
-      if (static_cast<size_t>(i) < tf.size())
-      {
-        tipPosition = tf[i];
+      const auto offsets = senseglovePtr->GetFingerThimbleOffsets();
+      const auto tips = senseglovePose.CalculateFingertips(offsets);
+      if (static_cast<size_t>(i) < tips.size()) {
+        return tips[static_cast<size_t>(i)];
       }
     }
-    else if (novaglovePtr || nova2glovePtr)
+
+    const auto & poseVec = handPose.GetJointPositions();
+    if (static_cast<size_t>(i) < poseVec.size() && poseVec[i].size() > 3)
     {
-      const auto & poseVec = handPose.GetJointPositions();
-      if (static_cast<size_t>(i) < poseVec.size() && poseVec[i].size() > 3)
-      {
-        tipPosition = poseVec[i][3];
-      }
+      tipPosition = poseVec[static_cast<size_t>(i)][3];
     }
     return tipPosition;
   }
@@ -308,6 +304,7 @@ namespace SGHardware
   {
   }
 
+  // Hand Pose Angles
   bool SenseGloveRobot::updateGloveData(const std::chrono::duration<double>& period)
   {
     auto logger = rclcpp::get_logger("senseglove.robot");
