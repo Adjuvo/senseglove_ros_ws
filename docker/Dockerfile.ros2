@@ -24,7 +24,7 @@ WORKDIR ${ROS_WORKSPACE}
 RUN rosdep init || true && rosdep update
 
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc
-RUN echo "source "${ROS_WORKSPACE}/install/setup.bash" >> /root/.bashrc
+RUN echo "source ${ROS_WORKSPACE}/install/setup.bash" >> /root/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
