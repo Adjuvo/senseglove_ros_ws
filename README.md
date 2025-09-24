@@ -51,7 +51,7 @@ See [DOCKER.md](/senseglove_ros/docker/DOCKER.md) for complete setup instruction
 | Status | Task |
 |--------|------|
 | ✅ | ~~**Docker:** Update setup for ROS2~~ |
-| ⬜ | **SenseGloveStates:** A broadcaster for glove states such as finger-tip position, IMU data etc. |
+| ✅ | ~~**SenseGloveStates:** A broadcaster for glove states such as finger-tip position, IMU data etc.~~ |
 | ⬜ | **Finger-Tip Distance:** Update calibration and finger-tip distance node, add separate launch |
 | ⬜ | **Vibration Haptic Controller:** Separate controller to input custom vibration for Nova-2 |
 | ⬜ | **Calibration Profiling:** Allow use of the calibration profile from SenseCom |
