@@ -74,7 +74,6 @@ private:
   // SenseGloveState
   std::vector<std::vector<double>> hand_xyz_;
   std::vector<std::vector<double>> tip_xyz_;
-  std::vector<double> norm_input_;
   std::vector<double> imu_quat_;
 
   void initialize_joint_data();

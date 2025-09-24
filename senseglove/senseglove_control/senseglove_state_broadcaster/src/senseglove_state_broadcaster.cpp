@@ -33,7 +33,7 @@ InterfaceConfiguration SenseGloveStateBroadcaster::state_interface_configuration
   InterfaceConfiguration cfg;
   cfg.type = interface_configuration_type::INDIVIDUAL;
 
-  // To:Do: Joints: position + velocity for each joint
+  // Joints: position + velocity for each joint
   for (const auto &jn : joint_names_) {
     cfg.names.push_back(jn + "/position");
     cfg.names.push_back(jn + "/velocity");
@@ -53,11 +53,6 @@ InterfaceConfiguration SenseGloveStateBroadcaster::state_interface_configuration
     cfg.names.push_back(base + "x");
     cfg.names.push_back(base + "y");
     cfg.names.push_back(base + "z");
-  }
-
-  // Normalized inputs
-  for (int k = 0; k < 6; ++k) {
-    cfg.names.push_back("normalized_input/" + std::to_string(k));
   }
 
   // IMU quaternion
@@ -94,7 +89,6 @@ SenseGloveStateBroadcaster::update(const rclcpp::Time &time, const rclcpp::Durat
       joint_size * 2 +   // pos+vel per joint
       20 * 3 +           // handposition xyz
       5 * 3 +            // fingertips xyz
-      6 +                // norm_input
       4;                 // imu quaternion
 
   if (state_interfaces_.size() < expected) {
@@ -146,13 +140,6 @@ SenseGloveStateBroadcaster::update(const rclcpp::Time &time, const rclcpp::Durat
                              ("finger_tip_" + std::to_string(i) + "/position.y").c_str());
     p.z = read_value(state_interfaces_[index++], logger, clock,
                              ("finger_tip_" + std::to_string(i) + "/position.z").c_str());
-  }
-
-  // Normalized input
-  msg.normalized_input.resize(6);
-  for (int k = 0; k < 6; ++k) {
-    msg.normalized_input[k] = read_value(state_interfaces_[index++], logger, clock,
-                              ("normalized_input/" + std::to_string(k)).c_str());
   }
 
   // IMU quaternion

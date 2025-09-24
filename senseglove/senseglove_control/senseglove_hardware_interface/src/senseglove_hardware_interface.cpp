@@ -85,7 +85,6 @@ void SenseGloveHardwareInterface::initialize_joint_data()
 
   hand_xyz_.resize(num_joints_, std::vector<double>(3, 0.0));
   tip_xyz_.resize(5, std::vector<double>(3, 0.0));
-  norm_input_.resize(6, 0.0);
   imu_quat_.resize(4, 0.0);
 }
 
@@ -119,11 +118,6 @@ std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces
     state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.z", &tip_xyz_[f][2]));
   }
 
-  // Normalized input
-  for (size_t k = 0; k < norm_input_.size(); ++k) {
-    state_interfaces.emplace_back(StateInterface("normalized_input", std::to_string(k), &norm_input_[k]));
-  }
-
   // IMU quaternion
   state_interfaces.emplace_back(StateInterface("imu", "orientation.x", &imu_quat_[0]));
   state_interfaces.emplace_back(StateInterface("imu", "orientation.y", &imu_quat_[1]));
@@ -140,7 +134,7 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
     auto & robot = senseglove_setup_->getSenseGloveRobot(i);
     for (size_t j = 0; j < num_joints_; ++j) {
       auto & joint = robot.getJoint(j);
-      std::string name = joint.getName();
+      const std::string name = joint.getName();
 
       if (joint.getActuationMode() == SGHardware::ActuationMode::position) 
       {
@@ -185,18 +179,11 @@ return_type SenseGloveHardwareInterface::read(const rclcpp::Time &, const rclcpp
     }
 
     // Fingertip positions
-    for (size_t f = 0; f < tip_xyz_.size(); ++f) {
+    for (size_t f = 0; f < num_joints_; ++f) {
       const auto tip = robot.getFingerTip(static_cast<int>(f));
       tip_xyz_[f][0] = tip.GetX();
       tip_xyz_[f][1] = tip.GetY();
       tip_xyz_[f][2] = tip.GetZ();
-    }
-
-    std::vector<float> nf;
-    if (robot.getNormalizedInput(nf)) {
-      for (size_t k = 0; k < nf.size(); ++k) {
-        norm_input_[k] = static_cast<double>(nf[k]);
-      }
     }
 
     // IMU quaternion
