@@ -5,32 +5,32 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    senseglove_state_broadcaster:
-      type: senseglove_state_broadcaster/SenseGloveStateBroadcaster
-      parameters:
-        topic_name: senseglove_states
-        frame_id: world
-        joints:
-          - r_thumb_mcp
-          - r_thumb_pip
-          - r_thumb_dip
-          - r_thumb_brake
-          - r_index_mcp
-          - r_index_pip
-          - r_index_dip
-          - r_index_brake
-          - r_middle_mcp
-          - r_middle_pip
-          - r_middle_dip
-          - r_middle_brake
-          - r_ring_mcp
-          - r_ring_pip
-          - r_ring_dip
-          - r_ring_brake
-          - r_pinky_mcp
-          - r_pinky_pip
-          - r_pinky_dip
-          - r_pinky_brake
+/**/senseglove_state_broadcaster:
+  ros__parameters:
+    type: senseglove_state_broadcaster/SenseGloveStateBroadcaster
+    topic_name: senseglove_states
+    frame_id: world
+    joints:
+      - r_thumb_mcp
+      - r_thumb_pip
+      - r_thumb_dip
+      - r_thumb_brake
+      - r_index_mcp
+      - r_index_pip
+      - r_index_dip
+      - r_index_brake
+      - r_middle_mcp
+      - r_middle_pip
+      - r_middle_dip
+      - r_middle_brake
+      - r_ring_mcp
+      - r_ring_pip
+      - r_ring_dip
+      - r_ring_brake
+      - r_pinky_mcp
+      - r_pinky_pip
+      - r_pinky_dip
+      - r_pinky_brake
           
 /**/haptics_controller:
   ros__parameters:

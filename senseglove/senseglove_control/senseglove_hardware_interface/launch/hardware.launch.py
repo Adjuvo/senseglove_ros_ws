@@ -96,7 +96,11 @@ def generate_launch_description():
     senseglove_state_broadcaster_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['senseglove_state_broadcaster'],
+        arguments=[
+            'senseglove_state_broadcaster',
+            '--param-file',
+            robot_controllers
+        ],
         output='screen',
         namespace=namespace
     )
