@@ -71,16 +71,14 @@ private:
   std::vector<std::vector<double>> joint_last_vibration_command_;
   std::vector<std::vector<double>> joint_last_effort_command_;
 
-  // Message publisher
-  rclcpp::Publisher<senseglove_msgs::msg::SenseGloveState>::SharedPtr state_publisher_;
-  senseglove_msgs::msg::SenseGloveState latest_msg_;
+  // SenseGloveState
+  std::vector<std::vector<double>> hand_xyz_;
+  std::vector<std::vector<double>> tip_xyz_;
+  std::vector<double> imu_quat_;
 
   void initialize_joint_data();
   void initialize_joint_commands(size_t glove_index, size_t joint_index, SGHardware::Joint& joint);
   void process_joint_commands(size_t glove_index, size_t joint_index, size_t & idx_force, size_t & idx_vib, SGHardware::Joint& joint);
-  void update_senseglove_state();
-
-  std::string get_topic_name() const;
 };
 
 }  // namespace senseglove_hardware_interface

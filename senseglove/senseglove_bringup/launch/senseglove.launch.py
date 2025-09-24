@@ -11,8 +11,8 @@ import yaml
 import os
 
 def generate_launch_description():
-    run_rviz = LaunchConfiguration('run_rviz', default='false')
-    run_sensecom = LaunchConfiguration('run_sensecom', default='false')
+    run_rviz = LaunchConfiguration('run_rviz')
+    run_sensecom = LaunchConfiguration('run_sensecom')
 
     # Locate senseglove_com package
     sensecom_share = get_package_share_directory('senseglove_com')
@@ -63,14 +63,14 @@ def generate_launch_description():
         return hardware_nodes
 
     # Hardware Nodes Event handlers
-    launch_hardware_nodes_handler = RegisterEventHandler(
+    launch_hardware_nodes_with_sensecom = RegisterEventHandler(
         OnProcessStart(
             target_action=sensecom_process,
             on_start=[OpaqueFunction(function=launch_hardware_nodes)]
         )
     )
 
-    launch_hardware_nodes_direct = OpaqueFunction(
+    launch_hardware_nodes_without_sensecom = OpaqueFunction(
         function=launch_hardware_nodes,
         condition=UnlessCondition(run_sensecom)
     )
@@ -99,24 +99,29 @@ def generate_launch_description():
     )
 
     # Locate senseglove_description package
-    description_share = get_package_share_directory('senseglove_description')    
-    rviz_right_file = os.path.join(description_share, 'rviz', 'urdf_right.rviz')
+    description_share = get_package_share_directory('senseglove_description')
+    
+    if len(gloves) == 2:
+        rviz_file = os.path.join(description_share, 'rviz', 'urdf_both.rviz')
+    elif len(gloves) == 1:
+        side = gloves[0].get('side', 'left')
+        rviz_file = os.path.join(description_share, 'rviz', f'urdf_{side}.rviz') 
 
     # RViz
     rviz_node = Node(
-        condition=IfCondition(run_rviz),
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', rviz_right_file],
-        output='screen'
+        arguments=['-d',  rviz_file],
+        output='screen',
+        condition=IfCondition(run_rviz)
     )
 
     return LaunchDescription([
         DeclareLaunchArgument('run_rviz', default_value='false', choices=['true', 'false'], description='Launch RViz'),
-        DeclareLaunchArgument('run_sensecom', default_value='false', choices=['true', 'false'], description='Start SenseCom executable'),
+        DeclareLaunchArgument('run_sensecom', default_value='true', choices=['true', 'false'], description='Start SenseCom executable'),
         sensecom_process,
-        launch_hardware_nodes_handler,
-        launch_hardware_nodes_direct,
+        launch_hardware_nodes_with_sensecom,
+        launch_hardware_nodes_without_sensecom,
         # calibration_left,
         # calibration_right,
         rviz_node

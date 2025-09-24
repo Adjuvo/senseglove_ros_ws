@@ -133,6 +133,9 @@ namespace SGHardware
     // Position of the joint
     double position = 0.0;
 
+    // Previous position of the joint
+    double prevPosition = 0.0;
+
     // Velocity of the joint
     double velocity = 0.0;
 

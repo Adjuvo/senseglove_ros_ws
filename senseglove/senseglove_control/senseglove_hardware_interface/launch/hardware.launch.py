@@ -93,6 +93,18 @@ def generate_launch_description():
         namespace=namespace
     )
 
+    senseglove_state_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'senseglove_state_broadcaster',
+            '--param-file',
+            robot_controllers
+        ],
+        output='screen',
+        namespace=namespace
+    )
+
     haptics_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
@@ -121,5 +133,6 @@ def generate_launch_description():
         control_node,
         robot_state_publisher,
         joint_state_broadcaster_spawner,
+        senseglove_state_broadcaster_spawner,
         haptics_controller_spawner
     ])

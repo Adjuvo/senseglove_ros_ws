@@ -49,6 +49,11 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
       return CallbackReturn::ERROR;
     }
 
+    if (senseglove_setup_->size() != 1) {
+      RCLCPP_ERROR(get_logger(), "Expected 1 glove, got %zu", senseglove_setup_->size());
+      return CallbackReturn::ERROR;
+    }
+
     num_gloves_        = senseglove_setup_->size();
     num_joints_        = senseglove_setup_->getSenseGloveRobot(0).getJointSize();
     position_joints_   = senseglove_setup_->getSenseGloveRobot(0).getPositionJointSize();
@@ -77,6 +82,10 @@ void SenseGloveHardwareInterface::initialize_joint_data()
   joint_last_position_command_.resize(num_gloves_, std::vector<double>(position_joints_, 0.0));
   joint_last_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
   joint_last_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
+
+  hand_xyz_.resize(num_joints_, std::vector<double>(3, 0.0));
+  tip_xyz_.resize(5, std::vector<double>(3, 0.0));
+  imu_quat_.resize(4, 0.0);
 }
 
 std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces()
@@ -84,15 +93,37 @@ std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces
   std::vector<StateInterface> state_interfaces;
   for (size_t i = 0; i < num_gloves_; ++i) {
     auto & robot = senseglove_setup_->getSenseGloveRobot(i);
+
     for (size_t j = 0; j < num_joints_; ++j) {
       auto & joint = robot.getJoint(j);
-      std::string name = joint.getName();
+      const auto name = joint.getName();
 
       state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_POSITION, &joint_position_[i][j]));
       state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_VELOCITY, &joint_velocity_[i][j]));
       state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_EFFORT, &joint_effort_[i][j]));
     }
   }
+
+  // Positions of all hand joints relative to the Sense Glove origin
+  for (size_t h = 0; h < hand_xyz_.size(); ++h) {
+    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.x", &hand_xyz_[h][0]));
+    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.y", &hand_xyz_[h][1]));
+    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.z", &hand_xyz_[h][2]));
+  }
+
+   // Finger Tip positions in 3D (world) space.
+  for (size_t f = 0; f < tip_xyz_.size(); ++f) {
+    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.x", &tip_xyz_[f][0]));
+    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.y", &tip_xyz_[f][1]));
+    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.z", &tip_xyz_[f][2]));
+  }
+
+  // IMU quaternion
+  state_interfaces.emplace_back(StateInterface("imu", "orientation.x", &imu_quat_[0]));
+  state_interfaces.emplace_back(StateInterface("imu", "orientation.y", &imu_quat_[1]));
+  state_interfaces.emplace_back(StateInterface("imu", "orientation.z", &imu_quat_[2]));
+  state_interfaces.emplace_back(StateInterface("imu", "orientation.w", &imu_quat_[3]));
+
   return state_interfaces;
 }
 
@@ -103,7 +134,7 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
     auto & robot = senseglove_setup_->getSenseGloveRobot(i);
     for (size_t j = 0; j < num_joints_; ++j) {
       auto & joint = robot.getJoint(j);
-      std::string name = joint.getName();
+      const std::string name = joint.getName();
 
       if (joint.getActuationMode() == SGHardware::ActuationMode::position) 
       {
@@ -122,15 +153,46 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
 // Read Data
 return_type SenseGloveHardwareInterface::read(const rclcpp::Time &, const rclcpp::Duration & period)
 {
+  const auto dt = std::chrono::duration<double>(period.seconds());
+
   for (size_t i = 0; i < num_gloves_; ++i) {
     auto & robot = senseglove_setup_->getSenseGloveRobot(i);
-    if (robot.updateGloveData(std::chrono::duration<double>(period.seconds()))) {
-      for (size_t j = 0; j < num_joints_; ++j) {
-        auto & joint = robot.getJoint(j);
-        joint_position_[i][j] = joint.getPosition();
-        joint_velocity_[i][j] = joint.getVelocity();
-        joint_effort_[i][j] = joint.getTorque();
-      }
+
+    if (!robot.updateGloveData(dt)) {
+      continue;
+    }
+
+    // Joints
+    for (size_t j = 0; j < num_joints_; ++j) {
+      auto & joint = robot.getJoint(j);
+      joint_position_[i][j] = joint.getPosition();
+      joint_velocity_[i][j] = joint.getVelocity();
+      joint_effort_[i][j]   = joint.getTorque();
+    }
+
+    // Per-joint hand positions
+    for (size_t k = 0; k < hand_xyz_.size(); ++k) {
+      const auto hp = robot.getHandPosition(static_cast<int>(k));
+      hand_xyz_[k][0] = hp.GetX();
+      hand_xyz_[k][1] = hp.GetY();
+      hand_xyz_[k][2] = hp.GetZ();
+    }
+
+    // Fingertip positions
+    for (size_t f = 0; f < tip_xyz_.size(); ++f) {
+      const auto tip = robot.getFingerTip(static_cast<int>(f));
+      tip_xyz_[f][0] = tip.GetX();
+      tip_xyz_[f][1] = tip.GetY();
+      tip_xyz_[f][2] = tip.GetZ();
+    }
+
+    // IMU quaternion
+    SGCore::Kinematics::Quat q;
+    if (robot.getImuRotation(q)) {
+      imu_quat_[0] = q.GetX();
+      imu_quat_[1] = q.GetY();
+      imu_quat_[2] = q.GetZ();
+      imu_quat_[3] = q.GetW();
     }
   }
   return return_type::OK;

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>senseglove_hardware_interface</name>
+  <name>senseglove_state_broadcaster</name>
   <version>2.0.0</version>
-  <description>The bridge between ros_control and the senseglove hardware</description>
+  <description>Publishes SenseGloveState from hardware state interfaces.</description>
   <maintainer email="akshay@senseglove.com">SenseGlove</maintainer>
   <license>MIT</license>
 
@@ -16,16 +16,11 @@
   <depend>pluginlib</depend>
   <depend>hardware_interface</depend>
   <depend>controller_interface</depend>
-  <depend>senseglove_hardware</depend>
-  <depend>senseglove_hardware_builder</depend>
   <depend>senseglove_msgs</depend>
-
-  <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>xacro</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
-    <hardware_interface plugin="${prefix}/plugin.xml"/>
+    <controller_interface plugin="${prefix}/plugin.xml"/>
   </export>
 
 </package>
