@@ -11,8 +11,8 @@ import yaml
 import os
 
 def generate_launch_description():
-    run_rviz = LaunchConfiguration('run_rviz', default='false')
-    run_sensecom = LaunchConfiguration('run_sensecom', default='false')
+    run_rviz = LaunchConfiguration('run_rviz')
+    run_sensecom = LaunchConfiguration('run_sensecom')
 
     # Locate senseglove_com package
     sensecom_share = get_package_share_directory('senseglove_com')
@@ -63,14 +63,14 @@ def generate_launch_description():
         return hardware_nodes
 
     # Hardware Nodes Event handlers
-    launch_hardware_nodes_handler = RegisterEventHandler(
+    launch_hardware_nodes_with_sensecom = RegisterEventHandler(
         OnProcessStart(
             target_action=sensecom_process,
             on_start=[OpaqueFunction(function=launch_hardware_nodes)]
         )
     )
 
-    launch_hardware_nodes_direct = OpaqueFunction(
+    launch_hardware_nodes_without_sensecom = OpaqueFunction(
         function=launch_hardware_nodes,
         condition=UnlessCondition(run_sensecom)
     )
@@ -113,10 +113,10 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('run_rviz', default_value='false', choices=['true', 'false'], description='Launch RViz'),
-        DeclareLaunchArgument('run_sensecom', default_value='false', choices=['true', 'false'], description='Start SenseCom executable'),
+        DeclareLaunchArgument('run_sensecom', default_value='true', choices=['true', 'false'], description='Start SenseCom executable'),
         sensecom_process,
-        launch_hardware_nodes_handler,
-        launch_hardware_nodes_direct,
+        launch_hardware_nodes_with_sensecom,
+        launch_hardware_nodes_without_sensecom,
         # calibration_left,
         # calibration_right,
         rviz_node
