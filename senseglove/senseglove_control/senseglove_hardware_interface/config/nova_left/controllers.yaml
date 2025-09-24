@@ -34,7 +34,7 @@
 
 /**/haptics_controller:
   ros__parameters:
-    type: forward_command_controller/ForwardCommandController
+    type: joint_trajectory_controller/JointTrajectoryController
     joints:
       - l_thumb_brake   # FFB
       - l_index_brake   # FFB
@@ -43,4 +43,13 @@
       - l_thumb_dip     # Buzzer
       - l_index_dip     # Buzzer
       - l_thumper       # Buzzer - Thumper
-    interface_name: effort
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+    action_monitor_rate: 60.0
+    allow_partial_joints_goal: true
+    interpolate_from_desired_state: true
+    constraints:
+      goal_time: 0.05
