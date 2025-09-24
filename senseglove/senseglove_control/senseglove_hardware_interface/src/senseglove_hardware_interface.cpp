@@ -171,7 +171,7 @@ return_type SenseGloveHardwareInterface::read(const rclcpp::Time &, const rclcpp
     }
 
     // Per-joint hand positions
-    for (size_t k = 0; k < num_joints_; ++k) {
+    for (size_t k = 0; k < hand_xyz_.size(); ++k) {
       const auto hp = robot.getHandPosition(static_cast<int>(k));
       hand_xyz_[k][0] = hp.GetX();
       hand_xyz_[k][1] = hp.GetY();
@@ -179,7 +179,7 @@ return_type SenseGloveHardwareInterface::read(const rclcpp::Time &, const rclcpp
     }
 
     // Fingertip positions
-    for (size_t f = 0; f < num_joints_; ++f) {
+    for (size_t f = 0; f < tip_xyz_.size(); ++f) {
       const auto tip = robot.getFingerTip(static_cast<int>(f));
       tip_xyz_[f][0] = tip.GetX();
       tip_xyz_[f][1] = tip.GetY();
