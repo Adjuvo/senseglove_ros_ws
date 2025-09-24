@@ -99,16 +99,21 @@ def generate_launch_description():
     )
 
     # Locate senseglove_description package
-    description_share = get_package_share_directory('senseglove_description')    
-    rviz_right_file = os.path.join(description_share, 'rviz', 'urdf_right.rviz')
+    description_share = get_package_share_directory('senseglove_description')
+    
+    if len(gloves) == 2:
+        rviz_file = os.path.join(description_share, 'rviz', 'urdf_both.rviz')
+    elif len(gloves) == 1:
+        side = gloves[0].get('side', 'left')
+        rviz_file = os.path.join(description_share, 'rviz', f'urdf_{side}.rviz') 
 
     # RViz
     rviz_node = Node(
-        condition=IfCondition(run_rviz),
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', rviz_right_file],
-        output='screen'
+        arguments=['-d',  rviz_file],
+        output='screen',
+        condition=IfCondition(run_rviz)
     )
 
     return LaunchDescription([

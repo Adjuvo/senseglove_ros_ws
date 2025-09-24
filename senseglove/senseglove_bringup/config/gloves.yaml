@@ -2,12 +2,6 @@ gloves:
   - type: nova2
     side: left
     index: 0
-  # - type: nova2
-  #   side: right
-  #   index: 0
-  # - type: nova
-  #   side: left
-  #   index: 1
-  # - type: nova2
-  #   side: right
-  #   index: 1
+  - type: nova2
+    side: right
+    index: 1

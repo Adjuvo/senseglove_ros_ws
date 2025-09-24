@@ -1,16 +1,16 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
         - /Status1
         - /Right Glove1
-        - /Right Glove1/Links1
+        - /Left Glove1
         - /TF1
       Splitter Ratio: 0.5
-    Tree Height: 612
+    Tree Height: 1068
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/ToolProperties
@@ -61,7 +61,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /robot_description_right
+        Value: /senseglove/glove1/rh/robot_description
       Enabled: true
       Links:
         All Links Enabled: true
@@ -211,7 +211,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /robot_description_left
+        Value: /senseglove/glove0/lh/robot_description
       Enabled: true
       Links:
         All Links Enabled: true
@@ -459,8 +459,8 @@ Visualization Manager:
       Marker Scale: 0.10000000149011612
       Name: TF
       Show Arrows: true
-      Show Axes: true
-      Show Names: true
+      Show Axes: false
+      Show Names: false
       Tree:
         world:
           l_glove_hub:
@@ -575,7 +575,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2
+      Distance: 1.8349801301956177
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -598,10 +598,10 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1371
+  Height: 2166
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000002000000000000026f000004fdfc0200000004fb000000100044006900730070006c006100790073010000003f000002f2000000cc00fffffffb0000001200530065006c0065006300740069006f006e01000003370000016c0000005d00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007300000002d6000000e60000006f00fffffffb0000000800540069006d006501000004a9000000930000003c00ffffff00000001000001c9000004fdfc0200000001fb0000000a00560069006500770073010000003f000004fd000000a900ffffff0000057f000004fd00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000002000000000000047a000007d6fc0200000004fb000000100044006900730070006c00610079007301000000700000049e0000018600fffffffb0000001200530065006c0065006300740069006f006e010000051a0000023a000000b200fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007300000002d6000000e6000000d600fffffffb0000000800540069006d00650100000760000000e60000005e00ffffff00000001000001c9000007d6fc0200000001fb0000000a005600690065007700730100000070000007d60000013800ffffff0000092b000007d600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -610,6 +610,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 2499
-  X: 61
-  Y: 32
+  Width: 3974
+  X: 122
+  Y: 64
