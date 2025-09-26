@@ -13,6 +13,7 @@ import os
 def generate_launch_description():
     run_rviz = LaunchConfiguration('run_rviz')
     run_sensecom = LaunchConfiguration('run_sensecom')
+    run_finger_distance = LaunchConfiguration('run_finger_distance')
 
     # Locate senseglove_com package
     sensecom_share = get_package_share_directory('senseglove_com')
@@ -30,6 +31,7 @@ def generate_launch_description():
     # Locate senseglove_bringup package
     launch_share = get_package_share_directory('senseglove_bringup')    
     gloves_file = os.path.join(launch_share, 'config', 'gloves.yaml')
+    finger_tip_distance_launch = os.path.join(launch_share, 'launch','finger_tip_distance.launch.py')
 
     # Locate senseglove_hardware_interface package
     hw_share = get_package_share_directory('senseglove_hardware_interface')    
@@ -75,29 +77,12 @@ def generate_launch_description():
         condition=UnlessCondition(run_sensecom)
     )
 
-    # Calibration nodes
-    calib_left_file = os.path.join(launch_share, 'config', 'calibration_left.yaml')
-    calib_right_file = os.path.join(launch_share, 'config', 'calibration_right.yaml')
-
-    # TODO: This needs a dynamic arg call
-    calibration_left = Node(
-        package='senseglove_interaction',
-        executable='senseglove_finger_distance_node',
-        name='senseglove_finger_distance_left',
-        output='screen',
-        arguments=['0', 'normalized'],
-        parameters=[calib_left_file]
+    # Finger Tip Distance Nodes
+    launch_finger_tip_distance = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(finger_tip_distance_launch),
+        condition=IfCondition(run_finger_distance)
     )
-
-    calibration_right = Node(
-        package='senseglove_interaction',
-        executable='senseglove_finger_distance_node',
-        name='senseglove_finger_distance_right',
-        output='screen',
-        arguments=['1', 'normalized'],
-        parameters=[calib_right_file]
-    )
-
+    
     # Locate senseglove_description package
     description_share = get_package_share_directory('senseglove_description')
     
@@ -119,10 +104,10 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('run_rviz', default_value='false', choices=['true', 'false'], description='Launch RViz'),
         DeclareLaunchArgument('run_sensecom', default_value='true', choices=['true', 'false'], description='Start SenseCom executable'),
+        DeclareLaunchArgument('run_finger_distance', default_value='false', choices=['true', 'false'], description='Start Finger-Tip Distance Nodes'),
         sensecom_process,
         launch_hardware_nodes_with_sensecom,
         launch_hardware_nodes_without_sensecom,
-        # calibration_left,
-        # calibration_right,
+        launch_finger_tip_distance,
         rviz_node
     ])

@@ -71,6 +71,10 @@ The finger distance node package publish the distances between fingertips.
 ros2 launch senseglove_bringup finger_distance.launch.py
 ```
 
+    ros2 run senseglove_interaction calibration_manager --target-ns /senseglove/glove0/rh --call-service
+
+    ros2 param set /senseglove/glove0/rh/finger_tip_distance_node calib_mode normalized
+
 ### Calibration Manager: ###
 This node is resposible for starting a `calibration` service. Simply provide the target node, it starts a GUI, saves the ros-params, saves it to the yaml.
 ```
