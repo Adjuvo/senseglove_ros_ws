@@ -29,8 +29,10 @@ setup(
     entry_points={
         'console_scripts': [
             # finger distance
-            'finger_distance = senseglove_interaction.finger_distance.finger_distance_node:main',
-            'finger_distance_calibration = senseglove_interaction.finger_distance.finger_distance_calibration:main',
+            'finger_tip_distance_node = senseglove_interaction.finger_distance.finger_distance_node:main',
+            'finger_tip_distance_calibration = senseglove_interaction.finger_distance.finger_distance_calibration:main',
+            'finger_tip_distance_planar_node = senseglove_interaction.finger_distance.finger_tip_distance_planar_node:main',
+            'calibration_manager = senseglove_interaction.finger_distance.calibration_manager:main',
             # haptics nodes
             'haptics_node = senseglove_interaction.haptics.haptics_node:main',
             # imu tf broadcaster

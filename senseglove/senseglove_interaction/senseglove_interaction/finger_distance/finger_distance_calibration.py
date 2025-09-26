@@ -4,29 +4,18 @@ import sys
 import os
 import yaml
 from collections import deque
+from PyQt5 import QtWidgets, QtCore
 
 import rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter as RclParameter
+from rcl_interfaces.srv import SetParameters
 from ament_index_python.packages import get_package_share_directory
-from PyQt5 import QtWidgets, QtCore
 
 from senseglove_msgs.msg import FingerDistanceFloats
 
-# -----------------------------------------------------------------------------
-# Calibration data
-# -----------------------------------------------------------------------------
 class Calibration:
-    """
-    Class used by a finger distance controller to calibrate fingertip distances.
-    """        
-    def __init__(self, glove_nr=1, name="default"):
-        """
-        :param glove_nr: integer >=0; even = left hand, odd = right hand, every 2 increments is new glove index.
-        :param name: Calibration profile name (used for saving YAML).
-        """
-        self.glove_nr = glove_nr
-        self.name = name
-        self.handedness_list = ["/lh", "/rh"]
+    def __init__(self):
 
         # Defaults
         self.pinch_calibration_min = [0.0, 0.0, 0.0, 0.0]  # [index, middle, ring, pinky] in mm
@@ -53,7 +42,7 @@ class Calibration:
     def log(self, msg: str):
         print(f"[Calibration] {msg}")
 
-    def senseglove_callback(self, finger_distance_msg: FingerDistanceFloats):
+    def callback(self, finger_distance_msg: FingerDistanceFloats):
         self.databuffer.appendleft(finger_distance_msg)
 
     def get_avg_finger_distances(self) -> FingerDistanceFloats:
@@ -162,23 +151,41 @@ class Calibration:
             self.finished_thumb_pinky_pinch
         )
 
-    def save_to_yaml(self):
-        data = {
-            'pinch_calibration_min': [
-                self.avg_thumb_index_pinch[0],
-                self.avg_thumb_middle_pinch[1],
-                self.avg_thumb_ring_pinch[2],
-                self.avg_thumb_pinky_pinch[3]
-            ],
-            'pinch_calibration_max': self.avg_open_flat
+    def save_to_yaml(self, node_key: str):
+
+        new_block = {
+            "ros__parameters": {
+                "pinch_calibration_min": [
+                    float(self.avg_thumb_index_pinch[0]),
+                    float(self.avg_thumb_middle_pinch[1]),
+                    float(self.avg_thumb_ring_pinch[2]),
+                    float(self.avg_thumb_pinky_pinch[3]),
+                ],
+                "pinch_calibration_max": [float(x) for x in self.avg_open_flat],
+            }
         }
-        home = os.path.expanduser('~')
-        calib_dir = os.path.join(home, '.ros', 'senseglove', 'calibration')
-        os.makedirs(calib_dir, exist_ok=True)
-        filename = os.path.join(calib_dir, f"{self.name}.yaml")
-        with open(filename, 'w') as f:
-            yaml.dump(data, f)
-        self.log(f"Calibration data saved to: {filename}")
+
+        # Locate the bringup package
+        pkg_share = get_package_share_directory("senseglove_bringup")
+        calib_file = os.path.join(pkg_share, "config", "calibration.yaml")
+        os.makedirs(os.path.dirname(calib_file), exist_ok=True)
+
+        # Load existing file
+        existing = {}
+        if os.path.exists(calib_file):
+            with open(calib_file, "r") as f:
+                loaded = yaml.safe_load(f) or {}
+                if isinstance(loaded, dict):
+                    existing = loaded
+
+        # Update just this block
+        existing[node_key] = new_block
+
+        with open(calib_file, "w") as f:
+            yaml.safe_dump(existing, f, sort_keys=False)
+
+        self.log(f"Calibration params saved to: {calib_file} under key {node_key}")
+
 
 # -----------------------------------------------------------------------------
 # Qt5 GUI for calibration steps
@@ -283,13 +290,27 @@ class CalibrationGUI(QtWidgets.QWidget):
         self.btn_cancel.clicked.connect(self._on_cancel)
 
     def _subscribe_to_topic(self):
-        topic = f"/senseglove/sg{str(int(self.calibration.glove_nr/2))}{self.calibration.handedness_list[self.calibration.glove_nr % 2]}/finger_distances"
+        target = getattr(self.node, 'target_node', '')
+
+        if not target:
+            self._log("Error: No target node FQN provided; aborting calibration.")
+            self._abort(2)
+            return
+
+        try:
+            ns = target.rsplit('/', 1)[0]
+            topic = f"{ns}/finger_distances"
+        except Exception as e:
+            self._log(f"Error: invalid target node FQN '{target}': {e}. Aborting.")
+            self._abort(2)
+            return
+        
+        names = dict(self.node.get_topic_names_and_types())
+        if topic not in names:
+            self._log(f"Warning: topic '{topic}' not currently advertised.")
+
         self.node.create_subscription(
-            FingerDistanceFloats, 
-            topic,
-            self.calibration.senseglove_callback,
-            1
-        )
+            FingerDistanceFloats, topic, self.calibration.callback, 1)
         self._log(f"Subscribed to: {topic}")
 
     def _start_ros_spin_timer(self):
@@ -361,23 +382,53 @@ class CalibrationGUI(QtWidgets.QWidget):
         ]
         self.calibration.pinch_calibration_max = self.calibration.avg_open_flat
         self._log(f"Calibration parameters computed: min={self.calibration.pinch_calibration_min}, max={self.calibration.pinch_calibration_max}")
-        # Set ROS 2 node parameters so other nodes can pick up immediately
-        if self.node:
-            params = [
-                rclpy.parameter.Parameter('pinch_calibration_min', rclpy.Parameter.Type.DOUBLE_ARRAY, self.calibration.pinch_calibration_min),
-                rclpy.parameter.Parameter('pinch_calibration_max', rclpy.Parameter.Type.DOUBLE_ARRAY, self.calibration.pinch_calibration_max),
+
+        # Push to target node
+        if getattr(self.node, 'target_node', ''):
+            target = self.node.target_node
+            self._log(f"Pushing params to target node: {target}")
+
+        # Create a client to the target node's parameter service
+        client = self.node.create_client(SetParameters, f"{target}/set_parameters")
+        if not client.wait_for_service(timeout_sec=5.0):
+            self._log("Error: target parameter service not available.")
+        else:
+            req = SetParameters.Request()
+            req.parameters = [
+                RclParameter(
+                    'pinch_calibration_min',
+                    RclParameter.Type.DOUBLE_ARRAY,
+                    list(map(float, self.calibration.pinch_calibration_min))
+                ).to_parameter_msg(),
+                RclParameter(
+                    'pinch_calibration_max',
+                    RclParameter.Type.DOUBLE_ARRAY,
+                    list(map(float, self.calibration.pinch_calibration_max))
+                ).to_parameter_msg(),
             ]
-            self.node.set_parameters(params)
-            self._log("Parameters set on node parameter server.")
+
+            future = client.call_async(req)
+            rclpy.spin_until_future_complete(self.node, future)
+            if future.result() and all([r.successful for r in future.result().results]):
+                self._log("Remote parameters set successfully.")
+            else:
+                self._log("Warning: Failed to set remote parameters.")
+        
         # Save YAML profile
-        self.calibration.save_to_yaml()
+        target_ns = os.path.dirname(target) + "/**"
+        self.calibration.save_to_yaml(target_ns)
         self._log("Calibration saved. Closing GUI.")
         QtWidgets.QApplication.quit()
 
     def _on_cancel(self):
-        self._log("Calibration cancelled by user.")
+        self._log("Calibration cancelled.")
         self.calibration.cancelled = True
         QtWidgets.QApplication.quit()
+
+    def _abort(self, code: int = 2):
+        self._log("Calibration cancelled.")
+        self.calibration.cancelled = True
+        QtCore.QTimer.singleShot(0, lambda: QtWidgets.QApplication.exit(code))
 
     def _log(self, msg: str):
         self.log_text.append(msg)
@@ -388,15 +439,15 @@ class CalibrationGUI(QtWidgets.QWidget):
 # -----------------------------------------------------------------------------
 def main(args=None):
     rclpy.init(args=args)
-    node = Node('finger_distance_calibration')
+    node = Node('finger_tip_distance_calibration')
 
     node.declare_parameter('pinch_calibration_min', [0.0, 0.0, 0.0, 0.0])
     node.declare_parameter('pinch_calibration_max', [100.0, 100.0, 100.0, 100.0])
 
-    glove_nr = int(sys.argv[1]) if len(sys.argv) > 1 else 1
-    profile  = sys.argv[2] if len(sys.argv) > 2 else 'default'
+    target_node = sys.argv[1] if len(sys.argv) > 1 else ''
 
-    calibration = Calibration(glove_nr=glove_nr, name=profile)
+    calibration = Calibration()
+    node.target_node = target_node
 
     # Launch Qt GUI (blocks until closed)
     app = QtWidgets.QApplication(sys.argv)
