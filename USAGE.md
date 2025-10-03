@@ -35,12 +35,15 @@ gloves:
   - type: nova2
     side: right
     index: 0
+    finger_distance: false
   - type: nova2
     side: left
     index: 1
+    finger_distance: false
   - type: dk1
     side: right
     index: 2       
+    finger_distance: true
 ```
 2. Launch
 ```
@@ -56,31 +59,36 @@ ros2 launch senseglove_bringup senseglove.launch.py
     - true:  launches sensecom with hardware_node launch
     - false: does not launch sensecom
 
-<!-- - `use_finger_distance`
+- `run_finger_distance`
     - true:  launch additional nodes that compute and publish finger distance data
-    - false: skip these nodes -->
+    - false: skips
 
 Example:
 ```
-ros2 launch senseglove_bringup senseglove.launch.py run_rviz:=true run_sensecom:=true
+ros2 launch senseglove_bringup senseglove.launch.py run_rviz:=true run_sensecom:=true run_finger_distance:=true
 ```
 
-## (Update soon) Finger-Tip Distances: ##
-The finger distance node package publish the distances between fingertips.
+## Finger-Tip Distances: ##
+The finger distance nodes compute and publish the distance between each fingertip and the thumb fingertip. Update the `finger_distance` bool in the 
+[gloves.yaml](/senseglove/senseglove_bringup/config/gloves.yaml) and launch the nodes using:
+
 ```
 ros2 launch senseglove_bringup finger_distance.launch.py
 ```
 
-    ros2 run senseglove_interaction calibration_manager --target-ns /senseglove/glove0/rh --call-service
+#### Finger-Tip-Distance Node Parameters ####
+- `calib_mode`
+    - nothing:  raw output
+    - normalized: normalized output
 
-    ros2 param set /senseglove/glove0/rh/finger_tip_distance_node calib_mode normalized
+```
+ros2 param set /senseglove/glove0/rh/finger_tip_distance_node calib_mode normalized
+```
 
 ### Calibration Manager: ###
 This node is resposible for starting a `calibration` service. Simply provide the target node, it starts a GUI, saves the ros-params, saves it to the yaml.
 ```
-ros2 run senseglove_interaction calibration_manager /
-    --target-ns /senseglove/glove0/rh /
-    --call-service
+ros2 run senseglove_interaction calibration_manager --target-ns /senseglove/glove0/rh --call-service
 ```
 Default and calibrated parameters are found in [calibration.yaml](/senseglove_ros/senseglove/senseglove_bringup/config/calibration.yaml)
 

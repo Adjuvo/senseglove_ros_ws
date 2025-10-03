@@ -1,7 +1,14 @@
+# types : dk1, nova, nova2
+# side  : left, right
+# index : 0, 1, 2, ...
+# finger_distance: true, false
+
 gloves:
   - type: nova2
     side: left
     index: 0
+    finger_distance: false
   - type: nova2
     side: right
-    index: 1
+    index: 0
+    finger_distance: false

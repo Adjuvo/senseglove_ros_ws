@@ -31,7 +31,7 @@ def generate_launch_description():
     # Locate senseglove_bringup package
     launch_share = get_package_share_directory('senseglove_bringup')    
     gloves_file = os.path.join(launch_share, 'config', 'gloves.yaml')
-    finger_tip_distance_launch = os.path.join(launch_share, 'launch','finger_tip_distance.launch.py')
+    finger_distance_launch = os.path.join(launch_share, 'launch','finger_distance.launch.py')
 
     # Locate senseglove_hardware_interface package
     hw_share = get_package_share_directory('senseglove_hardware_interface')    
@@ -78,8 +78,8 @@ def generate_launch_description():
     )
 
     # Finger Tip Distance Nodes
-    launch_finger_tip_distance = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(finger_tip_distance_launch),
+    launch_finger_distance = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(finger_distance_launch),
         condition=IfCondition(run_finger_distance)
     )
     
@@ -108,6 +108,6 @@ def generate_launch_description():
         sensecom_process,
         launch_hardware_nodes_with_sensecom,
         launch_hardware_nodes_without_sensecom,
-        launch_finger_tip_distance,
+        launch_finger_distance,
         rviz_node
     ])
