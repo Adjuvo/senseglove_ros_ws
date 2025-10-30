@@ -10,5 +10,5 @@ gloves:
     finger_distance: false
   - type: nova2
     side: right
-    index: 0
+    index: 1
     finger_distance: false
