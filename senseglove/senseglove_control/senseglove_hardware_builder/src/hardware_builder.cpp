@@ -11,7 +11,7 @@ HardwareBuilder::HardwareBuilder(AllowedRobot robot, int gloveIndex, bool isRigh
 {
 }
 
-HardwareBuilder::HardwareBuilder(AllowedRobot robot, urdf::Model urdfModel)
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, std::shared_ptr<urdf::Model> urdfModel)
   : robotConfig(YAML::LoadFile(robot.getFilePath())), urdfModel(std::move(urdfModel))
 {
 }
@@ -21,15 +21,19 @@ HardwareBuilder::HardwareBuilder(const std::string& yamlPath, int gloveIndex, bo
 {
 }
 
-HardwareBuilder::HardwareBuilder(const std::string& yamlPath, urdf::Model urdfModel)
+HardwareBuilder::HardwareBuilder(const std::string& yamlPath, std::shared_ptr<urdf::Model> urdfModel)
   : robotConfig(YAML::LoadFile(yamlPath)), urdfModel(std::move(urdfModel))
 {
 }
 
-
-void HardwareBuilder::setUrdfModel(urdf::Model urdfModel)
+HardwareBuilder::HardwareBuilder(AllowedRobot robot, int gloveIndex, bool isRight, const std::string& gloveSerial)
+  : robotConfig(YAML::LoadFile(robot.getFilePath())), gloveIndex(gloveIndex), isRight(isRight), gloveSerial(gloveSerial)
 {
-    this->urdfModel = std::move(urdfModel);
+}
+
+void HardwareBuilder::setUrdfModel(std::shared_ptr<urdf::Model> urdfModel)
+{
+    this->urdfModel = urdfModel;
 }
 
 // Create SenseGloveSetup
@@ -47,12 +51,17 @@ std::unique_ptr<SGHardware::SenseGloveSetup> HardwareBuilder::createSenseGloveSe
   YAML::Node config = this->robotConfig[robotName];
 
   auto allGloves = SGCore::SG::SenseGlove::GetHapticGloves(true);
-  auto currentGlove = allGloves[gloveIndex];
-
   RCLCPP_INFO_STREAM(logger, "Obtained the following gloves:");
   for (auto& glove : allGloves)
   {
     RCLCPP_INFO_STREAM(logger, " - " << glove->GetDeviceId());
+  }
+
+  std::shared_ptr<HapticGlove> currentGlove;  
+  if (!gloveSerial.empty()) {
+    currentGlove = getGloveBySerial(allGloves, gloveSerial);
+  } else {
+    currentGlove = allGloves[gloveIndex];
   }
 
   if (DeviceList::SenseComRunning())
@@ -119,7 +128,7 @@ SGHardware::Joint HardwareBuilder::createJoint(const YAML::Node& jointConfig, co
 
 // Construct SenseGloveRobot object
 SGHardware::SenseGloveRobot HardwareBuilder::createRobot(
-  const YAML::Node& robotConfig, urdf::Model urdfModel, std::vector<SGHardware::Joint> jointList,
+  const YAML::Node& robotConfig, std::shared_ptr<urdf::Model> urdfModel, std::vector<SGHardware::Joint> jointList,
   std::shared_ptr<HapticGlove> glove, int robotIndex, bool isArgRight)
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -161,7 +170,7 @@ std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& j
   for (const auto& jointConfig : jointsConfig)
   {
     const auto jointName = jointConfig.begin()->first.as<std::string>();
-    const auto urdfJoint = this->urdfModel.getJoint(jointName);
+    const auto urdfJoint = this->urdfModel->getJoint(jointName);
     if (urdfJoint && urdfJoint->type == urdf::Joint::FIXED)
     {
       RCLCPP_WARN_STREAM(logger, "Joint: " << jointName << " is fixed in the URDF, but defined in the robot yaml.");
@@ -169,7 +178,7 @@ std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& j
     joints.push_back(createJoint(jointConfig[jointName], jointName, urdfJoint));
   }
 
-  for (const auto& urdfJoint : this->urdfModel.joints_)
+  for (const auto& urdfJoint : this->urdfModel->joints_)
   {
     if (urdfJoint.second->type != urdf::Joint::FIXED)
     {
@@ -188,7 +197,7 @@ std::vector<SGHardware::Joint> HardwareBuilder::createJoints(const YAML::Node& j
 
 // Creates a SenseGloveRobot for each glove,
 std::vector<SGHardware::SenseGloveRobot> HardwareBuilder::createRobots(
-  const YAML::Node& robotsConfig, urdf::Model urdfModel, std::vector<SGHardware::Joint> jointList,
+  const YAML::Node& robotsConfig, std::shared_ptr<urdf::Model> urdfModel, std::vector<SGHardware::Joint> jointList,
   std::vector<std::shared_ptr<HapticGlove>> allGloves) const
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
@@ -204,20 +213,34 @@ std::vector<SGHardware::SenseGloveRobot> HardwareBuilder::createRobots(
   return robots;
 }
 
-// Helper function to select the correct glove from a list, based on the specified hand orientation and glove number
-std::shared_ptr<HapticGlove> HardwareBuilder::correctGlove(std::vector<std::shared_ptr<HapticGlove>> gloves) const
+// Helper function to find current glove by serial number
+std::shared_ptr<HapticGlove> HardwareBuilder::getGloveBySerial(std::vector<std::shared_ptr<HapticGlove>> gloves, const std::string& targetSerial) const
 {
-  int mod = gloveIndex % 2;
-  auto choiceA = gloves[gloveIndex];
-  bool notEqual = choiceA->IsRight() xor isRight;
+  auto logger = rclcpp::get_logger("senseglove.hardware_builder");
+  
+  for (size_t i = 0; i < gloves.size(); ++i)
+  {
+    std::string deviceId = gloves[i]->GetDeviceId();
+    RCLCPP_DEBUG_STREAM(logger, "  Checking glove " << i << ": " << deviceId);
+        
+    // Matching Device IDs (Example: "01000" matches with "Nova 2-01000-L")
+    if (deviceId.find(targetSerial) != std::string::npos)
+    {
+      RCLCPP_INFO_STREAM(logger, "Found match at index " << i 
+                        << ": " << deviceId << " contains '" << targetSerial << "'"
+                        << " (IsRight: " << gloves[i]->IsRight() << ")");
+      return gloves[i];
+    }
+  }
 
-  if (mod == 0 && notEqual)
+  // No match found?
+  RCLCPP_ERROR_STREAM(logger, "Could not find glove with serial: " << targetSerial);
+  RCLCPP_ERROR_STREAM(logger, "Available gloves:");
+  for (size_t i = 0; i < gloves.size(); ++i)
   {
-    return gloves[gloveIndex + 1];
+    RCLCPP_ERROR_STREAM(logger, "  [" << i << "] " << gloves[i]->GetDeviceId() 
+                        << " (" << (gloves[i]->IsRight() ? "right" : "left") << ")");
   }
-  else if (mod == 1 && notEqual)
-  {
-    return gloves[gloveIndex - 1];
-  }
-  return choiceA;
+  
+  throw std::runtime_error("Glove with serial '" + targetSerial + "' not found");
 }

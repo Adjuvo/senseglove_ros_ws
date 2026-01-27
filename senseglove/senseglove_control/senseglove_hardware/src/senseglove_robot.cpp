@@ -8,7 +8,7 @@ namespace SGHardware
   SenseGloveRobot::SenseGloveRobot(
     std::shared_ptr<HapticGlove> glove, 
     std::vector<Joint> jointList, 
-    const urdf::Model urdfModel, 
+    std::shared_ptr<urdf::Model> urdfModel, 
     int robotIndex, 
     bool isRight)
     : hapticglove(std::move(glove))
@@ -389,9 +389,9 @@ namespace SGHardware
     return isUpdated;
   }
 
-  const urdf::Model& SenseGloveRobot::getUrdf() const
+  const std::shared_ptr<urdf::Model>& SGHardware::SenseGloveRobot::getUrdf() const
   {
-    return this->urdfModel;
+      return this->urdfModel;
   }
   
 }  // namespace SGHardware

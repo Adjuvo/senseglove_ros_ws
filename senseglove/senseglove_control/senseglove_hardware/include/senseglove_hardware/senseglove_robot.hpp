@@ -39,7 +39,7 @@ namespace SGHardware
     // Constructor: pass a shared HapticGlove pointer, joint list, URDF model, index, and handedness
     SenseGloveRobot(std::shared_ptr<HapticGlove> hapticglove, 
                     std::vector<Joint> jointList, 
-                    urdf::Model urdfModel, 
+                    std::shared_ptr<urdf::Model> urdfModel, 
                     int robotIndex, 
                     bool isRight);
 
@@ -97,7 +97,7 @@ namespace SGHardware
     iterator begin();
     iterator end();
 
-    const urdf::Model& getUrdf() const;
+    const std::shared_ptr<urdf::Model>& getUrdf() const;
 
     bool updateGloveData(const std::chrono::duration<double>& period);
 
@@ -153,7 +153,7 @@ namespace SGHardware
 
     std::vector<Joint> jointList;
     std::unordered_map<std::string, size_t> jointMap;
-    urdf::Model urdfModel;
+    std::shared_ptr<urdf::Model> urdfModel;
     const std::string SenseGloveRobotName;
     const SGCore::EDeviceType deviceType;
     const int robotIndex;

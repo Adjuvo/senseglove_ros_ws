@@ -6,6 +6,7 @@
   <xacro:arg name="selected_robot"  default="nova2_right" />
   <xacro:arg name="glove_index"     default="0" />
   <xacro:arg name="is_right"        default="true" />
+  <xacro:arg name="glove_serial"    default=""/>
   <xacro:arg name="publish_rate"    default="60" />
 
   <!-- Import Nova2 Description Macro -->
@@ -25,6 +26,7 @@
     selected_robot="$(arg selected_robot)"
     glove_index="$(arg glove_index)"
     is_right="$(arg is_right)"
+    glove_serial="$(arg glove_serial)"
     publish_rate="$(arg publish_rate)" />
 
 </robot>

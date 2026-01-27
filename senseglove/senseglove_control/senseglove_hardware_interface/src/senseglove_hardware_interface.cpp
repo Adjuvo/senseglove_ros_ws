@@ -32,16 +32,27 @@ CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::Ha
     std::transform(is_right_str.begin(), is_right_str.end(), is_right_str.begin(), ::tolower);
     is_right_ = (is_right_str == "true") ? true : false;
 
+    std::string glove_serial = "";
+    auto it = info_.hardware_parameters.find("glove_serial");
+    if (it != info_.hardware_parameters.end()) {
+      glove_serial = it->second;
+      RCLCPP_INFO(rclcpp::get_logger("SenseGloveHW"), 
+                  "Found glove_serial parameter: '%s'", glove_serial.c_str());
+    } else {
+      RCLCPP_WARN(rclcpp::get_logger("SenseGloveHW"), 
+                  "No glove_serial parameter found");
+    }
+
     publish_rate_ = std::stod(info_.hardware_parameters.at("publish_rate"));
 
-    urdf::Model urdf_model;
-    if (!urdf_model.initString(info_.original_xml)) {
+    auto urdf_model = std::make_shared<urdf::Model>();
+    if (!urdf_model->initString(info_.original_xml)) {
         RCLCPP_ERROR(get_logger(), "Failed to parse URDF from original_xml");
         return CallbackReturn::ERROR;
     }
 
-    HardwareBuilder builder(robot_enum, glove_index_, is_right_);
-    builder.setUrdfModel(std::move(urdf_model)); 
+    HardwareBuilder builder(robot_enum, glove_index_, is_right_, glove_serial);
+    builder.setUrdfModel(urdf_model); 
     senseglove_setup_ = builder.createSenseGloveSetup();
 
     if (!senseglove_setup_ || senseglove_setup_->size() == 0) {

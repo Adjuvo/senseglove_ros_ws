@@ -47,7 +47,7 @@ namespace SGHardware
     const_iterator end() const noexcept { return SGRobots.end(); }
 
     // Retrieve URDF model of a robot by name
-    const urdf::Model& getRobotUrdf(const std::string & gloveName);
+    const std::shared_ptr<urdf::Model>& getRobotUrdf(const std::string & gloveName);
 
     // Comparison operators
     friend bool operator==(const SenseGloveSetup& lhs, const SenseGloveSetup& rhs)

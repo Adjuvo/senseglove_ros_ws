@@ -50,15 +50,19 @@ def generate_launch_description():
             robot = glove.get('type', 'nova2') + '_' + glove.get('side', 'left')
             index = str(glove.get('index', 0))
             is_right = 'true' if glove.get('side') == 'right' else 'false'
+            glove_serial = glove.get('serial', '')
+
+            launch_args = {
+                'robot': robot,
+                'gloveIndex': index,
+                'isRight': is_right,
+                'gloveSerial': str(glove_serial)
+            }
 
             hardware_nodes.append(
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(hardware_launch),
-                    launch_arguments={
-                        'robot': robot,
-                        'gloveIndex': index,
-                        'isRight': is_right
-                    }.items()
+                    launch_arguments=launch_args.items()
                 )
             )
         

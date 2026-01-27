@@ -31,11 +31,12 @@ public:
 
   // Constructors
   explicit HardwareBuilder(AllowedRobot robot, int gloveIndex, bool isRight);
-  HardwareBuilder(AllowedRobot robot, urdf::Model urdfModel);
+  HardwareBuilder(AllowedRobot robot, std::shared_ptr<urdf::Model> urdfModel);
   explicit HardwareBuilder(const std::string& yamlPath, int gloveIndex, bool isRight);
-  HardwareBuilder(const std::string& yamlPath, urdf::Model urdfModel);
+  HardwareBuilder(const std::string& yamlPath, std::shared_ptr<urdf::Model> urdfModel);
+  explicit HardwareBuilder(AllowedRobot robot, int gloveIndex, bool isRight, const std::string& gloveSerial);
 
-  void setUrdfModel(urdf::Model urdfModel);
+  void setUrdfModel(std::shared_ptr<urdf::Model> urdfModel);
 
   // Build SenseGlove robot setup
   std::unique_ptr<SGHardware::SenseGloveSetup> createSenseGloveSetup();
@@ -43,23 +44,27 @@ public:
   // Static helpers
   static void validateRequiredKeysExist(const YAML::Node& config, const std::vector<std::string>& keyList, const std::string& objectName);
   static SGHardware::Joint createJoint(const YAML::Node& jointConfig, const std::string& jointName, const urdf::JointConstSharedPtr& urdfJoint);
-  static SGHardware::SenseGloveRobot createRobot(const YAML::Node& robotConfig, urdf::Model urdf,
+  static SGHardware::SenseGloveRobot createRobot(const YAML::Node& robotConfig,
+                                                 std::shared_ptr<urdf::Model> urdfModel,
                                                  std::vector<SGHardware::Joint> joints,
                                                  std::shared_ptr<SGCore::HapticGlove> glove,
                                                  int robotIndex, bool isArgRight);
 private:
   // Internal helpers
   std::vector<SGHardware::Joint> createJoints(const YAML::Node& joints_config) const;
-  std::vector<SGHardware::SenseGloveRobot> createRobots(const YAML::Node& allRobotConfig, urdf::Model urdfModel,
+  std::vector<SGHardware::SenseGloveRobot> createRobots(const YAML::Node& allRobotConfig, 
+                                                        std::shared_ptr<urdf::Model> urdfModel,
                                                         std::vector<SGHardware::Joint> joints,
                                                         std::vector<std::shared_ptr<SGCore::HapticGlove>> allGloves) const;
-  std::shared_ptr<SGCore::HapticGlove> correctGlove(std::vector<std::shared_ptr<SGCore::HapticGlove>> gloves) const;
+  // Current Glove
+  std::shared_ptr<SGCore::HapticGlove> getGloveBySerial(std::vector<std::shared_ptr<SGCore::HapticGlove>> gloves, const std::string& targetSerial) const;
 
   // Member data
   YAML::Node robotConfig;
-  urdf::Model urdfModel;
+  std::shared_ptr<urdf::Model> urdfModel;
   int gloveIndex;
   bool isRight;
+  std::string gloveSerial = "";
 };
 
 #endif  // ROS_WORKSPACE_HARDWARE_BUILDER_H

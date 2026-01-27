@@ -15,6 +15,7 @@ def generate_launch_description():
     robot = LaunchConfiguration('robot')
     glove_index = LaunchConfiguration('gloveIndex')
     is_right = LaunchConfiguration('isRight')
+    glove_serial = LaunchConfiguration('gloveSerial')
 
     robot_type = PythonExpression(["'", robot, "'.split('_')[0]"])
     handedness = PythonExpression(['"rh" if "', is_right, '" == "true" else "lh"'])
@@ -37,7 +38,9 @@ def generate_launch_description():
         " ",
         "is_right:=", is_right,
         " ",
-        "publish_rate:=", "100", 
+        "glove_serial:=", glove_serial,
+        " ",
+        "publish_rate:=", "60", 
         ])
 
 
@@ -53,10 +56,11 @@ def generate_launch_description():
         robot = LaunchConfiguration('robot').perform(context)
         glove_index = LaunchConfiguration('gloveIndex').perform(context)
         is_right = LaunchConfiguration('isRight').perform(context)
+        glove_serial = LaunchConfiguration('gloveSerial').perform(context)
 
         return [
             LogInfo(
-                msg=f"[DEBUG] Xacro args: robot={robot} glove_index={glove_index} is_right={is_right}"
+                msg=f"[DEBUG] Xacro args: robot={robot} glove_index={glove_index} is_right={is_right} glove_serial={glove_serial}"
             )
         ]
 
@@ -128,7 +132,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('robot', description='The robot model to use'),
         DeclareLaunchArgument('gloveIndex', description='Index of the glove'),
-        DeclareLaunchArgument('isRight', description='Is right hand glove? (true/false)'),
+        DeclareLaunchArgument('gloveSerial', default_value='', description='Serial number'),  # ADD THIS
         log_args,
         control_node,
         robot_state_publisher,

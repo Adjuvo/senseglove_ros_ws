@@ -112,7 +112,7 @@ namespace SGHardware
     return *SGRobots[index];
   }
 
-  const urdf::Model& SenseGloveSetup::getRobotUrdf(const std::string & robotName)
+  const std::shared_ptr<urdf::Model>& SenseGloveSetup::getRobotUrdf(const std::string & robotName)
   {
     return this->getSenseGloveRobot(robotName).getUrdf();
   }
