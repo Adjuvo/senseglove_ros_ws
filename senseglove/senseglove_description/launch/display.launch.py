@@ -6,8 +6,8 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def launch_setup(context, *args, **kwargs):
-    type = LaunchConfiguration('type').perform(context)     # dk1 / nova / nova2
-    side = LaunchConfiguration('side').perform(context)     # left / right / both
+    type = LaunchConfiguration('type').perform(context)
+    side = LaunchConfiguration('side').perform(context)
     prefix = LaunchConfiguration('prefix').perform(context)
 
     urdf_dir = os.path.join(get_package_share_directory('senseglove_description'), 'urdf', type)

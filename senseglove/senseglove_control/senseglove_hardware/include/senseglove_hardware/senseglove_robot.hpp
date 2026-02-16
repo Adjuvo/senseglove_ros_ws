@@ -1,166 +1,223 @@
-#ifndef ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
-#define ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
+#ifndef SENSEGLOVE_HARDWARE_SENSEGLOVE_ROBOT_HPP
+#define SENSEGLOVE_HARDWARE_SENSEGLOVE_ROBOT_HPP
 
-#include <vector>
-#include <numeric>
 #include <chrono>
-#include <unordered_map>
-#include <algorithm>
-#include <limits>
+#include <memory>
 #include <ostream>
-#include <cmath>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 #include <senseglove_hardware/joint.hpp>
 
 // SenseGlove API headers
-#include <SenseGlove.hpp>
-#include <SenseGloveSensorData.hpp>
-#include <SenseGlovePose.hpp>
-
-#include <NovaGlove.hpp>
-#include <NovaGloveSensorData.hpp>
-
+#include <BasicHandModel.hpp>
+#include <DeviceList.hpp>
+#include <HandPose.hpp>
 #include <Nova2Glove.hpp>
 #include <Nova2GloveSensorData.hpp>
-
-#include <BasicHandModel.hpp>
-#include <HandPose.hpp>
-#include <DeviceList.hpp>
-#include <Vect3D.hpp>
+#include <NovaGlove.hpp>
+#include <NovaGloveSensorData.hpp>
 #include <Quat.hpp>
+#include <SenseGlove.hpp>
+#include <SenseGlovePose.hpp>
+#include <SenseGloveSensorData.hpp>
+#include <Vect3D.hpp>
 
 namespace SGHardware
 {
-  class SenseGloveRobot
-  {   
-  public:  
-    using iterator = std::vector<Joint>::iterator;
-    
-    // Constructor: pass a shared HapticGlove pointer, joint list, URDF model, index, and handedness
-    SenseGloveRobot(std::shared_ptr<HapticGlove> hapticglove, 
-                    std::vector<Joint> jointList, 
-                    std::shared_ptr<urdf::Model> urdfModel, 
-                    int robotIndex, 
-                    bool isRight);
 
-    ~SenseGloveRobot();
+class SenseGloveRobot
+{
+public:
+  using iterator = std::vector<Joint>::iterator;
+  using const_iterator = std::vector<Joint>::const_iterator;
 
-    // Delete copy constructor/assignment since the unique_ptr cannot be copied
-    SenseGloveRobot(SenseGloveRobot&) = delete;
-    SenseGloveRobot& operator=(SenseGloveRobot&) = delete;
-
-    // Delete move assignment since string cannot be move assigned
-    SenseGloveRobot(SenseGloveRobot&&) = default;
-    SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
-    
-    // Accessors
-    std::string getRobotName() const;
-    SGCore::EDeviceType getRobotType() const;
-    int getRobotIndex() const;
-    bool getRight() const;
-
-    Joint& getJoint(const std::string jointName);
-    Joint& getJoint(size_t index);
-
-    size_t getJointSize() const;
-    size_t getPositionJointSize() const;
-    size_t getEffortJointSize() const;
-    size_t getVibrationJointSize() const;
-
-    SGCore::Kinematics::Vect3D getHandPosition(int i) const;
-    SGCore::Kinematics::Vect3D getFingerTip(int i) const;
-
-    bool getImuRotation(SGCore::Kinematics::Quat & outIMU) const;
-
-    std::vector<float> effortLevels;
-    std::vector<float> vibrationLevels;
-    float squeezeLevel = 0.0f;
-
-    // ros control works exclusively with doubles, but the sendHaptics function works with integers
-    void queueEffort(const std::vector<double>& effortCommand);    
-    void queueVibrations(const std::vector<double>& vibrationCommand);
-
-    void sendHaptics();
-    void stopHaptics();
-
-    bool effortActive = false;
-    bool vibrationActive = false;
-
-    bool effortQueued = false;
-    bool vibrationQueued = false;
-    bool ffbQueued = false;
-    bool squeezeQueued = false;
-    bool vibroQueued = false;
-    bool thumperQueued = false;
-
-    size_t size() const;    
-    iterator begin();
-    iterator end();
-
-    const std::shared_ptr<urdf::Model>& getUrdf() const;
-
-    bool updateGloveData(const std::chrono::duration<double>& period);
-
-    // Override comparison operator
-    friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
-    {
-      if (lhs.jointList.size() != rhs.jointList.size()) {
-        return false;
-      }
-      for (size_t i = 0; i < lhs.jointList.size(); ++i) {
-        if (lhs.jointList[i] != rhs.jointList[i]) {
-          return false;
-        }
-      }
-      return true;
-    }
-    friend bool operator!=(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
-    {
-      return !(lhs == rhs);
-    }
-    friend std::ostream& operator<<(std::ostream& os, const SenseGloveRobot& robot)
-    {
-      for (const auto& j : robot.jointList) {
-        os << j << "\n";
-      }
-      return os;
-    }
-  
-    private:
-    // DK1 Specific  
-    SGCore::SG::SenseGloveSensorData sensegloveSensorData;
-    SGCore::SG::SenseGlovePose senseglovePose;
-
-    //Nova Specific
-    SGCore::Nova::NovaGlove novaglove;    
-    SGCore::Nova::NovaGloveSensorData novaSensorData;  
-
-    // Nova2 Specific
-    SGCore::Nova::Nova2Glove nova2glove;    
-    SGCore::Nova::Nova2GloveSensorData nova2SensorData;
-
-    // Shared
-    std::shared_ptr<SGCore::HapticGlove> hapticglove;
-    std::shared_ptr<SGCore::SG::SenseGlove> senseglovePtr;
-    std::shared_ptr<SGCore::Nova::NovaGlove> novaglovePtr;
-    std::shared_ptr<SGCore::Nova::Nova2Glove> nova2glovePtr;
-    
-    SGCore::HandPose handPose;
-    SGCore::Kinematics::BasicHandModel handModel;
-    SGCore::Kinematics::Vect3D jointPosition;
-    SGCore::Kinematics::Vect3D tipPositions;  
-    std::vector<std::vector<SGCore::Kinematics::Vect3D>> handPoseAngles;
-
-    std::vector<Joint> jointList;
-    std::unordered_map<std::string, size_t> jointMap;
-    std::shared_ptr<urdf::Model> urdfModel;
-    const std::string SenseGloveRobotName;
-    const SGCore::EDeviceType deviceType;
-    const int robotIndex;
-    const bool isRight;
-    bool isUpdated = false;
-
+  enum class GloveType
+  {
+    SenseGlove,
+    Nova,
+    Nova2,
+    Unknown
   };
+
+  static constexpr int TOTAL_FINGER_JOINTS = 19;
+  static constexpr int NUM_FINGERS = 5;
+  static constexpr int JOINTS_PER_FINGER = 4;
+  static constexpr int DISTAL_JOINT_INDEX = 3;
+
+  static constexpr float MIN_TOTAL_FFB_THRESHOLD = 10.0f;
+  static constexpr float MIN_TOTAL_VIBRATION_THRESHOLD = 10.0f;
+  static constexpr float STRAP_SAFETY_THRESHOLD = 10.0f;
+
+  // Construct a SenseGlove robot
+  SenseGloveRobot(std::shared_ptr<SGCore::HapticGlove> hapticglove,
+                  std::vector<Joint> jointList,
+                  std::shared_ptr<urdf::Model> urdfModel,
+                  const std::string& serial,
+                  bool isRight);
+
+  ~SenseGloveRobot();
+
+  // Non-copyable, movable
+  SenseGloveRobot(const SenseGloveRobot&) = delete;
+  SenseGloveRobot& operator=(const SenseGloveRobot&) = delete;
+
+  SenseGloveRobot(SenseGloveRobot&&) noexcept = default;
+  SenseGloveRobot& operator=(SenseGloveRobot&&) = delete;
+
+  // Identification
+  const std::string& getRobotName() const noexcept
+  {
+    return robotName_;
+  }
+  const std::string& getSerial() const noexcept
+  {
+    return serial_;
+  }
+  const std::string& getHandedness() const noexcept
+  {
+    return handedness_;
+  }
+  SGCore::EDeviceType getDeviceType() const noexcept
+  {
+    return deviceType_;
+  }
+  GloveType getGloveType() const noexcept
+  {
+    return gloveType_;
+  }
+  bool isRight() const noexcept
+  {
+    return isRight_;
+  }
+
+  // Joint Access
+  Joint& getJoint(const std::string& jointName);
+  const Joint& getJoint(const std::string& jointName) const;
+
+  Joint& getJoint(size_t index);
+  const Joint& getJoint(size_t index) const;
+
+  size_t getJointSize() const noexcept
+  {
+    return jointList_.size();
+  }
+  size_t getPositionJointSize() const noexcept
+  {
+    return positionJointCount_;
+  }
+  size_t getEffortJointSize() const noexcept
+  {
+    return effortJointCount_;
+  }
+  size_t getVibrationJointSize() const noexcept
+  {
+    return vibrationJointCount_;
+  }
+
+  // Iterator Access
+  size_t size() const noexcept
+  {
+    return jointList_.size();
+  }
+  iterator begin() noexcept
+  {
+    return jointList_.begin();
+  }
+  iterator end() noexcept
+  {
+    return jointList_.end();
+  }
+  const_iterator begin() const noexcept
+  {
+    return jointList_.begin();
+  }
+  const_iterator end() const noexcept
+  {
+    return jointList_.end();
+  }
+
+  // Pose Data
+  SGCore::Kinematics::Vect3D getHandPosition(int jointIndex) const;
+  SGCore::Kinematics::Vect3D getFingerTip(int fingerIndex) const;
+  bool getImuRotation(SGCore::Kinematics::Quat& outIMU) const;
+  const std::shared_ptr<urdf::Model>& getUrdf() const noexcept
+  {
+    return urdfModel_;
+  }
+
+  // Haptics
+  void queueEffort(const std::vector<double>& effortCommand);
+  void queueVibrations(const std::vector<double>& vibrationCommand);
+  void sendHaptics();
+  void stopHaptics();
+
+  bool updateGloveData(const std::chrono::duration<double>& period);
+
+  // Operator
+  friend bool operator==(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
+  {
+    return lhs.serial_ == rhs.serial_ && lhs.isRight_ == rhs.isRight_;
+  }
+
+  friend bool operator!=(const SenseGloveRobot& lhs, const SenseGloveRobot& rhs)
+  {
+    return !(lhs == rhs);
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const SenseGloveRobot& robot)
+  {
+    os << "SenseGloveRobot{name=" << robot.robotName_ << ", serial=" << robot.serial_
+       << ", hand=" << robot.handedness_ << ", joints=" << robot.jointList_.size() << "}";
+    return os;
+  }
+
+private:
+  GloveType gloveType_ = GloveType::Unknown;
+  std::shared_ptr<SGCore::HapticGlove> hapticglove_;
+
+  std::shared_ptr<SGCore::SG::SenseGlove> senseglovePtr_;
+  std::shared_ptr<SGCore::Nova::NovaGlove> novaglovePtr_;
+  std::shared_ptr<SGCore::Nova::Nova2Glove> nova2glovePtr_;
+
+  SGCore::SG::SenseGloveSensorData sensegloveSensorData_;
+  SGCore::SG::SenseGlovePose senseglovePose_;
+  SGCore::Nova::NovaGloveSensorData novaSensorData_;
+  SGCore::Nova::Nova2GloveSensorData nova2SensorData_;
+
+  SGCore::HandPose handPose_;
+  SGCore::Kinematics::BasicHandModel handModel_;
+  std::vector<std::vector<SGCore::Kinematics::Vect3D>> handPoseAngles_;
+
+  std::vector<Joint> jointList_;
+  std::unordered_map<std::string, size_t> jointMap_;
+  std::shared_ptr<urdf::Model> urdfModel_;
+
+  size_t positionJointCount_ = 0;
+  size_t effortJointCount_ = 0;
+  size_t vibrationJointCount_ = 0;
+
+  const std::string serial_;
+  const std::string robotName_;
+  const std::string handedness_;
+  const SGCore::EDeviceType deviceType_;
+  const bool isRight_;
+
+  std::vector<float> effortLevels_;
+  std::vector<float> vibrationLevels_;
+  float squeezeLevel_ = 0.0f;
+
+  bool effortQueued_ = false;
+  bool vibrationQueued_ = false;
+  bool effortActive_ = false;
+  bool vibrationActive_ = false;
+
+  void computeJointCounts();
+  void updateJointPositions(const std::vector<std::vector<SGCore::Kinematics::Vect3D>>& poseAngles);
+  void updateJointVelocities(double dt);
+};
+
 }  // namespace SGHardware
 
-#endif  // ROS_WORKSPACE_SENSEGLOVE_ROBOT_H
+#endif  // SENSEGLOVE_HARDWARE_SENSEGLOVE_ROBOT_HPP

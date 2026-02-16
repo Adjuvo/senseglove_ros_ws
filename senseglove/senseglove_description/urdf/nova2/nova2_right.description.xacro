@@ -5,9 +5,9 @@
     <xacro:macro name="nova2_right" params="parent prefix">
 
         <!-- Constants -->
-        <xacro:property name="PI"           value="3.1415926535897931"/>
+        <xacro:property name="PI" value="3.1415926535897931"/>
         <xacro:property name="hover_height" value="0.5"/>
-        <xacro:property name="color_blue"   value="0.0 0.0 1.0 1.0"/>
+        <xacro:property name="color_blue" value="0.0 0.0 1.0 1.0"/>
 
         <link name="r_glove_hub">
             <visual name="r_glove_hub_visual">

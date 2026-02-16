@@ -1,11 +1,15 @@
-#ifndef ROS_WORKSPACE_ALLOWED_ROBOT_H
-#define ROS_WORKSPACE_ALLOWED_ROBOT_H
+#ifndef SENSEGLOVE_HARDWARE_BUILDER_ALLOWED_ROBOT_HPP
+#define SENSEGLOVE_HARDWARE_BUILDER_ALLOWED_ROBOT_HPP
+
+#include <rclcpp/rclcpp.hpp>
+
+#include <ament_index_cpp/get_package_share_directory.hpp>
 
 #include <iostream>
 #include <string>
 
-#include <ament_index_cpp/get_package_share_directory.hpp>
-#include <rclcpp/rclcpp.hpp>
+namespace senseglove_hardware_builder
+{
 
 class AllowedRobot
 {
@@ -18,7 +22,7 @@ public:
     nova_right,
     nova2_left,
     nova2_right,
-    rembrandt
+    unknown
   };
 
   AllowedRobot() = default;
@@ -26,102 +30,79 @@ public:
   explicit AllowedRobot(const std::string& robotName)
   {
     if (robotName == "dk1_left")
-    {
-      this->value = dk1_left;
-    }
+      value_ = dk1_left;
     else if (robotName == "dk1_right")
-    {
-      this->value = dk1_right;
-    }
+      value_ = dk1_right;
     else if (robotName == "nova_left")
-    {
-      this->value = nova_left;
-    }
+      value_ = nova_left;
     else if (robotName == "nova_right")
-    {
-      this->value = nova_right;
-    }
+      value_ = nova_right;
     else if (robotName == "nova2_left")
-    {
-      this->value = nova2_left;
-    }
+      value_ = nova2_left;
     else if (robotName == "nova2_right")
-    {
-      this->value = nova2_right;
-    }
+      value_ = nova2_right;
     else
     {
-      RCLCPP_WARN_STREAM(
-        rclcpp::get_logger("allowed_robot"),
-        "Unknown robot '" << robotName << "', defaulting to 'dk1_left'");
-      this->value = AllowedRobot::dk1_left;
+      RCLCPP_WARN_STREAM(rclcpp::get_logger("allowed_robot"),
+                         "Unknown robot '" << robotName << "', defaulting to 'unknown'");
+      value_ = unknown;
     }
   }
 
-  std::string getFilePath()
+  constexpr AllowedRobot(Value v) : value_(v) {}
+
+  std::string getName() const
   {
-    std::string basePath = ament_index_cpp::get_package_share_directory("senseglove_hardware_builder");
-    if (this->value == AllowedRobot::dk1_left)
+    switch (value_)
     {
-      return basePath + "/robots/dk1_left.yaml";
-    }
-    else if (this->value == AllowedRobot::dk1_right)
-    {
-      return basePath + "/robots/dk1_right.yaml";
-    }
-    else if (this->value == AllowedRobot::nova_left)
-    {
-      return basePath + "/robots/nova_left.yaml";
-    }
-    else if (this->value == AllowedRobot::nova_right)
-    {
-      return basePath + "/robots/nova_right.yaml";
-    }
-    else if (this->value == AllowedRobot::nova2_left)
-    {
-      return basePath + "/robots/nova2_left.yaml";
-    }
-    else if (this->value == AllowedRobot::nova2_right)
-    {
-      return basePath + "/robots/nova2_right.yaml";
-    }
-    else
-    {
-      RCLCPP_ERROR_STREAM(
-        rclcpp::get_logger("allowed_robot"),
-        "AllowedRobot: Robot name not implemented. Using 'dk1_left.yaml'.");
-      return basePath + "/robots/dk1_left.yaml";
+      case dk1_left:
+        return "dk1_left";
+      case dk1_right:
+        return "dk1_right";
+      case nova_left:
+        return "nova_left";
+      case nova_right:
+        return "nova_right";
+      case nova2_left:
+        return "nova2_left";
+      case nova2_right:
+        return "nova2_right";
+      default:
+        return "unknown";
     }
   }
 
-  constexpr AllowedRobot(Value allowedRobot) : value(allowedRobot) {}
+  std::string getFilePath() const
+  {
+    std::string basePath =
+      ament_index_cpp::get_package_share_directory("senseglove_hardware_builder");
+    return basePath + "/robots/" + getName() + ".yaml";
+  }
+
+  Value getValue() const
+  {
+    return value_;
+  }
 
   bool operator==(AllowedRobot a) const
   {
-    return value == a.value;
+    return value_ == a.value_;
   }
   bool operator!=(AllowedRobot a) const
   {
-    return value != a.value;
+    return value_ != a.value_;
   }
 
-  friend std::ostream& operator<<(std::ostream& out, const AllowedRobot& c)
+  friend std::ostream& operator<<(std::ostream& out, const AllowedRobot& r)
   {
-    switch (c.value)
-    {
-      case dk1_left: out << "dk1_left"; break;
-      case dk1_right: out << "dk1_right"; break;
-      case nova_left: out << "nova_left"; break;
-      case nova_right: out << "nova_right"; break;
-      case nova2_left: out << "nova2_left"; break;
-      case nova2_right: out << "nova2_right"; break;
-      default: out << "(Unknown)"; break;
-    }
+    out << r.getName();
     return out;
   }
 
 private:
-  Value value;
+  Value value_ = unknown;
 };
 
-#endif  // ROS_WORKSPACE_ALLOWED_ROBOT_H
+}  // namespace senseglove_hardware_builder
+
+#endif  // SENSEGLOVE_HARDWARE_BUILDER_ALLOWED_ROBOT_HPP

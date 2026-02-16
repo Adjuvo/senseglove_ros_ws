@@ -1,59 +1,330 @@
----
+# Ref: https://docs.ros.org/en/jazzy/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html
+
+Language: Cpp
+Standard: c++17
 BasedOnStyle: Google
-AccessModifierOffset: -2
-ConstructorInitializerIndentWidth: 2
-AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
-AlwaysBreakTemplateDeclarations: Yes
-AlwaysBreakBeforeMultilineStrings: false
-BreakBeforeBinaryOperators: None
-BreakBeforeTernaryOperators: false
-BreakConstructorInitializersBeforeComma: true
-BinPackParameters: true
-ColumnLimit: 120
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-ExperimentalAutoDetectBinPacking: false
-IndentCaseLabels: true
-MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
-ObjCSpaceBeforeProtocolList: true
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 60
-PenaltyBreakString: 1
-PenaltyBreakFirstLessLess: 1000
-PenaltyExcessCharacter: 1000
-PenaltyReturnTypeOnItsOwnLine: 90
-SpacesBeforeTrailingComments: 2
-Cpp11BracedListStyle: false
-Standard: Auto
+
+
+# Indentation
 IndentWidth: 2
 TabWidth: 2
 UseTab: Never
-SpacesInParentheses: false
-SpacesInAngles: false
-SpaceInEmptyParentheses: false
-SpacesInCStyleCastParentheses: false
-SpaceBeforeAssignmentOperators: true
-ContinuationIndentWidth: 4
-SortIncludes: Never
-SpaceAfterCStyleCast: false
+ContinuationIndentWidth: 2
+IndentCaseLabels: true
+IndentCaseBlocks: false
+IndentGotoLabels: true
+IndentPPDirectives: None
+IndentExternBlock: AfterExternBlock
+IndentWrappedFunctionNames: false
+IndentRequiresClause: true
+RequiresClausePosition: OwnLine
 
-# Configure each individual brace in BraceWrapping
+
+# Line Length
+ColumnLimit: 100
+
+
+# Braces (Allman style for ROS 2)
 BreakBeforeBraces: Custom
-
-# Control of individual brace wrapping cases
 BraceWrapping:
+  AfterCaseLabel: true
   AfterClass: true
-  AfterControlStatement: 'true'
-  AfterEnum : true
-  AfterFunction : true
-  AfterNamespace : true
-  AfterStruct : true
-  AfterUnion : true
-  BeforeCatch : true
-  BeforeElse : true
-  IndentBraces : false
-...
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: true
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+
+# Namespaces
+NamespaceIndentation: None
+CompactNamespaces: false
+FixNamespaceComments: true
+ShortNamespaceLines: 0
+
+
+# Classes and Access Modifiers
+AccessModifierOffset: -2
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: LogicalBlock
+
+
+# Functions
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: All
+AlwaysBreakAfterReturnType: None
+AlwaysBreakTemplateDeclarations: Yes
+RequiresExpressionIndentation: OuterScope
+
+
+# Control Statements
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+InsertBraces: false
+
+
+# Constructor Formatting
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 2
+PackConstructorInitializers: NextLine
+
+
+# Function Parameters and Arguments
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: true
+AlignAfterOpenBracket: Align
+
+
+# Templates
+SpaceAfterTemplateKeyword: true
+
+
+# Includes
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Main header (same name as .cpp file)
+  - Regex: '^"[^/]*\.hpp"'
+    Priority: 0
+    SortPriority: 0
+  # Project headers
+  - Regex: '^".*"'
+    Priority: 1
+    SortPriority: 1
+  # ROS 2 core (Jazzy)
+  - Regex: '^<rclcpp/.*>'
+    Priority: 2
+    SortPriority: 2
+  - Regex: '^<rclcpp_lifecycle/.*>'
+    Priority: 2
+    SortPriority: 3
+  - Regex: '^<rclcpp_action/.*>'
+    Priority: 2
+    SortPriority: 4
+  - Regex: '^<rclcpp_components/.*>'
+    Priority: 2
+    SortPriority: 5
+  # ros2_control
+  - Regex: '^<hardware_interface/.*>'
+    Priority: 3
+    SortPriority: 6
+  - Regex: '^<controller_interface/.*>'
+    Priority: 3
+    SortPriority: 7
+  - Regex: '^<controller_manager/.*>'
+    Priority: 3
+    SortPriority: 8
+  - Regex: '^<realtime_tools/.*>'
+    Priority: 3
+    SortPriority: 9
+  - Regex: '^<joint_limits/.*>'
+    Priority: 3
+    SortPriority: 10
+  - Regex: '^<transmission_interface/.*>'
+    Priority: 3
+    SortPriority: 11
+  # URDF / robot_description
+  - Regex: '^<urdf/.*>'
+    Priority: 4
+    SortPriority: 12
+  - Regex: '^<urdf_parser_plugin/.*>'
+    Priority: 4
+    SortPriority: 13
+  - Regex: '^<kdl_parser/.*>'
+    Priority: 4
+    SortPriority: 14
+  - Regex: '^<robot_state_publisher/.*>'
+    Priority: 4
+    SortPriority: 15
+  # Messages and services
+  - Regex: '^<.*_msgs/.*>'
+    Priority: 5
+    SortPriority: 16
+  - Regex: '^<.*_srvs/.*>'
+    Priority: 5
+    SortPriority: 17
+  - Regex: '^<.*_interfaces/.*>'
+    Priority: 5
+    SortPriority: 18
+  # TF2 and geometry
+  - Regex: '^<tf2.*>'
+    Priority: 6
+    SortPriority: 19
+  - Regex: '^<geometry_msgs/.*>'
+    Priority: 6
+    SortPriority: 20
+  # Other ROS 2 packages
+  - Regex: '^<pluginlib/.*>'
+    Priority: 7
+    SortPriority: 21
+  - Regex: '^<ament_index_cpp/.*>'
+    Priority: 7
+    SortPriority: 22
+  - Regex: '^<rcl_interfaces/.*>'
+    Priority: 7
+    SortPriority: 23
+  - Regex: '^<lifecycle_msgs/.*>'
+    Priority: 7
+    SortPriority: 24
+  # Third-party
+  - Regex: '^<Eigen/.*>'
+    Priority: 8
+    SortPriority: 25
+  - Regex: '^<fmt/.*>'
+    Priority: 8
+    SortPriority: 26
+  - Regex: '^<yaml-cpp/.*>'
+    Priority: 8
+    SortPriority: 27
+  # C++ standard library
+  - Regex: '^<[a-z_]+>'
+    Priority: 9
+    SortPriority: 28
+  # C headers
+  - Regex: '^<.*\.h>'
+    Priority: 10
+    SortPriority: 29
+
+
+# Comments
+ReflowComments: true
+SpacesBeforeTrailingComments: 2
+CommentPragmas: '^ IWYU pragma:'
+
+
+# Pointer and Reference Alignment
+PointerAlignment: Left
+ReferenceAlignment: Pointer
+DerivePointerAlignment: false
+
+
+# Spacing
+SpaceBeforeParens: ControlStatements
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceInEmptyBlock: false
+SpacesInAngles: Never
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeSquareBrackets: false
+
+
+# Alignment
+AlignConsecutiveAssignments: None
+AlignConsecutiveBitFields: None
+AlignConsecutiveDeclarations: None
+AlignConsecutiveMacros: None
+AlignEscapedNewlines: Left
+AlignOperands: Align
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
+
+
+# Breaking
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+BreakStringLiterals: true
+BreakInheritanceList: BeforeColon
+BreakAfterAttributes: Never
+BreakBeforeConceptDeclarations: Always
+
+
+# Penalties
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyIndentedWhitespace: 0
+PenaltyReturnTypeOnItsOwnLine: 200
+
+
+# Miscellaneous
+Cpp11BracedListStyle: true
+InsertTrailingCommas: None
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+SortUsingDeclarations: Lexicographic
+UseCRLF: false
+RemoveSemicolon: false
+InsertNewlineAtEOF: true
+LineEnding: LF
+SeparateDefinitionBlocks: Leave
+IntegerLiteralSeparator:
+  Binary: 4
+  Decimal: 3
+  Hex: 2
+
+
+# Lambdas
+LambdaBodyIndentation: Signature
+
+
+# Qualifiers (const placement)
+QualifierAlignment: Leave
+
+
+# ROS 2 Visibility Macros
+AttributeMacros:
+  - RCLCPP_PUBLIC
+  - RCLCPP_LOCAL
+  - RCLCPP_PUBLIC_TYPE
+  - HARDWARE_INTERFACE_PUBLIC
+  - HARDWARE_INTERFACE_LOCAL
+  - CONTROLLER_INTERFACE_PUBLIC
+  - CONTROLLER_INTERFACE_LOCAL
+  - CONTROLLER_MANAGER_PUBLIC
+  - CONTROLLER_MANAGER_LOCAL
+  - REALTIME_TOOLS_PUBLIC
+  - REALTIME_TOOLS_LOCAL
+  - JOINT_LIMITS_PUBLIC
+  - JOINT_LIMITS_LOCAL
+
+StatementMacros:
+  - RCLCPP_INFO
+  - RCLCPP_WARN
+  - RCLCPP_ERROR
+  - RCLCPP_DEBUG
+  - RCLCPP_FATAL
+  - RCLCPP_INFO_STREAM
+  - RCLCPP_WARN_STREAM
+  - RCLCPP_ERROR_STREAM
+  - RCLCPP_DEBUG_STREAM
+  - RCLCPP_INFO_THROTTLE
+  - RCLCPP_WARN_THROTTLE
+  - RCLCPP_ERROR_THROTTLE
+
+TypenameMacros: []
+
+WhitespaceSensitiveMacros:
+  - STRINGIZE
+  - PP_STRINGIZE
+  - BOOST_PP_STRINGIZE
+  - RCUTILS_STRINGIFY
+
+MacroBlockBegin: ''
+MacroBlockEnd: ''

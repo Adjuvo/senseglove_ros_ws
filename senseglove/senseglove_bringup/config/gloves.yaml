@@ -1,6 +1,5 @@
 # types : dk1, nova, nova2
 # side  : left, right
-# index : 0, 1, 2, ...
 # serial: "01000", "01001", ...
 # finger_distance: true, false
 

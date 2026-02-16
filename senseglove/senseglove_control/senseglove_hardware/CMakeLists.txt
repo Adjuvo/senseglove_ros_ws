@@ -42,7 +42,6 @@ find_library(SGSERIAL
 add_library(${PROJECT_NAME} SHARED
         src/joint.cpp
         src/senseglove_robot.cpp
-        src/senseglove_setup.cpp
         )
 
 # Include directories

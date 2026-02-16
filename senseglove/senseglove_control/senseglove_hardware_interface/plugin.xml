@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
 <library path="senseglove_hardware_interface">
-  <class
-    name="senseglove_hardware_interface/SenseGloveHardwareInterface"
-    type="senseglove_hardware_interface::SenseGloveHardwareInterface"
-    base_class_type="hardware_interface::SystemInterface" />
+  <class name="senseglove_hardware_interface/SenseGloveHardwareInterface" type="senseglove_hardware_interface::SenseGloveHardwareInterface" base_class_type="hardware_interface::SystemInterface" />
 </library>
