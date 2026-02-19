@@ -1,8 +1,10 @@
 #pragma once
 
-#include <controller_interface/controller_interface.hpp>
-#include <hardware_interface/loaned_state_interface.hpp>
 #include <rclcpp/rclcpp.hpp>
+
+#include <hardware_interface/loaned_state_interface.hpp>
+#include <controller_interface/controller_interface.hpp>
+
 #include <senseglove_msgs/msg/sense_glove_state.hpp>
 
 namespace senseglove_state_broadcaster
@@ -14,7 +16,8 @@ public:
   controller_interface::CallbackReturn on_init() override;
   controller_interface::InterfaceConfiguration command_interface_configuration() const override;
   controller_interface::InterfaceConfiguration state_interface_configuration() const override;
-  controller_interface::return_type update(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  controller_interface::return_type update(const rclcpp::Time& time,
+                                           const rclcpp::Duration& period) override;
 
 private:
   rclcpp::Publisher<senseglove_msgs::msg::SenseGloveState>::SharedPtr pub_;

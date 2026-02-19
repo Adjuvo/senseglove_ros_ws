@@ -1,84 +1,94 @@
 #pragma once
 
+#include "hardware_interface/handle.hpp"
+#include "hardware_interface/hardware_info.hpp"
+#include "hardware_interface/system_interface.hpp"
+#include "hardware_interface/types/hardware_component_interface_params.hpp"
+#include "rclcpp/rclcpp.hpp"
+
+#include <chrono>
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
-#include <chrono>
-#include <unordered_map>
 
-// ROS
-#include "rclcpp/rclcpp.hpp"
-#include "rclcpp_lifecycle/state.hpp"
-
-// ROS 2 Control
-#include "hardware_interface/system_interface.hpp"
-#include "hardware_interface/types/hardware_component_interface_params.hpp"
-#include "hardware_interface/handle.hpp"
-#include "hardware_interface/hardware_info.hpp"
-
-// Senseglove
 #include <senseglove_hardware/senseglove_robot.hpp>
-#include <senseglove_hardware/senseglove_setup.hpp>
 #include <senseglove_hardware_builder/hardware_builder.hpp>
-#include <senseglove_msgs/msg/sense_glove_state.hpp>
 
 namespace senseglove_hardware_interface
 {
-  
+
+enum class ActuatorType
+{
+  None,
+  ForceFeedback,
+  Vibration
+};
+
+// Single Glove state and command interfaces
+struct GloveData
+{
+  size_t num_joints = 0;
+  size_t effort_joints = 0;
+  size_t vibration_joints = 0;
+
+  // State data
+  std::vector<double> joint_position;
+  std::vector<double> joint_velocity;
+  std::vector<double> joint_effort;
+
+  // Hand pose data
+  std::vector<std::vector<double>> hand_xyz;
+  std::vector<std::vector<double>> tip_xyz;
+  std::vector<double> imu_quat;
+
+  // Command data
+  std::vector<double> joint_effort_command;
+  std::vector<double> effort_output;
+  std::vector<double> vibration_output;
+
+  // Mapping from joint index to command index
+  std::vector<size_t> joint_to_command_index;
+  std::vector<ActuatorType> joint_actuator_type;
+
+  void initialize(size_t numJoints, size_t effortJoints, size_t vibrationJoints);
+  void buildIndexMap(SGHardware::SenseGloveRobot& robot);
+};
+
+// ROS2 Control HW for a single SenseGlove
 class SenseGloveHardwareInterface : public hardware_interface::SystemInterface
 {
 public:
-
   RCLCPP_SHARED_PTR_DEFINITIONS(SenseGloveHardwareInterface)
 
   SenseGloveHardwareInterface();
   ~SenseGloveHardwareInterface() override = default;
-  
-  SenseGloveHardwareInterface(std::unique_ptr<SGHardware::SenseGloveSetup> setup);
+  explicit SenseGloveHardwareInterface(std::unique_ptr<SGHardware::SenseGloveRobot> robot);
 
-  hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareComponentInterfaceParams & params) override;
+  hardware_interface::CallbackReturn on_init(
+    const hardware_interface::HardwareComponentInterfaceParams& params) override;
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-  hardware_interface::return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
-  hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
-  
+  hardware_interface::return_type read(const rclcpp::Time& time,
+                                       const rclcpp::Duration& period) override;
+  hardware_interface::return_type write(const rclcpp::Time& time,
+                                        const rclcpp::Duration& period) override;
+
 private:
-  // Configuration
-  std::unique_ptr<SGHardware::SenseGloveSetup> senseglove_setup_;
-  size_t num_gloves_ = 0;
-  size_t num_joints_ = 0;
-  size_t position_joints_ = 0;
-  size_t effort_joints_ = 0;
-  size_t vibration_joints_ = 0;
+  std::unique_ptr<SGHardware::SenseGloveRobot> robot_;
+  GloveData glove_data_;
+  double publish_rate_ = 60.0;
 
-  // Parameters
-  std::string selected_robot_;
-  int glove_index_ = 0;
-  bool is_right_ = true;
-  double publish_rate_ = 100.0;
-
-  // States
-  std::vector<std::vector<double>> joint_position_;
-  std::vector<std::vector<double>> joint_velocity_;
-  std::vector<std::vector<double>> joint_effort_;
-
-  // Commands
-  std::vector<std::vector<double>> joint_position_command_;
-  std::vector<std::vector<double>> joint_vibration_command_;
-  std::vector<std::vector<double>> joint_effort_command_;
-  std::vector<std::vector<double>> joint_last_position_command_;
-  std::vector<std::vector<double>> joint_last_vibration_command_;
-  std::vector<std::vector<double>> joint_last_effort_command_;
-
-  // SenseGloveState
-  std::vector<std::vector<double>> hand_xyz_;
-  std::vector<std::vector<double>> tip_xyz_;
-  std::vector<double> imu_quat_;
-
-  void initialize_joint_data();
-  void initialize_joint_commands(size_t glove_index, size_t joint_index, SGHardware::Joint& joint);
-  void process_joint_commands(size_t glove_index, size_t joint_index, size_t & idx_force, size_t & idx_vib, SGHardware::Joint& joint);
+  void initialize_glove_data();
+  rclcpp::Logger logger_ = rclcpp::get_logger("senseglove.hardware_interface");
 };
 
 }  // namespace senseglove_hardware_interface
+
+namespace color
+{
+constexpr const char* RESET = "\033[0m";
+constexpr const char* INFO = "\033[2;36m";
+}  // namespace color

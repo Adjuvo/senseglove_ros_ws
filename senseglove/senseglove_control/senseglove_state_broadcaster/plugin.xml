@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
 <library path="senseglove_state_broadcaster">
-  <class
-    name="senseglove_state_broadcaster/SenseGloveStateBroadcaster"
-    type="senseglove_state_broadcaster::SenseGloveStateBroadcaster"
-    base_class_type="controller_interface::ControllerInterface" />
+  <class name="senseglove_state_broadcaster/SenseGloveStateBroadcaster" type="senseglove_state_broadcaster::SenseGloveStateBroadcaster" base_class_type="controller_interface::ControllerInterface" />
 </library>

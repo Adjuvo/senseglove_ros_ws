@@ -1,253 +1,296 @@
-// Copyright (c) 2020 - 2025 SenseGlove
+// Copyright (c) 2020 - 2026 SenseGlove
+
 #include "senseglove_hardware_interface/senseglove_hardware_interface.hpp"
 
 #include <pluginlib/class_list_macros.hpp>
+
 #include <algorithm>
 #include <stdexcept>
 
 using hardware_interface::CallbackReturn;
+using hardware_interface::CommandInterface;
 using hardware_interface::return_type;
 using hardware_interface::StateInterface;
-using hardware_interface::CommandInterface;
 
 namespace senseglove_hardware_interface
 {
 
+void GloveData::initialize(size_t numJoints, size_t effortJoints, size_t vibrationJoints)
+{
+  num_joints = numJoints;
+  effort_joints = effortJoints;
+  vibration_joints = vibrationJoints;
+
+  joint_position.resize(num_joints, 0.0);
+  joint_velocity.resize(num_joints, 0.0);
+  joint_effort.resize(num_joints, 0.0);
+
+  size_t actuatable = effort_joints + vibration_joints;
+  joint_effort_command.resize(actuatable, 0.0);
+  effort_output.resize(effort_joints, 0.0);
+  vibration_output.resize(vibration_joints, 0.0);
+
+  hand_xyz.resize(20, std::vector<double>(3, 0.0));
+  tip_xyz.resize(5, std::vector<double>(3, 0.0));
+  imu_quat.resize(4, 0.0);
+  imu_quat[3] = 1.0;
+
+  joint_to_command_index.resize(num_joints, SIZE_MAX);
+  joint_actuator_type.resize(num_joints, ActuatorType::None);
+}
+
+void GloveData::buildIndexMap(SGHardware::SenseGloveRobot& robot)
+{
+  size_t cmd_idx = 0;
+  for (size_t j = 0; j < num_joints; ++j)
+  {
+    auto& joint = robot.getJoint(j);
+    if (joint.canActuate())
+    {
+      joint_to_command_index[j] = cmd_idx++;
+      auto type = joint.getActuationType();
+      if (type == SGHardware::ActuationType::brake || type == SGHardware::ActuationType::squeeze)
+        joint_actuator_type[j] = ActuatorType::ForceFeedback;
+      else if (type == SGHardware::ActuationType::vibration)
+        joint_actuator_type[j] = ActuatorType::Vibration;
+    }
+  }
+}
+
 SenseGloveHardwareInterface::SenseGloveHardwareInterface() = default;
 
-CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::HardwareComponentInterfaceParams & params)
+SenseGloveHardwareInterface::SenseGloveHardwareInterface(
+  std::unique_ptr<SGHardware::SenseGloveRobot> robot)
+  : robot_(std::move(robot))
 {
-  if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS) {
+}
+
+CallbackReturn SenseGloveHardwareInterface::on_init(
+  const hardware_interface::HardwareComponentInterfaceParams& params)
+{
+  if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS)
     return CallbackReturn::ERROR;
-  }
 
-  try {
-    // Parse required parameters
-    selected_robot_ = info_.hardware_parameters.at("selected_robot");
-    AllowedRobot robot_enum(selected_robot_);
+  auto& logger = logger_;
 
-    glove_index_ = std::stoi(info_.hardware_parameters.at("glove_index"));
+  try
+  {
+    auto it = info_.hardware_parameters.find("publish_rate");
+    if (it != info_.hardware_parameters.end())
+      publish_rate_ = std::stod(it->second);
 
-    std::string is_right_str = info_.hardware_parameters.at("is_right");
-    std::transform(is_right_str.begin(), is_right_str.end(), is_right_str.begin(), ::tolower);
-    is_right_ = (is_right_str == "true") ? true : false;
-
-    publish_rate_ = std::stod(info_.hardware_parameters.at("publish_rate"));
-
-    urdf::Model urdf_model;
-    if (!urdf_model.initString(info_.original_xml)) {
-        RCLCPP_ERROR(get_logger(), "Failed to parse URDF from original_xml");
+    if (!robot_)
+    {
+      // Parse URDF
+      auto urdf_model = std::make_shared<urdf::Model>();
+      if (!urdf_model->initString(info_.original_xml))
+      {
+        RCLCPP_ERROR(logger, "Failed to parse URDF");
         return CallbackReturn::ERROR;
+      }
+
+      // Get parameters
+      std::string selected_robot = info_.hardware_parameters.at("selected_robot");
+      std::string glove_serial = info_.hardware_parameters.at("glove_serial");
+      std::string is_right_str = info_.hardware_parameters.at("is_right");
+
+      std::transform(is_right_str.begin(), is_right_str.end(), is_right_str.begin(), ::tolower);
+      bool is_right = (is_right_str == "true");
+
+      logger_ = rclcpp::get_logger("senseglove.glove0" + glove_serial + "." +
+                                   (is_right ? "rh" : "lh") + ".hardware_interface");
+      auto& logger = logger_;
+      RCLCPP_INFO(logger,
+                  "%sInitializing SenseGlove: %s (serial: %s, %s)%s",
+                  color::INFO,
+                  selected_robot.c_str(),
+                  glove_serial.c_str(),
+                  is_right ? "right" : "left",
+                  color::RESET);
+
+      // Build robot
+      senseglove_hardware_builder::AllowedRobot robot_enum(selected_robot);
+      senseglove_hardware_builder::HardwareBuilder builder(robot_enum, glove_serial, is_right);
+      builder.setUrdfModel(urdf_model);
+
+      robot_ = builder.createRobot();
     }
 
-    HardwareBuilder builder(robot_enum, glove_index_, is_right_);
-    builder.setUrdfModel(std::move(urdf_model)); 
-    senseglove_setup_ = builder.createSenseGloveSetup();
-
-    if (!senseglove_setup_ || senseglove_setup_->size() == 0) {
-      RCLCPP_ERROR(rclcpp::get_logger("SenseGloveHW"), "No gloves detected in setup.");
+    if (!robot_)
+    {
+      RCLCPP_ERROR(logger, "Failed to create SenseGlove robot");
       return CallbackReturn::ERROR;
     }
 
-    if (senseglove_setup_->size() != 1) {
-      RCLCPP_ERROR(get_logger(), "Expected 1 glove, got %zu", senseglove_setup_->size());
-      return CallbackReturn::ERROR;
-    }
+    // Initialize glove data
+    initialize_glove_data();
 
-    num_gloves_        = senseglove_setup_->size();
-    num_joints_        = senseglove_setup_->getSenseGloveRobot(0).getJointSize();
-    position_joints_   = senseglove_setup_->getSenseGloveRobot(0).getPositionJointSize();
-    effort_joints_     = senseglove_setup_->getSenseGloveRobot(0).getEffortJointSize();
-    vibration_joints_  = senseglove_setup_->getSenseGloveRobot(0).getVibrationJointSize();
+    RCLCPP_DEBUG(logger,
+                 "SenseGlove initialized: %s with %zu joints [ffb:%zu, vib:%zu]",
+                 robot_->getRobotName().c_str(),
+                 glove_data_.num_joints,
+                 glove_data_.effort_joints,
+                 glove_data_.vibration_joints);
 
-    initialize_joint_data();
     return CallbackReturn::SUCCESS;
   }
-  catch (const std::exception & e) {
-    RCLCPP_ERROR(rclcpp::get_logger("SenseGloveHW"), "Initialization failed: %s", e.what());
+  catch (const std::exception& e)
+  {
+    RCLCPP_ERROR(logger, "Initialization failed: %s", e.what());
     return CallbackReturn::ERROR;
   }
 }
 
-void SenseGloveHardwareInterface::initialize_joint_data()
+void SenseGloveHardwareInterface::initialize_glove_data()
 {
-  joint_position_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
-  joint_velocity_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
-  joint_effort_.resize(num_gloves_, std::vector<double>(num_joints_, 0.0));
-
-  joint_position_command_.resize(num_gloves_, std::vector<double>(position_joints_, 0.0));
-  joint_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
-  joint_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
-
-  joint_last_position_command_.resize(num_gloves_, std::vector<double>(position_joints_, 0.0));
-  joint_last_vibration_command_.resize(num_gloves_, std::vector<double>(vibration_joints_, 0.0));
-  joint_last_effort_command_.resize(num_gloves_, std::vector<double>(effort_joints_, 0.0));
-
-  hand_xyz_.resize(num_joints_, std::vector<double>(3, 0.0));
-  tip_xyz_.resize(5, std::vector<double>(3, 0.0));
-  imu_quat_.resize(4, 0.0);
+  glove_data_.initialize(
+    robot_->getJointSize(), robot_->getEffortJointSize(), robot_->getVibrationJointSize());
+  glove_data_.buildIndexMap(*robot_);
 }
 
 std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces()
 {
-  std::vector<StateInterface> state_interfaces;
-  for (size_t i = 0; i < num_gloves_; ++i) {
-    auto & robot = senseglove_setup_->getSenseGloveRobot(i);
+  auto& logger = logger_;
+  std::vector<StateInterface> interfaces;
 
-    for (size_t j = 0; j < num_joints_; ++j) {
-      auto & joint = robot.getJoint(j);
-      const auto name = joint.getName();
-
-      state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_POSITION, &joint_position_[i][j]));
-      state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_VELOCITY, &joint_velocity_[i][j]));
-      state_interfaces.emplace_back(StateInterface(name, hardware_interface::HW_IF_EFFORT, &joint_effort_[i][j]));
-    }
+  // Joint state interfaces
+  for (size_t j = 0; j < glove_data_.num_joints; ++j)
+  {
+    const std::string& name = robot_->getJoint(j).getName();
+    interfaces.emplace_back(
+      name, hardware_interface::HW_IF_POSITION, &glove_data_.joint_position[j]);
+    interfaces.emplace_back(
+      name, hardware_interface::HW_IF_VELOCITY, &glove_data_.joint_velocity[j]);
+    interfaces.emplace_back(name, hardware_interface::HW_IF_EFFORT, &glove_data_.joint_effort[j]);
   }
 
-  // Positions of all hand joints relative to the Sense Glove origin
-  for (size_t h = 0; h < hand_xyz_.size(); ++h) {
-    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.x", &hand_xyz_[h][0]));
-    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.y", &hand_xyz_[h][1]));
-    state_interfaces.emplace_back(StateInterface("hand_joint_" + std::to_string(h), "position.z", &hand_xyz_[h][2]));
+  // Position interfaces of all hand joints relative to the Sense Glove origin
+  for (size_t h = 0; h < glove_data_.hand_xyz.size(); ++h)
+  {
+    std::string n = "hand_joint_" + std::to_string(h);
+    interfaces.emplace_back(n, "position.x", &glove_data_.hand_xyz[h][0]);
+    interfaces.emplace_back(n, "position.y", &glove_data_.hand_xyz[h][1]);
+    interfaces.emplace_back(n, "position.z", &glove_data_.hand_xyz[h][2]);
   }
 
-   // Finger Tip positions in 3D (world) space.
-  for (size_t f = 0; f < tip_xyz_.size(); ++f) {
-    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.x", &tip_xyz_[f][0]));
-    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.y", &tip_xyz_[f][1]));
-    state_interfaces.emplace_back(StateInterface("finger_tip_" + std::to_string(f), "position.z", &tip_xyz_[f][2]));
+  // Fingertip position interfaces (5 fingers x 3 coordinates)
+  for (size_t f = 0; f < glove_data_.tip_xyz.size(); ++f)
+  {
+    std::string n = "finger_tip_" + std::to_string(f);
+    interfaces.emplace_back(n, "position.x", &glove_data_.tip_xyz[f][0]);
+    interfaces.emplace_back(n, "position.y", &glove_data_.tip_xyz[f][1]);
+    interfaces.emplace_back(n, "position.z", &glove_data_.tip_xyz[f][2]);
   }
 
-  // IMU quaternion
-  state_interfaces.emplace_back(StateInterface("imu", "orientation.x", &imu_quat_[0]));
-  state_interfaces.emplace_back(StateInterface("imu", "orientation.y", &imu_quat_[1]));
-  state_interfaces.emplace_back(StateInterface("imu", "orientation.z", &imu_quat_[2]));
-  state_interfaces.emplace_back(StateInterface("imu", "orientation.w", &imu_quat_[3]));
+  // IMU orientation interface
+  interfaces.emplace_back("imu", "orientation.x", &glove_data_.imu_quat[0]);
+  interfaces.emplace_back("imu", "orientation.y", &glove_data_.imu_quat[1]);
+  interfaces.emplace_back("imu", "orientation.z", &glove_data_.imu_quat[2]);
+  interfaces.emplace_back("imu", "orientation.w", &glove_data_.imu_quat[3]);
 
-  return state_interfaces;
+  RCLCPP_DEBUG(logger, "Exported %zu state interfaces", interfaces.size());
+  return interfaces;
 }
 
 std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interfaces()
 {
-  std::vector<CommandInterface> command_interfaces;
-  for (size_t i = 0; i < num_gloves_; ++i) {
-    auto & robot = senseglove_setup_->getSenseGloveRobot(i);
-    for (size_t j = 0; j < num_joints_; ++j) {
-      auto & joint = robot.getJoint(j);
-      const std::string name = joint.getName();
+  auto& logger = logger_;
+  std::vector<CommandInterface> interfaces;
 
-      if (joint.getActuationMode() == SGHardware::ActuationMode::position) 
-      {
-        command_interfaces.emplace_back(CommandInterface(name, hardware_interface::HW_IF_POSITION, &joint_position_command_[i][j]));
-      }
-      else if (joint.getActuationMode() == SGHardware::ActuationMode::torque ||
-               joint.getActuationMode() == SGHardware::ActuationMode::effort)
-      {
-        command_interfaces.emplace_back(CommandInterface(name, hardware_interface::HW_IF_EFFORT, &joint_effort_command_[i][j]));
-      }
+  size_t cmd_idx = 0;
+  for (size_t j = 0; j < glove_data_.num_joints; ++j)
+  {
+    auto& joint = robot_->getJoint(j);
+    if (joint.canActuate() && cmd_idx < glove_data_.joint_effort_command.size())
+    {
+      interfaces.emplace_back(joint.getName(),
+                              hardware_interface::HW_IF_EFFORT,
+                              &glove_data_.joint_effort_command[cmd_idx++]);
     }
   }
-  return command_interfaces;
+
+  RCLCPP_DEBUG(logger, "Exported %zu command interfaces", interfaces.size());
+  return interfaces;
 }
 
-// Read Data
-return_type SenseGloveHardwareInterface::read(const rclcpp::Time &, const rclcpp::Duration & period)
+return_type SenseGloveHardwareInterface::read(const rclcpp::Time&, const rclcpp::Duration& period)
 {
   const auto dt = std::chrono::duration<double>(period.seconds());
 
-  for (size_t i = 0; i < num_gloves_; ++i) {
-    auto & robot = senseglove_setup_->getSenseGloveRobot(i);
+  if (!robot_->updateGloveData(dt))
+    return return_type::OK;
 
-    if (!robot.updateGloveData(dt)) {
+  // Update joint states
+  for (size_t j = 0; j < glove_data_.num_joints; ++j)
+  {
+    auto& joint = robot_->getJoint(j);
+    glove_data_.joint_position[j] = joint.getPosition();
+    glove_data_.joint_velocity[j] = joint.getVelocity();
+    glove_data_.joint_effort[j] = joint.getTorque();
+  }
+
+  // Update hand positions
+  for (size_t h = 0; h < glove_data_.hand_xyz.size(); ++h)
+  {
+    const auto pos = robot_->getHandPosition(static_cast<int>(h));
+    glove_data_.hand_xyz[h][0] = pos.GetX();
+    glove_data_.hand_xyz[h][1] = pos.GetY();
+    glove_data_.hand_xyz[h][2] = pos.GetZ();
+  }
+
+  // Update fingertip positions
+  for (size_t f = 0; f < glove_data_.tip_xyz.size(); ++f)
+  {
+    const auto tip = robot_->getFingerTip(static_cast<int>(f));
+    glove_data_.tip_xyz[f][0] = tip.GetX();
+    glove_data_.tip_xyz[f][1] = tip.GetY();
+    glove_data_.tip_xyz[f][2] = tip.GetZ();
+  }
+
+  // Update IMU
+  SGCore::Kinematics::Quat q;
+  if (robot_->getImuRotation(q))
+  {
+    glove_data_.imu_quat[0] = q.GetX();
+    glove_data_.imu_quat[1] = q.GetY();
+    glove_data_.imu_quat[2] = q.GetZ();
+    glove_data_.imu_quat[3] = q.GetW();
+  }
+
+  return return_type::OK;
+}
+
+return_type SenseGloveHardwareInterface::write(const rclcpp::Time&, const rclcpp::Duration&)
+{
+  std::fill(glove_data_.effort_output.begin(), glove_data_.effort_output.end(), 0.0);
+  std::fill(glove_data_.vibration_output.begin(), glove_data_.vibration_output.end(), 0.0);
+
+  size_t ffb_idx = 0, vib_idx = 0;
+
+  for (size_t j = 0; j < glove_data_.num_joints; ++j)
+  {
+    size_t cmd_idx = glove_data_.joint_to_command_index[j];
+    if (cmd_idx == SIZE_MAX)
       continue;
-    }
 
-    // Joints
-    for (size_t j = 0; j < num_joints_; ++j) {
-      auto & joint = robot.getJoint(j);
-      joint_position_[i][j] = joint.getPosition();
-      joint_velocity_[i][j] = joint.getVelocity();
-      joint_effort_[i][j]   = joint.getTorque();
-    }
+    double val = glove_data_.joint_effort_command[cmd_idx];
 
-    // Per-joint hand positions
-    for (size_t k = 0; k < hand_xyz_.size(); ++k) {
-      const auto hp = robot.getHandPosition(static_cast<int>(k));
-      hand_xyz_[k][0] = hp.GetX();
-      hand_xyz_[k][1] = hp.GetY();
-      hand_xyz_[k][2] = hp.GetZ();
-    }
-
-    // Fingertip positions
-    for (size_t f = 0; f < tip_xyz_.size(); ++f) {
-      const auto tip = robot.getFingerTip(static_cast<int>(f));
-      tip_xyz_[f][0] = tip.GetX();
-      tip_xyz_[f][1] = tip.GetY();
-      tip_xyz_[f][2] = tip.GetZ();
-    }
-
-    // IMU quaternion
-    SGCore::Kinematics::Quat q;
-    if (robot.getImuRotation(q)) {
-      imu_quat_[0] = q.GetX();
-      imu_quat_[1] = q.GetY();
-      imu_quat_[2] = q.GetZ();
-      imu_quat_[3] = q.GetW();
-    }
+    if (glove_data_.joint_actuator_type[j] == ActuatorType::ForceFeedback &&
+        ffb_idx < glove_data_.effort_joints)
+      glove_data_.effort_output[ffb_idx++] = val;
+    else if (glove_data_.joint_actuator_type[j] == ActuatorType::Vibration &&
+             vib_idx < glove_data_.vibration_joints)
+      glove_data_.vibration_output[vib_idx++] = val;
   }
+
+  robot_->queueEffort(glove_data_.effort_output);
+  robot_->queueVibrations(glove_data_.vibration_output);
+  robot_->sendHaptics();
+
   return return_type::OK;
 }
 
-// Write Data
-return_type SenseGloveHardwareInterface::write(const rclcpp::Time &, const rclcpp::Duration &)
-{
-  for (size_t i = 0; i < num_gloves_; ++i) {
-    auto & robot = senseglove_setup_->getSenseGloveRobot(i);
-    size_t idx_force = 0; // brake/squeeze
-    size_t idx_vib   = 0;
+}  // namespace senseglove_hardware_interface
 
-    for (size_t j = 0; j < num_joints_; ++j) {
-      auto & joint = robot.getJoint(j);
-      if (joint.canActuate()) {
-        process_joint_commands(i, j, idx_force, idx_vib, joint);
-      }
-    }
-
-    robot.queueEffort(joint_last_effort_command_[i]);
-    robot.queueVibrations(joint_last_vibration_command_[i]);
-    robot.sendHaptics();
-  }
-  return return_type::OK;
-}
-
-// Process Joint Commands -> Splice joint_effort_command vector into vectors for FFB and vibration commands
-void SenseGloveHardwareInterface::process_joint_commands(size_t glove_index, size_t joint_index, size_t & idx_force, size_t & idx_vib, SGHardware::Joint & joint)
-{
-  if (joint.getActuationMode() == SGHardware::ActuationMode::position) {
-    switch (joint.getActuationType().getValue()) {
-      case SGHardware::ActuationType::brake:
-      case SGHardware::ActuationType::squeeze:
-        joint_last_position_command_[glove_index][idx_force++] = joint_position_command_[glove_index][joint_index];
-        break;
-      case SGHardware::ActuationType::vibration:
-        joint_last_vibration_command_[glove_index][idx_vib++] = joint_vibration_command_[glove_index][joint_index];
-        break;
-    }
-  } 
-  else if (joint.getActuationMode() == SGHardware::ActuationMode::torque || 
-           joint.getActuationMode() == SGHardware::ActuationMode::effort) {
-    switch (joint.getActuationType().getValue()) {
-      case SGHardware::ActuationType::brake:
-      case SGHardware::ActuationType::squeeze:
-        joint_last_effort_command_[glove_index][idx_force++] = joint_effort_command_[glove_index][joint_index];
-        break;
-      case SGHardware::ActuationType::vibration:
-        joint_last_vibration_command_[glove_index][idx_vib++] = joint_vibration_command_[glove_index][joint_index];
-        break;
-    }
-  }
-}
-
-} // namespace senseglove_hardware_interface
-
-PLUGINLIB_EXPORT_CLASS(senseglove_hardware_interface::SenseGloveHardwareInterface, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(senseglove_hardware_interface::SenseGloveHardwareInterface,
+                       hardware_interface::SystemInterface)

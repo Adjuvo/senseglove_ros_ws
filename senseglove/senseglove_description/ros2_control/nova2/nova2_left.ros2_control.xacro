@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:macro name="nova2_left_ros2_control" params="name prefix selected_robot glove_index is_right publish_rate">
+    <xacro:macro name="nova2_left_ros2_control" params="name prefix selected_robot is_right glove_serial publish_rate">
 
         <!-- Include joint interfaces macro -->
         <xacro:include filename="$(find senseglove_description)/urdf/urdf_helper_macros/joint_interfaces_macro.xacro"/>
@@ -12,8 +12,8 @@
             <hardware>
                 <plugin>senseglove_hardware_interface/SenseGloveHardwareInterface</plugin>
                 <param name="selected_robot">${selected_robot}</param>
-                <param name="glove_index">${glove_index}</param>
                 <param name="is_right">${is_right}</param>
+                <param name="glove_serial">${glove_serial}</param>
                 <param name="publish_rate">${publish_rate}</param>
             </hardware>
 
@@ -35,7 +35,7 @@
             <xacro:add_state_interfaces joint_name="l_pinky_brake"/>
             <xacro:add_state_interfaces joint_name="l_pinky_mcp"/>
             <xacro:add_state_interfaces joint_name="l_pinky_pip"/>
-            <xacro:add_state_interfaces joint_name="l_pinky_dip"/>  
+            <xacro:add_state_interfaces joint_name="l_pinky_dip"/>
 
             <xacro:add_state_interfaces joint_name="l_palm_index"/>
             <xacro:add_state_interfaces joint_name="l_palm_pinky"/>
@@ -52,8 +52,8 @@
             <xacro:add_state_and_command_interfaces joint_name="l_middle_brake"/>
             <xacro:add_state_and_command_interfaces joint_name="l_ring_brake"/>
             <xacro:add_state_and_command_interfaces joint_name="l_thumb_dip"/>
-            <xacro:add_state_and_command_interfaces joint_name="l_index_dip"/>    
-            
+            <xacro:add_state_and_command_interfaces joint_name="l_index_dip"/>
+
         </ros2_control>
     </xacro:macro>
 </robot>

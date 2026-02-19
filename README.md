@@ -12,6 +12,7 @@ A workspace for the integration of the SenseGlove into _ROS2 Jazzy_.
     |    |    |    ├── senseglove_hardware            # SenseGloveRobot
     |    |    |    ├── senseglove_hardware_builder    # HardwareBuilder
     |    |    |    ├── senseglove_hardware_interface  # Hardware Interface
+    |    |    |    ├── senseglove_state_broadcaster   # SenseGlove State
     |    |    ├── senseglove_description              # URDFs
     |    |    ├── senseglove_msgs                     # SenseGlove messages, services
     |    |    ├── senseglove_interaction              # Python Interaction Package

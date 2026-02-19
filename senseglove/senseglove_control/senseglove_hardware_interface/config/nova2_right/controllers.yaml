@@ -55,3 +55,14 @@
     interpolate_from_desired_state: true
     constraints:
       goal_time: 0.05
+    # Suppress the "legacy anti-windup" deprecation logs
+    gains:
+      r_thumb_brake:  { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_index_brake:  { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_middle_brake: { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_ring_brake:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_thumb_dip:    { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_index_dip:    { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_palm_index:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_palm_pinky:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
+      r_palm_strap:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }

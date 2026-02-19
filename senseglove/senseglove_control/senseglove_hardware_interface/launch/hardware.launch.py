@@ -11,18 +11,16 @@ from launch.actions import OpaqueFunction, LogInfo
 
 
 def generate_launch_description():
-
     robot = LaunchConfiguration('robot')
-    glove_index = LaunchConfiguration('gloveIndex')
     is_right = LaunchConfiguration('isRight')
-
+    glove_serial = LaunchConfiguration('gloveSerial')
     robot_type = PythonExpression(["'", robot, "'.split('_')[0]"])
     handedness = PythonExpression(['"rh" if "', is_right, '" == "true" else "lh"'])
 
     xacro_file = PathJoinSubstitution([
         FindPackageShare('senseglove_description'),
-        'urdf', 
-        robot_type, 
+        'urdf',
+        robot_type,
         [robot, TextSubstitution(text='.urdf.xacro')]
     ])
 
@@ -30,38 +28,13 @@ def generate_launch_description():
         PathJoinSubstitution([FindExecutable(name='xacro')]),
         " ",
         xacro_file,
-        " ",
-        "selected_robot:=", robot,
-        " ",
-        "glove_index:=", glove_index,
-        " ",
-        "is_right:=", is_right,
-        " ",
-        "publish_rate:=", "100", 
-        ])
-
-
-    robot_description = {'robot_description': robot_description_content}
-
-    namespace = PathJoinSubstitution([
-        '/senseglove/',
-        PythonExpression(["'glove' + str(", glove_index, ")"]),
-        handedness
+        " selected_robot:=", robot,
+        " is_right:=", is_right,
+        " glove_serial:=", glove_serial,
+        " publish_rate:=", "60",
     ])
 
-    def log_args_fn(context, *args, **kwargs):
-        robot = LaunchConfiguration('robot').perform(context)
-        glove_index = LaunchConfiguration('gloveIndex').perform(context)
-        is_right = LaunchConfiguration('isRight').perform(context)
-
-        return [
-            LogInfo(
-                msg=f"[DEBUG] Xacro args: robot={robot} glove_index={glove_index} is_right={is_right}"
-            )
-        ]
-
-    log_args = OpaqueFunction(function=log_args_fn)
-
+    robot_description = {'robot_description': robot_description_content}
     robot_controllers = PathJoinSubstitution([
         FindPackageShare('senseglove_hardware_interface'),
         'config',
@@ -69,18 +42,30 @@ def generate_launch_description():
         'controllers.yaml'
     ])
 
+    namespace = PathJoinSubstitution([
+        '/senseglove/',
+        PythonExpression(["'glove' + '", glove_serial, "' + '/' + ('rh' if '", is_right, "' == 'true' else 'lh')"]),
+    ])
+
+    def log_glove(context, *args, **kwargs):
+        robot = LaunchConfiguration('robot').perform(context)
+        is_right = LaunchConfiguration('isRight').perform(context)
+        glove_serial = LaunchConfiguration('gloveSerial').perform(context)
+
+        return [
+            LogInfo(
+                msg=f"[SenseGlove] Launching: robot={robot} serial={glove_serial} is_right={is_right}"
+            )
+        ]
+
     control_node = Node(
         package='controller_manager',
         executable='ros2_control_node',
         parameters=[robot_description, robot_controllers],
-        output='screen',
-        namespace=namespace
-    )
-
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[robot_description],
+        arguments=[
+        '--ros-args',
+        '--log-level', 'resource_manager:=WARN',
+        ],
         output='screen',
         namespace=namespace
     )
@@ -98,8 +83,7 @@ def generate_launch_description():
         executable='spawner',
         arguments=[
             'senseglove_state_broadcaster',
-            '--param-file',
-            robot_controllers
+            '--param-file', robot_controllers
         ],
         output='screen',
         namespace=namespace
@@ -110,8 +94,7 @@ def generate_launch_description():
         executable='spawner',
         arguments=[
             'haptics_controller',
-            '--param-file',
-            robot_controllers
+            '--param-file', robot_controllers
         ],
         output='screen',
         namespace=namespace
@@ -127,9 +110,9 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('robot', description='The robot model to use'),
-        DeclareLaunchArgument('gloveIndex', description='Index of the glove'),
-        DeclareLaunchArgument('isRight', description='Is right hand glove? (true/false)'),
-        log_args,
+        DeclareLaunchArgument('isRight', description='Whether this is a right hand glove (true/false)'),
+        DeclareLaunchArgument('gloveSerial', description='Serial number of the glove'),
+        OpaqueFunction(function=log_glove),
         control_node,
         robot_state_publisher,
         joint_state_broadcaster_spawner,

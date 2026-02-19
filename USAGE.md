@@ -27,22 +27,22 @@ ros2 run senseglove_com SenseCom.x86_64
 ## Launching SenseGloves ###
 The whole infrastructure of this codebase was built upon the use with infinitely many sensegloves. Hence we have a per-glove ros2-control launch system.
 
-1. Edit [gloves.yaml](/senseglove_ros/senseglove/senseglove_bringup/config/gloves.yaml) to specify which gloves are connected:
+1. Edit [gloves.yaml](/senseglove_ros/senseglove/senseglove_bringup/config/gloves.yaml) to specify which gloves (refer serial) are connected:
 
 Example:
 ```
 gloves:
   - type: nova2
     side: right
-    index: 0
+    serial: "01000"
     finger_distance: false
   - type: nova2
     side: left
-    index: 1
+    serial: "01001"
     finger_distance: false
   - type: dk1
     side: right
-    index: 2       
+    serial: "01002"       
     finger_distance: true
 ```
 2. Launch
