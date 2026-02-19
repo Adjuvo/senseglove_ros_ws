@@ -49,14 +49,14 @@ SenseGloveRobot::SenseGloveRobot(std::shared_ptr<SGCore::HapticGlove> glove,
   effortLevels_.resize(effortJointCount_, 0.0f);
   vibrationLevels_.resize(vibrationJointCount_, 0.0f);
 
-  RCLCPP_INFO(rclcpp::get_logger("senseglove.robot"),
-              "Created robot: %s (%s) with %zu joints [pos:%zu, ffb:%zu, vib:%zu]",
-              robotName_.c_str(),
-              handedness_.c_str(),
-              jointList_.size(),
-              positionJointCount_,
-              effortJointCount_,
-              vibrationJointCount_);
+  RCLCPP_DEBUG(rclcpp::get_logger("senseglove.robot"),
+               "Created robot: %s (%s) with %zu joints [pos:%zu, ffb:%zu, vib:%zu]",
+               robotName_.c_str(),
+               handedness_.c_str(),
+               jointList_.size(),
+               positionJointCount_,
+               effortJointCount_,
+               vibrationJointCount_);
 }
 
 SenseGloveRobot::~SenseGloveRobot()

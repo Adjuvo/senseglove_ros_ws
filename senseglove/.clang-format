@@ -4,7 +4,6 @@ Language: Cpp
 Standard: c++17
 BasedOnStyle: Google
 
-
 # Indentation
 IndentWidth: 2
 TabWidth: 2
@@ -19,10 +18,8 @@ IndentWrappedFunctionNames: false
 IndentRequiresClause: true
 RequiresClausePosition: OwnLine
 
-
 # Line Length
 ColumnLimit: 100
-
 
 # Braces (Allman style for ROS 2)
 BreakBeforeBraces: Custom
@@ -45,19 +42,16 @@ BraceWrapping:
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 
-
 # Namespaces
 NamespaceIndentation: None
 CompactNamespaces: false
 FixNamespaceComments: true
 ShortNamespaceLines: 0
 
-
 # Classes and Access Modifiers
 AccessModifierOffset: -2
 EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: LogicalBlock
-
 
 # Functions
 AllowShortFunctionsOnASingleLine: Empty
@@ -66,7 +60,6 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
 RequiresExpressionIndentation: OuterScope
 
-
 # Control Statements
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
@@ -74,12 +67,10 @@ AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
 InsertBraces: false
 
-
 # Constructor Formatting
 BreakConstructorInitializers: BeforeComma
 ConstructorInitializerIndentWidth: 2
 PackConstructorInitializers: NextLine
-
 
 # Function Parameters and Arguments
 BinPackParameters: false
@@ -88,10 +79,8 @@ AllowAllParametersOfDeclarationOnNextLine: true
 AllowAllArgumentsOnNextLine: true
 AlignAfterOpenBracket: Align
 
-
 # Templates
 SpaceAfterTemplateKeyword: true
-
 
 # Includes
 SortIncludes: CaseSensitive
@@ -199,18 +188,15 @@ IncludeCategories:
     Priority: 10
     SortPriority: 29
 
-
 # Comments
 ReflowComments: true
 SpacesBeforeTrailingComments: 2
 CommentPragmas: '^ IWYU pragma:'
 
-
 # Pointer and Reference Alignment
 PointerAlignment: Left
 ReferenceAlignment: Pointer
 DerivePointerAlignment: false
-
 
 # Spacing
 SpaceBeforeParens: ControlStatements
@@ -229,7 +215,6 @@ SpacesInSquareBrackets: false
 SpaceAroundPointerQualifiers: Default
 SpaceBeforeSquareBrackets: false
 
-
 # Alignment
 AlignConsecutiveAssignments: None
 AlignConsecutiveBitFields: None
@@ -241,7 +226,6 @@ AlignTrailingComments:
   Kind: Always
   OverEmptyLines: 0
 
-
 # Breaking
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
@@ -249,7 +233,6 @@ BreakStringLiterals: true
 BreakInheritanceList: BeforeColon
 BreakAfterAttributes: Never
 BreakBeforeConceptDeclarations: Always
-
 
 # Penalties
 PenaltyBreakAssignment: 2
@@ -261,7 +244,6 @@ PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 1000000
 PenaltyIndentedWhitespace: 0
 PenaltyReturnTypeOnItsOwnLine: 200
-
 
 # Miscellaneous
 Cpp11BracedListStyle: true
@@ -279,14 +261,11 @@ IntegerLiteralSeparator:
   Decimal: 3
   Hex: 2
 
-
 # Lambdas
 LambdaBodyIndentation: Signature
 
-
 # Qualifiers (const placement)
 QualifierAlignment: Leave
-
 
 # ROS 2 Visibility Macros
 AttributeMacros:

@@ -71,7 +71,7 @@ CallbackReturn SenseGloveHardwareInterface::on_init(
   if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS)
     return CallbackReturn::ERROR;
 
-  auto logger = get_interface_logger();
+  auto& logger = logger_;
 
   try
   {
@@ -97,11 +97,16 @@ CallbackReturn SenseGloveHardwareInterface::on_init(
       std::transform(is_right_str.begin(), is_right_str.end(), is_right_str.begin(), ::tolower);
       bool is_right = (is_right_str == "true");
 
+      logger_ = rclcpp::get_logger("senseglove.glove0" + glove_serial + "." +
+                                   (is_right ? "rh" : "lh") + ".hardware_interface");
+      auto& logger = logger_;
       RCLCPP_INFO(logger,
-                  "Initializing SenseGlove: %s (serial: %s, %s)",
+                  "%sInitializing SenseGlove: %s (serial: %s, %s)%s",
+                  color::INFO,
                   selected_robot.c_str(),
                   glove_serial.c_str(),
-                  is_right ? "right" : "left");
+                  is_right ? "right" : "left",
+                  color::RESET);
 
       // Build robot
       senseglove_hardware_builder::AllowedRobot robot_enum(selected_robot);
@@ -120,12 +125,12 @@ CallbackReturn SenseGloveHardwareInterface::on_init(
     // Initialize glove data
     initialize_glove_data();
 
-    RCLCPP_INFO(logger,
-                "SenseGlove initialized: %s with %zu joints [ffb:%zu, vib:%zu]",
-                robot_->getRobotName().c_str(),
-                glove_data_.num_joints,
-                glove_data_.effort_joints,
-                glove_data_.vibration_joints);
+    RCLCPP_DEBUG(logger,
+                 "SenseGlove initialized: %s with %zu joints [ffb:%zu, vib:%zu]",
+                 robot_->getRobotName().c_str(),
+                 glove_data_.num_joints,
+                 glove_data_.effort_joints,
+                 glove_data_.vibration_joints);
 
     return CallbackReturn::SUCCESS;
   }
@@ -145,7 +150,7 @@ void SenseGloveHardwareInterface::initialize_glove_data()
 
 std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces()
 {
-  auto logger = get_interface_logger();
+  auto& logger = logger_;
   std::vector<StateInterface> interfaces;
 
   // Joint state interfaces
@@ -183,13 +188,13 @@ std::vector<StateInterface> SenseGloveHardwareInterface::export_state_interfaces
   interfaces.emplace_back("imu", "orientation.z", &glove_data_.imu_quat[2]);
   interfaces.emplace_back("imu", "orientation.w", &glove_data_.imu_quat[3]);
 
-  RCLCPP_INFO(logger, "Exported %zu state interfaces", interfaces.size());
+  RCLCPP_DEBUG(logger, "Exported %zu state interfaces", interfaces.size());
   return interfaces;
 }
 
 std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interfaces()
 {
-  auto logger = get_interface_logger();
+  auto& logger = logger_;
   std::vector<CommandInterface> interfaces;
 
   size_t cmd_idx = 0;
@@ -204,7 +209,7 @@ std::vector<CommandInterface> SenseGloveHardwareInterface::export_command_interf
     }
   }
 
-  RCLCPP_INFO(logger, "Exported %zu command interfaces", interfaces.size());
+  RCLCPP_DEBUG(logger, "Exported %zu command interfaces", interfaces.size());
   return interfaces;
 }
 

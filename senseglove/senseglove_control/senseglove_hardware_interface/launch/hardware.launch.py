@@ -28,24 +28,26 @@ def generate_launch_description():
         PathJoinSubstitution([FindExecutable(name='xacro')]),
         " ",
         xacro_file,
-        " ",
-        "selected_robot:=", robot,
-        " ",
-        "is_right:=", is_right,
-        " ",
-        "glove_serial:=", glove_serial,
-        " ",
-        "publish_rate:=", "60",
+        " selected_robot:=", robot,
+        " is_right:=", is_right,
+        " glove_serial:=", glove_serial,
+        " publish_rate:=", "60",
     ])
 
     robot_description = {'robot_description': robot_description_content}
+    robot_controllers = PathJoinSubstitution([
+        FindPackageShare('senseglove_hardware_interface'),
+        'config',
+        robot,
+        'controllers.yaml'
+    ])
 
     namespace = PathJoinSubstitution([
         '/senseglove/',
         PythonExpression(["'glove' + '", glove_serial, "' + '/' + ('rh' if '", is_right, "' == 'true' else 'lh')"]),
     ])
 
-    def log_args_fn(context, *args, **kwargs):
+    def log_glove(context, *args, **kwargs):
         robot = LaunchConfiguration('robot').perform(context)
         is_right = LaunchConfiguration('isRight').perform(context)
         glove_serial = LaunchConfiguration('gloveSerial').perform(context)
@@ -56,27 +58,14 @@ def generate_launch_description():
             )
         ]
 
-    log_args = OpaqueFunction(function=log_args_fn)
-
-    robot_controllers = PathJoinSubstitution([
-        FindPackageShare('senseglove_hardware_interface'),
-        'config',
-        robot,
-        'controllers.yaml'
-    ])
-
     control_node = Node(
         package='controller_manager',
         executable='ros2_control_node',
         parameters=[robot_description, robot_controllers],
-        output='screen',
-        namespace=namespace
-    )
-
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[robot_description],
+        arguments=[
+        '--ros-args',
+        '--log-level', 'resource_manager:=WARN',
+        ],
         output='screen',
         namespace=namespace
     )
@@ -94,8 +83,7 @@ def generate_launch_description():
         executable='spawner',
         arguments=[
             'senseglove_state_broadcaster',
-            '--param-file',
-            robot_controllers
+            '--param-file', robot_controllers
         ],
         output='screen',
         namespace=namespace
@@ -106,14 +94,13 @@ def generate_launch_description():
         executable='spawner',
         arguments=[
             'haptics_controller',
-            '--param-file',
-            robot_controllers
+            '--param-file', robot_controllers
         ],
         output='screen',
         namespace=namespace
     )
 
-    rviz_robot_state_publisher = Node(
+    robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         parameters=[robot_description],
@@ -125,9 +112,9 @@ def generate_launch_description():
         DeclareLaunchArgument('robot', description='The robot model to use'),
         DeclareLaunchArgument('isRight', description='Whether this is a right hand glove (true/false)'),
         DeclareLaunchArgument('gloveSerial', description='Serial number of the glove'),
-        log_args,
+        OpaqueFunction(function=log_glove),
         control_node,
-        rviz_robot_state_publisher,
+        robot_state_publisher,
         joint_state_broadcaster_spawner,
         senseglove_state_broadcaster_spawner,
         haptics_controller_spawner

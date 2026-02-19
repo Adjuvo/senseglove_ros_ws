@@ -82,11 +82,13 @@ private:
   double publish_rate_ = 60.0;
 
   void initialize_glove_data();
-
-  rclcpp::Logger get_interface_logger() const
-  {
-    return rclcpp::get_logger("senseglove.hardware_interface");
-  }
+  rclcpp::Logger logger_ = rclcpp::get_logger("senseglove.hardware_interface");
 };
 
 }  // namespace senseglove_hardware_interface
+
+namespace color
+{
+constexpr const char* RESET = "\033[0m";
+constexpr const char* INFO = "\033[2;36m";
+}  // namespace color

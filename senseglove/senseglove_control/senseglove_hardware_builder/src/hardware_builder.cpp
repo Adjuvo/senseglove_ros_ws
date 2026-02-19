@@ -39,12 +39,6 @@ std::unique_ptr<SGHardware::SenseGloveRobot> HardwareBuilder::createRobot()
 {
   auto logger = rclcpp::get_logger("senseglove.hardware_builder");
 
-  RCLCPP_INFO(logger,
-              "Building robot: %s (serial: %s, %s)",
-              robotType_.c_str(),
-              serial_.c_str(),
-              isRight_ ? "right" : "left");
-
   // Check SenseCom is running
   if (!SGCore::DeviceList::SenseComRunning())
     throw std::runtime_error("SenseCom is not running. Start SenseCom before launching.");
@@ -54,14 +48,14 @@ std::unique_ptr<SGHardware::SenseGloveRobot> HardwareBuilder::createRobot()
   if (allGloves.empty())
     throw std::runtime_error("No SenseGloves detected via SenseCom.");
 
-  RCLCPP_INFO(logger, "Connected gloves (%zu):", allGloves.size());
+  RCLCPP_DEBUG(logger, "Connected gloves (%zu):", allGloves.size());
   for (size_t i = 0; i < allGloves.size(); ++i)
   {
-    RCLCPP_INFO(logger,
-                "  [%zu] %s (%s)",
-                i,
-                allGloves[i]->GetDeviceId().c_str(),
-                allGloves[i]->IsRight() ? "right" : "left");
+    RCLCPP_DEBUG(logger,
+                 "  [%zu] %s (%s)",
+                 i,
+                 allGloves[i]->GetDeviceId().c_str(),
+                 allGloves[i]->IsRight() ? "right" : "left");
   }
 
   // Find glove by serial
@@ -99,13 +93,17 @@ std::unique_ptr<SGHardware::SenseGloveRobot> HardwareBuilder::createRobot()
 
   // Create joints
   auto joints = createJoints(config["joints"]);
-  RCLCPP_INFO(logger, "Created %zu joints", joints.size());
+  RCLCPP_DEBUG(logger, "Created %zu joints", joints.size());
 
   // Create and return robot
   auto robot = std::make_unique<SGHardware::SenseGloveRobot>(
     hardwareGlove, std::move(joints), urdfModel_, serial_, actualIsRight);
 
-  RCLCPP_INFO(logger, "Robot created successfully: %s", robot->getRobotName().c_str());
+  RCLCPP_DEBUG(logger,
+               "Robot ready: %s (%s)",
+               robot->getRobotName().c_str(),
+               actualIsRight ? "right" : "left");
+
   return robot;
 }
 

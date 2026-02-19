@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription, OpaqueFunction, RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription, OpaqueFunction, RegisterEventHandler, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.event_handlers import OnProcessStart
@@ -10,10 +10,16 @@ from ament_index_python.packages import get_package_share_directory
 import yaml
 import os
 
+_RESET  = '\033[0m'
+_YELLOW = '\033[1;33m'
+
 def generate_launch_description():
     run_rviz = LaunchConfiguration('run_rviz')
     run_sensecom = LaunchConfiguration('run_sensecom')
     run_finger_distance = LaunchConfiguration('run_finger_distance')
+
+    env_colorize = SetEnvironmentVariable(name='RCUTILS_COLORIZED_OUTPUT', value='1')
+    env_format = SetEnvironmentVariable(name='RCUTILS_CONSOLE_OUTPUT_FORMAT', value='[{severity}] [{name}]: {message}')
 
     # Locate senseglove_com package
     sensecom_share = get_package_share_directory('senseglove_com')
@@ -43,7 +49,7 @@ def generate_launch_description():
     gloves = config.get('gloves', [])
 
     def launch_hardware_nodes(context, *args, **kwargs):
-        input("Start SenseCom. Please confirm all gloves are connected in SenseCom and press ENTER to continue...")
+        input(f"{_YELLOW}Start SenseCom. Confirm all gloves connected, then press ENTER...{_RESET}")
 
         hardware_nodes = []
         for glove in gloves:
@@ -106,6 +112,8 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        env_colorize,
+        env_format,
         DeclareLaunchArgument('run_rviz', default_value='false', choices=['true', 'false'], description='Launch RViz'),
         DeclareLaunchArgument('run_sensecom', default_value='false', choices=['true', 'false'], description='Start SenseCom executable'),
         DeclareLaunchArgument('run_finger_distance', default_value='false', choices=['true', 'false'], description='Start Finger-Tip Distance Nodes'),
