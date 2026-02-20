@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.ros2
       args:
-        ROS_DISTRO: jazzy 
+        ROS_DISTRO: humble
     privileged: true
     network_mode: host
     ipc: host
@@ -15,7 +15,7 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
-      - ROS_DISTRO=jazzy
+      - ROS_DISTRO=humble
       - ROS_DOMAIN_ID=0
       - XDG_RUNTIME_DIR=/tmp/runtime-root
     group_add:

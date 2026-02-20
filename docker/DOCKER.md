@@ -1,5 +1,5 @@
 # 🐳 Docker #
-This provides a ready-to-use **Ubuntu 24.04 + ROS 2 Jazzy** environment for SenseGlove development.
+This provides a ready-to-use **Ubuntu 22.04 + ROS 2 Humble** environment for SenseGlove development.
 
 ## Preparing the Environment ##
 Before launching the containers, enable GUI forwarding on your host system so that any tools requiring X11 (e.g. RViz or PyQt GUIs) can be displayed

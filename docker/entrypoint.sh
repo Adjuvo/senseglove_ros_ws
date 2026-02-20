@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-: "${ROS_DISTRO:=jazzy}"
+: "${ROS_DISTRO:=humble}"
 : "${ROS_WORKSPACE:=/root/workspace}"
 
 source "/opt/ros/${ROS_DISTRO}/setup.bash"
