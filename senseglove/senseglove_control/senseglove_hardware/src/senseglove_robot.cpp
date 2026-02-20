@@ -26,18 +26,24 @@ SenseGloveRobot::SenseGloveRobot(std::shared_ptr<SGCore::HapticGlove> glove,
   , isRight_(isRight)
 {
   // Initialize glove type
-  senseglovePtr_ = std::dynamic_pointer_cast<SGCore::SG::SenseGlove>(hapticglove_);
-  novaglovePtr_ = std::dynamic_pointer_cast<SGCore::Nova::NovaGlove>(hapticglove_);
-  nova2glovePtr_ = std::dynamic_pointer_cast<SGCore::Nova::Nova2Glove>(hapticglove_);
-
-  if (senseglovePtr_)
-    gloveType_ = GloveType::SenseGlove;
-  else if (nova2glovePtr_)
-    gloveType_ = GloveType::Nova2;
-  else if (novaglovePtr_)
-    gloveType_ = GloveType::Nova;
-  else
-    gloveType_ = GloveType::Unknown;
+  switch (deviceType_)
+  {
+    case SGCore::EDeviceType::SenseGlove:
+      senseglovePtr_ = std::static_pointer_cast<SGCore::SG::SenseGlove>(hapticglove_);
+      gloveType_ = GloveType::SenseGlove;
+      break;
+    case SGCore::EDeviceType::Nova2:
+      nova2glovePtr_ = std::static_pointer_cast<SGCore::Nova::Nova2Glove>(hapticglove_);
+      gloveType_ = GloveType::Nova2;
+      break;
+    case SGCore::EDeviceType::Nova:
+      novaglovePtr_ = std::static_pointer_cast<SGCore::Nova::NovaGlove>(hapticglove_);
+      gloveType_ = GloveType::Nova;
+      break;
+    default:
+      gloveType_ = GloveType::Unknown;
+      break;
+  }
 
   // Build joint name lookup map
   jointMap_.reserve(jointList_.size());

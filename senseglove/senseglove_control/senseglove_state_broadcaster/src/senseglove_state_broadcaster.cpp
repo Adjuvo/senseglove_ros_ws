@@ -13,10 +13,20 @@ namespace senseglove_state_broadcaster
 controller_interface::CallbackReturn SenseGloveStateBroadcaster::on_init()
 {
   auto node = get_node();
-  topic_name_ = node->declare_parameter<std::string>("topic_name", "senseglove_states");
-  frame_id_ = node->declare_parameter<std::string>("frame_id", "world");
 
-  node->declare_parameter<std::vector<std::string>>("joints", std::vector<std::string>{});
+  if (!node->has_parameter("topic_name"))
+    topic_name_ = node->declare_parameter<std::string>("topic_name", "senseglove_states");
+  else
+    topic_name_ = node->get_parameter("topic_name").as_string();
+
+  if (!node->has_parameter("frame_id"))
+    frame_id_ = node->declare_parameter<std::string>("frame_id", "world");
+  else
+    frame_id_ = node->get_parameter("frame_id").as_string();
+
+  if (!node->has_parameter("joints"))
+    node->declare_parameter<std::vector<std::string>>("joints", std::vector<std::string>{});
+
   node->get_parameter("joints", joint_names_);
 
   pub_ = node->create_publisher<senseglove_msgs::msg::SenseGloveState>(
@@ -75,13 +85,14 @@ static inline double read_value(hardware_interface::LoanedStateInterface& sg_int
                                 rclcpp::Clock::SharedPtr clock,
                                 const char* logger_name)
 {
-  auto opt = sg_interface.get_optional();
-  if (opt.has_value())
-    return *opt;
-
-  RCLCPP_WARN_THROTTLE(
-    logger, *clock, 2'000, "State interface '%s' has no value; using 0.0", logger_name);
-  return 0.0;
+  double val = sg_interface.get_value();
+  if (std::isnan(val))
+  {
+    RCLCPP_WARN_THROTTLE(
+      logger, *clock, 2'000, "State interface '%s' has no value; using 0.0", logger_name);
+    return 0.0;
+  }
+  return val;
 }
 
 // Update

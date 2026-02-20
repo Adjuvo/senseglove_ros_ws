@@ -18,29 +18,30 @@ add_compile_options(-Wall -Wextra -Werror)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(urdf REQUIRED)
+find_package(yaml-cpp REQUIRED)
 find_package(senseglove_hardware REQUIRED)
 
 # Find SenseGlove API libraries
+set(SG_API_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api)
+set(SG_LIB_DIR ${SG_API_DIR}/stage/lib/ros/x86-64/release)
+
 find_library(SGCORE
         NAMES libsgcore.so sgcore
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
+        PATHS ${SG_LIB_DIR}
         REQUIRED
         )
 
 find_library(SGCONNECT
         NAMES libsgconnect.so sgconnect
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
+        PATHS ${SG_LIB_DIR}
         REQUIRED
         )
 
 find_library(SGSERIAL
         NAMES libserial.so serial
-        PATHS ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/lib/Ubuntu/x86-64/release/
+        PATHS ${SG_LIB_DIR}
         REQUIRED
         )
-
-# Find yaml-cpp (as system lib)
-find_package(yaml-cpp REQUIRED)
 
 # Add library target
 add_library(${PROJECT_NAME} SHARED
@@ -52,9 +53,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
         # SenseGlove API includes
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Core
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/Connect
-        ${CMAKE_CURRENT_LIST_DIR}/../../../senseglove_api/include/SenseGlove/BLE
+        ${SG_API_DIR}/stage/include
+        ${SG_API_DIR}/stage/include/SenseGlove/Core
+        ${SG_API_DIR}/stage/include/SenseGlove/Connect
+        ${SG_API_DIR}/stage/include/SenseGlove/BLE
         )
 
 # Link libraries

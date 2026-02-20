@@ -20,7 +20,7 @@ A workspace for the integration of the SenseGlove into _ROS2 Jazzy_.
     |    ├── senseglove_com                           # SenseCom
 
 ## Installation ##      
-1. Install [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html) on Ubuntu Noble 24.04
+1. Install [ROS 2 Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html) on Ubuntu Jammy 22.04
 2. Clone the repository: 
 ``` 
 git clone -b ${ROS_DISTRO} https://github.com/Adjuvo/senseglove_ros.git
@@ -28,8 +28,8 @@ git clone -b ${ROS_DISTRO} https://github.com/Adjuvo/senseglove_ros.git
 3. Install workspace dependencies: 
 ``` 
 sudo apt-get update
-sudo apt-get install ros-jazzy-ros2-control \
-                     ros-jazzy-ros2-controllers \
+sudo apt-get install ros-humble-ros2-control \
+                     ros-humble-ros2-controllers \
                      python3-pyqt5
 
 rosdep update

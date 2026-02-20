@@ -65,10 +65,9 @@ SenseGloveHardwareInterface::SenseGloveHardwareInterface(
 {
 }
 
-CallbackReturn SenseGloveHardwareInterface::on_init(
-  const hardware_interface::HardwareComponentInterfaceParams& params)
+CallbackReturn SenseGloveHardwareInterface::on_init(const hardware_interface::HardwareInfo& info)
 {
-  if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS)
+  if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
     return CallbackReturn::ERROR;
 
   auto& logger = logger_;
