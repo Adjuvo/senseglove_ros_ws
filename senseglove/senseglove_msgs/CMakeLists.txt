@@ -26,6 +26,7 @@ find_package(builtin_interfaces REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/FingerDistanceFloats.msg"
   "msg/KinematicsVect3D.msg"
+  "msg/Nova2WaveformCommand.msg"
   "msg/SenseGloveState.msg"
   "srv/Calibrate.srv"
   DEPENDENCIES std_msgs geometry_msgs control_msgs builtin_interfaces

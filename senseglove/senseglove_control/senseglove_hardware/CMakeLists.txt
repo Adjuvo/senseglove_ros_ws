@@ -17,7 +17,8 @@ add_compile_options(-Wall -Wextra -Werror)
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(urdf REQUIRED) 
+find_package(realtime_tools REQUIRED)
+find_package(urdf REQUIRED)
 
 # Find SenseGlove API libraries
 find_library(SGCORE
@@ -57,6 +58,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # Link libraries
 ament_target_dependencies(${PROJECT_NAME}
         rclcpp
+        realtime_tools
         urdf
         )
         
@@ -88,6 +90,6 @@ install(TARGETS ${PROJECT_NAME}
 # Export ament package
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
-ament_export_dependencies(rclcpp urdf)
+ament_export_dependencies(rclcpp realtime_tools urdf)
 
 ament_package()

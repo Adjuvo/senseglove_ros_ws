@@ -243,9 +243,6 @@ void SenseGloveRobot::queueVibrations(const std::vector<double>& vibrationComman
         vibroQueued = novaglovePtr_->QueueVibroLevels(vibrationLevels_);
         thumperQueued = novaglovePtr_->QueueWristLevel(vibrationLevels_.back());
         break;
-      case GloveType::Nova2:
-        vibroQueued = nova2glovePtr_->QueueVibroLevels(vibrationLevels_);
-        break;
       default:
         break;
     }
@@ -271,6 +268,33 @@ void SenseGloveRobot::sendHaptics()
     effortActive_ = false;
     vibrationActive_ = false;
   }
+}
+
+void SenseGloveRobot::queueCustomWaveform(SGCore::CustomWaveform& waveform,
+                                          SGCore::Nova::ENova2VibroMotor motor)
+{
+  if (gloveType_ != GloveType::Nova2 || !nova2glovePtr_)
+  {
+    RCLCPP_WARN_ONCE(rclcpp::get_logger("senseglove.robot"),
+                     "queueCustomWaveform called on non-Nova2 glove: ignored");
+    return;
+  }
+
+  waveform_buffer_.writeFromNonRT(WaveformCmd{waveform, motor});
+  waveform_pending_.store(true, std::memory_order_release);
+}
+
+void SenseGloveRobot::processCustomWaveform()
+{
+  if (gloveType_ != GloveType::Nova2 || !nova2glovePtr_)
+    return;
+
+  if (!waveform_pending_.load(std::memory_order_acquire))
+    return;
+
+  WaveformCmd* cmd = waveform_buffer_.readFromRT();
+  nova2glovePtr_->SendCustomWaveform_Nova2(cmd->waveform, cmd->motor);
+  waveform_pending_.store(false, std::memory_order_release);
 }
 
 void SenseGloveRobot::stopHaptics()

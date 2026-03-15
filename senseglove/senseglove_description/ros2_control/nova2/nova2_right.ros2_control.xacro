@@ -20,9 +20,11 @@
             <!-- State Interfaces -->
             <xacro:add_state_interfaces joint_name="r_thumb_mcp"/>
             <xacro:add_state_interfaces joint_name="r_thumb_pip"/>
+            <xacro:add_state_interfaces joint_name="r_thumb_dip"/>
 
             <xacro:add_state_interfaces joint_name="r_index_mcp"/>
             <xacro:add_state_interfaces joint_name="r_index_pip"/>
+            <xacro:add_state_interfaces joint_name="r_index_dip"/>
 
             <xacro:add_state_interfaces joint_name="r_middle_mcp"/>
             <xacro:add_state_interfaces joint_name="r_middle_pip"/>
@@ -42,8 +44,6 @@
             <xacro:add_state_interfaces joint_name="r_palm_strap"/>
 
             <!-- Command Interfaces -->
-            <xacro:add_command_interfaces joint_name="r_palm_index"/>
-            <xacro:add_command_interfaces joint_name="r_palm_pinky"/>
             <xacro:add_command_interfaces joint_name="r_palm_strap"/>
 
             <!-- State and Command Interfaces -->
@@ -51,8 +51,6 @@
             <xacro:add_state_and_command_interfaces joint_name="r_index_brake"/>
             <xacro:add_state_and_command_interfaces joint_name="r_middle_brake"/>
             <xacro:add_state_and_command_interfaces joint_name="r_ring_brake"/>
-            <xacro:add_state_and_command_interfaces joint_name="r_thumb_dip"/>
-            <xacro:add_state_and_command_interfaces joint_name="r_index_dip"/>
 
         </ros2_control>
     </xacro:macro>
