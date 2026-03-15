@@ -93,7 +93,42 @@ ros2 run senseglove_interaction calibration_manager --target-ns /senseglove/glov
 Default and calibrated parameters are found in [calibration.yaml](/senseglove_ros/senseglove/senseglove_bringup/config/calibration.yaml)
 
 ## Haptics: ##
-- The force-feedback system is implemented via ros2_control. Each SenseGlove product has joints and controllers defined in the [config folder](/senseglove_ros/senseglove/senseglove_control/senseglove_hardware_interface/config/).
-- Example haptic implementation in the [haptics folder](/senseglove_ros/senseglove/senseglove_interaction/senseglove_interaction/haptics/).
 
-> ⚠️ **NOVA 2**: The vibration feedback is disabled for the Index, Thumb and the Palm locations because of a packet overloading issue. A custom_waveform will be implemented instead of employing ros2-control in future.
+### Force Feedback
+The force-feedback system (brakes + wrist squeeze) is implemented via ros2_control. Each SenseGlove product has joints and controllers defined in the [config folder](/senseglove_ros/senseglove/senseglove_control/senseglove_hardware_interface/config/).
+
+Example haptic implementation in the [haptics folder](/senseglove_ros/senseglove/senseglove_interaction/senseglove_interaction/haptics/).
+
+### Nova 2 Vibration: Custom Waveforms
+
+Nova 2 LRA vibration is a **fire-and-forget** event. Each command is published **once** per haptic event. Have a look at the [nova2 vibration player](/senseglove_ros/senseglove/senseglove_interaction/senseglove_interaction/haptics/nova2_vibration_player.py).
+
+**Topic:** `/senseglove/glove{SERIAL}/{rh|lh}/vibration_waveform` of message [Nova2WaveformCommand](/senseglove_ros/senseglove/senseglove_msgs/msg/Nova2WaveformCommand.msg)
+
+> **Architecture note:** The RT-safe handoff uses `realtime_tools::RealtimeBuffer` + `std::atomic<bool>` inside `SenseGloveRobot`. The subscriber callback (non-RT) writes to the buffer and sets the flag; `write()` in the control loop checks the flag, fires the waveform once, and clears it.
+
+> **Optimal frequency for Nova 2 LRA motors is ~180 Hz.**
+
+> For detailed information on waveform parameters, motor locations, frequency guidance, and hardware behaviour, see the [SenseGlove Nova 2 Vibration documentation](https://senseglove.gitlab.io/SenseGloveDocs/nova2-vibration.html).
+
+## Real-Time Priority (Optional)
+
+For best performance with the ros2_control loop, grant the process real-time scheduling priority.
+
+Add to `/etc/security/limits.conf`:
+```
+@realtime soft rtprio 99
+@realtime hard rtprio 99
+@realtime soft priority 99
+@realtime hard priority 99
+@realtime soft memlock 102400
+@realtime hard memlock 102400
+```
+
+Then create the group and add your user:
+```bash
+sudo groupadd realtime
+sudo usermod -aG realtime $USER
+```
+
+Log out and back in for the group change to take effect.
