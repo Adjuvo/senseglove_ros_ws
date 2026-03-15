@@ -21,7 +21,7 @@ nova2_left:
         jointIndex: 3
         actuationType: vibration
         actuationMode: effort
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_thumb_brake:
@@ -50,7 +50,7 @@ nova2_left:
         jointIndex: 7
         actuationType: vibration
         actuationMode: effort
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_index_brake:
@@ -152,14 +152,14 @@ nova2_left:
         jointIndex: 21
         actuationType: vibration
         actuationMode: effort
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_palm_pinky:
         jointIndex: 22
         actuationType: vibration
         actuationMode: effort
-        allowActuation: true
+        allowActuation: false
         minPosition: 0
         maxPosition: 100
     - l_palm_strap:

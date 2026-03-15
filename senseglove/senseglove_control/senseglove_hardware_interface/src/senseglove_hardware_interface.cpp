@@ -125,6 +125,20 @@ CallbackReturn SenseGloveHardwareInterface::on_init(
     // Initialize glove data
     initialize_glove_data();
 
+    // Subscriber: Nova 2 custom waveform commands
+    if (robot_->getGloveType() == SGHardware::SenseGloveRobot::GloveType::Nova2)
+    {
+      const std::string waveform_topic =
+        std::string(get_node()->get_namespace()) + "/vibration_waveform";
+      waveform_sub_ = get_node()->create_subscription<senseglove_msgs::msg::Nova2WaveformCommand>(
+        waveform_topic,
+        rclcpp::QoS(10),
+        [this](const senseglove_msgs::msg::Nova2WaveformCommand::SharedPtr msg) {
+          waveformCallback(msg);
+        });
+      RCLCPP_INFO(logger, "Subscribed to Nova 2 waveform commands on: %s", waveform_topic.c_str());
+    }
+
     RCLCPP_DEBUG(logger,
                  "SenseGlove initialized: %s with %zu joints [ffb:%zu, vib:%zu]",
                  robot_->getRobotName().c_str(),
@@ -260,6 +274,78 @@ return_type SenseGloveHardwareInterface::read(const rclcpp::Time&, const rclcpp:
   return return_type::OK;
 }
 
+void SenseGloveHardwareInterface::waveformCallback(
+  const senseglove_msgs::msg::Nova2WaveformCommand::SharedPtr msg)
+{
+  using Msg = senseglove_msgs::msg::Nova2WaveformCommand;
+  using Motor = SGCore::Nova::ENova2VibroMotor;
+
+  // Map message motor_location to API enum
+  Motor motor;
+  switch (msg->motor_location)
+  {
+    case Msg::MOTOR_THUMB_TIP:
+      motor = Motor::ThumbFingertip;
+      break;
+    case Msg::MOTOR_INDEX_TIP:
+      motor = Motor::IndexFingertip;
+      break;
+    case Msg::MOTOR_PALM_INDEX:
+      motor = Motor::PalmIndexSide;
+      break;
+    case Msg::MOTOR_PALM_PINKY:
+      motor = Motor::PalmPinkySide;
+      break;
+    default:
+      RCLCPP_WARN(
+        logger_, "Unknown motor_location %u: ignoring waveform command", msg->motor_location);
+      return;
+  }
+
+  // Build CustomWaveform
+  SGCore::CustomWaveform waveform(msg->amplitude, msg->sustain_time, msg->frequency_start);
+  waveform.SetFrequencyEnd(msg->frequency_end);
+  waveform.SetAttackTime(msg->attack_time);
+  waveform.SetSustainTime(msg->sustain_time);
+  waveform.SetDecayTime(msg->decay_time);
+  waveform.SetRepeatAmount(msg->repeat_amount);
+  waveform.SetInfinite(msg->infinite);
+
+  if (msg->frequency_switch_time > 0.0f)
+  {
+    waveform.SetFrequencySwitchTime(msg->frequency_switch_time);
+    waveform.SetFrequencySwitchFactor(msg->frequency_switch_factor);
+  }
+
+  switch (msg->wave_type)
+  {
+    case Msg::WAVE_SINE:
+      waveform.SetWaveType(SGCore::EWaveformType::Sine);
+      break;
+    case Msg::WAVE_SQUARE:
+      waveform.SetWaveType(SGCore::EWaveformType::Square);
+      break;
+    case Msg::WAVE_SAW_UP:
+      waveform.SetWaveType(SGCore::EWaveformType::SawUp);
+      break;
+    case Msg::WAVE_SAW_DOWN:
+      waveform.SetWaveType(SGCore::EWaveformType::SawDown);
+      break;
+    case Msg::WAVE_TRIANGLE:
+      waveform.SetWaveType(SGCore::EWaveformType::Triangle);
+      break;
+    case Msg::WAVE_NOISE:
+      waveform.SetWaveType(SGCore::EWaveformType::Noise);
+      break;
+    default:
+      waveform.SetWaveType(SGCore::EWaveformType::Sine);
+      break;
+  }
+
+  // Queue custom waveform for the robot
+  robot_->queueCustomWaveform(waveform, motor);
+}
+
 return_type SenseGloveHardwareInterface::write(const rclcpp::Time&, const rclcpp::Duration&)
 {
   std::fill(glove_data_.effort_output.begin(), glove_data_.effort_output.end(), 0.0);
@@ -283,9 +369,14 @@ return_type SenseGloveHardwareInterface::write(const rclcpp::Time&, const rclcpp
       glove_data_.vibration_output[vib_idx++] = val;
   }
 
+  // FFB for all gloves
+  // Vibration levels for Nova 1 / DK1.
+  // For Nova 2, vibration_output is empty; use custom waveforms instead
   robot_->queueEffort(glove_data_.effort_output);
   robot_->queueVibrations(glove_data_.vibration_output);
   robot_->sendHaptics();
+
+  robot_->processCustomWaveform();
 
   return return_type::OK;
 }

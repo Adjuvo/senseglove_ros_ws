@@ -40,10 +40,6 @@
       - r_index_brake   # FFB
       - r_middle_brake  # FFB
       - r_ring_brake    # FFB
-      - r_thumb_dip     # Buzzer
-      - r_index_dip     # Buzzer
-      - r_palm_index    # Buzzer - Palm-Index Side
-      - r_palm_pinky    # Buzzer - Palm-Pinky Side
       - r_palm_strap    # Palm Strap
     command_interfaces:
       - effort
@@ -61,8 +57,4 @@
       r_index_brake:  { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
       r_middle_brake: { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
       r_ring_brake:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
-      r_thumb_dip:    { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
-      r_index_dip:    { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
-      r_palm_index:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
-      r_palm_pinky:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }
       r_palm_strap:   { p: 1.0, i: 0.0, d: 0.0, antiwindup_strategy: "none" }

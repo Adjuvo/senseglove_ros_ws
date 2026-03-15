@@ -35,6 +35,7 @@ setup(
             'calibration_manager = senseglove_interaction.finger_distance.calibration_manager:main',
             # haptics nodes
             'haptics_node = senseglove_interaction.haptics.haptics_node:main',
+            'nova2_vibration_node = senseglove_interaction.haptics.nova2_vibration_node:main',
             # imu tf broadcaster
             'imu_tf_broadcaster = senseglove_interaction.common.imu_tf_broadcaster:main',
         ],

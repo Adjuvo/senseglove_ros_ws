@@ -1,6 +1,9 @@
 #ifndef SENSEGLOVE_HARDWARE_SENSEGLOVE_ROBOT_HPP
 #define SENSEGLOVE_HARDWARE_SENSEGLOVE_ROBOT_HPP
 
+#include <realtime_tools/realtime_buffer.hpp>
+
+#include <atomic>
 #include <chrono>
 #include <memory>
 #include <ostream>
@@ -12,6 +15,7 @@
 
 // SenseGlove API headers
 #include <BasicHandModel.hpp>
+#include <CustomWaveform.hpp>
 #include <DeviceList.hpp>
 #include <HandPose.hpp>
 #include <Nova2Glove.hpp>
@@ -26,6 +30,13 @@
 
 namespace SGHardware
 {
+
+// Custom waveform command for one Nova 2 LRA motor
+struct WaveformCmd
+{
+  SGCore::CustomWaveform waveform{0.5f, 0.2f, 180.0f};
+  SGCore::Nova::ENova2VibroMotor motor{SGCore::Nova::ENova2VibroMotor::ThumbFingertip};
+};
 
 class SenseGloveRobot
 {
@@ -153,6 +164,12 @@ public:
   void sendHaptics();
   void stopHaptics();
 
+  // Nova 2 custom waveform
+  // queueCustomWaveform() is called from the non-RT subscriber callback
+  // processCustomWaveform() is called from write() in the RT control loop
+  void queueCustomWaveform(SGCore::CustomWaveform& waveform, SGCore::Nova::ENova2VibroMotor motor);
+  void processCustomWaveform();
+
   bool updateGloveData(const std::chrono::duration<double>& period);
 
   // Operator
@@ -212,6 +229,10 @@ private:
   bool vibrationQueued_ = false;
   bool effortActive_ = false;
   bool vibrationActive_ = false;
+
+  // Nova 2 waveform RT buffer
+  realtime_tools::RealtimeBuffer<WaveformCmd> waveform_buffer_;
+  std::atomic<bool> waveform_pending_{false};
 
   void computeJointCounts();
   void updateJointPositions(const std::vector<std::vector<SGCore::Kinematics::Vect3D>>& poseAngles);

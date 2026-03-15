@@ -6,6 +6,8 @@
 #include "hardware_interface/types/hardware_component_interface_params.hpp"
 #include "rclcpp/rclcpp.hpp"
 
+#include <senseglove_msgs/msg/nova2_waveform_command.hpp>
+
 #include <chrono>
 #include <cstddef>
 #include <memory>
@@ -81,7 +83,11 @@ private:
   GloveData glove_data_;
   double publish_rate_ = 60.0;
 
+  // Nova 2 custom waveform subscriber
+  rclcpp::Subscription<senseglove_msgs::msg::Nova2WaveformCommand>::SharedPtr waveform_sub_;
+
   void initialize_glove_data();
+  void waveformCallback(const senseglove_msgs::msg::Nova2WaveformCommand::SharedPtr msg);
   rclcpp::Logger logger_ = rclcpp::get_logger("senseglove.hardware_interface");
 };
 
